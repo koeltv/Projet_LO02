@@ -1,0 +1,17 @@
+<?xml version="1.0" ?>
+<!--GENERATED FILE, PLEASE DO NOT EDIT!!!--><EXT object="projet lo02" version="4">
+  <OBJECT>
+    <ID name="projet lo02" mc="Standard.Package" uid="c1cdd606-27f5-4376-90e1-4515821fa01d"/>
+    <PID name="Projet LO02" mc="Standard.Project" uid="9f2bab2f-d099-4057-ab5c-6a2919078315"/>
+    <ATTRIBUTES>
+      <ATT name="IsInstantiable">false</ATT>
+      <ATT name="IsAbstract">false</ATT>
+      <ATT name="IsLeaf">false</ATT>
+      <ATT name="IsRoot">false</ATT>
+      <ATT name="Visibility">Public</ATT>
+      <ATT name="Name"><![CDATA[projet lo02]]></ATT>
+      <ATT name="status">1970354901745664</ATT>
+    </ATTRIBUTES>
+    <DEPENDENCIES></DEPENDENCIES>
+  </OBJECT>
+</EXT>
