@@ -4,9 +4,9 @@
     <ID name="Diagramme de séquence Interaction" mc="Standard.SequenceDiagram" uid="38005f97-6f07-47de-93ca-4b00bf02de7c"/>
     <PID name="Interaction" mc="Standard.Interaction" uid="35ae5d52-fbff-45e4-a62e-9564968163de"/>
     <ATTRIBUTES>
-      <ATT name="UiDataVersion">0</ATT>
-      <ATT name="UiData"></ATT>
-      <ATT name="PreviewData"></ATT>
+      <ATT name="UiDataVersion">1</ATT>
+      <ATT name="UiData"><![CDATA[eJztU01PAjEQ/SvN3ikroGgCGGUNMa5iQE08mdntgNV+YNtV9t/bdUEFhaAxevHU5k3fzJvpm9b+VAryiMZyrdrBFg0Dst9p9ZM7TB3hzEMBcfkE24E2Yyo1Q8E1zaSgFh8yVCkyDmMDkvqL04aiQInK2Q/xnhzOkKhEAiLhTpub1+ph0GmdGz1B43KiQPqiAnKduQgc+NgViAxnalQmRFDttKpzwgfq0OUCg4Veap/1Mtdni/eWptogLbkb6OuCTYEhmxc7mroBjjascuZTzJgEpy5Kjr3Gl2txOS2ZpE6nS41Wy5bWNW9QgEPmtSzN7bSAyGOBFCMCxcAwuvQzpL4bhtujvWZlZxQ2K40mw8pePYVKIwnDZBTWGDbT9dMXYN2J0k8qhgTFkoihM1yNPVh9Qdc2ogUeq66WE22589/w/VTdWy6YwSJDzG0xvtmxkhFzdW83f344jgw8eTkx5GgWrVdfZ73XnWEl31JRZPArs5Dwd/bla6w/NxpnKxwR9Wh8cH00uDk86J70Bv3Ls+hnTLLB+r3/tjcDvbND498Of2WHi/75T/tgZegZnzORjg==]]></ATT>
+      <ATT name="PreviewData"><![CDATA[data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABUAAAAVCAIAAAAmdTLBAAAAGElEQVR4nGP4TxlgGNU/qn9U/6j+EaofAB8cJiE1IQRUAAAAAElFTkSuQmCC]]></ATT>
       <ATT name="Name"><![CDATA[Diagramme de séquence Interaction]]></ATT>
       <ATT name="status">1970354901745664</ATT>
     </ATTRIBUTES>
