@@ -10,7 +10,9 @@
     </ATTRIBUTES>
     <DEPENDENCIES>
       <COMP relation="Model">
-        <COMPID name="projet lo02" mc="Standard.Package" uid="c1cdd606-27f5-4376-90e1-4515821fa01d"/>
+        <COMPID name="witchHuntGame" mc="Standard.Package" uid="c1cdd606-27f5-4376-90e1-4515821fa01d"/>
+        <COMPID name="DGCasUtilisation" mc="Standard.Package" uid="f6da50c7-f607-4ba5-bf81-13175e6cb196"/>
+        <COMPID name="DGSequence" mc="Standard.Package" uid="928ff699-92b6-44f9-adcb-38d6b6abb1c3"/>
       </COMP>
       <COMP relation="DiagramRoot">
         <COMPID name="Projet LO02" mc="Infrastructure.DiagramSet" uid="b57a3b6d-e212-4e1f-8c3c-ba8d1075ef6c"/>
