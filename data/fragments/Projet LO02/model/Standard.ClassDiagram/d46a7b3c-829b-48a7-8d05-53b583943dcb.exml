@@ -1,0 +1,38 @@
+<?xml version="1.0" ?>
+<!--GENERATED FILE, PLEASE DO NOT EDIT!!!--><EXT object="Diagramme de classe witchHuntGame" version="4">
+  <OBJECT>
+    <ID name="Diagramme de classe witchHuntGame" mc="Standard.ClassDiagram" uid="d46a7b3c-829b-48a7-8d05-53b583943dcb"/>
+    <PID name="witchHuntGame" mc="Standard.Package" uid="c1cdd606-27f5-4376-90e1-4515821fa01d"/>
+    <ATTRIBUTES>
+      <ATT name="UiDataVersion">7</ATT>
+      <ATT name="UiData"><![CDATA[eJztmltT6joUgP9Khzmvrb1wqUe3exQYNyMqA+rMOS9M2i4w2zZlkrAVf/1OCkWtCKXU4jh9oylZWUm+dUtz/PMp8JU/QBkOyY+KoekV5efJ8bXzG1yuYE80VRQ+m8CPSkjHWhB64ONQmwa+xjji+MHDaExRoIGHeUg18CEAwtn8rRu/PQ8G0XNr/lxRAvQ7pMPluHrl5LhHwwlQPlMICsRwPpqFU95CHIl3d8ifwkIPMvX9ysHJ8UHc4V3XAZ/5UHkzC3PVLGLtmPw/09yQgjbvm0K/JmIu8sCLB2s/8T6MUo5yJUQseirwxFtOR+gY/ZQ/Luc9FUt7Skz0YD6ldZOn4CMOntAlsW6Xskn5I1vkEiHiIeppTR8xttgWxavWUcOxXNU2Dx21aqOGant6Ta1ZTs22DquW5zrrl15I4xckfCRd5ICf0GDAKSbjysliuAAUDxRXKgDKI+bu/a8p4edCzvFB1G3tNEMfOqQZBpOQYS426YOxUohq3mPfoyAldDHjb7ixstEvJvX8LKiPVncn2vtCE0TGEpTF1hm6eWRY+pFR04/sxtaWUP10S5BmMLe5tbo1u6eDwbDf7vXbg+HldaudmHmbTIN/Uyl5AbN/+jChwMTiIwmDtKAX1m/6t82b2367lUah05ub4Xn/+rZ31xl0zrpJrc5CAR4iS+GcTqEYI1VGOiDHqOtqw0SgVl1jpDq2WVPrtmsj2zlEDVPPwTp7gkWgX8cEazmYYI/iANHZVYRFrtaoH2W2xHpaSxSinmY7m2O1xHQtppcIEwnIjrg2suEqBbMJcuEexOZRAe5V3PIraik+Z7KL5bNe8rmWzzkGKQSy+/BxiN13gpKha4R8loxdq0Q9wOwxpF4O0jhyH4aMA4Vw+7C6SjV/xQZsLwo5jFPk8gwzXEL6ym4OMwcsxvAIR8bfXD70geFn5PhwTsPppHgvYOilG/hKbmDH8GRkrOcRF+M7Uw5jiaEg9DRu2J3LDhFiZYRb7JSZZCAFpakL/HwoNZJslJi+FfgWj12hzViGL6F9zWuuqKrG9qimrsBzQjVZh+eP6nJtFdO1XWg4I7V22HDUqodqKjIsU4BrIbNuG4LkWg64Mrk+xTrV75BVpdUtY1r1AtbcgjfkSUbGyl7KjE554lB0HTfsK0UquJIvg8+mUh74fehljjwp8c1Y6WMRQigRligsyOVTKoNTZ9E2iNv2AHHB5X4J8QaIYyZ2zZ0ylqOpMN2TwzULrkmFbXwrVnOk9JOdrJmxXE1F7/8h2YOjNYsuVb8ZvLk7WolBzgSnhDtjWYsJARodF0ZUi4fdvzMnC1sr+bkoBdhFF7ZlBrEpgyCp5K1LH8yMRdoHjO4rYSi4QjPLj637TRsy12YrqQW2p1Sh4JqsxPZLpQrvXyXGwexOPGEX5XtYlxjl/R0abQHXphwixcdSM2t5GqAxLC9NRAeW0mRlq7w4MZCtczTyzIq2T4qsgkvV0oLXW/BATNX3MU9jxuWRfy5H/hsdTBeTB7bGVyb+fjZuUfQodrMr2UiY28rzgqUTib2HNxfAtAgv4TjeSCwmzm/Xa7/XunES2uVV7nOte/pfuz88O21eyGuzV6284+OHUl7v2Qs+r2FYe9JSwvBpMNxc9wrLkv4C/2jPJw==]]></ATT>
+      <ATT name="PreviewData"><![CDATA[data:image/png;base64,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]]></ATT>
+      <ATT name="Name"><![CDATA[Diagramme de classe witchHuntGame]]></ATT>
+      <ATT name="status">1970354901745664</ATT>
+    </ATTRIBUTES>
+    <DEPENDENCIES>
+      <LINK relation="Represented">
+        <ID name="Player" mc="Standard.Class" uid="f0eab160-72ae-4c1f-b825-68c8a8b9a720"/>
+        <REFOBJ>
+          <ID name="score" mc="Standard.Attribute" uid="2c8ce7bf-597b-4da5-a132-4c3a26811605"/>
+        </REFOBJ>
+      </LINK>
+      <COMP relation="Descriptor">
+        <OBJECT>
+          <ID name="" mc="Infrastructure.Note" uid="bb86a3df-9912-47d7-a6dc-10534ae3c8b6"/>
+          <ATTRIBUTES>
+            <ATT name="Content"></ATT>
+            <ATT name="MimeType"><![CDATA[text/plain]]></ATT>
+            <ATT name="Name"></ATT>
+            <ATT name="status">1970354901745664</ATT>
+          </ATTRIBUTES>
+          <DEPENDENCIES>
+            <LINK relation="Model">
+              <FOREIGNID name="description" mc="Infrastructure.NoteType" uid="00000000-0000-3e81-0000-000000000000"/>
+            </LINK>
+          </DEPENDENCIES>
+        </OBJECT>
+      </COMP>
+    </DEPENDENCIES>
+  </OBJECT>
+</EXT>
