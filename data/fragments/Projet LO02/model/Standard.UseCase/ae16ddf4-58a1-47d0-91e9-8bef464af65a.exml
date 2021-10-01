@@ -1,7 +1,7 @@
 <?xml version="1.0" ?>
-<!--GENERATED FILE, PLEASE DO NOT EDIT!!!--><EXT object="Create game" version="4">
+<!--GENERATED FILE, PLEASE DO NOT EDIT!!!--><EXT object="Select nbPlayer|nbAI" version="4">
   <OBJECT>
-    <ID name="Create game" mc="Standard.UseCase" uid="ae16ddf4-58a1-47d0-91e9-8bef464af65a"/>
+    <ID name="Select nbPlayer|nbAI" mc="Standard.UseCase" uid="ae16ddf4-58a1-47d0-91e9-8bef464af65a"/>
     <PID name="DGCasUtilisation" mc="Standard.Package" uid="f6da50c7-f607-4ba5-bf81-13175e6cb196"/>
     <ATTRIBUTES>
       <ATT name="IsElementary">false</ATT>
@@ -9,10 +9,25 @@
       <ATT name="IsLeaf">false</ATT>
       <ATT name="IsRoot">false</ATT>
       <ATT name="Visibility">Public</ATT>
-      <ATT name="Name"><![CDATA[Create game]]></ATT>
+      <ATT name="Name"><![CDATA[Select nbPlayer|nbAI]]></ATT>
       <ATT name="status">1970354901745664</ATT>
     </ATTRIBUTES>
     <DEPENDENCIES>
+      <COMP relation="Parent">
+        <OBJECT>
+          <ID name="Generalization" mc="Standard.Generalization" uid="893ac28a-b332-4c78-8d62-4d3aa9561d24"/>
+          <ATTRIBUTES>
+            <ATT name="Discriminator"></ATT>
+            <ATT name="Name"><![CDATA[Generalization]]></ATT>
+            <ATT name="status">1970354901745664</ATT>
+          </ATTRIBUTES>
+          <DEPENDENCIES>
+            <LINK relation="SuperType">
+              <ID name="Host game" mc="Standard.UseCase" uid="24960965-7a42-4a91-9c79-e30303861942"/>
+            </LINK>
+          </DEPENDENCIES>
+        </OBJECT>
+      </COMP>
       <COMP relation="Descriptor">
         <OBJECT>
           <ID name="" mc="Infrastructure.Note" uid="8c67c5e7-4b7d-44a3-ab9f-c3b9f9e1e66d"/>
