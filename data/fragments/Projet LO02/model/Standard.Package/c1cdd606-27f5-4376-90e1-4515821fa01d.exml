@@ -70,8 +70,8 @@
           </DEPENDENCIES>
         </OBJECT>
         <COMPID name="DiscardPile" mc="Standard.Class" uid="b1141e97-bc54-40e7-95e3-6626aa9fe6a0"/>
-        <COMPID name="PlayerDiscardPile" mc="Standard.Class" uid="16045d7c-ebf7-4db6-90bb-0af1686f404e"/>
         <COMPID name="Round" mc="Standard.Class" uid="a8f12678-c6ee-4a36-875e-4bd1efc5e015"/>
+        <COMPID name="Revealed" mc="Standard.Class" uid="5fa48f4c-0970-473d-80e4-2bd0b20dad33"/>
       </COMP>
       <LINK relation="Extension">
         <FOREIGNID name="JavaPackage" mc="Infrastructure.Stereotype" uid="01ec23a8-0000-0126-0000-000000000000"/>
