@@ -14,24 +14,15 @@
     </ATTRIBUTES>
     <DEPENDENCIES>
       <COMP relation="OwnedElement">
-        <COMPID name="Current Player" mc="Standard.Actor" uid="b063bb8f-65ec-4ee1-b991-67bf2185c7db"/>
         <COMPID name="Play a card" mc="Standard.UseCase" uid="14c9134e-05a3-4836-84e6-d7571da74641"/>
-        <COMPID name="Bot" mc="Standard.Actor" uid="f5ca437d-910f-4071-95cc-f534d2d1df2a"/>
-        <COMPID name="Pick a Rumour Cards" mc="Standard.UseCase" uid="b1fc32f6-e221-4882-98f5-0bc77f6809c5"/>
         <COMPID name="Select a role" mc="Standard.UseCase" uid="8c75873e-30a8-48e5-8e9b-8c4e9a49ec5f"/>
-        <COMPID name="Get points (win)" mc="Standard.UseCase" uid="7c42fb16-66dd-467b-8c66-db6ce60aaef4"/>
         <COMPID name="Accuse a player" mc="Standard.UseCase" uid="a2817393-832d-490f-bddc-9565f33d3862"/>
         <COMPID name="Reveal Rumour Card" mc="Standard.UseCase" uid="33e87971-f17f-4b9a-982c-9d944e60ae11"/>
-        <COMPID name="Reveal a Identity Card" mc="Standard.UseCase" uid="48758064-ef6a-4806-bcff-51bba10085fb"/>
-        <COMPID name="Hunt !" mc="Standard.UseCase" uid="1374ebd2-a3e5-4aaa-ad2f-e269a1acd69d"/>
-        <COMPID name="Witch ?" mc="Standard.UseCase" uid="d920fcbe-0d8c-49ca-b234-89728698d7ef"/>
-        <COMPID name="Play again" mc="Standard.UseCase" uid="1ce6b244-5049-41f3-a3b2-f5f3dee240e9"/>
-        <COMPID name="Cannot play further" mc="Standard.UseCase" uid="8161f100-f809-41b4-bea8-b9ea63b76473"/>
-        <COMPID name="Shuffle Rumour Cards" mc="Standard.UseCase" uid="fc74819d-204a-4ff4-91a2-c251063f2fde"/>
-        <COMPID name="Lose points (loss)" mc="Standard.UseCase" uid="8a697b74-d21d-4e0a-8b36-35b9dbd4333f"/>
-        <COMPID name="Create game" mc="Standard.UseCase" uid="ae16ddf4-58a1-47d0-91e9-8bef464af65a"/>
-        <COMPID name="Give out Cards" mc="Standard.UseCase" uid="16aa3121-38d6-46e7-a0fa-1b1e27c75416"/>
-        <COMPID name="Player Accused" mc="Standard.Actor" uid="188e0c70-9463-4875-9496-36009300e69c"/>
+        <COMPID name="Reveal an Identity Card" mc="Standard.UseCase" uid="48758064-ef6a-4806-bcff-51bba10085fb"/>
+        <COMPID name="Select nbPlayer|nbAI" mc="Standard.UseCase" uid="ae16ddf4-58a1-47d0-91e9-8bef464af65a"/>
+        <COMPID name="Player" mc="Standard.Actor" uid="188e0c70-9463-4875-9496-36009300e69c"/>
+        <COMPID name="Play" mc="Standard.UseCase" uid="835a4043-d166-4806-8f79-d6b61e74da39"/>
+        <COMPID name="Host game" mc="Standard.UseCase" uid="24960965-7a42-4a91-9c79-e30303861942"/>
       </COMP>
       <COMP relation="Product">
         <COMPID name="Diagramme de cas d'utilisation DGCasUtilisation" mc="Standard.UseCaseDiagram" uid="45adec22-2507-48f5-8287-820e9d0fedca"/>
