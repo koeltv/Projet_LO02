@@ -16,8 +16,6 @@ public class Player {
 
     public List<RumourCard> rumourCard = new ArrayList<RumourCard> ();
 
-    public PlayerDiscardPile playerDiscardPile;
-
     public int getScore() {
         // Automatically generated method. Please delete this comment before entering specific code.
         return this.score;

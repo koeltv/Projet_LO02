@@ -18,12 +18,6 @@ public class Game {
     public void askForPlayerRepartition() {
     }
 
-    public void distributeRumourCards() {
-    }
-
-    public void askPlayersForIdentity() {
-    }
-
     public void startRound() {
     }
 
@@ -44,6 +38,9 @@ public class Game {
     }
 
     public void settleTie() {
+    }
+
+    public void setupGame() {
     }
 
 }

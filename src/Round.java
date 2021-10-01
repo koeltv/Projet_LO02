@@ -1,5 +1,5 @@
 
-public class Round {
+public abstract class Round {
     private static int numberOfRound;
 
     private int numberOfTurns;
@@ -7,6 +7,8 @@ public class Round {
     private Player currentPlayer;
 
     private Player nextPlayer;
+
+    public Game ;
 
     public static int getNumberOfRound() {
         // Automatically generated method. Please delete this comment before entering specific code.
@@ -49,6 +51,15 @@ public class Round {
     }
 
     public void askCurrentPlayerForAction() {
+    }
+
+    public void checkNumberOfPlayerLeft() {
+    }
+
+    public void distributeRumourCards() {
+    }
+
+    public void askPlayersForIdentity() {
     }
 
 }
