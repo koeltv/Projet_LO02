@@ -25,7 +25,7 @@
         <COMPID name="Host game" mc="Standard.UseCase" uid="24960965-7a42-4a91-9c79-e30303861942"/>
       </COMP>
       <COMP relation="Product">
-        <COMPID name="Diagramme de cas d'utilisation DGCasUtilisation" mc="Standard.UseCaseDiagram" uid="45adec22-2507-48f5-8287-820e9d0fedca"/>
+        <COMPID name="Diagramme de cas d'utilisation DGCasUtilisation" mc="Standard.UseCaseDiagram" uid="ad4e7c65-3e0e-4048-a562-90b1f545296e"/>
       </COMP>
     </DEPENDENCIES>
   </OBJECT>

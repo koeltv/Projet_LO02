@@ -15,7 +15,7 @@
     <DEPENDENCIES>
       <COMP relation="Parent">
         <OBJECT>
-          <ID name="Generalization" mc="Standard.Generalization" uid="bd01cf6b-b1c0-402f-93de-c178d7a8a1e4"/>
+          <ID name="Generalization" mc="Standard.Generalization" uid="a07169aa-acd1-427b-8938-e8c4a03860ae"/>
           <ATTRIBUTES>
             <ATT name="Discriminator"></ATT>
             <ATT name="Name"><![CDATA[Generalization]]></ATT>
