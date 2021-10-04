@@ -1,8 +1,8 @@
 import java.util.ArrayList;
 import java.util.List;
 
-public class DiscardPile {
-    public List<RumourCard> rumourCard = new ArrayList<RumourCard> ();
+public abstract class DiscardPile {
+    public static List<RumourCard> rumourCard = new ArrayList<RumourCard> ();
 
     public void addDiscardedCard(final RumourCard discardedCard) {
     }
