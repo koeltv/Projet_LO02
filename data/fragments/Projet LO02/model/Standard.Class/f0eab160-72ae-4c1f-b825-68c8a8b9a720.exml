@@ -1102,9 +1102,9 @@ numberOfPlayers = value;]]></ATT>
       </COMP>
       <COMP relation="OwnedEnd">
         <OBJECT>
-          <ID name="rumourCard" mc="Standard.AssociationEnd" uid="b8c0c74b-c238-4767-b10f-ddc5e69fafea"/>
+          <ID name="rumourCard" mc="Standard.AssociationEnd" uid="cb63364c-b266-48f1-8747-702fd9c07f00"/>
           <ATTRIBUTES>
-            <ATT name="Aggregation">KindIsAggregation</ATT>
+            <ATT name="Aggregation">KindIsAssociation</ATT>
             <ATT name="IsChangeable">true</ATT>
             <ATT name="Changeable">ReadWrite</ATT>
             <ATT name="IsDerived">false</ATT>
@@ -1124,7 +1124,7 @@ numberOfPlayers = value;]]></ATT>
             </LINK>
             <COMP relation="Opposite">
               <OBJECT>
-                <ID name="" mc="Standard.AssociationEnd" uid="40cbe2a0-adc3-4fde-8133-f25cf06b7087"/>
+                <ID name="" mc="Standard.AssociationEnd" uid="988768c9-5aa1-4608-baad-4718fdeb633e"/>
                 <ATTRIBUTES>
                   <ATT name="Aggregation">KindIsAssociation</ATT>
                   <ATT name="IsChangeable">true</ATT>
@@ -1142,11 +1142,11 @@ numberOfPlayers = value;]]></ATT>
                 </ATTRIBUTES>
                 <DEPENDENCIES>
                   <COMP relation="Opposite">
-                    <COMPID name="rumourCard" mc="Standard.AssociationEnd" uid="b8c0c74b-c238-4767-b10f-ddc5e69fafea"/>
+                    <COMPID name="rumourCard" mc="Standard.AssociationEnd" uid="cb63364c-b266-48f1-8747-702fd9c07f00"/>
                   </COMP>
                   <COMP relation="Association">
                     <OBJECT>
-                      <ID name="" mc="Standard.Association" uid="b886a4d8-7ba5-4caf-846e-55d37d8375ef"/>
+                      <ID name="" mc="Standard.Association" uid="604f4143-3c34-4331-94d0-f8327f380981"/>
                       <ATTRIBUTES>
                         <ATT name="Name"></ATT>
                         <ATT name="status">1970354901745664</ATT>
@@ -1154,7 +1154,7 @@ numberOfPlayers = value;]]></ATT>
                       <DEPENDENCIES>
                         <COMP relation="LinkToClass">
                           <OBJECT>
-                            <ID name="ClassAssociation" mc="Standard.ClassAssociation" uid="587db206-038c-4543-a8be-8acf3cd62b22"/>
+                            <ID name="ClassAssociation" mc="Standard.ClassAssociation" uid="8e58b85a-8013-4fd0-8071-246c38100dd2"/>
                             <ATTRIBUTES>
                               <ATT name="Name"><![CDATA[ClassAssociation]]></ATT>
                               <ATT name="status">1970354901745664</ATT>
@@ -1173,7 +1173,7 @@ numberOfPlayers = value;]]></ATT>
               </OBJECT>
             </COMP>
             <COMP relation="Association">
-              <COMPID name="" mc="Standard.Association" uid="b886a4d8-7ba5-4caf-846e-55d37d8375ef"/>
+              <COMPID name="" mc="Standard.Association" uid="604f4143-3c34-4331-94d0-f8327f380981"/>
             </COMP>
           </DEPENDENCIES>
         </OBJECT>

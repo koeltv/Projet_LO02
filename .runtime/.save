@@ -1,7 +1,7 @@
-#Fri Oct 01 21:10:41 CEST 2021
+#Mon Oct 04 16:42:31 CEST 2021
 org.modelio.app.module.propertytab.JavaDesigner\ v3.10.00\ GModule\ @file\:///C\:/Users/valen/.modelio/4.1/modules/JavaDesigner_3.10.00/JavaDesigner_3.10.00.jmdac\ runtime\ module_.org.modelio.diagram.perspective.parentId=app.ui.ext_com.partstack.right
 org.modelio.app.module.propertytab.JavaDesigner\ v3.10.00\ GModule\ @file\:///C\:/Users/valen/.modelio/4.1/modules/JavaDesigner_3.10.00/JavaDesigner_3.10.00.jmdac\ runtime\ module_.org.modelio.app.ui.model.perspective.parentId=org.modelio.app.bottom.parts
 org.modelio.app.module.propertytab.JavaDesigner\ v3.10.00\ GModule\ @file\:///C\:/Users/valen/.modelio/4.1/modules/JavaDesigner_3.10.00/JavaDesigner_3.10.00.jmdac\ runtime\ module_.org.modelio.development.perspective.parentId=app.ui.ext_com.partstack.bottom
-org.modelio.app.diagram.editor.OpenedDiagrams1='Diagramme de s\u00E9quence Interaction' {38005f97-6f07-47de-93ca-4b00bf02de7c} Standard.SequenceDiagram
+org.modelio.app.diagram.editor.OpenedDiagrams1='Diagramme de s\u00E9quence lancement du jeu' {b725a614-bc2e-4fe0-be5e-0516a284ca3f} Standard.SequenceDiagram
 org.modelio.app.diagram.editor.OpenedDiagrams0='Diagramme de classe witchHuntGame' {d46a7b3c-829b-48a7-8d05-53b583943dcb} Standard.ClassDiagram
 org.modelio.app.module.propertytab.JavaDesigner\ v3.10.00\ GModule\ @file\:///C\:/Users/valen/.modelio/4.1/modules/JavaDesigner_3.10.00/JavaDesigner_3.10.00.jmdac\ runtime\ module_.org.modelio.full.perspective.parentId=app.ui.ext_com.partstack.bottom

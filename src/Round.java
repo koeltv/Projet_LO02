@@ -1,14 +1,12 @@
 
-public abstract class Round {
+public class Round {
     private static int numberOfRound;
-
-    private int numberOfTurns;
 
     private Player currentPlayer;
 
     private Player nextPlayer;
 
-    public Game ;
+    public Game game;
 
     public static int getNumberOfRound() {
         // Automatically generated method. Please delete this comment before entering specific code.
@@ -18,16 +16,6 @@ public abstract class Round {
     public static void setNumberOfRound(final int value) {
         // Automatically generated method. Please delete this comment before entering specific code.
         numberOfRound = value;
-    }
-
-    public int getNumberOfTurns() {
-        // Automatically generated method. Please delete this comment before entering specific code.
-        return this.numberOfTurns;
-    }
-
-    public void setNumberOfTurns(final int value) {
-        // Automatically generated method. Please delete this comment before entering specific code.
-        this.numberOfTurns = value;
     }
 
     public Player getCurrentPlayer() {
@@ -56,10 +44,13 @@ public abstract class Round {
     public void checkNumberOfPlayerLeft() {
     }
 
-    public void distributeRumourCards() {
+    private void distributeRumourCards() {
     }
 
-    public void askPlayersForIdentity() {
+    private void askPlayersForIdentity() {
+    }
+
+    private void selectFirstPlayer() {
     }
 
 }

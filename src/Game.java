@@ -6,25 +6,22 @@ public class Game {
 
     public List<Player> player = new ArrayList<Player> ();
 
-    public List<RumourCard> rumourCard = new ArrayList<RumourCard> ();
-
     public DiscardPile discardPile;
 
     public Round round;
 
-    public void selectFirstPlayer() {
-    }
+    public List<RumourCard> rumourCard = new ArrayList<RumourCard> ();
 
     public void askForPlayerRepartition() {
     }
 
-    public void startRound() {
+    private void startRound() {
     }
 
     public void endRound() {
     }
 
-    public void verifyScores() {
+    private void verifyScores() {
     }
 
     public Player getLastPlayer() {
@@ -37,7 +34,7 @@ public class Game {
         this.lastPlayer = value;
     }
 
-    public void settleTie() {
+    private void settleTie() {
     }
 
     public void setupGame() {
