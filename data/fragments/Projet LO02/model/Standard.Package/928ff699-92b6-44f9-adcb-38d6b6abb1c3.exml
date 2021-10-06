@@ -15,6 +15,7 @@
     <DEPENDENCIES>
       <COMP relation="OwnedBehavior">
         <COMPID name="Interaction" mc="Standard.Interaction" uid="498e0195-5375-432d-be1e-a053604e0513"/>
+        <COMPID name="Interaction1" mc="Standard.Interaction" uid="d5a1af18-7cae-46e6-a8cf-0fd32df0a607"/>
       </COMP>
       <LINK relation="Extension">
         <FOREIGNID name="JavaPackage" mc="Infrastructure.Stereotype" uid="01ec23a8-0000-0126-0000-000000000000"/>

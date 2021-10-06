@@ -1,6 +1,6 @@
 
 public class AI extends Player {
-    private int difficulty;
+    private final int difficulty;
 
     private static final String[] AI_NAMES = {"Jean", "Antoine", "Fabrice", "Patrick"};
 

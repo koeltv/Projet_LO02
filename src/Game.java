@@ -95,4 +95,13 @@ public abstract class Game {
         return random.nextInt(max-min) + min;
     }
 
+    public static void main(String[] args) {
+        askForPlayerRepartition();
+        setupGame();
+        do {
+            startRound();
+            endRound();
+        } while (verifyScores());
+        wrapUpGame();
+    }
 }
