@@ -1,21 +1,19 @@
 
 public class AI extends Player {
-    private final int difficulty;
+    private static final String[] AI_NAMES = {"Jean", "Antoine", "Fabrice", "Patrick", "Clara", "June", "Louis", "Silvain"};
 
-    private static final String[] AI_NAMES = {"Jean", "Antoine", "Fabrice", "Patrick"};
+    public final Strategy strategy;
 
-    AI(final int difficulty) {
+    AI() {
         super(randomAIName());
-        this.difficulty = difficulty;
+        this.strategy = switch (Game.randomInInterval(0, 1)) {
+            case 0 -> new Agressive();
+            default -> new Defensive();
+        };
     }
 
     private static String randomAIName() {
         return AI_NAMES[Game.randomInInterval(0, AI_NAMES.length)];
-    }
-
-    public int getDifficulty() {
-        // Automatically generated method. Please delete this comment before entering specific code.
-        return this.difficulty;
     }
 
 }

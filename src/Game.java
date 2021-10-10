@@ -3,14 +3,23 @@ import java.util.Scanner;
 import java.util.ArrayList;
 import java.util.List;
 
-public abstract class Game {
-    public static List<Player> player = new ArrayList<Player> ();
+public class Game extends Observable {
+    private static final Game game = new Game();
 
-    public static List<RumourCard> rumourCard = new ArrayList<RumourCard> ();
+    public final List<Player> players = new ArrayList<>();
 
-    public static Round round;
+    public final List<RumourCard> deck = new ArrayList<>();
 
-    private static void askForPlayerRepartition() {
+    public Round round = Round.getRound();
+
+    private Game() {}
+
+    public static Game getGame() {
+        // Automatically generated method. Please delete this comment before entering specific code.
+        return game;
+    }
+
+    private void askForPlayerRepartition() {
         Scanner sc = new Scanner(System.in);
         int nbPlayers, nbAIs;
         do {
@@ -22,62 +31,65 @@ public abstract class Game {
         
                 for (int i = 0; i < nbPlayers; i++) {
                     System.out.println("Name of player " + (i+1) + " ?");
-                    player.add(i, new Player(sc.next()));
+                    this.players.add(i, new Player(sc.next()));
                 }
                 for (int i = nbPlayers; i < nbPlayers + nbAIs; i++) {
-                    System.out.println("Which difficulty for AI n°" + (i + 1 - nbPlayers) + " (0, 1, 2) ?");
-                    player.add(i, new AI(sc.nextInt()));
+                    this.players.add(i, new AI());
                 }
     }
 
-    private static void startRound() {
-        round = new Round();
-    }
-
-    private static void endRound() {
-        //Gather all players cards
-        for (Player player : Game.player) {
-            if (player.rumourCard != null) {
-                int startingNumberOfCard = player.rumourCard.size();
-                for (int i = 0; i < startingNumberOfCard; i++) {
-                    RumourCard removedCard = player.rumourCard.get(0);
-                    player.rumourCard.remove(removedCard);
-                    Game.rumourCard.add(removedCard);
-                }
-            }
-        }
-        //Gather the discarded cards
-        if (DiscardPile.rumourCard != null) {
-            int startingNumberOfCard = DiscardPile.rumourCard.size();
-            for (int i = 0; i < startingNumberOfCard; i++) {
-                RumourCard removedCard = DiscardPile.rumourCard.get(0);
-                DiscardPile.rumourCard.remove(removedCard);
-                Game.rumourCard.add(removedCard);
-            }
-        }
-        //Remember winning player
-        round = null;
-    }
-
-    private static boolean verifyScores() {
-        for (Player player : player)
+    private boolean verifyScores() {
+        for (Player player : this.players)
             if (player.getScore() >= 5) return true;
         return false;
     }
 
-    private static void settleTie() {
+    private void settleTie() {
     }
 
-    private static void setupGame() {
+    private void setupGame() { //TODO Add the effects to the cards
         for (CardName cardName : CardName.values()) {
-            rumourCard.add(new RumourCard(cardName));
+            RumourCard rumourCard = new RumourCard(
+                    cardName,
+                    //Witch? effects
+                    switch (cardName) {
+                        case ANGRY_MOB -> null;
+                        case THE_INQUISITION -> null;
+                        case POINTED_HAT -> null;
+                        case HOOKED_NOSE -> null;
+                        case BROOMSTICK -> null;
+                        case WART -> null;
+                        case DUCKING_STOOL -> null;
+                        case CAULDRON -> null;
+                        case EVIL_EYE -> null;
+                        case TOAD -> null;
+                        case BLACK_CAT -> null;
+                        case PET_NEWT -> null;
+                    },
+                    //Hunt! Effects
+                    switch (cardName) {
+                        case ANGRY_MOB -> null;
+                        case THE_INQUISITION -> null;
+                        case POINTED_HAT -> null;
+                        case HOOKED_NOSE -> null;
+                        case BROOMSTICK -> null;
+                        case WART -> null;
+                        case DUCKING_STOOL -> null;
+                        case CAULDRON -> null;
+                        case EVIL_EYE -> null;
+                        case TOAD -> null;
+                        case BLACK_CAT -> null;
+                        case PET_NEWT -> null;
+                    }
+            );
+            this.deck.add(rumourCard);
         }
     }
 
-    private static void wrapUpGame() {
+    private void wrapUpGame() {
         List<Player> winners = new ArrayList<>();
         
-                for (Player player : player) {
+                for (Player player : this.players) {
                     if (player.getScore() >= 5) winners.add(player);
                 }
         
@@ -90,18 +102,22 @@ public abstract class Game {
                 }
     }
 
+    public void sendGameState() {
+    }
+
     public static int randomInInterval(int min, int max) {
         Random random = new Random();
         return random.nextInt(max-min) + min;
     }
 
     public static void main(String[] args) {
-        askForPlayerRepartition();
-        setupGame();
+        Game game = Game.getGame();
+        game.askForPlayerRepartition();
+        game.setupGame();
         do {
-            startRound();
-            endRound();
-        } while (verifyScores());
-        wrapUpGame();
+            game.round.startRound();
+        } while (game.verifyScores());
+        game.wrapUpGame();
     }
+
 }

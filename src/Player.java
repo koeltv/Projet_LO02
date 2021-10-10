@@ -10,7 +10,19 @@ public class Player {
 
     private boolean identityRevealed;
 
-    public List<RumourCard> rumourCard = new ArrayList<RumourCard> ();
+    public final List<CardState> hand = new ArrayList<>();
+
+    Player(final String name) {
+        this.name = name;
+    }
+
+    public void addCardToHand(RumourCard rumourCard) {
+        this.hand.add(new CardState(rumourCard));
+    }
+
+    public void removeCardFromHand(RumourCard rumourCard) {
+        this.hand.removeIf(cardState -> cardState.rumourCard == rumourCard);
+    }
 
     public int getScore() {
         // Automatically generated method. Please delete this comment before entering specific code.
@@ -54,10 +66,6 @@ public class Player {
     }
 
     public void revealIdentity() {
-    }
-
-    Player(final String name) {
-        this.name = name;
     }
 
 }
