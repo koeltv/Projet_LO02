@@ -1,7 +1,7 @@
 <?xml version="1.0" ?>
-<!--GENERATED FILE, PLEASE DO NOT EDIT!!!--><EXT object="Player" version="4">
+<!--GENERATED FILE, PLEASE DO NOT EDIT!!!--><EXT object="User" version="4">
   <OBJECT>
-    <ID name="Player" mc="Standard.Actor" uid="188e0c70-9463-4875-9496-36009300e69c"/>
+    <ID name="User" mc="Standard.Actor" uid="188e0c70-9463-4875-9496-36009300e69c"/>
     <PID name="DGCasUtilisation" mc="Standard.Package" uid="f6da50c7-f607-4ba5-bf81-13175e6cb196"/>
     <ATTRIBUTES>
       <ATT name="IsElementary">false</ATT>
@@ -9,7 +9,7 @@
       <ATT name="IsLeaf">false</ATT>
       <ATT name="IsRoot">false</ATT>
       <ATT name="Visibility">Public</ATT>
-      <ATT name="Name"><![CDATA[Player]]></ATT>
+      <ATT name="Name"><![CDATA[User]]></ATT>
       <ATT name="status">1970354901745664</ATT>
     </ATTRIBUTES>
     <DEPENDENCIES>

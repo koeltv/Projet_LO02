@@ -1,7 +1,7 @@
 <?xml version="1.0" ?>
-<!--GENERATED FILE, PLEASE DO NOT EDIT!!!--><EXT object="Host game" version="4">
+<!--GENERATED FILE, PLEASE DO NOT EDIT!!!--><EXT object="Select Villager" version="4">
   <OBJECT>
-    <ID name="Host game" mc="Standard.UseCase" uid="24960965-7a42-4a91-9c79-e30303861942"/>
+    <ID name="Select Villager" mc="Standard.UseCase" uid="d4f115c3-7fad-46c2-be9f-bcc3e70e8253"/>
     <PID name="DGCasUtilisation" mc="Standard.Package" uid="f6da50c7-f607-4ba5-bf81-13175e6cb196"/>
     <ATTRIBUTES>
       <ATT name="IsElementary">false</ATT>
@@ -9,30 +9,28 @@
       <ATT name="IsLeaf">false</ATT>
       <ATT name="IsRoot">false</ATT>
       <ATT name="Visibility">Public</ATT>
-      <ATT name="Name"><![CDATA[Host game]]></ATT>
+      <ATT name="Name"><![CDATA[Select Villager]]></ATT>
       <ATT name="status">1970354901745664</ATT>
     </ATTRIBUTES>
     <DEPENDENCIES>
-      <COMP relation="Used">
+      <COMP relation="Parent">
         <OBJECT>
-          <ID name="UseCaseDependency" mc="Standard.UseCaseDependency" uid="ce43325c-886d-4b34-ab0c-8f432b8473fd"/>
+          <ID name="Generalization" mc="Standard.Generalization" uid="ea6c1d14-8cc5-41c1-bd61-a231f5bf4748"/>
           <ATTRIBUTES>
-            <ATT name="Name"><![CDATA[UseCaseDependency]]></ATT>
+            <ATT name="Discriminator"></ATT>
+            <ATT name="Name"><![CDATA[Generalization]]></ATT>
             <ATT name="status">1970354901745664</ATT>
           </ATTRIBUTES>
           <DEPENDENCIES>
-            <LINK relation="Target">
-              <ID name="Play" mc="Standard.UseCase" uid="835a4043-d166-4806-8f79-d6b61e74da39"/>
-            </LINK>
-            <LINK relation="Extension">
-              <FOREIGNID name="extend" mc="Infrastructure.Stereotype" uid="00000000-0000-9c48-0000-000000000000"/>
+            <LINK relation="SuperType">
+              <ID name="Select a role" mc="Standard.UseCase" uid="8c75873e-30a8-48e5-8e9b-8c4e9a49ec5f"/>
             </LINK>
           </DEPENDENCIES>
         </OBJECT>
       </COMP>
       <COMP relation="Descriptor">
         <OBJECT>
-          <ID name="" mc="Infrastructure.Note" uid="a6a89d49-599d-4ac5-bfbf-284a493e9fde"/>
+          <ID name="" mc="Infrastructure.Note" uid="47fd79ef-17cb-4c84-96e6-f64df228f5cc"/>
           <ATTRIBUTES>
             <ATT name="Content"><![CDATA[...]]></ATT>
             <ATT name="MimeType"><![CDATA[text/plain]]></ATT>
@@ -46,7 +44,7 @@
           </DEPENDENCIES>
         </OBJECT>
         <OBJECT>
-          <ID name="" mc="Infrastructure.Note" uid="b57f6bec-c452-4b9b-b2ba-2ddb3e1a4db0"/>
+          <ID name="" mc="Infrastructure.Note" uid="616a73bd-b835-469f-a44e-9c083b4c55d6"/>
           <ATTRIBUTES>
             <ATT name="Content"><![CDATA[...]]></ATT>
             <ATT name="MimeType"><![CDATA[text/plain]]></ATT>
@@ -60,7 +58,7 @@
           </DEPENDENCIES>
         </OBJECT>
         <OBJECT>
-          <ID name="" mc="Infrastructure.Note" uid="4736b7d1-32fe-40ed-ac3d-79da7923d716"/>
+          <ID name="" mc="Infrastructure.Note" uid="d1771f26-ae18-49a8-a218-31bcbfa9554c"/>
           <ATTRIBUTES>
             <ATT name="Content"><![CDATA[...]]></ATT>
             <ATT name="MimeType"><![CDATA[text/plain]]></ATT>
@@ -74,7 +72,7 @@
           </DEPENDENCIES>
         </OBJECT>
         <OBJECT>
-          <ID name="" mc="Infrastructure.Note" uid="15ae0ffb-7621-4a65-9d65-8bf9347786c7"/>
+          <ID name="" mc="Infrastructure.Note" uid="ce0ac0f1-4508-4481-92d8-b19e69250751"/>
           <ATTRIBUTES>
             <ATT name="Content"><![CDATA[...]]></ATT>
             <ATT name="MimeType"><![CDATA[text/plain]]></ATT>
@@ -88,7 +86,7 @@
           </DEPENDENCIES>
         </OBJECT>
         <OBJECT>
-          <ID name="" mc="Infrastructure.Note" uid="5d34dee9-26ca-4352-9bfc-c2d3052e6b9e"/>
+          <ID name="" mc="Infrastructure.Note" uid="84262b56-2290-448e-b075-3f719d728c10"/>
           <ATTRIBUTES>
             <ATT name="Content"><![CDATA[...]]></ATT>
             <ATT name="MimeType"><![CDATA[text/plain]]></ATT>
@@ -102,7 +100,7 @@
           </DEPENDENCIES>
         </OBJECT>
         <OBJECT>
-          <ID name="" mc="Infrastructure.Note" uid="8bde40b9-5edd-431d-9a24-d79bdde27b34"/>
+          <ID name="" mc="Infrastructure.Note" uid="d50d0720-a5a5-4991-a91e-dd2d322b32fd"/>
           <ATTRIBUTES>
             <ATT name="Content"><![CDATA[...]]></ATT>
             <ATT name="MimeType"><![CDATA[text/plain]]></ATT>
