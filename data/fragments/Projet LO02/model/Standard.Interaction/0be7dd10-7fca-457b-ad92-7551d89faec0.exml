@@ -2,7 +2,7 @@
 <!--GENERATED FILE, PLEASE DO NOT EDIT!!!--><EXT object="Interaction" version="4">
   <OBJECT>
     <ID name="Interaction" mc="Standard.Interaction" uid="0be7dd10-7fca-457b-ad92-7551d89faec0"/>
-    <PID name="DGSequence2" mc="Standard.Package" uid="a5f27f4f-d557-4ea2-8057-264cf9e938f2"/>
+    <PID name="DGSequence" mc="Standard.Package" uid="a5f27f4f-d557-4ea2-8057-264cf9e938f2"/>
     <ATTRIBUTES>
       <ATT name="IsReentrant">false</ATT>
       <ATT name="Name"><![CDATA[Interaction]]></ATT>
