@@ -8,10 +8,10 @@ public class ChooseNextEffect implements Effect {
             return false;
     }
 
-    public Player chooseTarget(final CardName cardName) {
+    public Player chooseTarget(final CardName cardName) { //TODO Implement
         System.out.println("Choose the next player");
-        Player chosenPlayer;
-        return chosenPlayer;
+//        Player chosenPlayer;
+        return null;
     }
 
 }

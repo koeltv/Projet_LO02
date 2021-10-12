@@ -47,42 +47,64 @@ public class Game extends Observable {
     private void settleTie() {
     }
 
-    private void setupGame() { //TODO Add the effects to the cards
+    private void setupGame() {
         for (CardName cardName : CardName.values()) {
-            RumourCard rumourCard = new RumourCard(
-                    cardName,
-                    //Witch? effects
-                    switch (cardName) {
-                        case ANGRY_MOB -> null;
-                        case THE_INQUISITION -> null;
-                        case POINTED_HAT -> null;
-                        case HOOKED_NOSE -> null;
-                        case BROOMSTICK -> null;
-                        case WART -> null;
-                        case DUCKING_STOOL -> null;
-                        case CAULDRON -> null;
-                        case EVIL_EYE -> null;
-                        case TOAD -> null;
-                        case BLACK_CAT -> null;
-                        case PET_NEWT -> null;
-                    },
-                    //Hunt! Effects
-                    switch (cardName) {
-                        case ANGRY_MOB -> null;
-                        case THE_INQUISITION -> null;
-                        case POINTED_HAT -> null;
-                        case HOOKED_NOSE -> null;
-                        case BROOMSTICK -> null;
-                        case WART -> null;
-                        case DUCKING_STOOL -> null;
-                        case CAULDRON -> null;
-                        case EVIL_EYE -> null;
-                        case TOAD -> null;
-                        case BLACK_CAT -> null;
-                        case PET_NEWT -> null;
-                    }
-            );
-            this.deck.add(rumourCard);
+
+            List<Effect> witchEffects = new ArrayList<>();
+            List<Effect> huntEffect = new ArrayList<>();
+
+            //Witch? effects
+            switch (cardName) {
+                case THE_INQUISITION -> {
+                    witchEffects.add(new DiscardFromHandEffect());
+                    witchEffects.add(new TakeNextTurnEffect());
+                }
+                case POINTED_HAT -> {
+                    witchEffects.add(new TakeRevealedCardEffect());
+                    witchEffects.add(new TakeNextTurnEffect());
+                }
+                case HOOKED_NOSE -> {
+                    witchEffects.add(new TakeFromAccusatorHandEffect());
+                    witchEffects.add(new TakeNextTurnEffect());
+                }
+                case DUCKING_STOOL -> witchEffects.add(new ChooseNextEffect());
+                case CAULDRON -> {
+                    witchEffects.add(new AccusatorDiscardRandomEffect());
+                    witchEffects.add(new TakeNextTurnEffect());
+                }
+                case EVIL_EYE -> {
+                    witchEffects.add(new ChooseNextEffect());
+                    witchEffects.add(new NextMustAccuseOtherEffect());
+                }
+                default -> witchEffects.add(new TakeNextTurnEffect());
+            }
+            //Hunt! Effects
+            switch (cardName) {
+                case ANGRY_MOB -> huntEffect.add(new RevealAnotherIdentityEffect());
+                case THE_INQUISITION -> {
+                    huntEffect.add(new ChooseNextEffect());
+                    huntEffect.add(new SecretlyReadIdentityEffect());
+                }
+                case POINTED_HAT -> {
+                    huntEffect.add(new TakeRevealedCardEffect());
+                    huntEffect.add(new ChooseNextEffect());
+                }
+                case HOOKED_NOSE -> {
+                    huntEffect.add(new ChooseNextEffect());
+                    huntEffect.add(new TakeRandomCardFromNextEffect());
+                }
+                case BROOMSTICK, WART -> huntEffect.add(new ChooseNextEffect());
+                case DUCKING_STOOL -> huntEffect.add(new RevealOrDiscardEffect());
+                case CAULDRON, TOAD -> huntEffect.add(new RevealOwnIdentityEffect());
+                case EVIL_EYE -> {
+                    huntEffect.add(new ChooseNextEffect());
+                    huntEffect.add(new NextMustAccuseOtherEffect());
+                }
+                case BLACK_CAT -> huntEffect.add(new DiscardedToHandEffect());
+                case PET_NEWT -> huntEffect.add(new TakeRevealedFromOtherEffect());
+            }
+
+            this.deck.add(new RumourCard(cardName, witchEffects, huntEffect));
         }
     }
 

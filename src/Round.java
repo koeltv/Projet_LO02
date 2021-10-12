@@ -74,20 +74,15 @@ public class Round {
     }
 
     private void distributeRumourCards() {
-        int numberOfCardsPerPlayer = switch (Game.getGame().players.size()) {
-            case 3 -> 4;
-            case 4 -> 3;
-            case 5 -> {
-                for (int i = 0; i < 2; i++) {
-                    int index = Game.randomInInterval(0, Game.getGame().deck.size());
-                    this.discardPile.add(Game.getGame().deck.get(index));
-                    Game.getGame().deck.remove(index);
-                }
-                yield 2;
+        int nbOfPlayers = Game.getGame().players.size();
+        if (nbOfPlayers == 5) {
+            for (int i = 0; i < 2; i++) {
+                int index = Game.randomInInterval(0, Game.getGame().deck.size());
+                this.discardPile.add(Game.getGame().deck.get(index));
+                Game.getGame().deck.remove(index);
             }
-            case 6 -> 2;
-            default -> throw new IllegalStateException("Unexpected value: " + Game.getGame().players.size());
-        };
+        }
+        int numberOfCardsPerPlayer = nbOfPlayers == 6 ? 2 : 7 - nbOfPlayers;
 
         for (Player player : Game.getGame().players) {
             for (int i = 0; i < numberOfCardsPerPlayer; i++) {

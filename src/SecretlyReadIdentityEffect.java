@@ -1,13 +1,13 @@
 
 public class SecretlyReadIdentityEffect implements Effect {
-    public boolean applyEffect() {
+    public boolean applyEffect(Player cardUser, Player target) {
         // TODO Auto-generated return
         return false;
     }
 
-    public boolean chooseTarget(final CardName cardName) {
+    public Player chooseTarget(final CardName cardName) {
         // TODO Auto-generated return
-        return false;
+        return null;
     }
 
 }
