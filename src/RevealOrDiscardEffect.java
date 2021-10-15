@@ -1,6 +1,6 @@
 
 public class RevealOrDiscardEffect implements Effect {
-    public boolean applyEffect(Player cardUser, Player target) {
+    public boolean applyEffect(final Player cardUser, final Player target) {
         // TODO Auto-generated return
         return false;
     }

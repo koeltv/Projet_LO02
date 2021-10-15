@@ -1,11 +1,12 @@
 
 public class TakeNextTurnEffect implements Effect {
-    public boolean applyEffect(Player cardUser, Player target) {
+    public boolean applyEffect(final Player cardUser, final Player target) {
         Game.getGame().round.setNextPlayer(cardUser);
         return true;
     }
 
     public Player chooseTarget(final CardName cardName) {
+        // TODO Auto-generated return
         return null;
     }
 

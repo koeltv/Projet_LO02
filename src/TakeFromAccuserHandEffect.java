@@ -1,6 +1,6 @@
 
-public class TakeFromAccusatorHandEffect implements Effect {
-    public boolean applyEffect(Player cardUser, Player target) {
+public class TakeFromAccuserHandEffect implements Effect {
+    public boolean applyEffect(final Player cardUser, final Player target) {
         // TODO Auto-generated return
         return false;
     }

@@ -13,32 +13,37 @@ public class Round {
 
     private Player nextPlayer;
 
-    public final List<RumourCard> discardPile = new ArrayList<>();
+    public List<RumourCard> discardPile = new ArrayList<>();
+
+    public List<IdentityCard> activePlayers = new ArrayList<>();
 
     private Round() {}
 
     public static Round getRound() {
-        // Automatically generated method. Please delete this comment before entering specific code.
         return round;
     }
 
     public static int getNumberOfRound() {
-        // Automatically generated method. Please delete this comment before entering specific code.
         return numberOfRound;
     }
 
+    public static int getNumberOfNotRevealedPlayers() {
+        return numberOfNotRevealedPlayers;
+    }
+
+    public static void setNumberOfNotRevealedPlayers(int value) {
+        numberOfNotRevealedPlayers = value;
+    }
+
     public static Player getCurrentPlayer() {
-        // Automatically generated method. Please delete this comment before entering specific code.
         return currentPlayer;
     }
 
     public Player getNextPlayer() {
-        // Automatically generated method. Please delete this comment before entering specific code.
         return this.nextPlayer;
     }
 
-    public void setNextPlayer(final Player value) {
-        // Automatically generated method. Please delete this comment before entering specific code.
+    public void setNextPlayer(Player value) {
         this.nextPlayer = value;
     }
 
@@ -48,13 +53,13 @@ public class Round {
         //Choosing action
         if (Round.getCurrentPlayer().hand.size() < 1) {
             System.out.println("You don't have any card to play");
-        } else {
-            System.out.println("What do you want to do ? (0 to Accuse someone, 1 to Use a card");
+        } else { //TODO Take care of IA
+            System.out.println(Round.getCurrentPlayer().getName() + ", what do you want to do ? (0 to Accuse someone, 1 to Use a card)");
             action = scanner.nextInt();
         }
         //Executing action
         if (action > 0) { //Use card action
-            boolean cardHasBeenUsedCorrectly = false;
+            boolean cardHasBeenUsedCorrectly;
             if (Round.getCurrentPlayer().hand.size() > 1) { //If the player has at least 2 cards
                 do {
                     System.out.println("Which card do you want to use");
@@ -75,15 +80,19 @@ public class Round {
 
     private void distributeRumourCards() {
         int nbOfPlayers = Game.getGame().players.size();
-        if (nbOfPlayers == 5) {
-            for (int i = 0; i < 2; i++) {
+        int nbOfExcessCards = CardName.values().length % nbOfPlayers;
+
+        //Take care of excess cards
+        if (nbOfExcessCards != 0) {
+            for (int i = 0; i < nbOfExcessCards; i++) {
                 int index = Game.randomInInterval(0, Game.getGame().deck.size());
                 this.discardPile.add(Game.getGame().deck.get(index));
                 Game.getGame().deck.remove(index);
             }
         }
-        int numberOfCardsPerPlayer = nbOfPlayers == 6 ? 2 : 7 - nbOfPlayers;
 
+        //Distribute the rest equally
+        int numberOfCardsPerPlayer = CardName.values().length / nbOfPlayers;
         for (Player player : Game.getGame().players) {
             for (int i = 0; i < numberOfCardsPerPlayer; i++) {
                 int index = Game.randomInInterval(0, Game.getGame().deck.size());
@@ -94,11 +103,11 @@ public class Round {
     }
 
     private void askPlayersForIdentity() {
-        for (Player player : Game.getGame().players) {
-            if (!(player instanceof AI)) {
-                System.out.println(player.getName() + ", type 0 for villager and 1 for witch");
+        for (IdentityCard identityCard : Game.getGame().round.activePlayers) {
+            if (!(identityCard.player instanceof AI)) {
+                System.out.println(identityCard.player.getName() + ", type 0 for villager and 1 for witch");
                 Scanner scanner = new Scanner(System.in);
-                player.setWitch(scanner.nextInt() > 0);
+                identityCard.setWitch(scanner.nextInt() > 0);
             } else {
                 //TODO Use AI Strategy
             }
@@ -106,20 +115,13 @@ public class Round {
     }
 
     private void selectFirstPlayer() {
-        if (currentPlayer == null) currentPlayer = Game.getGame().players.get(Game.randomInInterval(0, Game.getGame().players.size()));
-    }
-
-    public static int getNumberOfNotRevealedPlayers() {
-        // Automatically generated method. Please delete this comment before entering specific code.
-        return numberOfNotRevealedPlayers;
-    }
-
-    public static void setNumberOfNotRevealedPlayers(final int value) {
-        // Automatically generated method. Please delete this comment before entering specific code.
-        numberOfNotRevealedPlayers = value;
+        Round.currentPlayer = Game.getGame().players.get(Game.randomInInterval(0, Game.getGame().players.size()));
     }
 
     public void startRound() {
+        for (Player player: Game.getGame().players) {
+            round.activePlayers.add(new IdentityCard(player));
+        }
         if (currentPlayer == null) selectFirstPlayer();
         this.distributeRumourCards();
         this.askPlayersForIdentity();

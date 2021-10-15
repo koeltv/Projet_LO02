@@ -4,17 +4,15 @@ public class CardState {
 
     private boolean revealed;
 
-    CardState(RumourCard rumourCard) {
+    public CardState(RumourCard rumourCard) {
         this.rumourCard = rumourCard;
     }
 
     public boolean isRevealed() {
-        // Automatically generated method. Please delete this comment before entering specific code.
         return this.revealed;
     }
 
-    public void setRevealed(final boolean value) {
-        // Automatically generated method. Please delete this comment before entering specific code.
+    public void setRevealed(boolean value) {
         this.revealed = value;
     }
 

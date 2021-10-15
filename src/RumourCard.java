@@ -1,8 +1,7 @@
+import java.util.ArrayList;
 import java.util.List;
 
 public class RumourCard {
-    private static int numberOfCards;
-
     private final CardName cardName;
 
     private final List<Effect> witchEffects;
@@ -13,17 +12,10 @@ public class RumourCard {
         this.cardName = name;
         this.witchEffects = witchEffects;
         this.huntEffects = huntEffects;
-        numberOfCards++;
     }
 
     public CardName getCardName() {
-        // Automatically generated method. Please delete this comment before entering specific code.
         return this.cardName;
-    }
-
-    public static int getNumberOfCards() {
-        // Automatically generated method. Please delete this comment before entering specific code.
-        return numberOfCards;
     }
 
     public boolean useCard(Player cardUser) {

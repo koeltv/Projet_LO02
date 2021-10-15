@@ -1,9 +1,6 @@
 
 public class Agressive implements Strategy {
-    public void accuse() {
-    }
-
-    public void revealRumorCard() {
+    public void use() {
     }
 
 }

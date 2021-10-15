@@ -1,6 +1,6 @@
 
 public class ChooseNextEffect implements Effect {
-    public boolean applyEffect(Player cardUser, Player target) {
+    public boolean applyEffect(final Player cardUser, final Player target) {
         if (cardUser != target) {
             Game.getGame().round.setNextPlayer(target);
             return true;
@@ -8,7 +8,7 @@ public class ChooseNextEffect implements Effect {
             return false;
     }
 
-    public Player chooseTarget(final CardName cardName) { //TODO Implement
+    public Player chooseTarget(final CardName cardName) { //TODO
         System.out.println("Choose the next player");
 //        Player chosenPlayer;
         return null;

@@ -1,5 +1,5 @@
 
-public class AccusatorDiscardRandomEffect implements Effect {
+public class AccuserDiscardRandomEffect implements Effect {
     public boolean applyEffect(Player cardUser, Player target) {
         if (target.hand.size() > 0) {
             RumourCard chosenCard = target.hand.get(Game.randomInInterval(0, target.hand.size())).rumourCard;
@@ -10,7 +10,7 @@ public class AccusatorDiscardRandomEffect implements Effect {
             return false;
     }
 
-    public Player chooseTarget(final CardName cardName) {
+    public Player chooseTarget(CardName cardName) {
         return Round.getCurrentPlayer();
     }
 

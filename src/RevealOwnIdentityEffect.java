@@ -1,9 +1,9 @@
 
 public class RevealOwnIdentityEffect implements Effect {
-    public boolean applyEffect(Player cardUser, Player target) {
-        cardUser.setIdentityRevealed(true);
+    public boolean applyEffect(final Player cardUser, final Player target) {
+        cardUser.identityCard.setIdentityRevealed(true);
         System.out.print("The player is a ");
-        if (cardUser.isWitch()) {
+        if (cardUser.identityCard.isWitch()) {
             System.out.print("witch");
         } else {
             System.out.print("villager");
@@ -12,6 +12,7 @@ public class RevealOwnIdentityEffect implements Effect {
     }
 
     public Player chooseTarget(final CardName cardName) {
+        // TODO Auto-generated return
         return null;
     }
 

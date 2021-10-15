@@ -15,36 +15,7 @@ public class Game extends Observable {
     private Game() {}
 
     public static Game getGame() {
-        // Automatically generated method. Please delete this comment before entering specific code.
         return game;
-    }
-
-    private void askForPlayerRepartition() {
-        Scanner sc = new Scanner(System.in);
-        int nbPlayers, nbAIs;
-        do {
-            System.out.println("Number of players ?");
-            nbPlayers = sc.nextInt();
-            System.out.println("Number of AI ?");
-            nbAIs = sc.nextInt();
-        } while (nbPlayers + nbAIs < 3 || nbPlayers + nbAIs > 6);
-        
-                for (int i = 0; i < nbPlayers; i++) {
-                    System.out.println("Name of player " + (i+1) + " ?");
-                    this.players.add(i, new Player(sc.next()));
-                }
-                for (int i = nbPlayers; i < nbPlayers + nbAIs; i++) {
-                    this.players.add(i, new AI());
-                }
-    }
-
-    private boolean verifyScores() {
-        for (Player player : this.players)
-            if (player.getScore() >= 5) return true;
-        return false;
-    }
-
-    private void settleTie() {
     }
 
     private void setupGame() {
@@ -64,12 +35,12 @@ public class Game extends Observable {
                     witchEffects.add(new TakeNextTurnEffect());
                 }
                 case HOOKED_NOSE -> {
-                    witchEffects.add(new TakeFromAccusatorHandEffect());
+                    witchEffects.add(new TakeFromAccuserHandEffect());
                     witchEffects.add(new TakeNextTurnEffect());
                 }
                 case DUCKING_STOOL -> witchEffects.add(new ChooseNextEffect());
                 case CAULDRON -> {
-                    witchEffects.add(new AccusatorDiscardRandomEffect());
+                    witchEffects.add(new AccuserDiscardRandomEffect());
                     witchEffects.add(new TakeNextTurnEffect());
                 }
                 case EVIL_EYE -> {
@@ -110,18 +81,46 @@ public class Game extends Observable {
 
     private void wrapUpGame() {
         List<Player> winners = new ArrayList<>();
-        
-                for (Player player : this.players) {
-                    if (player.getScore() >= 5) winners.add(player);
-                }
-        
-                if (winners.size() > 1) {
-                    settleTie();
-                } else if (winners.size() == 1){
-                    System.out.println("Congratulations " + winners.get(0) + ", you won this game !");
-                } else {
-                    System.out.println("No winner ? Oh wait...");
-                }
+
+        for (Player player : this.players) {
+            if (player.getScore() >= 5) winners.add(player);
+        }
+
+        if (winners.size() > 1) {
+            settleTie();
+        } else if (winners.size() == 1){
+            System.out.println("Congratulations " + winners.get(0) + ", you won this game !");
+        } else {
+            System.out.println("No winner ? Oh wait...");
+        }
+    }
+
+    private void askForPlayerRepartition() {
+        Scanner sc = new Scanner(System.in);
+        int nbPlayers, nbAIs;
+        do {
+            System.out.println("Number of players ?");
+            nbPlayers = sc.nextInt();
+            System.out.println("Number of AI ?");
+            nbAIs = sc.nextInt();
+        } while (nbPlayers + nbAIs < 3 || nbPlayers + nbAIs > 6);
+
+        for (int i = 0; i < nbPlayers; i++) {
+            System.out.println("Name of player " + (i+1) + " ?");
+            this.players.add(i, new Player(sc.next()));
+        }
+        for (int i = nbPlayers; i < nbPlayers + nbAIs; i++) {
+            this.players.add(i, new AI());
+        }
+    }
+
+    private boolean verifyScores() {
+        for (Player player : this.players)
+            if (player.getScore() >= 5) return true;
+        return false;
+    }
+
+    private void settleTie() {
     }
 
     public void sendGameState() {

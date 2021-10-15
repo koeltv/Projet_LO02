@@ -11,5 +11,5 @@ public enum CardName {
     EVIL_EYE,
     TOAD,
     BLACK_CAT,
-    PET_NEWT;
+    PET_NEWT
 }
