@@ -73,7 +73,7 @@
         <OBJECT>
           <ID name="" mc="Standard.ExecutionOccurenceSpecification" uid="c4d9fc2e-d990-4413-8fbb-4e356183b54a"/>
           <ATTRIBUTES>
-            <ATT name="LineNumber">819</ATT>
+            <ATT name="LineNumber">857</ATT>
             <ATT name="Name"></ATT>
             <ATT name="status">1970354901745664</ATT>
           </ATTRIBUTES>
@@ -85,7 +85,7 @@
                   <ATT name="Argument"></ATT>
                   <ATT name="KindOfMessage">CompleteKind</ATT>
                   <ATT name="SortOfMessage">ReturnMessage</ATT>
-                  <ATT name="Sequence"><![CDATA[22]]></ATT>
+                  <ATT name="Sequence"><![CDATA[24]]></ATT>
                   <ATT name="Name"></ATT>
                   <ATT name="status">1970354901745664</ATT>
                 </ATTRIBUTES>
@@ -128,7 +128,7 @@
         <OBJECT>
           <ID name="" mc="Standard.ExecutionOccurenceSpecification" uid="52f72b95-982b-4a86-b19c-ea295ef0ebbf"/>
           <ATTRIBUTES>
-            <ATT name="LineNumber">819</ATT>
+            <ATT name="LineNumber">857</ATT>
             <ATT name="Name"></ATT>
             <ATT name="status">1970354901745664</ATT>
           </ATTRIBUTES>
@@ -368,7 +368,7 @@
         <OBJECT>
           <ID name="" mc="Standard.ExecutionOccurenceSpecification" uid="fae16f21-0c28-4124-8d1f-0fb5e19da8c8"/>
           <ATTRIBUTES>
-            <ATT name="LineNumber">801</ATT>
+            <ATT name="LineNumber">839</ATT>
             <ATT name="Name"></ATT>
             <ATT name="status">1970354901745664</ATT>
           </ATTRIBUTES>
@@ -380,7 +380,7 @@
                   <ATT name="Argument"></ATT>
                   <ATT name="KindOfMessage">CompleteKind</ATT>
                   <ATT name="SortOfMessage">ReturnMessage</ATT>
-                  <ATT name="Sequence"><![CDATA[21]]></ATT>
+                  <ATT name="Sequence"><![CDATA[23]]></ATT>
                   <ATT name="Name"></ATT>
                   <ATT name="status">1970354901745664</ATT>
                 </ATTRIBUTES>
@@ -423,7 +423,7 @@
         <OBJECT>
           <ID name="" mc="Standard.ExecutionOccurenceSpecification" uid="ebcd4c2b-9a6a-47e3-893b-2c69fb6ecd9f"/>
           <ATTRIBUTES>
-            <ATT name="LineNumber">801</ATT>
+            <ATT name="LineNumber">839</ATT>
             <ATT name="Name"></ATT>
             <ATT name="status">1970354901745664</ATT>
           </ATTRIBUTES>
@@ -449,7 +449,7 @@
                 <ID name="" mc="Standard.InteractionOperand" uid="c7a96648-36d0-4506-9a1d-59577f44a98b"/>
                 <ATTRIBUTES>
                   <ATT name="Guard"><![CDATA[nbOfNotRevealedPlayers > 1]]></ATT>
-                  <ATT name="EndLineNumber">830</ATT>
+                  <ATT name="EndLineNumber">868</ATT>
                   <ATT name="LineNumber">330</ATT>
                   <ATT name="Name"></ATT>
                   <ATT name="status">1970354901745664</ATT>
@@ -539,7 +539,7 @@ J1 accuse J2 qui révèle la carte "Angry Mob", appliquant son effet witch? et p
         <OBJECT>
           <ID name="" mc="Standard.ExecutionOccurenceSpecification" uid="2bf4f27d-6363-4ab1-8e2d-30146dbf7062"/>
           <ATTRIBUTES>
-            <ATT name="LineNumber">740</ATT>
+            <ATT name="LineNumber">778</ATT>
             <ATT name="Name"></ATT>
             <ATT name="status">1970354901745664</ATT>
           </ATTRIBUTES>
@@ -551,7 +551,7 @@ J1 accuse J2 qui révèle la carte "Angry Mob", appliquant son effet witch? et p
                   <ATT name="Argument"></ATT>
                   <ATT name="KindOfMessage">CompleteKind</ATT>
                   <ATT name="SortOfMessage">ReturnMessage</ATT>
-                  <ATT name="Sequence"><![CDATA[20]]></ATT>
+                  <ATT name="Sequence"><![CDATA[22]]></ATT>
                   <ATT name="Name"></ATT>
                   <ATT name="status">1970354901745664</ATT>
                 </ATTRIBUTES>
@@ -594,7 +594,7 @@ J1 accuse J2 qui révèle la carte "Angry Mob", appliquant son effet witch? et p
         <OBJECT>
           <ID name="" mc="Standard.ExecutionOccurenceSpecification" uid="59330cec-bf08-41ab-aeab-65d3b076984f"/>
           <ATTRIBUTES>
-            <ATT name="LineNumber">740</ATT>
+            <ATT name="LineNumber">778</ATT>
             <ATT name="Name"></ATT>
             <ATT name="status">1970354901745664</ATT>
           </ATTRIBUTES>
@@ -609,7 +609,7 @@ J1 accuse J2 qui révèle la carte "Angry Mob", appliquant son effet witch? et p
         <OBJECT>
           <ID name="" mc="Standard.ExecutionOccurenceSpecification" uid="c658768b-b2f6-4d6a-9b5f-0b66d6a157cc"/>
           <ATTRIBUTES>
-            <ATT name="LineNumber">440</ATT>
+            <ATT name="LineNumber">421</ATT>
             <ATT name="Name"></ATT>
             <ATT name="status">1970354901745664</ATT>
           </ATTRIBUTES>
@@ -633,7 +633,7 @@ J1 accuse J2 qui révèle la carte "Angry Mob", appliquant son effet witch? et p
                   </LINK>
                   <LINK relation="Invoked">
                     <REFOBJ>
-                      <ID name="accuse" mc="Standard.Operation" uid="b3b6e18f-52ca-473d-98c7-c9a9ba3df0d3"/>
+                      <ID name="play" mc="Standard.Operation" uid="d1e269cc-0614-405f-bb1d-d66e965d149e"/>
                     </REFOBJ>
                   </LINK>
                 </DEPENDENCIES>
@@ -649,7 +649,7 @@ J1 accuse J2 qui révèle la carte "Angry Mob", appliquant son effet witch? et p
         <OBJECT>
           <ID name="" mc="Standard.ExecutionOccurenceSpecification" uid="99903920-909d-4e5f-a00b-d713b56d80a3"/>
           <ATTRIBUTES>
-            <ATT name="LineNumber">440</ATT>
+            <ATT name="LineNumber">421</ATT>
             <ATT name="Name"></ATT>
             <ATT name="status">1970354901745664</ATT>
           </ATTRIBUTES>
@@ -669,7 +669,7 @@ J1 accuse J2 qui révèle la carte "Angry Mob", appliquant son effet witch? et p
         <OBJECT>
           <ID name="" mc="Standard.ExecutionOccurenceSpecification" uid="9149e90e-458c-43d0-b132-542de7306999"/>
           <ATTRIBUTES>
-            <ATT name="LineNumber">720</ATT>
+            <ATT name="LineNumber">739</ATT>
             <ATT name="Name"></ATT>
             <ATT name="status">1970354901745664</ATT>
           </ATTRIBUTES>
@@ -681,7 +681,7 @@ J1 accuse J2 qui révèle la carte "Angry Mob", appliquant son effet witch? et p
                   <ATT name="Argument"></ATT>
                   <ATT name="KindOfMessage">CompleteKind</ATT>
                   <ATT name="SortOfMessage">ReturnMessage</ATT>
-                  <ATT name="Sequence"><![CDATA[19]]></ATT>
+                  <ATT name="Sequence"><![CDATA[21]]></ATT>
                   <ATT name="Name"></ATT>
                   <ATT name="status">1970354901745664</ATT>
                 </ATTRIBUTES>
@@ -704,7 +704,7 @@ J1 accuse J2 qui révèle la carte "Angry Mob", appliquant son effet witch? et p
         <OBJECT>
           <ID name="" mc="Standard.ExecutionSpecification" uid="fe6ddeba-9ce3-449c-a16d-f73c1f36ceca"/>
           <ATTRIBUTES>
-            <ATT name="LineNumber">440</ATT>
+            <ATT name="LineNumber">421</ATT>
             <ATT name="Name"></ATT>
             <ATT name="status">1970354901745664</ATT>
           </ATTRIBUTES>
@@ -724,7 +724,7 @@ J1 accuse J2 qui révèle la carte "Angry Mob", appliquant son effet witch? et p
         <OBJECT>
           <ID name="" mc="Standard.ExecutionOccurenceSpecification" uid="a10aff2f-5856-4119-8740-d8b541bd1c19"/>
           <ATTRIBUTES>
-            <ATT name="LineNumber">720</ATT>
+            <ATT name="LineNumber">739</ATT>
             <ATT name="Name"></ATT>
             <ATT name="status">1970354901745664</ATT>
           </ATTRIBUTES>
@@ -739,7 +739,7 @@ J1 accuse J2 qui révèle la carte "Angry Mob", appliquant son effet witch? et p
         <OBJECT>
           <ID name="" mc="Standard.ExecutionOccurenceSpecification" uid="648de517-0d5d-43b2-a7f0-4e9806cfebba"/>
           <ATTRIBUTES>
-            <ATT name="LineNumber">459</ATT>
+            <ATT name="LineNumber">479</ATT>
             <ATT name="Name"></ATT>
             <ATT name="status">1970354901745664</ATT>
           </ATTRIBUTES>
@@ -751,7 +751,7 @@ J1 accuse J2 qui révèle la carte "Angry Mob", appliquant son effet witch? et p
                   <ATT name="Argument"></ATT>
                   <ATT name="KindOfMessage">CompleteKind</ATT>
                   <ATT name="SortOfMessage">SyncCall</ATT>
-                  <ATT name="Sequence"><![CDATA[8]]></ATT>
+                  <ATT name="Sequence"><![CDATA[9]]></ATT>
                   <ATT name="Name"><![CDATA[revealRumorCard]]></ATT>
                   <ATT name="status">1970354901745664</ATT>
                 </ATTRIBUTES>
@@ -779,7 +779,7 @@ J1 accuse J2 qui révèle la carte "Angry Mob", appliquant son effet witch? et p
         <OBJECT>
           <ID name="" mc="Standard.ExecutionOccurenceSpecification" uid="1e4e5d44-0ec4-4498-acf6-4fa7254fc7bd"/>
           <ATTRIBUTES>
-            <ATT name="LineNumber">459</ATT>
+            <ATT name="LineNumber">479</ATT>
             <ATT name="Name"></ATT>
             <ATT name="status">1970354901745664</ATT>
           </ATTRIBUTES>
@@ -799,7 +799,7 @@ J1 accuse J2 qui révèle la carte "Angry Mob", appliquant son effet witch? et p
         <OBJECT>
           <ID name="" mc="Standard.ExecutionOccurenceSpecification" uid="aa87afad-8a11-4dad-b73a-01d8aab036e3"/>
           <ATTRIBUTES>
-            <ATT name="LineNumber">700</ATT>
+            <ATT name="LineNumber">729</ATT>
             <ATT name="Name"></ATT>
             <ATT name="status">1970354901745664</ATT>
           </ATTRIBUTES>
@@ -811,7 +811,7 @@ J1 accuse J2 qui révèle la carte "Angry Mob", appliquant son effet witch? et p
                   <ATT name="Argument"></ATT>
                   <ATT name="KindOfMessage">CompleteKind</ATT>
                   <ATT name="SortOfMessage">ReturnMessage</ATT>
-                  <ATT name="Sequence"><![CDATA[18]]></ATT>
+                  <ATT name="Sequence"><![CDATA[20]]></ATT>
                   <ATT name="Name"></ATT>
                   <ATT name="status">1970354901745664</ATT>
                 </ATTRIBUTES>
@@ -834,7 +834,7 @@ J1 accuse J2 qui révèle la carte "Angry Mob", appliquant son effet witch? et p
         <OBJECT>
           <ID name="" mc="Standard.ExecutionSpecification" uid="f264ae5e-b1d5-451f-939f-c05891ac4db0"/>
           <ATTRIBUTES>
-            <ATT name="LineNumber">459</ATT>
+            <ATT name="LineNumber">479</ATT>
             <ATT name="Name"></ATT>
             <ATT name="status">1970354901745664</ATT>
           </ATTRIBUTES>
@@ -854,7 +854,7 @@ J1 accuse J2 qui révèle la carte "Angry Mob", appliquant son effet witch? et p
         <OBJECT>
           <ID name="" mc="Standard.ExecutionOccurenceSpecification" uid="b66ed896-350e-47c6-958b-871f5d676191"/>
           <ATTRIBUTES>
-            <ATT name="LineNumber">700</ATT>
+            <ATT name="LineNumber">729</ATT>
             <ATT name="Name"></ATT>
             <ATT name="status">1970354901745664</ATT>
           </ATTRIBUTES>
@@ -869,7 +869,7 @@ J1 accuse J2 qui révèle la carte "Angry Mob", appliquant son effet witch? et p
         <OBJECT>
           <ID name="" mc="Standard.ExecutionOccurenceSpecification" uid="dc18f667-81b8-437a-80cb-3d390255c098"/>
           <ATTRIBUTES>
-            <ATT name="LineNumber">472</ATT>
+            <ATT name="LineNumber">512</ATT>
             <ATT name="Name"></ATT>
             <ATT name="status">1970354901745664</ATT>
           </ATTRIBUTES>
@@ -881,7 +881,7 @@ J1 accuse J2 qui révèle la carte "Angry Mob", appliquant son effet witch? et p
                   <ATT name="Argument"></ATT>
                   <ATT name="KindOfMessage">CompleteKind</ATT>
                   <ATT name="SortOfMessage">SyncCall</ATT>
-                  <ATT name="Sequence"><![CDATA[9]]></ATT>
+                  <ATT name="Sequence"><![CDATA[11]]></ATT>
                   <ATT name="Name"><![CDATA[useCard]]></ATT>
                   <ATT name="status">1970354901745664</ATT>
                 </ATTRIBUTES>
@@ -909,7 +909,7 @@ J1 accuse J2 qui révèle la carte "Angry Mob", appliquant son effet witch? et p
         <OBJECT>
           <ID name="" mc="Standard.ExecutionOccurenceSpecification" uid="b08d2840-b4c2-4c64-a74f-44f981d54ab9"/>
           <ATTRIBUTES>
-            <ATT name="LineNumber">472</ATT>
+            <ATT name="LineNumber">512</ATT>
             <ATT name="Name"></ATT>
             <ATT name="status">1970354901745664</ATT>
           </ATTRIBUTES>
@@ -929,7 +929,7 @@ J1 accuse J2 qui révèle la carte "Angry Mob", appliquant son effet witch? et p
         <OBJECT>
           <ID name="" mc="Standard.ExecutionOccurenceSpecification" uid="924c4abe-3c83-41f6-93c9-b3ca6f72ee0a"/>
           <ATTRIBUTES>
-            <ATT name="LineNumber">680</ATT>
+            <ATT name="LineNumber">720</ATT>
             <ATT name="Name"></ATT>
             <ATT name="status">1970354901745664</ATT>
           </ATTRIBUTES>
@@ -941,7 +941,7 @@ J1 accuse J2 qui révèle la carte "Angry Mob", appliquant son effet witch? et p
                   <ATT name="Argument"></ATT>
                   <ATT name="KindOfMessage">CompleteKind</ATT>
                   <ATT name="SortOfMessage">ReturnMessage</ATT>
-                  <ATT name="Sequence"><![CDATA[17]]></ATT>
+                  <ATT name="Sequence"><![CDATA[19]]></ATT>
                   <ATT name="Name"></ATT>
                   <ATT name="status">1970354901745664</ATT>
                 </ATTRIBUTES>
@@ -964,7 +964,7 @@ J1 accuse J2 qui révèle la carte "Angry Mob", appliquant son effet witch? et p
         <OBJECT>
           <ID name="" mc="Standard.ExecutionSpecification" uid="404a216c-c802-4f50-918e-bb64cf2b6399"/>
           <ATTRIBUTES>
-            <ATT name="LineNumber">472</ATT>
+            <ATT name="LineNumber">512</ATT>
             <ATT name="Name"></ATT>
             <ATT name="status">1970354901745664</ATT>
           </ATTRIBUTES>
@@ -984,7 +984,7 @@ J1 accuse J2 qui révèle la carte "Angry Mob", appliquant son effet witch? et p
         <OBJECT>
           <ID name="" mc="Standard.ExecutionOccurenceSpecification" uid="adc5bc7d-a49b-4310-8149-68d3bfd4fc1f"/>
           <ATTRIBUTES>
-            <ATT name="LineNumber">680</ATT>
+            <ATT name="LineNumber">720</ATT>
             <ATT name="Name"></ATT>
             <ATT name="status">1970354901745664</ATT>
           </ATTRIBUTES>
@@ -999,7 +999,7 @@ J1 accuse J2 qui révèle la carte "Angry Mob", appliquant son effet witch? et p
         <OBJECT>
           <ID name="" mc="Standard.ExecutionOccurenceSpecification" uid="829f2aa8-839f-4c0a-9214-02b3878633da"/>
           <ATTRIBUTES>
-            <ATT name="LineNumber">487</ATT>
+            <ATT name="LineNumber">525</ATT>
             <ATT name="Name"></ATT>
             <ATT name="status">1970354901745664</ATT>
           </ATTRIBUTES>
@@ -1011,7 +1011,7 @@ J1 accuse J2 qui révèle la carte "Angry Mob", appliquant son effet witch? et p
                   <ATT name="Argument"></ATT>
                   <ATT name="KindOfMessage">CompleteKind</ATT>
                   <ATT name="SortOfMessage">SyncCall</ATT>
-                  <ATT name="Sequence"><![CDATA[10]]></ATT>
+                  <ATT name="Sequence"><![CDATA[12]]></ATT>
                   <ATT name="Name"><![CDATA[applyWitchEffects]]></ATT>
                   <ATT name="status">1970354901745664</ATT>
                 </ATTRIBUTES>
@@ -1039,7 +1039,7 @@ J1 accuse J2 qui révèle la carte "Angry Mob", appliquant son effet witch? et p
         <OBJECT>
           <ID name="" mc="Standard.ExecutionOccurenceSpecification" uid="150f33a6-4424-4fbe-bf3f-995316d850a5"/>
           <ATTRIBUTES>
-            <ATT name="LineNumber">511</ATT>
+            <ATT name="LineNumber">549</ATT>
             <ATT name="Name"></ATT>
             <ATT name="status">1970354901745664</ATT>
           </ATTRIBUTES>
@@ -1059,7 +1059,7 @@ J1 accuse J2 qui révèle la carte "Angry Mob", appliquant son effet witch? et p
         <OBJECT>
           <ID name="" mc="Standard.ExecutionOccurenceSpecification" uid="a4b7f1a9-3d70-4be9-b79d-50a71f6c86d2"/>
           <ATTRIBUTES>
-            <ATT name="LineNumber">660</ATT>
+            <ATT name="LineNumber">698</ATT>
             <ATT name="Name"></ATT>
             <ATT name="status">1970354901745664</ATT>
           </ATTRIBUTES>
@@ -1071,7 +1071,7 @@ J1 accuse J2 qui révèle la carte "Angry Mob", appliquant son effet witch? et p
                   <ATT name="Argument"></ATT>
                   <ATT name="KindOfMessage">CompleteKind</ATT>
                   <ATT name="SortOfMessage">ReturnMessage</ATT>
-                  <ATT name="Sequence"><![CDATA[16]]></ATT>
+                  <ATT name="Sequence"><![CDATA[18]]></ATT>
                   <ATT name="Name"></ATT>
                   <ATT name="status">1970354901745664</ATT>
                 </ATTRIBUTES>
@@ -1094,7 +1094,7 @@ J1 accuse J2 qui révèle la carte "Angry Mob", appliquant son effet witch? et p
         <OBJECT>
           <ID name="" mc="Standard.ExecutionSpecification" uid="678579df-70a4-4f07-a480-a7c8f09f10ce"/>
           <ATTRIBUTES>
-            <ATT name="LineNumber">511</ATT>
+            <ATT name="LineNumber">549</ATT>
             <ATT name="Name"></ATT>
             <ATT name="status">1970354901745664</ATT>
           </ATTRIBUTES>
@@ -1114,7 +1114,7 @@ J1 accuse J2 qui révèle la carte "Angry Mob", appliquant son effet witch? et p
         <OBJECT>
           <ID name="" mc="Standard.ExecutionOccurenceSpecification" uid="f61c3cfd-b00f-46df-9c1c-481259827160"/>
           <ATTRIBUTES>
-            <ATT name="LineNumber">660</ATT>
+            <ATT name="LineNumber">698</ATT>
             <ATT name="Name"></ATT>
             <ATT name="status">1970354901745664</ATT>
           </ATTRIBUTES>
@@ -1129,7 +1129,7 @@ J1 accuse J2 qui révèle la carte "Angry Mob", appliquant son effet witch? et p
         <OBJECT>
           <ID name="" mc="Standard.ExecutionOccurenceSpecification" uid="2a4e1494-ab65-4ba2-b034-cd168932229b"/>
           <ATTRIBUTES>
-            <ATT name="LineNumber">529</ATT>
+            <ATT name="LineNumber">567</ATT>
             <ATT name="Name"></ATT>
             <ATT name="status">1970354901745664</ATT>
           </ATTRIBUTES>
@@ -1141,7 +1141,7 @@ J1 accuse J2 qui révèle la carte "Angry Mob", appliquant son effet witch? et p
                   <ATT name="Argument"></ATT>
                   <ATT name="KindOfMessage">CompleteKind</ATT>
                   <ATT name="SortOfMessage">SyncCall</ATT>
-                  <ATT name="Sequence"><![CDATA[11]]></ATT>
+                  <ATT name="Sequence"><![CDATA[13]]></ATT>
                   <ATT name="Name"><![CDATA[chooseTarget]]></ATT>
                   <ATT name="status">1970354901745664</ATT>
                 </ATTRIBUTES>
@@ -1169,7 +1169,7 @@ J1 accuse J2 qui révèle la carte "Angry Mob", appliquant son effet witch? et p
         <OBJECT>
           <ID name="" mc="Standard.ExecutionOccurenceSpecification" uid="c8fc836c-cf9d-418f-8ae6-5a6375f62898"/>
           <ATTRIBUTES>
-            <ATT name="LineNumber">529</ATT>
+            <ATT name="LineNumber">567</ATT>
             <ATT name="Name"></ATT>
             <ATT name="status">1970354901745664</ATT>
           </ATTRIBUTES>
@@ -1189,7 +1189,7 @@ J1 accuse J2 qui révèle la carte "Angry Mob", appliquant son effet witch? et p
         <OBJECT>
           <ID name="" mc="Standard.ExecutionOccurenceSpecification" uid="2f5db7ea-39c5-42be-94ce-a4970f494171"/>
           <ATTRIBUTES>
-            <ATT name="LineNumber">562</ATT>
+            <ATT name="LineNumber">600</ATT>
             <ATT name="Name"></ATT>
             <ATT name="status">1970354901745664</ATT>
           </ATTRIBUTES>
@@ -1201,7 +1201,7 @@ J1 accuse J2 qui révèle la carte "Angry Mob", appliquant son effet witch? et p
                   <ATT name="Argument"></ATT>
                   <ATT name="KindOfMessage">CompleteKind</ATT>
                   <ATT name="SortOfMessage">ReturnMessage</ATT>
-                  <ATT name="Sequence"><![CDATA[12]]></ATT>
+                  <ATT name="Sequence"><![CDATA[14]]></ATT>
                   <ATT name="Name"></ATT>
                   <ATT name="status">1970354901745664</ATT>
                 </ATTRIBUTES>
@@ -1224,7 +1224,7 @@ J1 accuse J2 qui révèle la carte "Angry Mob", appliquant son effet witch? et p
         <OBJECT>
           <ID name="" mc="Standard.ExecutionSpecification" uid="6b28345a-31b3-4f23-b7b6-26bc1c9eacd3"/>
           <ATTRIBUTES>
-            <ATT name="LineNumber">529</ATT>
+            <ATT name="LineNumber">567</ATT>
             <ATT name="Name"></ATT>
             <ATT name="status">1970354901745664</ATT>
           </ATTRIBUTES>
@@ -1244,7 +1244,7 @@ J1 accuse J2 qui révèle la carte "Angry Mob", appliquant son effet witch? et p
         <OBJECT>
           <ID name="" mc="Standard.ExecutionOccurenceSpecification" uid="271a3779-9334-4d12-9810-02d79865c29d"/>
           <ATTRIBUTES>
-            <ATT name="LineNumber">562</ATT>
+            <ATT name="LineNumber">600</ATT>
             <ATT name="Name"></ATT>
             <ATT name="status">1970354901745664</ATT>
           </ATTRIBUTES>
@@ -1259,7 +1259,7 @@ J1 accuse J2 qui révèle la carte "Angry Mob", appliquant son effet witch? et p
         <OBJECT>
           <ID name="" mc="Standard.ExecutionOccurenceSpecification" uid="e2e35d64-3428-4855-8816-faec39a599f7"/>
           <ATTRIBUTES>
-            <ATT name="LineNumber">595</ATT>
+            <ATT name="LineNumber">633</ATT>
             <ATT name="Name"></ATT>
             <ATT name="status">1970354901745664</ATT>
           </ATTRIBUTES>
@@ -1271,7 +1271,7 @@ J1 accuse J2 qui révèle la carte "Angry Mob", appliquant son effet witch? et p
                   <ATT name="Argument"></ATT>
                   <ATT name="KindOfMessage">CompleteKind</ATT>
                   <ATT name="SortOfMessage">SyncCall</ATT>
-                  <ATT name="Sequence"><![CDATA[13]]></ATT>
+                  <ATT name="Sequence"><![CDATA[15]]></ATT>
                   <ATT name="Name"><![CDATA[applyEffect]]></ATT>
                   <ATT name="status">1970354901745664</ATT>
                 </ATTRIBUTES>
@@ -1299,7 +1299,7 @@ J1 accuse J2 qui révèle la carte "Angry Mob", appliquant son effet witch? et p
         <OBJECT>
           <ID name="" mc="Standard.ExecutionOccurenceSpecification" uid="793de2e4-15d4-4556-924e-295aea34c9bf"/>
           <ATTRIBUTES>
-            <ATT name="LineNumber">595</ATT>
+            <ATT name="LineNumber">633</ATT>
             <ATT name="Name"></ATT>
             <ATT name="status">1970354901745664</ATT>
           </ATTRIBUTES>
@@ -1319,7 +1319,7 @@ J1 accuse J2 qui révèle la carte "Angry Mob", appliquant son effet witch? et p
         <OBJECT>
           <ID name="" mc="Standard.ExecutionOccurenceSpecification" uid="935884c4-70ac-4d72-879c-31df64c4b7bd"/>
           <ATTRIBUTES>
-            <ATT name="LineNumber">640</ATT>
+            <ATT name="LineNumber">678</ATT>
             <ATT name="Name"></ATT>
             <ATT name="status">1970354901745664</ATT>
           </ATTRIBUTES>
@@ -1331,7 +1331,7 @@ J1 accuse J2 qui révèle la carte "Angry Mob", appliquant son effet witch? et p
                   <ATT name="Argument"></ATT>
                   <ATT name="KindOfMessage">CompleteKind</ATT>
                   <ATT name="SortOfMessage">ReturnMessage</ATT>
-                  <ATT name="Sequence"><![CDATA[15]]></ATT>
+                  <ATT name="Sequence"><![CDATA[17]]></ATT>
                   <ATT name="Name"></ATT>
                   <ATT name="status">1970354901745664</ATT>
                 </ATTRIBUTES>
@@ -1354,7 +1354,7 @@ J1 accuse J2 qui révèle la carte "Angry Mob", appliquant son effet witch? et p
         <OBJECT>
           <ID name="" mc="Standard.ExecutionSpecification" uid="2970c693-dc93-4be2-9d29-eaeb6e876b1d"/>
           <ATTRIBUTES>
-            <ATT name="LineNumber">595</ATT>
+            <ATT name="LineNumber">633</ATT>
             <ATT name="Name"></ATT>
             <ATT name="status">1970354901745664</ATT>
           </ATTRIBUTES>
@@ -1374,7 +1374,7 @@ J1 accuse J2 qui révèle la carte "Angry Mob", appliquant son effet witch? et p
         <OBJECT>
           <ID name="" mc="Standard.ExecutionOccurenceSpecification" uid="ac5a3ad8-298f-41cf-9d38-a662c77d3770"/>
           <ATTRIBUTES>
-            <ATT name="LineNumber">640</ATT>
+            <ATT name="LineNumber">678</ATT>
             <ATT name="Name"></ATT>
             <ATT name="status">1970354901745664</ATT>
           </ATTRIBUTES>
@@ -1389,7 +1389,7 @@ J1 accuse J2 qui révèle la carte "Angry Mob", appliquant son effet witch? et p
         <OBJECT>
           <ID name="" mc="Standard.ExecutionOccurenceSpecification" uid="573b484e-3b9c-49b4-af01-148a4eb1abfb"/>
           <ATTRIBUTES>
-            <ATT name="LineNumber">619</ATT>
+            <ATT name="LineNumber">657</ATT>
             <ATT name="Name"></ATT>
             <ATT name="status">1970354901745664</ATT>
           </ATTRIBUTES>
@@ -1401,7 +1401,7 @@ J1 accuse J2 qui révèle la carte "Angry Mob", appliquant son effet witch? et p
                   <ATT name="Argument"></ATT>
                   <ATT name="KindOfMessage">CompleteKind</ATT>
                   <ATT name="SortOfMessage">SyncCall</ATT>
-                  <ATT name="Sequence"><![CDATA[14]]></ATT>
+                  <ATT name="Sequence"><![CDATA[16]]></ATT>
                   <ATT name="Name"><![CDATA[setNextPlayer]]></ATT>
                   <ATT name="status">1970354901745664</ATT>
                 </ATTRIBUTES>
@@ -1429,7 +1429,7 @@ J1 accuse J2 qui révèle la carte "Angry Mob", appliquant son effet witch? et p
         <OBJECT>
           <ID name="" mc="Standard.ExecutionOccurenceSpecification" uid="9e7094ce-a20b-4718-ae11-cc533fdb1b09"/>
           <ATTRIBUTES>
-            <ATT name="LineNumber">619</ATT>
+            <ATT name="LineNumber">657</ATT>
             <ATT name="Name"></ATT>
             <ATT name="status">1970354901745664</ATT>
           </ATTRIBUTES>
@@ -1437,6 +1437,116 @@ J1 accuse J2 qui révèle la carte "Angry Mob", appliquant son effet witch? et p
             <LINK relation="Covered">
               <REFOBJ>
                 <ID name="round1" mc="Standard.Lifeline" uid="60bc705b-7f92-40db-b7d8-79f16e56f02d"/>
+              </REFOBJ>
+            </LINK>
+          </DEPENDENCIES>
+        </OBJECT>
+        <OBJECT>
+          <ID name="" mc="Standard.ExecutionOccurenceSpecification" uid="a4eae3a0-1a7c-47a2-adae-922157f42ef1"/>
+          <ATTRIBUTES>
+            <ATT name="LineNumber">426</ATT>
+            <ATT name="Name"></ATT>
+            <ATT name="status">1970354901745664</ATT>
+          </ATTRIBUTES>
+          <DEPENDENCIES>
+            <COMP relation="SentMessage">
+              <OBJECT>
+                <ID name="accuse" mc="Standard.Message" uid="eaf4c989-a8e5-4908-87e6-15f08eb86e3b"/>
+                <ATTRIBUTES>
+                  <ATT name="Argument"></ATT>
+                  <ATT name="KindOfMessage">CompleteKind</ATT>
+                  <ATT name="SortOfMessage">SyncCall</ATT>
+                  <ATT name="Sequence"><![CDATA[8]]></ATT>
+                  <ATT name="Name"><![CDATA[accuse]]></ATT>
+                  <ATT name="status">1970354901745664</ATT>
+                </ATTRIBUTES>
+                <DEPENDENCIES>
+                  <LINK relation="ReceiveEvent">
+                    <REFOBJ>
+                      <ID name="" mc="Standard.ExecutionOccurenceSpecification" uid="b18db915-e2cc-4cb9-b123-f45666332e81"/>
+                    </REFOBJ>
+                  </LINK>
+                  <LINK relation="Invoked">
+                    <REFOBJ>
+                      <ID name="accuse" mc="Standard.Operation" uid="b3b6e18f-52ca-473d-98c7-c9a9ba3df0d3"/>
+                    </REFOBJ>
+                  </LINK>
+                </DEPENDENCIES>
+              </OBJECT>
+            </COMP>
+            <LINK relation="Covered">
+              <REFOBJ>
+                <ID name="r" mc="Standard.Lifeline" uid="0dc3ff02-3272-4a63-bd26-ab81987765d7"/>
+              </REFOBJ>
+            </LINK>
+          </DEPENDENCIES>
+        </OBJECT>
+        <OBJECT>
+          <ID name="" mc="Standard.ExecutionOccurenceSpecification" uid="b18db915-e2cc-4cb9-b123-f45666332e81"/>
+          <ATTRIBUTES>
+            <ATT name="LineNumber">458</ATT>
+            <ATT name="Name"></ATT>
+            <ATT name="status">1970354901745664</ATT>
+          </ATTRIBUTES>
+          <DEPENDENCIES>
+            <LINK relation="Covered">
+              <REFOBJ>
+                <ID name="r" mc="Standard.Lifeline" uid="0dc3ff02-3272-4a63-bd26-ab81987765d7"/>
+              </REFOBJ>
+            </LINK>
+          </DEPENDENCIES>
+        </OBJECT>
+        <OBJECT>
+          <ID name="" mc="Standard.ExecutionOccurenceSpecification" uid="9d150d04-5800-4680-b702-304b3e5fd8a6"/>
+          <ATTRIBUTES>
+            <ATT name="LineNumber">485</ATT>
+            <ATT name="Name"></ATT>
+            <ATT name="status">1970354901745664</ATT>
+          </ATTRIBUTES>
+          <DEPENDENCIES>
+            <COMP relation="SentMessage">
+              <OBJECT>
+                <ID name="play" mc="Standard.Message" uid="e0dd6273-1eaa-4ad4-94fc-75d38f7d97d9"/>
+                <ATTRIBUTES>
+                  <ATT name="Argument"></ATT>
+                  <ATT name="KindOfMessage">CompleteKind</ATT>
+                  <ATT name="SortOfMessage">SyncCall</ATT>
+                  <ATT name="Sequence"><![CDATA[10]]></ATT>
+                  <ATT name="Name"><![CDATA[play]]></ATT>
+                  <ATT name="status">1970354901745664</ATT>
+                </ATTRIBUTES>
+                <DEPENDENCIES>
+                  <LINK relation="ReceiveEvent">
+                    <REFOBJ>
+                      <ID name="" mc="Standard.ExecutionOccurenceSpecification" uid="bbde55bf-72c1-434f-899b-0a7ec48b5f7c"/>
+                    </REFOBJ>
+                  </LINK>
+                  <LINK relation="Invoked">
+                    <REFOBJ>
+                      <ID name="play" mc="Standard.Operation" uid="d1e269cc-0614-405f-bb1d-d66e965d149e"/>
+                    </REFOBJ>
+                  </LINK>
+                </DEPENDENCIES>
+              </OBJECT>
+            </COMP>
+            <LINK relation="Covered">
+              <REFOBJ>
+                <ID name="r2" mc="Standard.Lifeline" uid="209007cb-288f-4669-a795-1de0cff3bdb6"/>
+              </REFOBJ>
+            </LINK>
+          </DEPENDENCIES>
+        </OBJECT>
+        <OBJECT>
+          <ID name="" mc="Standard.ExecutionOccurenceSpecification" uid="bbde55bf-72c1-434f-899b-0a7ec48b5f7c"/>
+          <ATTRIBUTES>
+            <ATT name="LineNumber">505</ATT>
+            <ATT name="Name"></ATT>
+            <ATT name="status">1970354901745664</ATT>
+          </ATTRIBUTES>
+          <DEPENDENCIES>
+            <LINK relation="Covered">
+              <REFOBJ>
+                <ID name="r2" mc="Standard.Lifeline" uid="209007cb-288f-4669-a795-1de0cff3bdb6"/>
               </REFOBJ>
             </LINK>
           </DEPENDENCIES>

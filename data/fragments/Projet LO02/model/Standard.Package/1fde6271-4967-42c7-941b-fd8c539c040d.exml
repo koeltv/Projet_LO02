@@ -17,7 +17,7 @@
         <COMPID name="Player" mc="Standard.Class" uid="111fa0a5-d215-450b-92eb-5a72e7b62f6d"/>
         <COMPID name="Game" mc="Standard.Class" uid="f50d48b7-a6d1-4fad-af87-83fb571812fd"/>
         <COMPID name="Round" mc="Standard.Class" uid="c28f7e31-e764-4b29-bf82-24de6d7b861e"/>
-        <COMPID name="RevealedCard" mc="Standard.Class" uid="48789c70-4131-43ec-be0b-726990f19cd0"/>
+        <COMPID name="CardState" mc="Standard.Class" uid="48789c70-4131-43ec-be0b-726990f19cd0"/>
         <COMPID name="Observable" mc="Standard.Class" uid="70e60d31-a84f-4dd0-8575-011f83e5e678"/>
         <COMPID name="Console" mc="Standard.Class" uid="67474d8a-ef04-4c5d-89ba-9c4dfd84e620"/>
         <COMPID name="GraphicalInterface" mc="Standard.Class" uid="dd6cfd57-23d1-4189-8373-49e8a8609bbc"/>
@@ -26,9 +26,9 @@
         <COMPID name="Defensive" mc="Standard.Class" uid="60cbbe4e-b6b8-435c-9a69-a0ab28fb692d"/>
         <COMPID name="Agressive" mc="Standard.Class" uid="e1b768fd-229c-4381-a358-22005903e012"/>
         <COMPID name="AI" mc="Standard.Class" uid="92073e8b-2cbc-4460-9e87-a67d41f0cea6"/>
-        <COMPID name="AccusatorDiscardRandomEffect" mc="Standard.Class" uid="9b8f1017-e6f9-4534-a80b-d19d79461d75"/>
+        <COMPID name="AccuserDiscardRandomEffect" mc="Standard.Class" uid="9b8f1017-e6f9-4534-a80b-d19d79461d75"/>
         <COMPID name="RevealOrDiscardEffect" mc="Standard.Class" uid="a0a7d956-7f6d-4091-9735-c341153e7294"/>
-        <COMPID name="TakeFromAccusatorHandEffect" mc="Standard.Class" uid="80187038-38cf-42bb-84ba-c765af77603d"/>
+        <COMPID name="TakeFromAccuserHandEffect" mc="Standard.Class" uid="80187038-38cf-42bb-84ba-c765af77603d"/>
         <COMPID name="TakeNextTurnEffect" mc="Standard.Class" uid="eebfef01-0042-46dc-ad54-19ce1e092c06"/>
         <COMPID name="DiscardedToHandEffect" mc="Standard.Class" uid="3f6ea5a7-f9b6-4350-94a5-2f3f774d624a"/>
         <COMPID name="RumourCard" mc="Standard.Class" uid="bf6572c6-603b-4089-aa8e-1fdf38fba75e"/>
@@ -157,12 +157,13 @@
           </DEPENDENCIES>
         </OBJECT>
         <COMPID name="Effect" mc="Standard.Interface" uid="227731b3-49f5-4204-958d-5a639dba4da5"/>
+        <COMPID name="IdentityCard" mc="Standard.Class" uid="17a469e1-6467-404e-b7ea-b8529834f3a3"/>
       </COMP>
       <LINK relation="Extension">
         <FOREIGNID name="JavaPackage" mc="Infrastructure.Stereotype" uid="01ec23a8-0000-0126-0000-000000000000"/>
       </LINK>
       <COMP relation="Product">
-        <COMPID name="Diagramme de classe witchHuntGame (2)" mc="Standard.ClassDiagram" uid="92425b89-2e4c-4a6d-9381-dff4138827c3"/>
+        <COMPID name="Diagramme de classe witchHuntGame" mc="Standard.ClassDiagram" uid="92425b89-2e4c-4a6d-9381-dff4138827c3"/>
       </COMP>
     </DEPENDENCIES>
   </OBJECT>

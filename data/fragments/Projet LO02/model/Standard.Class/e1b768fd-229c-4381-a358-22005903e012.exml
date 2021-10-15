@@ -28,13 +28,7 @@
             <ATT name="Name"><![CDATA[accuse]]></ATT>
             <ATT name="status">1970354901745664</ATT>
           </ATTRIBUTES>
-          <DEPENDENCIES>
-            <LINK relation="Redefines">
-              <REFOBJ>
-                <ID name="accuse" mc="Standard.Operation" uid="23c78c88-0d89-4baa-92cc-44fcc2e9d698"/>
-              </REFOBJ>
-            </LINK>
-          </DEPENDENCIES>
+          <DEPENDENCIES></DEPENDENCIES>
         </OBJECT>
         <OBJECT>
           <ID name="revealRumorCard" mc="Standard.Operation" uid="729c5be2-1e9b-403a-b561-47c9f3efea9a"/>
@@ -48,10 +42,24 @@
             <ATT name="Name"><![CDATA[revealRumorCard]]></ATT>
             <ATT name="status">1970354901745664</ATT>
           </ATTRIBUTES>
+          <DEPENDENCIES></DEPENDENCIES>
+        </OBJECT>
+        <OBJECT>
+          <ID name="play" mc="Standard.Operation" uid="fc515237-c9c0-429a-ac63-4276925a2d49"/>
+          <ATTRIBUTES>
+            <ATT name="Concurrency">false</ATT>
+            <ATT name="Final">false</ATT>
+            <ATT name="Passing">MethodOut</ATT>
+            <ATT name="Visibility">Public</ATT>
+            <ATT name="IsClass">false</ATT>
+            <ATT name="IsAbstract">false</ATT>
+            <ATT name="Name"><![CDATA[play]]></ATT>
+            <ATT name="status">1970354901745664</ATT>
+          </ATTRIBUTES>
           <DEPENDENCIES>
             <LINK relation="Redefines">
               <REFOBJ>
-                <ID name="revealRumorCard" mc="Standard.Operation" uid="1de43f0f-a937-4599-9f7b-e22807378394"/>
+                <ID name="play" mc="Standard.Operation" uid="8ebb2c64-897a-4c93-b4c2-aca2f56bb9a6"/>
               </REFOBJ>
             </LINK>
           </DEPENDENCIES>

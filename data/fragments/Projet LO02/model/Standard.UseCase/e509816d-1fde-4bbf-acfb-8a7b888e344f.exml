@@ -1,7 +1,7 @@
 <?xml version="1.0" ?>
-<!--GENERATED FILE, PLEASE DO NOT EDIT!!!--><EXT object="Hunt Effect" version="4">
+<!--GENERATED FILE, PLEASE DO NOT EDIT!!!--><EXT object="Apply Hunt effect" version="4">
   <OBJECT>
-    <ID name="Hunt Effect" mc="Standard.UseCase" uid="e509816d-1fde-4bbf-acfb-8a7b888e344f"/>
+    <ID name="Apply Hunt effect" mc="Standard.UseCase" uid="e509816d-1fde-4bbf-acfb-8a7b888e344f"/>
     <PID name="DGCasUtilisation" mc="Standard.Package" uid="f6da50c7-f607-4ba5-bf81-13175e6cb196"/>
     <ATTRIBUTES>
       <ATT name="IsElementary">false</ATT>
@@ -9,7 +9,7 @@
       <ATT name="IsLeaf">false</ATT>
       <ATT name="IsRoot">false</ATT>
       <ATT name="Visibility">Public</ATT>
-      <ATT name="Name"><![CDATA[Hunt Effect]]></ATT>
+      <ATT name="Name"><![CDATA[Apply Hunt effect]]></ATT>
       <ATT name="status">1970354901745664</ATT>
     </ATTRIBUTES>
     <DEPENDENCIES>
