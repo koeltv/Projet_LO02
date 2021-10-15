@@ -24,6 +24,19 @@
             <LINK relation="Target">
               <ID name="Play" mc="Standard.UseCase" uid="835a4043-d166-4806-8f79-d6b61e74da39"/>
             </LINK>
+            <COMP relation="ConstraintDefinition">
+              <OBJECT>
+                <ID name="Condition" mc="Standard.Constraint" uid="a306e360-77fa-4cbc-872f-27c5585c9717"/>
+                <ATTRIBUTES>
+                  <ATT name="BaseClass"></ATT>
+                  <ATT name="Body"><![CDATA[If Game wasn't initiated yet]]></ATT>
+                  <ATT name="Language"></ATT>
+                  <ATT name="Name"><![CDATA[Condition]]></ATT>
+                  <ATT name="status">1970354901745664</ATT>
+                </ATTRIBUTES>
+                <DEPENDENCIES></DEPENDENCIES>
+              </OBJECT>
+            </COMP>
             <LINK relation="Extension">
               <FOREIGNID name="extend" mc="Infrastructure.Stereotype" uid="00000000-0000-9c48-0000-000000000000"/>
             </LINK>
