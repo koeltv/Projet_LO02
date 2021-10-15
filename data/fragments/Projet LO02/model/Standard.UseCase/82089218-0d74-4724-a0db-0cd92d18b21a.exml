@@ -13,26 +13,72 @@
       <ATT name="status">1970354901745664</ATT>
     </ATTRIBUTES>
     <DEPENDENCIES>
-      <COMP relation="Used">
+      <COMP relation="OwnedEnd">
         <OBJECT>
-          <ID name="UseCaseDependency" mc="Standard.UseCaseDependency" uid="50b10583-eed3-4f2a-9508-a083103eb105"/>
+          <ID name="" mc="Standard.AssociationEnd" uid="009eb578-9d40-4840-b080-52c8707a4f92"/>
           <ATTRIBUTES>
-            <ATT name="Name"><![CDATA[UseCaseDependency]]></ATT>
+            <ATT name="Aggregation">KindIsAssociation</ATT>
+            <ATT name="IsChangeable">true</ATT>
+            <ATT name="Changeable">ReadWrite</ATT>
+            <ATT name="IsDerived">false</ATT>
+            <ATT name="IsOrdered">false</ATT>
+            <ATT name="IsUnique">false</ATT>
+            <ATT name="MultiplicityMin"><![CDATA[0]]></ATT>
+            <ATT name="MultiplicityMax"><![CDATA[1]]></ATT>
+            <ATT name="Visibility">Public</ATT>
+            <ATT name="IsClass">false</ATT>
+            <ATT name="IsAbstract">false</ATT>
+            <ATT name="Name"></ATT>
             <ATT name="status">1970354901745664</ATT>
           </ATTRIBUTES>
           <DEPENDENCIES>
             <LINK relation="Target">
-              <ID name="Being accused" mc="Standard.UseCase" uid="3a0202d2-6328-44a8-9c50-658899212289"/>
+              <ID name="Accused Player" mc="Standard.Actor" uid="ec2195d9-ed08-4737-ba6b-7274d7fb8a21"/>
             </LINK>
-            <LINK relation="Extension">
-              <FOREIGNID name="include" mc="Infrastructure.Stereotype" uid="00000000-0000-9c49-0000-000000000000"/>
-            </LINK>
+            <COMP relation="Opposite">
+              <OBJECT>
+                <ID name="" mc="Standard.AssociationEnd" uid="162b75cf-0d5f-436f-ad27-555d1f66fd94"/>
+                <ATTRIBUTES>
+                  <ATT name="Aggregation">KindIsAssociation</ATT>
+                  <ATT name="IsChangeable">true</ATT>
+                  <ATT name="Changeable">ReadWrite</ATT>
+                  <ATT name="IsDerived">false</ATT>
+                  <ATT name="IsOrdered">false</ATT>
+                  <ATT name="IsUnique">false</ATT>
+                  <ATT name="MultiplicityMin"><![CDATA[0]]></ATT>
+                  <ATT name="MultiplicityMax"><![CDATA[1]]></ATT>
+                  <ATT name="Visibility">Public</ATT>
+                  <ATT name="IsClass">false</ATT>
+                  <ATT name="IsAbstract">false</ATT>
+                  <ATT name="Name"></ATT>
+                  <ATT name="status">1970354901745664</ATT>
+                </ATTRIBUTES>
+                <DEPENDENCIES>
+                  <COMP relation="Opposite">
+                    <COMPID name="" mc="Standard.AssociationEnd" uid="009eb578-9d40-4840-b080-52c8707a4f92"/>
+                  </COMP>
+                  <COMP relation="Association">
+                    <OBJECT>
+                      <ID name="" mc="Standard.Association" uid="893da4e1-a006-44f1-8166-9650b8057ac0"/>
+                      <ATTRIBUTES>
+                        <ATT name="Name"></ATT>
+                        <ATT name="status">1970354901745664</ATT>
+                      </ATTRIBUTES>
+                      <DEPENDENCIES></DEPENDENCIES>
+                    </OBJECT>
+                  </COMP>
+                </DEPENDENCIES>
+              </OBJECT>
+            </COMP>
+            <COMP relation="Association">
+              <COMPID name="" mc="Standard.Association" uid="893da4e1-a006-44f1-8166-9650b8057ac0"/>
+            </COMP>
           </DEPENDENCIES>
         </OBJECT>
       </COMP>
       <COMP relation="Parent">
         <OBJECT>
-          <ID name="Generalization" mc="Standard.Generalization" uid="4b7c0125-9d99-4063-872d-35fd79058464"/>
+          <ID name="Generalization" mc="Standard.Generalization" uid="f112678f-e3ce-4ccd-877e-0e1f74c2d04d"/>
           <ATTRIBUTES>
             <ATT name="Discriminator"></ATT>
             <ATT name="Name"><![CDATA[Generalization]]></ATT>

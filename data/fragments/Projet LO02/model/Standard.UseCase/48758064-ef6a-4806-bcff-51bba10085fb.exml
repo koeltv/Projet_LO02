@@ -1,7 +1,7 @@
 <?xml version="1.0" ?>
-<!--GENERATED FILE, PLEASE DO NOT EDIT!!!--><EXT object="Reveal an Identity Card" version="4">
+<!--GENERATED FILE, PLEASE DO NOT EDIT!!!--><EXT object="Reveal Identity Card" version="4">
   <OBJECT>
-    <ID name="Reveal an Identity Card" mc="Standard.UseCase" uid="48758064-ef6a-4806-bcff-51bba10085fb"/>
+    <ID name="Reveal Identity Card" mc="Standard.UseCase" uid="48758064-ef6a-4806-bcff-51bba10085fb"/>
     <PID name="DGCasUtilisation" mc="Standard.Package" uid="f6da50c7-f607-4ba5-bf81-13175e6cb196"/>
     <ATTRIBUTES>
       <ATT name="IsElementary">false</ATT>
@@ -9,13 +9,76 @@
       <ATT name="IsLeaf">false</ATT>
       <ATT name="IsRoot">false</ATT>
       <ATT name="Visibility">Public</ATT>
-      <ATT name="Name"><![CDATA[Reveal an Identity Card]]></ATT>
+      <ATT name="Name"><![CDATA[Reveal Identity Card]]></ATT>
       <ATT name="status">1970354901745664</ATT>
     </ATTRIBUTES>
     <DEPENDENCIES>
+      <COMP relation="OwnedEnd">
+        <OBJECT>
+          <ID name="" mc="Standard.AssociationEnd" uid="e86ddc35-a88c-473f-802d-cc0df28b01a3"/>
+          <ATTRIBUTES>
+            <ATT name="Aggregation">KindIsAssociation</ATT>
+            <ATT name="IsChangeable">true</ATT>
+            <ATT name="Changeable">ReadWrite</ATT>
+            <ATT name="IsDerived">false</ATT>
+            <ATT name="IsOrdered">false</ATT>
+            <ATT name="IsUnique">false</ATT>
+            <ATT name="MultiplicityMin"><![CDATA[0]]></ATT>
+            <ATT name="MultiplicityMax"><![CDATA[1]]></ATT>
+            <ATT name="Visibility">Public</ATT>
+            <ATT name="IsClass">false</ATT>
+            <ATT name="IsAbstract">false</ATT>
+            <ATT name="Name"></ATT>
+            <ATT name="status">1970354901745664</ATT>
+          </ATTRIBUTES>
+          <DEPENDENCIES>
+            <LINK relation="Target">
+              <ID name="Accused Player" mc="Standard.Actor" uid="ec2195d9-ed08-4737-ba6b-7274d7fb8a21"/>
+            </LINK>
+            <COMP relation="Opposite">
+              <OBJECT>
+                <ID name="" mc="Standard.AssociationEnd" uid="10ddea76-bca3-4431-92cc-26c47c8cc70a"/>
+                <ATTRIBUTES>
+                  <ATT name="Aggregation">KindIsAssociation</ATT>
+                  <ATT name="IsChangeable">true</ATT>
+                  <ATT name="Changeable">ReadWrite</ATT>
+                  <ATT name="IsDerived">false</ATT>
+                  <ATT name="IsOrdered">false</ATT>
+                  <ATT name="IsUnique">false</ATT>
+                  <ATT name="MultiplicityMin"><![CDATA[0]]></ATT>
+                  <ATT name="MultiplicityMax"><![CDATA[1]]></ATT>
+                  <ATT name="Visibility">Public</ATT>
+                  <ATT name="IsClass">false</ATT>
+                  <ATT name="IsAbstract">false</ATT>
+                  <ATT name="Name"></ATT>
+                  <ATT name="status">1970354901745664</ATT>
+                </ATTRIBUTES>
+                <DEPENDENCIES>
+                  <COMP relation="Opposite">
+                    <COMPID name="" mc="Standard.AssociationEnd" uid="e86ddc35-a88c-473f-802d-cc0df28b01a3"/>
+                  </COMP>
+                  <COMP relation="Association">
+                    <OBJECT>
+                      <ID name="" mc="Standard.Association" uid="f60cc65f-934b-415c-9644-bad338e30c6a"/>
+                      <ATTRIBUTES>
+                        <ATT name="Name"></ATT>
+                        <ATT name="status">1970354901745664</ATT>
+                      </ATTRIBUTES>
+                      <DEPENDENCIES></DEPENDENCIES>
+                    </OBJECT>
+                  </COMP>
+                </DEPENDENCIES>
+              </OBJECT>
+            </COMP>
+            <COMP relation="Association">
+              <COMPID name="" mc="Standard.Association" uid="f60cc65f-934b-415c-9644-bad338e30c6a"/>
+            </COMP>
+          </DEPENDENCIES>
+        </OBJECT>
+      </COMP>
       <COMP relation="Parent">
         <OBJECT>
-          <ID name="Generalization" mc="Standard.Generalization" uid="4e9ed575-1594-451d-a3a4-a51c97fb8736"/>
+          <ID name="Generalization" mc="Standard.Generalization" uid="dbbda591-5fa9-4efc-97a4-55a5f5945d9b"/>
           <ATTRIBUTES>
             <ATT name="Discriminator"></ATT>
             <ATT name="Name"><![CDATA[Generalization]]></ATT>
@@ -23,7 +86,7 @@
           </ATTRIBUTES>
           <DEPENDENCIES>
             <LINK relation="SuperType">
-              <ID name="Play a card" mc="Standard.UseCase" uid="14c9134e-05a3-4836-84e6-d7571da74641"/>
+              <ID name="Play" mc="Standard.UseCase" uid="835a4043-d166-4806-8f79-d6b61e74da39"/>
             </LINK>
           </DEPENDENCIES>
         </OBJECT>

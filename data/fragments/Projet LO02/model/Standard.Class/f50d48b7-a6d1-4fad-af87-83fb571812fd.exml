@@ -35,7 +35,7 @@
           </DEPENDENCIES>
         </OBJECT>
         <OBJECT>
-          <ID name="getGame" mc="Standard.Operation" uid="f65c4969-e4b5-436c-a781-74f1e20c7371"/>
+          <ID name="getGame" mc="Standard.Operation" uid="b05e530f-cea8-460b-b527-8d1b3078cd7d"/>
           <ATTRIBUTES>
             <ATT name="Concurrency">false</ATT>
             <ATT name="Final">false</ATT>
@@ -49,7 +49,7 @@
           <DEPENDENCIES>
             <COMP relation="Return">
               <OBJECT>
-                <ID name="" mc="Standard.Parameter" uid="649140d6-c7b8-4b38-8810-3a7412c415a2"/>
+                <ID name="p1" mc="Standard.Parameter" uid="efbfe447-c741-4246-8cee-102e0dd21f33"/>
                 <ATTRIBUTES>
                   <ATT name="ParameterPassing">In</ATT>
                   <ATT name="MultiplicityMin"><![CDATA[1]]></ATT>
@@ -61,64 +61,12 @@
                   <ATT name="IsException">false</ATT>
                   <ATT name="IsStream">false</ATT>
                   <ATT name="Effect">ReadEffect</ATT>
-                  <ATT name="Name"></ATT>
+                  <ATT name="Name"><![CDATA[p1]]></ATT>
                   <ATT name="status">1970354901745664</ATT>
                 </ATTRIBUTES>
                 <DEPENDENCIES>
                   <LINK relation="Type">
                     <ID name="Game" mc="Standard.Class" uid="f50d48b7-a6d1-4fad-af87-83fb571812fd"/>
-                  </LINK>
-                </DEPENDENCIES>
-              </OBJECT>
-            </COMP>
-            <LINK relation="Extension">
-              <FOREIGNID name="JavaGetter" mc="Infrastructure.Stereotype" uid="01ec25e8-0000-00f0-0000-000000000000"/>
-            </LINK>
-            <COMP relation="DependsOnDependency">
-              <OBJECT>
-                <ID name="" mc="Infrastructure.Dependency" uid="c620c3c5-d7a6-4e11-a072-440177a28e31"/>
-                <ATTRIBUTES>
-                  <ATT name="Name"></ATT>
-                  <ATT name="status">1970354901745664</ATT>
-                </ATTRIBUTES>
-                <DEPENDENCIES>
-                  <LINK relation="DependsOn">
-                    <REFOBJ>
-                      <ID name="game" mc="Standard.Attribute" uid="71c6ab19-3e2a-46c6-b782-dd3b4ec3b008"/>
-                    </REFOBJ>
-                  </LINK>
-                  <LINK relation="Extension">
-                    <FOREIGNID name="JavaGetter" mc="Infrastructure.Stereotype" uid="01ec23a8-0000-012b-0000-000000000000"/>
-                  </LINK>
-                </DEPENDENCIES>
-              </OBJECT>
-            </COMP>
-            <COMP relation="Descriptor">
-              <OBJECT>
-                <ID name="" mc="Infrastructure.Note" uid="c5f26b6f-79a3-43fa-a9b1-65785de74cf5"/>
-                <ATTRIBUTES>
-                  <ATT name="Content"><![CDATA[// Automatically generated method. Please delete this comment before entering specific code.]]></ATT>
-                  <ATT name="MimeType"></ATT>
-                  <ATT name="Name"></ATT>
-                  <ATT name="status">1970354901745664</ATT>
-                </ATTRIBUTES>
-                <DEPENDENCIES>
-                  <LINK relation="Model">
-                    <FOREIGNID name="JavaCode" mc="Infrastructure.NoteType" uid="003800a8-0000-018e-0000-000000000000"/>
-                  </LINK>
-                </DEPENDENCIES>
-              </OBJECT>
-              <OBJECT>
-                <ID name="" mc="Infrastructure.Note" uid="9a866b32-5aac-4a3c-970b-7da07bf1c151"/>
-                <ATTRIBUTES>
-                  <ATT name="Content"><![CDATA[return game;]]></ATT>
-                  <ATT name="MimeType"></ATT>
-                  <ATT name="Name"></ATT>
-                  <ATT name="status">1970354901745664</ATT>
-                </ATTRIBUTES>
-                <DEPENDENCIES>
-                  <LINK relation="Model">
-                    <FOREIGNID name="JavaReturned" mc="Infrastructure.NoteType" uid="003800a8-0000-0190-0000-000000000000"/>
                   </LINK>
                 </DEPENDENCIES>
               </OBJECT>
@@ -334,32 +282,6 @@
           <DEPENDENCIES></DEPENDENCIES>
         </OBJECT>
       </COMP>
-      <COMP relation="OwnedAttribute">
-        <OBJECT>
-          <ID name="game" mc="Standard.Attribute" uid="71c6ab19-3e2a-46c6-b782-dd3b4ec3b008"/>
-          <ATTRIBUTES>
-            <ATT name="TypeConstraint"></ATT>
-            <ATT name="Value"></ATT>
-            <ATT name="TargetIsClass">false</ATT>
-            <ATT name="Changeable">Read</ATT>
-            <ATT name="IsDerived">false</ATT>
-            <ATT name="IsOrdered">false</ATT>
-            <ATT name="IsUnique">false</ATT>
-            <ATT name="MultiplicityMin"><![CDATA[1]]></ATT>
-            <ATT name="MultiplicityMax"><![CDATA[1]]></ATT>
-            <ATT name="Visibility">Private</ATT>
-            <ATT name="IsClass">true</ATT>
-            <ATT name="IsAbstract">false</ATT>
-            <ATT name="Name"><![CDATA[game]]></ATT>
-            <ATT name="status">1970354901745664</ATT>
-          </ATTRIBUTES>
-          <DEPENDENCIES>
-            <LINK relation="Type">
-              <ID name="Game" mc="Standard.Class" uid="f50d48b7-a6d1-4fad-af87-83fb571812fd"/>
-            </LINK>
-          </DEPENDENCIES>
-        </OBJECT>
-      </COMP>
       <COMP relation="OwnedEnd">
         <OBJECT>
           <ID name="players" mc="Standard.AssociationEnd" uid="2b8287d7-1f5a-4486-9073-5a1c2c052258"/>
@@ -557,6 +479,67 @@
             </COMP>
             <COMP relation="Association">
               <COMPID name="" mc="Standard.Association" uid="24002e69-9a09-4e68-8044-3ee779de883f"/>
+            </COMP>
+          </DEPENDENCIES>
+        </OBJECT>
+        <OBJECT>
+          <ID name="game" mc="Standard.AssociationEnd" uid="dd82d223-e5ef-4adf-81db-88be8be0af77"/>
+          <ATTRIBUTES>
+            <ATT name="Aggregation">KindIsAssociation</ATT>
+            <ATT name="IsChangeable">true</ATT>
+            <ATT name="Changeable">ReadWrite</ATT>
+            <ATT name="IsDerived">false</ATT>
+            <ATT name="IsOrdered">false</ATT>
+            <ATT name="IsUnique">false</ATT>
+            <ATT name="MultiplicityMin"><![CDATA[1]]></ATT>
+            <ATT name="MultiplicityMax"><![CDATA[1]]></ATT>
+            <ATT name="Visibility">Private</ATT>
+            <ATT name="IsClass">true</ATT>
+            <ATT name="IsAbstract">false</ATT>
+            <ATT name="Name"><![CDATA[game]]></ATT>
+            <ATT name="status">1970354901745664</ATT>
+          </ATTRIBUTES>
+          <DEPENDENCIES>
+            <LINK relation="Target">
+              <ID name="Game" mc="Standard.Class" uid="f50d48b7-a6d1-4fad-af87-83fb571812fd"/>
+            </LINK>
+            <COMP relation="Opposite">
+              <OBJECT>
+                <ID name="" mc="Standard.AssociationEnd" uid="cb6f9264-c4e3-493e-bf2c-f814a675946a"/>
+                <ATTRIBUTES>
+                  <ATT name="Aggregation">KindIsAssociation</ATT>
+                  <ATT name="IsChangeable">true</ATT>
+                  <ATT name="Changeable">ReadWrite</ATT>
+                  <ATT name="IsDerived">false</ATT>
+                  <ATT name="IsOrdered">false</ATT>
+                  <ATT name="IsUnique">false</ATT>
+                  <ATT name="MultiplicityMin"><![CDATA[1]]></ATT>
+                  <ATT name="MultiplicityMax"><![CDATA[1]]></ATT>
+                  <ATT name="Visibility">Public</ATT>
+                  <ATT name="IsClass">false</ATT>
+                  <ATT name="IsAbstract">false</ATT>
+                  <ATT name="Name"></ATT>
+                  <ATT name="status">1970354901745664</ATT>
+                </ATTRIBUTES>
+                <DEPENDENCIES>
+                  <COMP relation="Opposite">
+                    <COMPID name="game" mc="Standard.AssociationEnd" uid="dd82d223-e5ef-4adf-81db-88be8be0af77"/>
+                  </COMP>
+                  <COMP relation="Association">
+                    <OBJECT>
+                      <ID name="" mc="Standard.Association" uid="df7fba60-446c-4da5-b5b4-7749b840d249"/>
+                      <ATTRIBUTES>
+                        <ATT name="Name"></ATT>
+                        <ATT name="status">1970354901745664</ATT>
+                      </ATTRIBUTES>
+                      <DEPENDENCIES></DEPENDENCIES>
+                    </OBJECT>
+                  </COMP>
+                </DEPENDENCIES>
+              </OBJECT>
+            </COMP>
+            <COMP relation="Association">
+              <COMPID name="" mc="Standard.Association" uid="df7fba60-446c-4da5-b5b4-7749b840d249"/>
             </COMP>
           </DEPENDENCIES>
         </OBJECT>

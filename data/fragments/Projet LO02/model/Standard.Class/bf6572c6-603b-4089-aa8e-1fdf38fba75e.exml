@@ -193,97 +193,6 @@
           </DEPENDENCIES>
         </OBJECT>
         <OBJECT>
-          <ID name="getNumberOfCards" mc="Standard.Operation" uid="404c08d8-3f5b-47be-af7d-6a765e705254"/>
-          <ATTRIBUTES>
-            <ATT name="Concurrency">false</ATT>
-            <ATT name="Final">false</ATT>
-            <ATT name="Passing">MethodOut</ATT>
-            <ATT name="Visibility">Public</ATT>
-            <ATT name="IsClass">true</ATT>
-            <ATT name="IsAbstract">false</ATT>
-            <ATT name="Name"><![CDATA[getNumberOfCards]]></ATT>
-            <ATT name="status">1970354901745664</ATT>
-          </ATTRIBUTES>
-          <DEPENDENCIES>
-            <COMP relation="Return">
-              <OBJECT>
-                <ID name="" mc="Standard.Parameter" uid="4fdfd0ab-1949-4359-a491-4664e5454a49"/>
-                <ATTRIBUTES>
-                  <ATT name="ParameterPassing">In</ATT>
-                  <ATT name="MultiplicityMin"><![CDATA[1]]></ATT>
-                  <ATT name="MultiplicityMax"><![CDATA[1]]></ATT>
-                  <ATT name="TypeConstraint"></ATT>
-                  <ATT name="DefaultValue"></ATT>
-                  <ATT name="IsOrdered">false</ATT>
-                  <ATT name="IsUnique">false</ATT>
-                  <ATT name="IsException">false</ATT>
-                  <ATT name="IsStream">false</ATT>
-                  <ATT name="Effect">ReadEffect</ATT>
-                  <ATT name="Name"></ATT>
-                  <ATT name="status">1970354901745664</ATT>
-                </ATTRIBUTES>
-                <DEPENDENCIES>
-                  <LINK relation="Type">
-                    <FOREIGNID name="integer" mc="Standard.DataType" uid="00000004-0000-0009-0000-000000000000"/>
-                  </LINK>
-                </DEPENDENCIES>
-              </OBJECT>
-            </COMP>
-            <LINK relation="Extension">
-              <FOREIGNID name="JavaGetter" mc="Infrastructure.Stereotype" uid="01ec25e8-0000-00f0-0000-000000000000"/>
-            </LINK>
-            <COMP relation="DependsOnDependency">
-              <OBJECT>
-                <ID name="" mc="Infrastructure.Dependency" uid="1d847d3b-b671-442f-8bab-54ca3415ad8c"/>
-                <ATTRIBUTES>
-                  <ATT name="Name"></ATT>
-                  <ATT name="status">1970354901745664</ATT>
-                </ATTRIBUTES>
-                <DEPENDENCIES>
-                  <LINK relation="DependsOn">
-                    <REFOBJ>
-                      <ID name="numberOfCards" mc="Standard.Attribute" uid="fcedbcf3-c90a-4496-801a-98f1c31d8399"/>
-                    </REFOBJ>
-                  </LINK>
-                  <LINK relation="Extension">
-                    <FOREIGNID name="JavaGetter" mc="Infrastructure.Stereotype" uid="01ec23a8-0000-012b-0000-000000000000"/>
-                  </LINK>
-                </DEPENDENCIES>
-              </OBJECT>
-            </COMP>
-            <COMP relation="Descriptor">
-              <OBJECT>
-                <ID name="" mc="Infrastructure.Note" uid="da509aa3-350e-460b-bcaf-da82ad125a26"/>
-                <ATTRIBUTES>
-                  <ATT name="Content"><![CDATA[// Automatically generated method. Please delete this comment before entering specific code.]]></ATT>
-                  <ATT name="MimeType"></ATT>
-                  <ATT name="Name"></ATT>
-                  <ATT name="status">1970354901745664</ATT>
-                </ATTRIBUTES>
-                <DEPENDENCIES>
-                  <LINK relation="Model">
-                    <FOREIGNID name="JavaCode" mc="Infrastructure.NoteType" uid="003800a8-0000-018e-0000-000000000000"/>
-                  </LINK>
-                </DEPENDENCIES>
-              </OBJECT>
-              <OBJECT>
-                <ID name="" mc="Infrastructure.Note" uid="f56898b2-441d-4641-8933-b22920cf64e9"/>
-                <ATTRIBUTES>
-                  <ATT name="Content"><![CDATA[return numberOfCards;]]></ATT>
-                  <ATT name="MimeType"></ATT>
-                  <ATT name="Name"></ATT>
-                  <ATT name="status">1970354901745664</ATT>
-                </ATTRIBUTES>
-                <DEPENDENCIES>
-                  <LINK relation="Model">
-                    <FOREIGNID name="JavaReturned" mc="Infrastructure.NoteType" uid="003800a8-0000-0190-0000-000000000000"/>
-                  </LINK>
-                </DEPENDENCIES>
-              </OBJECT>
-            </COMP>
-          </DEPENDENCIES>
-        </OBJECT>
-        <OBJECT>
           <ID name="useCard" mc="Standard.Operation" uid="f6afa7ef-dc94-4803-9183-047cef2ad442"/>
           <ATTRIBUTES>
             <ATT name="Concurrency">false</ATT>
@@ -398,32 +307,6 @@
                 </DEPENDENCIES>
               </OBJECT>
             </COMP>
-          </DEPENDENCIES>
-        </OBJECT>
-      </COMP>
-      <COMP relation="OwnedAttribute">
-        <OBJECT>
-          <ID name="numberOfCards" mc="Standard.Attribute" uid="fcedbcf3-c90a-4496-801a-98f1c31d8399"/>
-          <ATTRIBUTES>
-            <ATT name="TypeConstraint"></ATT>
-            <ATT name="Value"></ATT>
-            <ATT name="TargetIsClass">false</ATT>
-            <ATT name="Changeable">Read</ATT>
-            <ATT name="IsDerived">false</ATT>
-            <ATT name="IsOrdered">false</ATT>
-            <ATT name="IsUnique">false</ATT>
-            <ATT name="MultiplicityMin"><![CDATA[1]]></ATT>
-            <ATT name="MultiplicityMax"><![CDATA[1]]></ATT>
-            <ATT name="Visibility">Private</ATT>
-            <ATT name="IsClass">true</ATT>
-            <ATT name="IsAbstract">false</ATT>
-            <ATT name="Name"><![CDATA[numberOfCards]]></ATT>
-            <ATT name="status">1970354901745664</ATT>
-          </ATTRIBUTES>
-          <DEPENDENCIES>
-            <LINK relation="Type">
-              <FOREIGNID name="integer" mc="Standard.DataType" uid="00000004-0000-0009-0000-000000000000"/>
-            </LINK>
           </DEPENDENCIES>
         </OBJECT>
       </COMP>

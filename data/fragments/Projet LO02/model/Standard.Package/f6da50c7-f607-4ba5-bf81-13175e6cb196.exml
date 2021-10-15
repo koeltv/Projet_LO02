@@ -14,21 +14,22 @@
     </ATTRIBUTES>
     <DEPENDENCIES>
       <COMP relation="OwnedElement">
-        <COMPID name="Play a card" mc="Standard.UseCase" uid="14c9134e-05a3-4836-84e6-d7571da74641"/>
         <COMPID name="Select a role" mc="Standard.UseCase" uid="8c75873e-30a8-48e5-8e9b-8c4e9a49ec5f"/>
         <COMPID name="Accuse a player" mc="Standard.UseCase" uid="a2817393-832d-490f-bddc-9565f33d3862"/>
         <COMPID name="Reveal Rumour Card" mc="Standard.UseCase" uid="33e87971-f17f-4b9a-982c-9d944e60ae11"/>
-        <COMPID name="Reveal an Identity Card" mc="Standard.UseCase" uid="48758064-ef6a-4806-bcff-51bba10085fb"/>
-        <COMPID name="Select nbPlayer|nbAI" mc="Standard.UseCase" uid="ae16ddf4-58a1-47d0-91e9-8bef464af65a"/>
-        <COMPID name="User" mc="Standard.Actor" uid="188e0c70-9463-4875-9496-36009300e69c"/>
+        <COMPID name="Reveal Identity Card" mc="Standard.UseCase" uid="48758064-ef6a-4806-bcff-51bba10085fb"/>
+        <COMPID name="Select number of Players &amp; AIs" mc="Standard.UseCase" uid="ae16ddf4-58a1-47d0-91e9-8bef464af65a"/>
+        <COMPID name="Current Player" mc="Standard.Actor" uid="188e0c70-9463-4875-9496-36009300e69c"/>
         <COMPID name="Play" mc="Standard.UseCase" uid="835a4043-d166-4806-8f79-d6b61e74da39"/>
         <COMPID name="Host game" mc="Standard.UseCase" uid="24960965-7a42-4a91-9c79-e30303861942"/>
-        <COMPID name="Witch Effect" mc="Standard.UseCase" uid="82089218-0d74-4724-a0db-0cd92d18b21a"/>
-        <COMPID name="Hunt Effect" mc="Standard.UseCase" uid="e509816d-1fde-4bbf-acfb-8a7b888e344f"/>
-        <COMPID name="Being accused" mc="Standard.UseCase" uid="3a0202d2-6328-44a8-9c50-658899212289"/>
-        <COMPID name="Being the current player" mc="Standard.UseCase" uid="b3810b3f-da12-46c7-ab72-ac09dbff3e71"/>
+        <COMPID name="Apply Witch effect" mc="Standard.UseCase" uid="82089218-0d74-4724-a0db-0cd92d18b21a"/>
+        <COMPID name="Apply Hunt effect" mc="Standard.UseCase" uid="e509816d-1fde-4bbf-acfb-8a7b888e344f"/>
         <COMPID name="Select Witch" mc="Standard.UseCase" uid="d644dead-b350-4765-a9c1-1060b2d17740"/>
         <COMPID name="Select Villager" mc="Standard.UseCase" uid="d4f115c3-7fad-46c2-be9f-bcc3e70e8253"/>
+        <COMPID name="Enter Player's names" mc="Standard.UseCase" uid="f878caac-5ece-4260-a116-2df212afca05"/>
+        <COMPID name="Administrator" mc="Standard.Actor" uid="021da1b4-c030-43ca-adae-ddc60c185376"/>
+        <COMPID name="Player" mc="Standard.Actor" uid="0cadbd1b-b1ad-4fa3-8e10-43b698cc8adc"/>
+        <COMPID name="Accused Player" mc="Standard.Actor" uid="ec2195d9-ed08-4737-ba6b-7274d7fb8a21"/>
       </COMP>
       <COMP relation="Product">
         <COMPID name="Diagramme de cas d'utilisation DGCasUtilisation" mc="Standard.UseCaseDiagram" uid="ad4e7c65-3e0e-4048-a562-90b1f545296e"/>

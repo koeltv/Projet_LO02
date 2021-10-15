@@ -56,7 +56,7 @@
           </DEPENDENCIES>
         </OBJECT>
         <OBJECT>
-          <ID name="getRound" mc="Standard.Operation" uid="b0ae0205-962d-444d-95cb-6b52d3c58c91"/>
+          <ID name="getRound" mc="Standard.Operation" uid="716e5197-0ee5-4c5a-bc95-2ca1d95ce1b1"/>
           <ATTRIBUTES>
             <ATT name="Concurrency">false</ATT>
             <ATT name="Final">false</ATT>
@@ -70,7 +70,7 @@
           <DEPENDENCIES>
             <COMP relation="Return">
               <OBJECT>
-                <ID name="" mc="Standard.Parameter" uid="9b6a972c-5e8b-42ca-b5c4-52aa78fad1a3"/>
+                <ID name="p1" mc="Standard.Parameter" uid="b65decaf-7205-4fa6-9c9a-dbcdcbe8b124"/>
                 <ATTRIBUTES>
                   <ATT name="ParameterPassing">In</ATT>
                   <ATT name="MultiplicityMin"><![CDATA[1]]></ATT>
@@ -82,64 +82,12 @@
                   <ATT name="IsException">false</ATT>
                   <ATT name="IsStream">false</ATT>
                   <ATT name="Effect">ReadEffect</ATT>
-                  <ATT name="Name"></ATT>
+                  <ATT name="Name"><![CDATA[p1]]></ATT>
                   <ATT name="status">1970354901745664</ATT>
                 </ATTRIBUTES>
                 <DEPENDENCIES>
                   <LINK relation="Type">
                     <ID name="Round" mc="Standard.Class" uid="c28f7e31-e764-4b29-bf82-24de6d7b861e"/>
-                  </LINK>
-                </DEPENDENCIES>
-              </OBJECT>
-            </COMP>
-            <LINK relation="Extension">
-              <FOREIGNID name="JavaGetter" mc="Infrastructure.Stereotype" uid="01ec25e8-0000-00f0-0000-000000000000"/>
-            </LINK>
-            <COMP relation="DependsOnDependency">
-              <OBJECT>
-                <ID name="" mc="Infrastructure.Dependency" uid="1b4207ce-bba3-4a4e-b967-646196150afd"/>
-                <ATTRIBUTES>
-                  <ATT name="Name"></ATT>
-                  <ATT name="status">1970354901745664</ATT>
-                </ATTRIBUTES>
-                <DEPENDENCIES>
-                  <LINK relation="DependsOn">
-                    <REFOBJ>
-                      <ID name="round" mc="Standard.Attribute" uid="4fc1ca21-0e93-4720-9460-38403cbf79ba"/>
-                    </REFOBJ>
-                  </LINK>
-                  <LINK relation="Extension">
-                    <FOREIGNID name="JavaGetter" mc="Infrastructure.Stereotype" uid="01ec23a8-0000-012b-0000-000000000000"/>
-                  </LINK>
-                </DEPENDENCIES>
-              </OBJECT>
-            </COMP>
-            <COMP relation="Descriptor">
-              <OBJECT>
-                <ID name="" mc="Infrastructure.Note" uid="dd5560d4-3d0e-445e-8af7-30daa9b4d0b7"/>
-                <ATTRIBUTES>
-                  <ATT name="Content"><![CDATA[// Automatically generated method. Please delete this comment before entering specific code.]]></ATT>
-                  <ATT name="MimeType"></ATT>
-                  <ATT name="Name"></ATT>
-                  <ATT name="status">1970354901745664</ATT>
-                </ATTRIBUTES>
-                <DEPENDENCIES>
-                  <LINK relation="Model">
-                    <FOREIGNID name="JavaCode" mc="Infrastructure.NoteType" uid="003800a8-0000-018e-0000-000000000000"/>
-                  </LINK>
-                </DEPENDENCIES>
-              </OBJECT>
-              <OBJECT>
-                <ID name="" mc="Infrastructure.Note" uid="9b4acbf0-f796-44c3-bbda-427f6379c5ba"/>
-                <ATTRIBUTES>
-                  <ATT name="Content"><![CDATA[return round;]]></ATT>
-                  <ATT name="MimeType"></ATT>
-                  <ATT name="Name"></ATT>
-                  <ATT name="status">1970354901745664</ATT>
-                </ATTRIBUTES>
-                <DEPENDENCIES>
-                  <LINK relation="Model">
-                    <FOREIGNID name="JavaReturned" mc="Infrastructure.NoteType" uid="003800a8-0000-0190-0000-000000000000"/>
                   </LINK>
                 </DEPENDENCIES>
               </OBJECT>
@@ -900,30 +848,6 @@ this.nextPlayer = value;]]></ATT>
       </COMP>
       <COMP relation="OwnedAttribute">
         <OBJECT>
-          <ID name="round" mc="Standard.Attribute" uid="4fc1ca21-0e93-4720-9460-38403cbf79ba"/>
-          <ATTRIBUTES>
-            <ATT name="TypeConstraint"></ATT>
-            <ATT name="Value"></ATT>
-            <ATT name="TargetIsClass">false</ATT>
-            <ATT name="Changeable">Read</ATT>
-            <ATT name="IsDerived">false</ATT>
-            <ATT name="IsOrdered">false</ATT>
-            <ATT name="IsUnique">false</ATT>
-            <ATT name="MultiplicityMin"><![CDATA[1]]></ATT>
-            <ATT name="MultiplicityMax"><![CDATA[1]]></ATT>
-            <ATT name="Visibility">Private</ATT>
-            <ATT name="IsClass">true</ATT>
-            <ATT name="IsAbstract">false</ATT>
-            <ATT name="Name"><![CDATA[round]]></ATT>
-            <ATT name="status">1970354901745664</ATT>
-          </ATTRIBUTES>
-          <DEPENDENCIES>
-            <LINK relation="Type">
-              <ID name="Round" mc="Standard.Class" uid="c28f7e31-e764-4b29-bf82-24de6d7b861e"/>
-            </LINK>
-          </DEPENDENCIES>
-        </OBJECT>
-        <OBJECT>
           <ID name="numberOfRound" mc="Standard.Attribute" uid="f1eb2f1f-3209-47b3-9074-ea2f205131cb"/>
           <ATTRIBUTES>
             <ATT name="TypeConstraint"></ATT>
@@ -1135,7 +1059,7 @@ this.nextPlayer = value;]]></ATT>
                       <DEPENDENCIES>
                         <COMP relation="LinkToClass">
                           <OBJECT>
-                            <ID name="ClassAssociation" mc="Standard.ClassAssociation" uid="b4d29c3a-0a96-4771-9f4e-7f5f684cee62"/>
+                            <ID name="ClassAssociation" mc="Standard.ClassAssociation" uid="3fa6a879-ca68-417e-94c5-836bc2034db2"/>
                             <ATTRIBUTES>
                               <ATT name="Name"><![CDATA[ClassAssociation]]></ATT>
                               <ATT name="status">1970354901745664</ATT>
@@ -1155,6 +1079,67 @@ this.nextPlayer = value;]]></ATT>
             </COMP>
             <COMP relation="Association">
               <COMPID name="" mc="Standard.Association" uid="f8682a57-87e0-4403-8af3-0508423cdf2b"/>
+            </COMP>
+          </DEPENDENCIES>
+        </OBJECT>
+        <OBJECT>
+          <ID name="round" mc="Standard.AssociationEnd" uid="9810aaba-8f32-4fa2-96a3-8c8166a22603"/>
+          <ATTRIBUTES>
+            <ATT name="Aggregation">KindIsAssociation</ATT>
+            <ATT name="IsChangeable">true</ATT>
+            <ATT name="Changeable">ReadWrite</ATT>
+            <ATT name="IsDerived">false</ATT>
+            <ATT name="IsOrdered">false</ATT>
+            <ATT name="IsUnique">false</ATT>
+            <ATT name="MultiplicityMin"><![CDATA[1]]></ATT>
+            <ATT name="MultiplicityMax"><![CDATA[1]]></ATT>
+            <ATT name="Visibility">Private</ATT>
+            <ATT name="IsClass">true</ATT>
+            <ATT name="IsAbstract">false</ATT>
+            <ATT name="Name"><![CDATA[round]]></ATT>
+            <ATT name="status">1970354901745664</ATT>
+          </ATTRIBUTES>
+          <DEPENDENCIES>
+            <LINK relation="Target">
+              <ID name="Round" mc="Standard.Class" uid="c28f7e31-e764-4b29-bf82-24de6d7b861e"/>
+            </LINK>
+            <COMP relation="Opposite">
+              <OBJECT>
+                <ID name="" mc="Standard.AssociationEnd" uid="7e31cfec-3629-45bf-a76c-614911389815"/>
+                <ATTRIBUTES>
+                  <ATT name="Aggregation">KindIsAssociation</ATT>
+                  <ATT name="IsChangeable">true</ATT>
+                  <ATT name="Changeable">ReadWrite</ATT>
+                  <ATT name="IsDerived">false</ATT>
+                  <ATT name="IsOrdered">false</ATT>
+                  <ATT name="IsUnique">false</ATT>
+                  <ATT name="MultiplicityMin"><![CDATA[1]]></ATT>
+                  <ATT name="MultiplicityMax"><![CDATA[1]]></ATT>
+                  <ATT name="Visibility">Public</ATT>
+                  <ATT name="IsClass">false</ATT>
+                  <ATT name="IsAbstract">false</ATT>
+                  <ATT name="Name"></ATT>
+                  <ATT name="status">1970354901745664</ATT>
+                </ATTRIBUTES>
+                <DEPENDENCIES>
+                  <COMP relation="Opposite">
+                    <COMPID name="round" mc="Standard.AssociationEnd" uid="9810aaba-8f32-4fa2-96a3-8c8166a22603"/>
+                  </COMP>
+                  <COMP relation="Association">
+                    <OBJECT>
+                      <ID name="" mc="Standard.Association" uid="ff607fb8-cf8e-4a7d-8ac8-0964dfa3d868"/>
+                      <ATTRIBUTES>
+                        <ATT name="Name"></ATT>
+                        <ATT name="status">1970354901745664</ATT>
+                      </ATTRIBUTES>
+                      <DEPENDENCIES></DEPENDENCIES>
+                    </OBJECT>
+                  </COMP>
+                </DEPENDENCIES>
+              </OBJECT>
+            </COMP>
+            <COMP relation="Association">
+              <COMPID name="" mc="Standard.Association" uid="ff607fb8-cf8e-4a7d-8ac8-0964dfa3d868"/>
             </COMP>
           </DEPENDENCIES>
         </OBJECT>

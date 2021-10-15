@@ -13,23 +13,6 @@
       <ATT name="status">1970354901745664</ATT>
     </ATTRIBUTES>
     <DEPENDENCIES>
-      <COMP relation="Used">
-        <OBJECT>
-          <ID name="UseCaseDependency" mc="Standard.UseCaseDependency" uid="2d559140-4904-4000-b0fa-0cdd32aa8972"/>
-          <ATTRIBUTES>
-            <ATT name="Name"><![CDATA[UseCaseDependency]]></ATT>
-            <ATT name="status">1970354901745664</ATT>
-          </ATTRIBUTES>
-          <DEPENDENCIES>
-            <LINK relation="Target">
-              <ID name="Being the current player" mc="Standard.UseCase" uid="b3810b3f-da12-46c7-ab72-ac09dbff3e71"/>
-            </LINK>
-            <LINK relation="Extension">
-              <FOREIGNID name="include" mc="Infrastructure.Stereotype" uid="00000000-0000-9c49-0000-000000000000"/>
-            </LINK>
-          </DEPENDENCIES>
-        </OBJECT>
-      </COMP>
       <COMP relation="Parent">
         <OBJECT>
           <ID name="Generalization" mc="Standard.Generalization" uid="b4507f93-c9eb-45ae-acad-9ef3284a3c7e"/>

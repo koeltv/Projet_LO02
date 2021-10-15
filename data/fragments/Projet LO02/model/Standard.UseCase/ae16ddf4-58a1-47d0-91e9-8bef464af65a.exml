@@ -1,7 +1,7 @@
 <?xml version="1.0" ?>
-<!--GENERATED FILE, PLEASE DO NOT EDIT!!!--><EXT object="Select nbPlayer|nbAI" version="4">
+<!--GENERATED FILE, PLEASE DO NOT EDIT!!!--><EXT object="Select number of Players &amp; AIs" version="4">
   <OBJECT>
-    <ID name="Select nbPlayer|nbAI" mc="Standard.UseCase" uid="ae16ddf4-58a1-47d0-91e9-8bef464af65a"/>
+    <ID name="Select number of Players &amp; AIs" mc="Standard.UseCase" uid="ae16ddf4-58a1-47d0-91e9-8bef464af65a"/>
     <PID name="DGCasUtilisation" mc="Standard.Package" uid="f6da50c7-f607-4ba5-bf81-13175e6cb196"/>
     <ATTRIBUTES>
       <ATT name="IsElementary">false</ATT>
@@ -9,21 +9,23 @@
       <ATT name="IsLeaf">false</ATT>
       <ATT name="IsRoot">false</ATT>
       <ATT name="Visibility">Public</ATT>
-      <ATT name="Name"><![CDATA[Select nbPlayer|nbAI]]></ATT>
+      <ATT name="Name"><![CDATA[Select number of Players & AIs]]></ATT>
       <ATT name="status">1970354901745664</ATT>
     </ATTRIBUTES>
     <DEPENDENCIES>
-      <COMP relation="Parent">
+      <COMP relation="Used">
         <OBJECT>
-          <ID name="Generalization" mc="Standard.Generalization" uid="2e26a026-3fd8-47f8-849a-30f18c94ea3d"/>
+          <ID name="UseCaseDependency" mc="Standard.UseCaseDependency" uid="c67fb08f-ccad-4e49-8804-36b1f2aec4ad"/>
           <ATTRIBUTES>
-            <ATT name="Discriminator"></ATT>
-            <ATT name="Name"><![CDATA[Generalization]]></ATT>
+            <ATT name="Name"><![CDATA[UseCaseDependency]]></ATT>
             <ATT name="status">1970354901745664</ATT>
           </ATTRIBUTES>
           <DEPENDENCIES>
-            <LINK relation="SuperType">
+            <LINK relation="Target">
               <ID name="Host game" mc="Standard.UseCase" uid="24960965-7a42-4a91-9c79-e30303861942"/>
+            </LINK>
+            <LINK relation="Extension">
+              <FOREIGNID name="include" mc="Infrastructure.Stereotype" uid="00000000-0000-9c49-0000-000000000000"/>
             </LINK>
           </DEPENDENCIES>
         </OBJECT>
