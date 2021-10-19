@@ -58,9 +58,10 @@ public class Player {
      * Reveal a Rumour card
      * This method reveal the chosen card from the player hand and call its effects
      * @param cardToReveal - card to reveal
+     * @return Whether the card has been used successfully or not
      */
-    public void revealRumourCard(RumourCard cardToReveal) {
-        cardToReveal.useCard(this);
+    public boolean revealRumourCard(RumourCard cardToReveal) {
+        return cardToReveal.useCard(this);
     }
 
     /**

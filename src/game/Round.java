@@ -18,9 +18,9 @@ public class Round {
 
     private Player nextPlayer;
 
-    public List<RumourCard> discardPile = new ArrayList<>();
+    public final List<RumourCard> discardPile = new ArrayList<>();
 
-    public List<IdentityCard> activePlayers = new ArrayList<>();
+    public final List<IdentityCard> activePlayers = new ArrayList<>();
 
     private Round() {}
 
