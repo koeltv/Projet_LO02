@@ -31,7 +31,10 @@ public class AI extends Player {
         boolean nameAssigned = false;
         do {
             name = AI_NAMES[Game.randomInInterval(0, AI_NAMES.length - 1)];
-            for (Player player : Game.getGame().players) nameAssigned = name.equals(player.getName());
+            for (Player player : Game.getGame().players) {
+                nameAssigned = name.equals(player.getName());
+                if (nameAssigned) break;
+            }
         } while (nameAssigned);
         return name;
     }

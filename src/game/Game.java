@@ -126,10 +126,10 @@ public class Game extends Observable {
 
         for (int i = 0; i < nbPlayers; i++) {
             System.out.println("Name of player " + (i+1) + " ?");
-            this.players.add(i, new Player(sc.next()));
+            this.players.add(new Player(sc.next()));
         }
         for (int i = nbPlayers; i < nbPlayers + nbAIs; i++) {
-            this.players.add(i, new AI());
+            this.players.add(new AI());
         }
     }
 
