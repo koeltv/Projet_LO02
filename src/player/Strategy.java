@@ -1,6 +1,8 @@
 package player;
 
 public interface Strategy {
-    void use();
+    void use(AI ai);
+
+    void selectIdentity(AI ai);
 
 }

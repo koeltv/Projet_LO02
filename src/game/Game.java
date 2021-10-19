@@ -18,7 +18,7 @@ public class Game extends Observable {
 
     public final List<RumourCard> deck = new ArrayList<>();
 
-    public final Round round = Round.getRound();
+    public Round round = Round.getRound();
 
     private Game() {}
 
@@ -26,6 +26,10 @@ public class Game extends Observable {
         return game;
     }
 
+    /**
+     * Set up the game
+     * This is where the cards are instantiated before a new game
+     */
     private void setupGame() {
         for (CardName cardName : CardName.values()) {
             List<Effect> witchEffects = new ArrayList<>();
@@ -86,6 +90,10 @@ public class Game extends Observable {
         }
     }
 
+    /**
+     * Wrap up the game
+     * This is where we congratulate the winner and settle ties if needed
+     */
     private void wrapUpGame() {
         List<Player> winners = new ArrayList<>();
 
@@ -96,12 +104,16 @@ public class Game extends Observable {
         if (winners.size() > 1) {
             settleTie();
         } else if (winners.size() == 1){
-            System.out.println("Congratulations " + winners.get(0) + ", you won this game !");
+            System.out.println("Congratulations " + winners.get(0).getName() + ", you won this game !");
         } else {
             System.out.println("No winner ? Oh wait...");
         }
     }
 
+    /**
+     * Ask for player repartition
+     * This function asks for the repartition of players and AIs, along with the players name
+     */
     private void askForPlayerRepartition() {
         Scanner sc = new Scanner(System.in);
         int nbPlayers, nbAIs;
@@ -121,21 +133,37 @@ public class Game extends Observable {
         }
     }
 
+    /**
+     * Verify the scores
+     * This function verify the score of each player to know the current state of the game
+     * @return true if at least 1 player has at least 5 points, false otherwise
+     */
     private boolean verifyScores() {
         for (Player player : this.players)
             if (player.getScore() >= 5) return true;
         return false;
     }
 
+    /**
+     * Settle ties
+     * This function is used when more than 1 player has at least 5 points in order to decide a single winner
+     */
     private void settleTie() {
     }
 
     public void sendGameState() {
     }
 
+    /**
+     * Get random integer in a given interval
+     * This function is a utility function used to get a random integer between 2 limits (included)
+     * @param min - The minimum value to be returned (included)
+     * @param max - The maximum value to be returned (included)
+     * @return random integer in the interval
+     */
     public static int randomInInterval(int min, int max) {
         Random random = new Random();
-        return random.nextInt(max-min) + min;
+        return random.nextInt((max + 1)-min) + min;
     }
 
     public static void main(String[] args) {
@@ -144,7 +172,8 @@ public class Game extends Observable {
         game.setupGame();
         do {
             game.round.startRound();
-        } while (game.verifyScores());
+            game.round = Round.getRound();
+        } while (!game.verifyScores());
         game.wrapUpGame();
     }
 

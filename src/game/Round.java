@@ -2,12 +2,10 @@ package game;
 
 import card.CardName;
 import card.RumourCard;
-import player.AI;
 import player.Player;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Scanner;
 
 public class Round {
     private static Round round = new Round();
@@ -16,13 +14,13 @@ public class Round {
 
     private static Player currentPlayer;
 
-    private static int numberOfNotRevealedPlayers;
+    private int numberOfNotRevealedPlayers;
 
     private Player nextPlayer;
 
-    public final List<RumourCard> discardPile = new ArrayList<>();
+    public List<RumourCard> discardPile = new ArrayList<>();
 
-    public final List<IdentityCard> activePlayers = new ArrayList<>();
+    public List<IdentityCard> activePlayers = new ArrayList<>();
 
     private Round() {}
 
@@ -34,11 +32,11 @@ public class Round {
         return numberOfRound;
     }
 
-    public static int getNumberOfNotRevealedPlayers() {
+    public int getNumberOfNotRevealedPlayers() {
         return numberOfNotRevealedPlayers;
     }
 
-    public static void setNumberOfNotRevealedPlayers(int value) {
+    public void setNumberOfNotRevealedPlayers(int value) {
         numberOfNotRevealedPlayers = value;
     }
 
@@ -75,7 +73,7 @@ public class Round {
         int numberOfCardsPerPlayer = CardName.values().length / nbOfPlayers;
         for (Player player : Game.getGame().players) {
             for (int i = 0; i < numberOfCardsPerPlayer; i++) {
-                int index = Game.randomInInterval(0, Game.getGame().deck.size());
+                int index = Game.randomInInterval(0, Game.getGame().deck.size() - 1);
                 player.addCardToHand(Game.getGame().deck.get(index));
                 Game.getGame().deck.remove(index);
             }
@@ -84,22 +82,17 @@ public class Round {
 
     private void askPlayersForIdentity() {
         for (IdentityCard identityCard : Game.getGame().round.activePlayers) {
-            if (!(identityCard.player instanceof AI)) {
-                System.out.println(identityCard.player.getName() + ", type 0 for villager and 1 for witch");
-                Scanner scanner = new Scanner(System.in);
-                identityCard.setWitch(scanner.nextInt() > 0);
-            } else {
-                //TODO Use AI Strategy
-            }
+            identityCard.player.selectIdentity();
         }
     }
 
     private void selectFirstPlayer() {
         List<Player> playerList = Game.getGame().players;
-        Round.currentPlayer = playerList.get(Game.randomInInterval(0, playerList.size()));
+        Round.currentPlayer = playerList.get(Game.randomInInterval(0, playerList.size() - 1));
     }
 
     public void startRound() {
+        System.out.println("===============================");
         if (currentPlayer == null) selectFirstPlayer();
         //Fill up the list of active players at the start
         for (Player player: Game.getGame().players) {
@@ -107,6 +100,8 @@ public class Round {
             round.activePlayers.add(playerIdentityCard);
             player.identityCard = playerIdentityCard;
         }
+        this.numberOfNotRevealedPlayers = this.activePlayers.size();
+
         this.distributeRumourCards();
         this.askPlayersForIdentity();
         numberOfRound++;
@@ -116,27 +111,25 @@ public class Round {
     private void playRound() {
         do {
             askCurrentPlayerForAction();
-            Round.currentPlayer = this.nextPlayer;
+            if (this.numberOfNotRevealedPlayers > 1) Round.currentPlayer = this.nextPlayer;
             //TODO Playing loop, currently there is a risk of not setting next player
-        } while (Game.getGame().players.size() - numberOfNotRevealedPlayers > 1);
-
-        //We search the last not revealed player, reveal is identity and give him points
-        Player roundWinner = null;
-        for (IdentityCard identityCard : this.activePlayers) {
-            if (!identityCard.isIdentityRevealed()) {
-                roundWinner = identityCard.player;
-                break;
-            }
-        }
-        if (roundWinner != null) {
-            roundWinner.revealIdentity();
-            roundWinner.setScore(roundWinner.getScore() + (roundWinner.identityCard.isWitch() ? 2 : 1));
-        }
-
+        } while (this.numberOfNotRevealedPlayers > 1);
         endRound();
     }
 
     private void endRound() {
+        //We search the last not revealed player, reveal is identity and give him points
+        for (IdentityCard identityCard : this.activePlayers) {
+            if (!identityCard.isIdentityRevealed()) {
+                //Reveal player identity and give points
+                System.out.println(identityCard.player.getName() + " won this round !");
+                identityCard.player.revealIdentity();
+                identityCard.player.addToScore(identityCard.player.identityCard.isWitch() ? 2 : 1);
+                //Set him to be first for the next round
+                Round.currentPlayer = identityCard.player;
+                break;
+            }
+        }
         //Gather all players cards
         for (Player player : Game.getGame().players) {
             int startingNumberOfCard = player.hand.size();
@@ -153,7 +146,7 @@ public class Round {
             this.discardPile.remove(removedCard);
             Game.getGame().deck.add(removedCard);
         }
-        round = new Round();
+        Round.round = new Round();
     }
 
 }
