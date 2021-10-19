@@ -2,8 +2,6 @@ package player;
 
 import game.Game;
 
-import java.util.Scanner;
-
 public class AI extends Player {
     private static final String[] AI_NAMES = {"Jean", "Antoine", "Fabrice", "Patrick", "Clara", "June", "Louis", "Silvain"};
 
@@ -24,6 +22,10 @@ public class AI extends Player {
         };
     }
 
+    /**
+     * Get a random not already assigned name
+     * @return New name
+     */
     private static String randomAIName() {
         String name;
         boolean nameAssigned = false;
@@ -34,11 +36,17 @@ public class AI extends Player {
         return name;
     }
 
+    /**
+     * Use the AI strategy to select action
+     */
     public void play() {
         System.out.println("Currently using " + this.getName() + "'s player.Strategy !"); //Used for debug
         this.strategy.use(this);
     }
 
+    /**
+     * Use the AI strategy to select identity
+     */
     public void selectIdentity() {
         this.strategy.selectIdentity(this);
     }

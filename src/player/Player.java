@@ -43,6 +43,10 @@ public class Player {
         this.hand.removeIf(cardState -> cardState.rumourCard == rumourCard);
     }
 
+    /**
+     * Accuse the chosen player
+     * @param accusedPlayer - player to accuse
+     */
     public void accuse(Player accusedPlayer) {
         accusedPlayer.play();
         if (accusedPlayer.identityCard.isWitch()) {
@@ -50,10 +54,18 @@ public class Player {
         }
     }
 
-    public void revealRumorCard(RumourCard cardToReveal) {
+    /**
+     * Reveal a Rumour card
+     * This method reveal the chosen card from the player hand and call its effects
+     * @param cardToReveal - card to reveal
+     */
+    public void revealRumourCard(RumourCard cardToReveal) {
         cardToReveal.useCard(this);
     }
 
+    /**
+     * Reveal the player identity
+     */
     public void revealIdentity() {
         this.identityCard.setIdentityRevealed(true);
         System.out.print("Player " + this.getName() + " is a ");
@@ -67,6 +79,10 @@ public class Player {
         Round.getRound().setNumberOfNotRevealedPlayers(Round.getRound().getNumberOfNotRevealedPlayers() - 1);
     }
 
+    /**
+     * Prompt player for action
+     * This method will prompt the player to choose an action; accuse or reveal a card if he is the current player, reveal his identity or reveal a card otherwise
+     */
     public void play() {
         if (this == Round.getCurrentPlayer()) {
             System.out.print(this.getName() + ", ");
@@ -86,7 +102,7 @@ public class Player {
                 } else {
                     System.out.println("Which card do you want to use ?");
                     RumourCard chosenRumourCard = this.chooseCard(); //TODO Make a choice list for the user
-                    this.revealRumorCard(chosenRumourCard);
+                    this.revealRumourCard(chosenRumourCard);
                 }
             }
         } else {
@@ -104,12 +120,16 @@ public class Player {
                 } else {
                     System.out.println("Which card do you want to use ?");
                     RumourCard chosenRumourCard = this.chooseCard(); //TODO Make a choice list for the user
-                    this.revealRumorCard(chosenRumourCard);
+                    this.revealRumourCard(chosenRumourCard);
                 }
             }
         }
     }
 
+    /**
+     * Get the list of not revealed card from the player's hand
+     * @return Selectable cards
+     */
     public List<CardState> getSelectableCards() {
         List<CardState> selectableCards = new ArrayList<>();
         for (CardState cardState : this.hand) {
@@ -118,6 +138,10 @@ public class Player {
         return selectableCards;
     }
 
+    /**
+     * Prompt the player to choose a card
+     * @return Chosen card
+     */
     RumourCard chooseCard() { //TODO Temporary, to choose a card
         List<CardState> selectableCards = this.getSelectableCards();
         //Printing selectable cards
@@ -128,6 +152,10 @@ public class Player {
         return this.hand.get(scanner.nextInt()).rumourCard;
     }
 
+    /**
+     * Get the list of not revealed player in the current round
+     * @return Selectable players
+     */
     public List<IdentityCard> getSelectablePlayers() {
         List<IdentityCard> selectablePlayers = new ArrayList<>();
         for (IdentityCard identityCard : Game.getGame().round.activePlayers) {
@@ -138,6 +166,10 @@ public class Player {
         return selectablePlayers;
     }
 
+    /**
+     * Prompt the player to choose another player
+     * @return Chosen player
+     */
     public Player choosePlayer() { //TODO Temporary to choose a player
         List<IdentityCard> selectablePlayers = this.getSelectablePlayers();
         //Printing selectable players
@@ -149,6 +181,9 @@ public class Player {
         return selectablePlayers.get(scanner.nextInt()).player;
     }
 
+    /**
+     * Prompt the user to choose an identity
+     */
     public void selectIdentity() {
         System.out.println(this.getName() + ", type 0 for villager and 1 for witch");
         Scanner scanner = new Scanner(System.in);

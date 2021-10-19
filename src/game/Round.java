@@ -44,20 +44,24 @@ public class Round {
         return currentPlayer;
     }
 
-    public Player getNextPlayer() {
-        return this.nextPlayer;
-    }
-
     public void setNextPlayer(Player value) {
         this.nextPlayer = value;
     }
 
+    /**
+     * Ask the current player for his next action
+     * This method will call the play method of the current player
+     */
     private void askCurrentPlayerForAction() {
         Round.getCurrentPlayer().play();
     }
 
+    /**
+     * Distribute Rumour cards
+     * This method distribute the Rumour cards at the start of a round based on the number of players
+     */
     private void distributeRumourCards() {
-        int nbOfPlayers = Game.getGame().players.size();
+        int nbOfPlayers = this.activePlayers.size();
         int nbOfExcessCards = CardName.values().length % nbOfPlayers;
 
         //Take care of excess cards
@@ -80,17 +84,29 @@ public class Round {
         }
     }
 
+    /**
+     * Ask players for their chosen identity
+     * This method will call the selectIdentity() method to prompt players to choose a role for the round
+     */
     private void askPlayersForIdentity() {
         for (IdentityCard identityCard : Game.getGame().round.activePlayers) {
             identityCard.player.selectIdentity();
         }
     }
 
+    /**
+     * Select the first player
+     * This method will only be used on the first round to select a random player to start
+     */
     private void selectFirstPlayer() {
         List<Player> playerList = Game.getGame().players;
         Round.currentPlayer = playerList.get(Game.randomInInterval(0, playerList.size() - 1));
     }
 
+    /**
+     * Set up the round
+     * This method will do everything necessary to set up a round (select 1st player, create identity cards, distribute Rumour cards, ask players for identity)
+     */
     public void startRound() {
         System.out.println("===============================");
         if (currentPlayer == null) selectFirstPlayer();
@@ -108,6 +124,10 @@ public class Round {
         playRound();
     }
 
+    /**
+     * Round playing loop
+     * This method will prompt the current player for action, then set the current player to the next and loop while there is more than 1 not revealed player
+     */
     private void playRound() {
         do {
             askCurrentPlayerForAction();
@@ -117,6 +137,10 @@ public class Round {
         endRound();
     }
 
+    /**
+     * Wrap up the round
+     * This method will do everything necessary to wrap up a round (reveal last player and give him points, gather all cards)
+     */
     private void endRound() {
         //We search the last not revealed player, reveal is identity and give him points
         for (IdentityCard identityCard : this.activePlayers) {

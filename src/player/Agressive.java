@@ -5,7 +5,6 @@ import game.IdentityCard;
 import game.Round;
 
 import java.util.List;
-import java.util.Scanner;
 
 public class Agressive implements Strategy {
     public void use(AI ai) { //TODO Temporary implementation, need to be developed
