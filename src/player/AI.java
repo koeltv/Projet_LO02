@@ -2,11 +2,20 @@ package player;
 
 import game.Game;
 
+/**
+ * The type AI.
+ */
 public class AI extends Player {
     private static final String[] AI_NAMES = {"Jean", "Antoine", "Fabrice", "Patrick", "Clara", "June", "Louis", "Silvain"};
 
+    /**
+     * The Strategy.
+     */
     public final Strategy strategy;
 
+    /**
+     * Instantiates a new AI.
+     */
     public AI() {
         super(randomAIName());
         System.out.print("AI " + this.getName() + " is ");
@@ -24,7 +33,7 @@ public class AI extends Player {
 
     /**
      * Get a random not already assigned name
-     * @return New name
+     * @return new name
      */
     private static String randomAIName() {
         String name;

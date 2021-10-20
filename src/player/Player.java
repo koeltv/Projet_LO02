@@ -10,42 +10,84 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
+/**
+ * The type Player.
+ */
 public class Player {
     private int score;
 
     private final String name;
 
+    /**
+     * The Identity card.
+     * Identity card of the player attributed at the start of each round.
+     */
     public IdentityCard identityCard; //TODO Check if necessary
 
+    /**
+     * The Hand.
+     * Hand of the player including revealed cards
+     */
     public final List<CardState> hand = new ArrayList<>();
 
+    /**
+     * Instantiates a new Player.
+     *
+     * @param name the player name
+     */
     public Player(final String name) {
         this.name = name;
     }
 
+    /**
+     * Gets score.
+     *
+     * @return the score
+     */
     public int getScore() {
         return this.score;
     }
 
+    /**
+     * Add to score.
+     *
+     * @param value the value
+     */
     public void addToScore(int value) {
         this.score += value;
     }
 
+    /**
+     * Gets name.
+     *
+     * @return the name
+     */
     public String getName() {
         return this.name;
     }
 
+    /**
+     * Add card to hand.
+     *
+     * @param rumourCard the rumour card
+     */
     public void addCardToHand(RumourCard rumourCard) {
         this.hand.add(new CardState(rumourCard));
     }
 
+    /**
+     * Remove card from hand.
+     *
+     * @param rumourCard the rumour card to remove
+     */
     public void removeCardFromHand(RumourCard rumourCard) {
         this.hand.removeIf(cardState -> cardState.rumourCard == rumourCard);
     }
 
     /**
      * Accuse the chosen player
-     * @param accusedPlayer - player to accuse
+     *
+     * @param accusedPlayer player to accuse
      */
     public void accuse(Player accusedPlayer) {
         accusedPlayer.play();
@@ -57,8 +99,9 @@ public class Player {
     /**
      * Reveal a Rumour card
      * This method reveal the chosen card from the player hand and call its effects
-     * @param cardToReveal - card to reveal
-     * @return Whether the card has been used successfully or not
+     *
+     * @param cardToReveal card to reveal
+     * @return whether the card has been used successfully or not
      */
     public boolean revealRumourCard(RumourCard cardToReveal) {
         return cardToReveal.useCard(this);
@@ -129,7 +172,8 @@ public class Player {
 
     /**
      * Get the list of not revealed card from the player's hand
-     * @return Selectable cards
+     *
+     * @return selectable cards
      */
     public List<CardState> getSelectableCards() {
         List<CardState> selectableCards = new ArrayList<>();
@@ -141,7 +185,8 @@ public class Player {
 
     /**
      * Prompt the player to choose a card
-     * @return Chosen card
+     *
+     * @return chosen card
      */
     RumourCard chooseCard() { //TODO Temporary, to choose a card
         List<CardState> selectableCards = this.getSelectableCards();
@@ -155,7 +200,8 @@ public class Player {
 
     /**
      * Get the list of not revealed player in the current round
-     * @return Selectable players
+     *
+     * @return selectable players
      */
     public List<IdentityCard> getSelectablePlayers() {
         List<IdentityCard> selectablePlayers = new ArrayList<>();
@@ -169,7 +215,8 @@ public class Player {
 
     /**
      * Prompt the player to choose another player
-     * @return Chosen player
+     *
+     * @return chosen player
      */
     public Player choosePlayer() { //TODO Temporary to choose a player
         List<IdentityCard> selectablePlayers = this.getSelectablePlayers();

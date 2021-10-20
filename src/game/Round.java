@@ -7,6 +7,10 @@ import player.Player;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * The type Round.
+ * Round is the class that contains all methods to supervise a round. It is a singleton.
+ */
 public class Round {
     private static Round round = new Round();
 
@@ -18,34 +22,70 @@ public class Round {
 
     private Player nextPlayer;
 
+    /**
+     * The Discard pile.
+     */
     public final List<RumourCard> discardPile = new ArrayList<>();
 
+    /**
+     * The Active players.
+     */
     public final List<IdentityCard> activePlayers = new ArrayList<>();
 
     private Round() {}
 
+    /**
+     * Gets round instance.
+     *
+     * @return the round instance
+     */
     public static Round getRound() {
         return round;
     }
 
+    /**
+     * Gets number of round.
+     *
+     * @return the number of round
+     */
     public static int getNumberOfRound() {
         return numberOfRound;
     }
 
+    /**
+     * Gets number of not revealed players.
+     *
+     * @return the number of not revealed players
+     */
     public int getNumberOfNotRevealedPlayers() {
         return numberOfNotRevealedPlayers;
     }
 
-    public void setNumberOfNotRevealedPlayers(int value) {
-        numberOfNotRevealedPlayers = value;
+    /**
+     * Sets number of not revealed players.
+     *
+     * @param numberOfNotRevealedPlayers the number of not revealed players
+     */
+    public void setNumberOfNotRevealedPlayers(int numberOfNotRevealedPlayers) {
+        this.numberOfNotRevealedPlayers = numberOfNotRevealedPlayers;
     }
 
+    /**
+     * Gets current player.
+     *
+     * @return the current player
+     */
     public static Player getCurrentPlayer() {
         return currentPlayer;
     }
 
-    public void setNextPlayer(Player value) {
-        this.nextPlayer = value;
+    /**
+     * Sets next player.
+     *
+     * @param nextPlayer the next player
+     */
+    public void setNextPlayer(Player nextPlayer) {
+        this.nextPlayer = nextPlayer;
     }
 
     /**

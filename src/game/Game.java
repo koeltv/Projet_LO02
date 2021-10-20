@@ -11,17 +11,36 @@ import java.util.List;
 import java.util.Random;
 import java.util.Scanner;
 
+/**
+ * The type Game.
+ * Game is the main class that supervise the whole game. It is a singleton.
+ */
 public class Game extends Observable {
     private static final Game game = new Game();
 
+    /**
+     * The Players.
+     * List of all the players in the game
+     */
     public final List<Player> players = new ArrayList<>();
 
+    /**
+     * The Deck.
+     */
     public final List<RumourCard> deck = new ArrayList<>();
 
+    /**
+     * The Round.
+     */
     public Round round = Round.getRound();
 
     private Game() {}
 
+    /**
+     * Gets game instance.
+     *
+     * @return the game instance
+     */
     public static Game getGame() {
         return game;
     }
@@ -154,8 +173,9 @@ public class Game extends Observable {
     /**
      * Get random integer in a given interval
      * This function is a utility function used to get a random integer between 2 limits (included)
-     * @param min - The minimum value to be returned (included)
-     * @param max - The maximum value to be returned (included)
+     *
+     * @param min the minimum value to be returned (included)
+     * @param max the maximum value to be returned (included)
      * @return random integer in the interval
      */
     public static int randomInInterval(int min, int max) {
@@ -163,6 +183,11 @@ public class Game extends Observable {
         return random.nextInt((max + 1)-min) + min;
     }
 
+    /**
+     * The entry point of application.
+     *
+     * @param args the input arguments
+     */
     public static void main(String[] args) {
         Game game = Game.getGame();
 
