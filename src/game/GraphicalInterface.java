@@ -1,7 +1,7 @@
 package game;
 
 public class GraphicalInterface implements Observer {
-    public void update() {
+    public void update(String message) {
     }
 
 }

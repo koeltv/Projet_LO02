@@ -151,9 +151,6 @@ public class Game extends Observable {
     private void settleTie() {
     }
 
-    public void sendGameState() {
-    }
-
     /**
      * Get random integer in a given interval
      * This function is a utility function used to get a random integer between 2 limits (included)
@@ -168,6 +165,10 @@ public class Game extends Observable {
 
     public static void main(String[] args) {
         Game game = Game.getGame();
+
+        Console console = new Console();
+        game.addObserver(console);
+
         game.askForPlayerRepartition();
         game.setupGame();
         do {
