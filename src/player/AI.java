@@ -8,10 +8,7 @@ import game.Game;
 public class AI extends Player {
     private static final String[] AI_NAMES = {"Jean", "Antoine", "Fabrice", "Patrick", "Clara", "June", "Louis", "Silvain"};
 
-    /**
-     * The Strategy.
-     */
-    public final Strategy strategy;
+    private final Strategy strategy;
 
     /**
      * Instantiates a new AI.

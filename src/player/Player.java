@@ -134,48 +134,52 @@ public class Player {
     /**
      * Prompt player for action
      * This method will prompt the player to choose an action; accuse or reveal a card if he is the current player, reveal his identity or reveal a card otherwise
+     * If there was a problem with the resolution of the action, we loop until we can apply correctly an action
      */
     public void play() {
-        if (this == Round.getCurrentPlayer()) {
-            System.out.print(this.getName() + ", ");
-            //hunt effect or accuse
-            if (this.hand.size() < 1) {
-                System.out.println("You don't have any cards left, who do you want to accuse ?");
-                Player accusedPlayer = this.choosePlayer(); //TODO Make a choice list for the user
-                this.accuse(accusedPlayer);
-            } else {
-                System.out.println("Do you want to accuse someone or use a Rumour Card ? (0 or 1)");
-                Scanner scanner = new Scanner(System.in);
-                int action = scanner.nextInt();
-                if (action == 0) {
-                    System.out.println("Who do you want to accuse ?");
-                    Player accusedPlayer = this.choosePlayer(); //TODO Make a choice list for the user
+        boolean actionNotTaken = false;
+        do {
+            if (this == Round.getCurrentPlayer()) {
+                System.out.print(this.getName() + ", ");
+                //hunt effect or accuse
+                if (this.hand.size() < 1) {
+                    System.out.println("You don't have any cards left, who do you want to accuse ?");
+                    Player accusedPlayer = this.choosePlayer();
                     this.accuse(accusedPlayer);
                 } else {
-                    System.out.println("Which card do you want to use ?");
-                    RumourCard chosenRumourCard = this.chooseCard(); //TODO Make a choice list for the user
-                    this.revealRumourCard(chosenRumourCard);
+                    System.out.println("Do you want to accuse someone or use a Rumour Card ? (0 or 1)");
+                    Scanner scanner = new Scanner(System.in);
+                    int action = scanner.nextInt();
+                    if (action == 0) {
+                        System.out.println("Who do you want to accuse ?");
+                        Player accusedPlayer = this.choosePlayer();
+                        this.accuse(accusedPlayer);
+                    } else {
+                        System.out.println("Which card do you want to use ?");
+                        RumourCard chosenRumourCard = this.chooseCard();
+                        actionNotTaken = this.revealRumourCard(chosenRumourCard);
+                    }
                 }
-            }
-        } else {
-            //witch effect or reveal identity
-            if (this.hand.size() < 1) {
-                System.out.println("You don't have any cards left, revealing your identity:");
-                this.revealIdentity();
             } else {
-                System.out.println("Do you want to reveal your identity or use a Rumour Card ? (0 or 1)");
-                Scanner scanner = new Scanner(System.in);
-                int action = scanner.nextInt();
-                if (action == 0) {
-                    System.out.println("Revealing your identity:");
+                //witch effect or reveal identity
+                if (this.hand.size() < 1) {
+                    System.out.println("You don't have any cards left, revealing your identity:");
                     this.revealIdentity();
                 } else {
-                    System.out.println("Which card do you want to use ?");
-                    RumourCard chosenRumourCard = this.chooseCard(); //TODO Make a choice list for the user
-                    this.revealRumourCard(chosenRumourCard);
+                    System.out.println("Do you want to reveal your identity or use a Rumour Card ? (0 or 1)");
+                    Scanner scanner = new Scanner(System.in);
+                    int action = scanner.nextInt();
+                    if (action == 0) {
+                        System.out.println("Revealing your identity:");
+                        this.revealIdentity();
+                    } else {
+                        System.out.println("Which card do you want to use ?");
+                        RumourCard chosenRumourCard = this.chooseCard();
+                        actionNotTaken = this.revealRumourCard(chosenRumourCard);
+                    }
                 }
             }
-        }
+        } while (actionNotTaken);
     }
 
     /**
