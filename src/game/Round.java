@@ -30,7 +30,7 @@ public class Round {
     /**
      * The Active players.
      */
-    public final List<IdentityCard> activePlayers = new ArrayList<>();
+    public final List<IdentityCard> identityCards = new ArrayList<>();
 
     private Round() {}
 
@@ -101,25 +101,22 @@ public class Round {
      * This method distribute the Rumour cards at the start of a round based on the number of players
      */
     private void distributeRumourCards() {
-        int nbOfPlayers = this.activePlayers.size();
-        int nbOfExcessCards = CardName.values().length % nbOfPlayers;
+        int nbOfExcessCards = CardName.values().length % this.identityCards.size();
 
         //Take care of excess cards
-        if (nbOfExcessCards != 0) {
+        if (nbOfExcessCards > 0) {
             for (int i = 0; i < nbOfExcessCards; i++) {
-                int index = Game.randomInInterval(0, Game.getGame().deck.size());
-                this.discardPile.add(Game.getGame().deck.get(index));
-                Game.getGame().deck.remove(index);
+                int index = Game.randomInInterval(0, Game.getGame().deck.size() - 1);
+                this.discardPile.add(Game.getGame().deck.remove(index));
             }
         }
 
         //Distribute the rest equally
-        int numberOfCardsPerPlayer = CardName.values().length / nbOfPlayers;
+        int numberOfCardsPerPlayer = CardName.values().length / this.identityCards.size();
         for (Player player : Game.getGame().players) {
             for (int i = 0; i < numberOfCardsPerPlayer; i++) {
                 int index = Game.randomInInterval(0, Game.getGame().deck.size() - 1);
-                player.addCardToHand(Game.getGame().deck.get(index));
-                Game.getGame().deck.remove(index);
+                player.addCardToHand(Game.getGame().deck.remove(index));
             }
         }
     }
@@ -129,7 +126,7 @@ public class Round {
      * This method will call the selectIdentity() method to prompt players to choose a role for the round
      */
     private void askPlayersForIdentity() {
-        for (IdentityCard identityCard : Game.getGame().round.activePlayers) {
+        for (IdentityCard identityCard : this.identityCards) {
             identityCard.player.selectIdentity();
         }
     }
@@ -148,19 +145,19 @@ public class Round {
      * This method will do everything necessary to set up a round (select 1st player, create identity cards, distribute Rumour cards, ask players for identity)
      */
     public void startRound() {
-        System.out.println("===============================");
         if (currentPlayer == null) selectFirstPlayer();
         //Fill up the list of active players at the start
         for (Player player: Game.getGame().players) {
             IdentityCard playerIdentityCard = new IdentityCard(player);
-            round.activePlayers.add(playerIdentityCard);
+            round.identityCards.add(playerIdentityCard);
             player.identityCard = playerIdentityCard;
         }
-        this.numberOfNotRevealedPlayers = this.activePlayers.size();
+        this.numberOfNotRevealedPlayers = this.identityCards.size();
 
         this.distributeRumourCards();
         this.askPlayersForIdentity();
         numberOfRound++;
+        System.out.println("================Round " + Round.getNumberOfRound() + "================");
         playRound();
     }
 
@@ -171,7 +168,7 @@ public class Round {
     private void playRound() {
         do {
             askCurrentPlayerForAction();
-            if (this.numberOfNotRevealedPlayers > 1) Round.currentPlayer = this.nextPlayer;
+            if (this.numberOfNotRevealedPlayers > 1) Round.currentPlayer = this.nextPlayer; //TODO Test if conditional is useful
             //TODO Playing loop, currently there is a risk of not setting next player
         } while (this.numberOfNotRevealedPlayers > 1);
         endRound();
@@ -183,7 +180,7 @@ public class Round {
      */
     private void endRound() {
         //We search the last not revealed player, reveal is identity and give him points
-        for (IdentityCard identityCard : this.activePlayers) {
+        for (IdentityCard identityCard : this.identityCards) {
             if (!identityCard.isIdentityRevealed()) {
                 //Reveal player identity and give points
                 System.out.println(identityCard.player.getName() + " won this round !");

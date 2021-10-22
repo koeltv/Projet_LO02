@@ -122,7 +122,7 @@ public class Game extends Observable {
 
         if (winners.size() > 1) {
             settleTie();
-        } else if (winners.size() == 1){
+        } else if (winners.size() == 1) {
             System.out.println("Congratulations " + winners.get(0).getName() + ", you won this game !");
         } else {
             System.out.println("No winner ? Oh wait...");
@@ -143,7 +143,7 @@ public class Game extends Observable {
             nbAIs = sc.nextInt();
         } while (nbPlayers + nbAIs < 3 || nbPlayers + nbAIs > 6);
 
-        for (int i = 0; i < nbPlayers; i++) {
+        for (int i = 0; i < nbPlayers; i++) { //TODO Make sure that names are unique
             System.out.println("Name of player " + (i+1) + " ?");
             this.players.add(new Player(sc.next()));
         }
@@ -180,7 +180,7 @@ public class Game extends Observable {
      */
     public static int randomInInterval(int min, int max) {
         Random random = new Random();
-        return random.nextInt((max + 1)-min) + min;
+        return random.nextInt((max + 1) - min) + min;
     }
 
     /**

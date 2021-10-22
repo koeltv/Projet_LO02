@@ -30,7 +30,6 @@ public class IdentityCard {
      * @param witch player identity
      */
     public void setWitch(final boolean witch) {
-        // Automatically generated method. Please delete this comment before entering specific code.
         this.witch = witch;
     }
 
@@ -40,7 +39,6 @@ public class IdentityCard {
      * @return whether the player is a witch or not
      */
     public boolean isWitch() {
-        // Automatically generated method. Please delete this comment before entering specific code.
         return this.witch;
     }
 
@@ -50,7 +48,6 @@ public class IdentityCard {
      * @return whether the identity is revealed or not
      */
     public boolean isIdentityRevealed() {
-        // Automatically generated method. Please delete this comment before entering specific code.
         return this.identityRevealed;
     }
 
@@ -60,7 +57,6 @@ public class IdentityCard {
      * @param identityRevealed whether the identity is revealed or not
      */
     public void setIdentityRevealed(final boolean identityRevealed) {
-        // Automatically generated method. Please delete this comment before entering specific code.
         this.identityRevealed = identityRevealed;
     }
 

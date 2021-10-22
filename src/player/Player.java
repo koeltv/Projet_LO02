@@ -104,6 +104,12 @@ public class Player {
      * @return whether the card has been used successfully or not
      */
     public boolean revealRumourCard(RumourCard cardToReveal) {
+        for (CardState cardState : this.hand) {
+            if (cardToReveal == cardState.rumourCard) {
+                cardState.setRevealed(true);
+                break;
+            }
+        }
         return cardToReveal.useCard(this);
     }
 
@@ -115,6 +121,8 @@ public class Player {
         System.out.print("Player " + this.getName() + " is a ");
         if (this.identityCard.isWitch()) {
             System.out.println("witch !");
+            //If a player is revealed as a witch, we exclude him from the round
+            Game.getGame().round.identityCards.removeIf(identityCard -> identityCard.player == this);
             Game.getGame().round.setNextPlayer(Round.getCurrentPlayer());
         } else {
             System.out.println("villager !");
@@ -205,7 +213,7 @@ public class Player {
      */
     public List<IdentityCard> getSelectablePlayers() {
         List<IdentityCard> selectablePlayers = new ArrayList<>();
-        for (IdentityCard identityCard : Game.getGame().round.activePlayers) {
+        for (IdentityCard identityCard : Game.getGame().round.identityCards) {
             if (identityCard.player != this && !identityCard.isIdentityRevealed()) {
                 selectablePlayers.add(identityCard);
             }
