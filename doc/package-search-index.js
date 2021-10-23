@@ -1,1 +1,0 @@
-packageSearchIndex = [{"l":"All Packages","u":"allpackages-index.html"},{"l":"card"},{"l":"card.effect"},{"l":"game"},{"l":"player"}];updateSearchResults();

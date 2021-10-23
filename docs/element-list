@@ -1,4 +1,6 @@
-card
-card.effect
-game
-player
+com.controller
+com.model.card
+com.model.card.effect
+com.model.game
+com.model.player
+com.view
