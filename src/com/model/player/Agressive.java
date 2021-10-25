@@ -9,12 +9,16 @@ import java.util.List;
 public class Agressive implements Strategy {
     public void use(AI ai) { //TODO Temporary implementation, need to be developed
         if (RoundController.getCurrentPlayer() == ai) {
-            List<IdentityCard> selectablePlayers = ai.getSelectablePlayers();
+            List<IdentityCard> selectablePlayers = RoundController.roundController.getSelectablePlayers(ai);
             Player selectedPlayer = selectablePlayers.get(GameController.randomInInterval(0, selectablePlayers.size() - 1)).player;
             System.out.println(ai.getName() + " is accusing " + selectedPlayer.getName() + " !");
+
+            RoundController.roundController.askPlayerForAction(selectedPlayer);
             ai.accuse(selectedPlayer);
         } else {
             System.out.println(ai.getName() + " is revealing his identity !");
+
+            RoundController.roundController.numberOfNotRevealedPlayers--;
             ai.revealIdentity();
         }
     }

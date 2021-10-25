@@ -3,54 +3,70 @@ package com.controller;
 import com.model.card.CardName;
 import com.model.card.RumourCard;
 import com.model.card.effect.*;
-import com.view.CommandLineView;
 import com.model.player.AI;
 import com.model.player.Player;
+import com.view.CommandLineView;
+import com.view.View;
+import com.view.Views;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
-import java.util.Scanner;
 
-/**
- * The type Game.
- * Game is the main class that supervise the whole game. It is a singleton.
- */
-public class GameController extends Observable {
-    private static final GameController game = new GameController();
+public class GameController {
 
-    /**
-     * The Players.
-     * List of all the players in the game
-     */
-    public final List<Player> players = new ArrayList<>();
-
-    /**
-     * The Deck.
-     */
-    public final List<RumourCard> deck = new ArrayList<>();
-
-    /**
-     * The Round.
-     */
-    public RoundController roundController = RoundController.getRound();
-
-    private GameController() {}
-
-    /**
-     * Gets game instance.
-     *
-     * @return the game instance
-     */
-    public static GameController getGame() {
-        return game;
+    enum GameState {
+        ADDING_PLAYERS, PLAYERS_ADDED, GAME_INITIATED, GAME_COMPLETED, END_OF_SESSION
     }
 
-    /**
-     * Set up the game
-     * This is where the cards are instantiated before a new game
-     */
-    private void setupGame() {
+    public final List<Player> players;
+
+    public final List<RumourCard> deck;
+
+    public static GameController gameController;
+
+    public RoundController roundController;
+
+    private final View view;
+
+    GameState gameState;
+
+    public GameController(View view) {
+        super();
+        this.players = new ArrayList<>();
+        this.deck = new ArrayList<>();
+        this.view = view;
+        this.gameState = GameState.ADDING_PLAYERS;
+        view.setController(this);
+
+        GameController.gameController = this; //TODO Get rid of
+    }
+
+    private void askForPlayerRepartition() {
+        if (gameState == GameState.ADDING_PLAYERS) {
+            view.promptForRepartition();
+        }
+    }
+
+    public void createPlayers(int nbPlayers, int nbAIs) {
+        int i = 1;
+        while (players.size() < nbPlayers) {
+            view.promptForPlayerName(i);
+            if (players.size() >= i - 1) i++;
+        }
+        for (i = nbPlayers; i < nbPlayers + nbAIs; i++) {
+            players.add(new AI());
+        }
+        gameState = GameState.PLAYERS_ADDED;
+    }
+
+    public void addPlayer(String playerName) { //TODO Make sure that names are unique
+        if (gameState == GameState.ADDING_PLAYERS) {
+            players.add(new Player(playerName));
+        }
+    }
+
+    public void setupGame() {
         for (CardName cardName : CardName.values()) {
             List<Effect> witchEffects = new ArrayList<>();
             List<Effect> huntEffect = new ArrayList<>();
@@ -108,66 +124,57 @@ public class GameController extends Observable {
 
             this.deck.add(new RumourCard(cardName, witchEffects, huntEffect));
         }
+        gameState = GameState.GAME_INITIATED;
     }
 
-    /**
-     * Wrap up the game
-     * This is where we congratulate the winner and settle ties if needed
-     */
+    public void nextAction(String nextChoice) {
+        gameState = "q".equals(nextChoice) ? GameState.END_OF_SESSION : GameState.GAME_INITIATED;
+    }
+
+    public void run() {
+        while (gameState != GameState.END_OF_SESSION) {
+            switch (gameState) {
+                case ADDING_PLAYERS -> askForPlayerRepartition();
+                case PLAYERS_ADDED -> setupGame();
+                case GAME_INITIATED -> {
+                    if (!verifyScores()) {
+                        roundController = new RoundController(view);
+                        roundController.run();
+                    } else {
+                        gameState = GameState.GAME_COMPLETED;
+                    }
+                }
+                case GAME_COMPLETED -> {
+                    wrapUpGame();
+                    view.promptForNewGame();
+                }
+            }
+        }
+    }
+
+    private boolean verifyScores() {
+        for (Player player : players)
+            if (player.getScore() >= 5) return true;
+        return false;
+    }
+
     private void wrapUpGame() {
         List<Player> winners = new ArrayList<>();
 
-        for (Player player : this.players) {
+        for (Player player : players) {
             if (player.getScore() >= 5) winners.add(player);
+            player.resetScore();
         }
 
         if (winners.size() > 1) {
             settleTie();
         } else if (winners.size() == 1) {
-            System.out.println("Congratulations " + winners.get(0).getName() + ", you won this game !");
-        } else {
-            System.out.println("No winner ? Oh wait...");
+            view.showGameWinner(winners.get(0).getName(), RoundController.getNumberOfRound());
         }
+
+        RoundController.reset();
     }
 
-    /**
-     * Ask for player repartition
-     * This function asks for the repartition of players and AIs, along with the players name
-     */
-    private void askForPlayerRepartition() {
-        Scanner sc = new Scanner(System.in);
-        int nbPlayers, nbAIs;
-        do {
-            System.out.println("Number of players ?");
-            nbPlayers = sc.nextInt();
-            System.out.println("Number of AI ?");
-            nbAIs = sc.nextInt();
-        } while (nbPlayers + nbAIs < 3 || nbPlayers + nbAIs > 6);
-
-        for (int i = 0; i < nbPlayers; i++) { //TODO Make sure that names are unique
-            System.out.println("Name of player " + (i+1) + " ?");
-            this.players.add(new Player(sc.next()));
-        }
-        for (int i = nbPlayers; i < nbPlayers + nbAIs; i++) {
-            this.players.add(new AI());
-        }
-    }
-
-    /**
-     * Verify the scores
-     * This function verify the score of each player to know the current state of the game
-     * @return true if at least 1 player has at least 5 points, false otherwise
-     */
-    private boolean verifyScores() {
-        for (Player player : this.players)
-            if (player.getScore() >= 5) return true;
-        return false;
-    }
-
-    /**
-     * Settle ties
-     * This function is used when more than 1 player has at least 5 points in order to decide a single winner
-     */
     private void settleTie() {
     }
 
@@ -184,24 +191,11 @@ public class GameController extends Observable {
         return random.nextInt((max + 1) - min) + min;
     }
 
-    /**
-     * The entry point of application.
-     *
-     * @param args the input arguments
-     */
     public static void main(String[] args) {
-        GameController gameController = GameController.getGame();
+        Views views = new Views();
+        views.addView(new CommandLineView());
 
-        CommandLineView commandLineView = new CommandLineView();
-        gameController.addObserver(commandLineView);
-
-        gameController.askForPlayerRepartition();
-        gameController.setupGame();
-        do {
-            gameController.roundController.startRound();
-            gameController.roundController = RoundController.getRound();
-        } while (!gameController.verifyScores());
-        gameController.wrapUpGame();
+        GameController gameController = new GameController(views);
+        gameController.run();
     }
-
 }

@@ -37,7 +37,7 @@ public class AI extends Player {
         boolean nameAssigned = false;
         do {
             name = AI_NAMES[GameController.randomInInterval(0, AI_NAMES.length - 1)];
-            for (Player player : GameController.getGame().players) {
+            for (Player player : GameController.gameController.players) {
                 nameAssigned = name.equals(player.getName());
                 if (nameAssigned) break;
             }
@@ -48,7 +48,6 @@ public class AI extends Player {
     /**
      * Use the AI strategy to select action
      */
-    @Override
     public void play() {
         System.out.println("Currently using " + this.getName() + "'s player.Strategy !"); //Used for debug
         this.strategy.use(this);
@@ -57,7 +56,6 @@ public class AI extends Player {
     /**
      * Use the AI strategy to select identity
      */
-    @Override
     public void selectIdentity() {
         this.strategy.selectIdentity(this);
     }
