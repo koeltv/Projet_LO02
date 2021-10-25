@@ -46,17 +46,24 @@ public class GameController {
         int i = 1;
         while (players.size() < nbPlayers) {
             view.promptForPlayerName(i);
-            if (players.size() >= i - 1) i++;
+            if (players.size() > i - 1) i++;
         }
         for (i = nbPlayers; i < nbPlayers + nbAIs; i++) {
-            players.add(new AI());
+            players.add(new AI(randomAIName()));
         }
         gameState = GameState.PLAYERS_ADDED;
     }
 
-    public void addPlayer(String playerName) { //TODO Make sure that names are unique
+    public void addPlayer(String playerName) {
         if (gameState == GameState.ADDING_PLAYERS) {
-            players.add(new Player(playerName));
+            boolean nameAlreadyAssigned = false;
+            for (Player player : players) {
+                nameAlreadyAssigned = player.getName().equals(playerName);
+                if (nameAlreadyAssigned) break;
+            }
+            if (!nameAlreadyAssigned) {
+                players.add(new Player(playerName));
+            }
         }
     }
 
@@ -187,19 +194,22 @@ public class GameController {
         return random.nextInt((max + 1) - min) + min;
     }
 
-    private static final String[] NAMES = {"Jean", "Antoine", "Fabrice", "Patrick", "Clara", "June", "Louis", "Silvain"};
-
     /**
      * Get a random not already assigned name
      *
      * @return new name
      */
-    public static String randomAIName() {
+    public String randomAIName() {
+        String[] NAMES = {"Jean", "Antoine", "Fabrice", "Patrick", "Clara", "June", "Louis", "Silvain"};
+
         String name;
-        boolean nameAssigned;
+        boolean nameAssigned = false;
         do {
             name = NAMES[GameController.randomInInterval(0, NAMES.length - 1)];
-            nameAssigned = false; //TODO Check if the name is already assigned
+            for (Player player : players) {
+                nameAssigned = player.getName().equals(name);
+                if (nameAssigned) break;
+            }
         } while (nameAssigned);
         return name;
     }

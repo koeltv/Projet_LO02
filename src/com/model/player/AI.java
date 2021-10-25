@@ -14,8 +14,8 @@ public class AI extends Player {
     /**
      * Instantiates a new AI.
      */
-    public AI() {
-        super(GameController.randomAIName());
+    public AI(final String name) {
+        super(name);
         this.strategy = switch (GameController.randomInInterval(0, 1)) {
             case 0 -> new Agressive();
             default -> new Defensive();
