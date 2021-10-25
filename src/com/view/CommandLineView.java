@@ -2,6 +2,7 @@ package com.view;
 
 import com.controller.GameController;
 import com.model.card.CardName;
+import com.model.player.PlayerAction;
 
 import java.util.List;
 import java.util.Scanner;
@@ -18,13 +19,13 @@ public class CommandLineView implements View {
     @Override
     public void promptForPlayerName(int playerIndex) {
         System.out.println("Enter player " + playerIndex + " name");
-        controller.addPlayer(keyboard.next());
+        controller.addPlayer(keyboard.nextLine());
     }
 
     @Override
     public void promptForNewGame() {
-        System.out.println("Press enter to deal again or q to exit");
-        controller.nextAction(keyboard.next());
+        System.out.println("Press enter to play again or q to exit");
+        controller.nextAction(keyboard.nextLine());
     }
 
     @Override
@@ -33,7 +34,7 @@ public class CommandLineView implements View {
         for (int i = 0; i < playerNames.size(); i++) {
             System.out.println(i + "- " + playerNames.get(i));
         }
-        return keyboard.nextInt();
+        return Integer.parseInt(keyboard.nextLine());
     }
 
     @Override
@@ -42,15 +43,15 @@ public class CommandLineView implements View {
         for (int i = 0; i < rumourCardNames.size(); i++) {
             System.out.println(i + "- " + rumourCardNames.get(i));
         }
-        return keyboard.nextInt();
+        return Integer.parseInt(keyboard.nextLine());
     }
 
     @Override
     public void promptForRepartition() {
         System.out.println("Number of players ?");
-        int nbPlayers = keyboard.nextInt();
+        int nbPlayers = Integer.parseInt(keyboard.nextLine());
         System.out.println("Number of AI ?");
-        int nbAIs = keyboard.nextInt();
+        int nbAIs = Integer.parseInt(keyboard.nextLine());
         if (nbPlayers + nbAIs >= 3 && nbPlayers + nbAIs <= 6) {
             controller.createPlayers(nbPlayers, nbAIs);
         }
@@ -74,21 +75,41 @@ public class CommandLineView implements View {
     @Override
     public int promptForPlayerIdentity(String name) {
         System.out.println(name + ", type 0 for villager and 1 for witch");
-        return keyboard.nextInt();
+        return Integer.parseInt(keyboard.nextLine());
     }
 
     @Override
-    public String promptForAction(String playerName, List<String> possibleActions) {
+    public PlayerAction promptForAction(String playerName, List<PlayerAction> possibleActions) {
         System.out.println(playerName + ", please choose your next action");
         for (int i = 0; i < possibleActions.size(); i++) {
             System.out.println(i + "- " + possibleActions.get(i));
         }
-        return possibleActions.get(keyboard.nextInt());
+        return possibleActions.get(Integer.parseInt(keyboard.nextLine()));
     }
 
     @Override
     public void showPlayerIdentity(String name, boolean witch) {
         System.out.print(name + " is a ");
         System.out.println(witch ? "witch !" : "villager !");
+    }
+
+    @Override
+    public void showCurrentPlayer(String name) {
+        System.out.println("This is now " + name + "'s turn !");
+    }
+
+    @Override
+    public void showPlayerAction(String name) {
+        System.out.println(name + " is revealing is identity !");
+    }
+
+    @Override
+    public void showPlayerAction(String name, String targetedPlayerName) {
+        System.out.println(name + " is accusing " + targetedPlayerName + " !");
+    }
+
+    @Override
+    public void showPlayerAction(String name, CardName chosenCardName) {
+        System.out.println(name + " is using " + chosenCardName + " !");
     }
 }

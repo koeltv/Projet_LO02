@@ -2,6 +2,7 @@ package com.view;
 
 import com.controller.GameController;
 import com.model.card.CardName;
+import com.model.player.PlayerAction;
 
 import java.util.List;
 
@@ -26,7 +27,15 @@ public interface View {
 
     int promptForPlayerIdentity(String name);
 
-    String promptForAction(String playerName, List<String> possibleActions);
+    PlayerAction promptForAction(String playerName, List<PlayerAction> possibleActions);
 
     void showPlayerIdentity(String name, boolean witch);
+
+    void showCurrentPlayer(String name);
+
+    void showPlayerAction(String name);
+
+    void showPlayerAction(String name, String targetedPlayerName);
+
+    void showPlayerAction(String name, CardName chosenCardName);
 }

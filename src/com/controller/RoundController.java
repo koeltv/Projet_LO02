@@ -6,11 +6,11 @@ import com.model.game.CardState;
 import com.model.game.IdentityCard;
 import com.model.player.AI;
 import com.model.player.Player;
+import com.model.player.PlayerAction;
 import com.view.View;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Scanner;
 
 /**
  * The type Round.
@@ -22,7 +22,7 @@ public class RoundController {
         INITIALIZING_ROUND, PLAYING_ROUND, ENDING_ROUND, ROUND_ENDED
     }
 
-    public static RoundController roundController;
+    private static RoundController roundController;
 
     private static int numberOfRound;
 
@@ -31,6 +31,8 @@ public class RoundController {
     public int numberOfNotRevealedPlayers;
 
     private Player nextPlayer;
+
+    private final GameController gameController;
 
     private final View view;
 
@@ -46,13 +48,19 @@ public class RoundController {
      */
     public final List<IdentityCard> identityCards;
 
-    RoundController(View view) {
+    RoundController(GameController gameController, View view) {
         this.discardPile = new ArrayList<>();
         this.identityCards = new ArrayList<>();
         this.roundState = RoundState.INITIALIZING_ROUND;
+
         this.view = view;
+        this.gameController = gameController;
 
         RoundController.roundController = this; //TODO Get rid of
+    }
+
+    public static RoundController getRoundController() {
+        return roundController;
     }
 
     public static void reset() {
@@ -106,14 +114,19 @@ public class RoundController {
      * @return chosen card
      */
     public RumourCard chooseCard(Player player) {
-        List<CardName> selectableCards = new ArrayList<>();
+        List<RumourCard> selectableCards = new ArrayList<>();
+        List<CardName> selectableCardNames = new ArrayList<>();
         for (CardState cardState : getSelectableCards(player)) {
-            selectableCards.add(cardState.rumourCard.getCardName());
+            selectableCards.add(cardState.rumourCard);
+            selectableCardNames.add(cardState.rumourCard.getCardName());
         }
         //Printing selectable cards
-        view.promptForCardChoice(selectableCards);
-        Scanner scanner = new Scanner(System.in);
-        return player.hand.get(scanner.nextInt()).rumourCard;
+        if (player instanceof AI) {
+            return ((AI) player).selectCard(selectableCards);
+        } else {
+            int index = view.promptForCardChoice(selectableCardNames);
+            return player.hand.get(index).rumourCard;
+        }
     }
 
     /**
@@ -137,13 +150,19 @@ public class RoundController {
      * @return chosen player
      */
     public Player choosePlayer(Player player) {
-        List<String> selectablePlayers = new ArrayList<>();
+        List<Player> selectablePlayers = new ArrayList<>();
+        List<String> selectablePlayerNames = new ArrayList<>();
         for (IdentityCard identityCard : getSelectablePlayers(player)) {
-            selectablePlayers.add(identityCard.player.getName());
+            selectablePlayers.add(identityCard.player);
+            selectablePlayerNames.add(identityCard.player.getName());
         }
         //Printing selectable players
-        int index = view.promptForPlayerChoice(selectablePlayers);
-        return getSelectablePlayers(player).get(index).player;
+        if (player instanceof AI) {
+            return ((AI) player).selectPlayer(selectablePlayers);
+        } else {
+            int index = view.promptForPlayerChoice(selectablePlayerNames);
+            return selectablePlayers.get(index);
+        }
     }
 
     /**
@@ -151,33 +170,48 @@ public class RoundController {
      * This method will call the play method of the current player
      */
     public void askPlayerForAction(Player player) {
-        if (!(player instanceof AI)) {
-            List<String> possibleActions = new ArrayList<>();
-            if (player == RoundController.getCurrentPlayer()) possibleActions.add("accuse");
-            else possibleActions.add("reveal identity");
-            if (player.hand.size() > 0) possibleActions.add("use card");
+        view.showCurrentPlayer(player.getName());
 
-            String action = view.promptForAction(player.getName(), possibleActions);
-            switch (action) {
-                case "reveal identity" -> {
-                    player.revealIdentity();
-                    numberOfNotRevealedPlayers--;
-                    view.showPlayerIdentity(player.getName(), player.identityCard.isWitch());
-                }
-                case "accuse" -> {
-                    Player targetedPlayer = choosePlayer(player);
-                    askPlayerForAction(targetedPlayer);
-                    player.accuse(targetedPlayer);
-                }
-                case "use card" -> {
-                    boolean cardUsedSuccessfully;
-                    do {
-                        cardUsedSuccessfully = player.revealRumourCard(chooseCard(player));
-                    } while (!cardUsedSuccessfully);
-                }
-            }
+        //Get possible actions
+        List<PlayerAction> possibleActions = new ArrayList<>();
+        if (player == RoundController.getCurrentPlayer()) possibleActions.add(PlayerAction.ACCUSE);
+        else possibleActions.add(PlayerAction.REVEAL_IDENTITY);
+        if (player.hand.size() > 0) possibleActions.add(PlayerAction.USE_CARD);
+
+        //Ask the player to choose
+        PlayerAction action;
+        if (player instanceof AI) {
+            action = ((AI) player).play(possibleActions);
         } else {
-            ((AI) (player)).play();
+            action = view.promptForAction(player.getName(), possibleActions);
+        }
+
+        applyPlayerAction(player, action);
+    }
+
+    public void applyPlayerAction(Player player, PlayerAction action) {
+        //Apply action
+        switch (action) {
+            case REVEAL_IDENTITY -> {
+                view.showPlayerAction(player.getName());
+                player.revealIdentity();
+                numberOfNotRevealedPlayers--;
+                view.showPlayerIdentity(player.getName(), player.identityCard.isWitch());
+            }
+            case ACCUSE -> {
+                Player targetedPlayer = choosePlayer(player);
+                view.showPlayerAction(player.getName(), targetedPlayer.getName());
+                askPlayerForAction(targetedPlayer);
+                player.accuse(targetedPlayer);
+            }
+            case USE_CARD -> {
+                boolean cardUsedSuccessfully;
+                do {
+                    RumourCard chosenRumourCard = chooseCard(player);
+                    view.showPlayerAction(player.getName(), chosenRumourCard.getCardName());
+                    cardUsedSuccessfully = player.revealRumourCard(chosenRumourCard);
+                } while (!cardUsedSuccessfully);
+            }
         }
     }
 
@@ -191,17 +225,17 @@ public class RoundController {
         //Take care of excess cards
         if (nbOfExcessCards > 0) {
             for (int i = 0; i < nbOfExcessCards; i++) {
-                int index = GameController.randomInInterval(0, GameController.gameController.deck.size() - 1);
-                discardPile.add(GameController.gameController.deck.remove(index));
+                int index = GameController.randomInInterval(0, gameController.deck.size() - 1);
+                discardPile.add(gameController.deck.remove(index));
             }
         }
 
         //Distribute the rest equally
         int numberOfCardsPerPlayer = CardName.values().length / identityCards.size();
-        for (Player player : GameController.gameController.players) {
+        for (Player player : gameController.players) {
             for (int i = 0; i < numberOfCardsPerPlayer; i++) {
-                int index = GameController.randomInInterval(0, GameController.gameController.deck.size() - 1);
-                player.addCardToHand(GameController.gameController.deck.remove(index));
+                int index = GameController.randomInInterval(0, gameController.deck.size() - 1);
+                player.addCardToHand(gameController.deck.remove(index));
             }
         }
     }
@@ -215,7 +249,6 @@ public class RoundController {
             if (!(identityCard.player instanceof AI)) {
                 int identity = view.promptForPlayerIdentity(identityCard.player.getName());
                 identityCard.setWitch(identity > 0);
-                //                identityCard.player.selectIdentity();
             } else {
                 ((AI) (identityCard.player)).selectIdentity();
             }
@@ -228,7 +261,7 @@ public class RoundController {
      * This method will only be used on the first round to select a random player to start
      */
     private void selectFirstPlayer() {
-        List<Player> playerList = GameController.gameController.players;
+        List<Player> playerList = gameController.players;
         RoundController.currentPlayer = playerList.get(GameController.randomInInterval(0, playerList.size() - 1));
     }
 
@@ -242,7 +275,7 @@ public class RoundController {
 
         if (currentPlayer == null) selectFirstPlayer();
         //Fill up the list of active players at the start
-        for (Player player : GameController.gameController.players) {
+        for (Player player : gameController.players) {
             IdentityCard playerIdentityCard = new IdentityCard(player);
             identityCards.add(playerIdentityCard);
             player.identityCard = playerIdentityCard;
@@ -287,12 +320,12 @@ public class RoundController {
             }
         }
         //Gather all players cards
-        for (Player player : GameController.gameController.players) {
+        for (Player player : gameController.players) {
             int startingNumberOfCard = player.hand.size();
             for (int i = 0; i < startingNumberOfCard; i++) {
                 RumourCard removedCard = player.hand.get(0).rumourCard;
                 player.removeCardFromHand(removedCard);
-                GameController.gameController.deck.add(removedCard);
+                gameController.deck.add(removedCard);
             }
         }
         //Gather the discarded cards
@@ -300,7 +333,7 @@ public class RoundController {
         for (int i = 0; i < startingNumberOfCard; i++) {
             RumourCard removedCard = this.discardPile.get(0);
             this.discardPile.remove(removedCard);
-            GameController.gameController.deck.add(removedCard);
+            gameController.deck.add(removedCard);
         }
         roundState = RoundState.ROUND_ENDED;
     }

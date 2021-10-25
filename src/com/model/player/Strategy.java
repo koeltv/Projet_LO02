@@ -1,5 +1,9 @@
 package com.model.player;
 
+import com.model.card.RumourCard;
+
+import java.util.List;
+
 /**
  * The interface Strategy.
  */
@@ -9,7 +13,7 @@ public interface Strategy {
      *
      * @param ai the AI using the strategy
      */
-    void use(AI ai);
+    PlayerAction use(AI ai, List<PlayerAction> possibleActions);
 
     /**
      * Select identity.
@@ -18,4 +22,7 @@ public interface Strategy {
      */
     void selectIdentity(AI ai);
 
+    Player selectPlayer(List<Player> players);
+
+    RumourCard selectCard(List<RumourCard> rumourCards);
 }

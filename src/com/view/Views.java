@@ -2,6 +2,7 @@ package com.view;
 
 import com.controller.GameController;
 import com.model.card.CardName;
+import com.model.player.PlayerAction;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -99,7 +100,7 @@ public class Views implements View {
     }
 
     @Override
-    public String promptForAction(String playerName, List<String> possibleActions) {
+    public PlayerAction promptForAction(String playerName, List<PlayerAction> possibleActions) {
         for (View view : views) {
             view.promptForAction(playerName, possibleActions);
         }
@@ -110,6 +111,34 @@ public class Views implements View {
     public void showPlayerIdentity(String name, boolean witch) {
         for (View view : views) {
             view.showPlayerIdentity(name, witch);
+        }
+    }
+
+    @Override
+    public void showCurrentPlayer(String name) {
+        for (View view : views) {
+            view.showCurrentPlayer(name);
+        }
+    }
+
+    @Override
+    public void showPlayerAction(String name) {
+        for (View view : views) {
+            view.showPlayerAction(name);
+        }
+    }
+
+    @Override
+    public void showPlayerAction(String name, String targetedPlayerName) {
+        for (View view : views) {
+            view.showPlayerAction(name, targetedPlayerName);
+        }
+    }
+
+    @Override
+    public void showPlayerAction(String name, CardName chosenCardName) {
+        for (View view : views) {
+            view.showPlayerAction(name, chosenCardName);
         }
     }
 }

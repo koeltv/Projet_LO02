@@ -121,10 +121,10 @@ public class Player {
         this.identityCard.setIdentityRevealed(true);
         if (this.identityCard.isWitch()) {
             //If a player is revealed as a witch, we exclude him from the round
-            RoundController.roundController.identityCards.removeIf(identityCard -> identityCard.player == this);
-            RoundController.roundController.setNextPlayer(RoundController.getCurrentPlayer());
+            RoundController.getRoundController().identityCards.removeIf(identityCard -> identityCard.player == this);
+            RoundController.getRoundController().setNextPlayer(RoundController.getCurrentPlayer());
         } else {
-            RoundController.roundController.setNextPlayer(this);
+            RoundController.getRoundController().setNextPlayer(this);
         }
     }
 

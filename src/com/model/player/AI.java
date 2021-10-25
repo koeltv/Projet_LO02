@@ -1,63 +1,46 @@
 package com.model.player;
 
 import com.controller.GameController;
+import com.model.card.RumourCard;
+
+import java.util.List;
 
 /**
  * The type AI.
  */
 public class AI extends Player {
-    private static final String[] AI_NAMES = {"Jean", "Antoine", "Fabrice", "Patrick", "Clara", "June", "Louis", "Silvain"};
-
     private final Strategy strategy;
 
     /**
      * Instantiates a new AI.
      */
     public AI() {
-        super(randomAIName());
-        System.out.print("AI " + this.getName() + " is ");
+        super(GameController.randomAIName());
         this.strategy = switch (GameController.randomInInterval(0, 1)) {
-            case 0 -> {
-                System.out.println("agressive !");
-                yield new Agressive();
-            }
-            default -> {
-                System.out.println("defensive !");
-                yield new Defensive();
-            }
+            case 0 -> new Agressive();
+            default -> new Defensive();
         };
-    }
-
-    /**
-     * Get a random not already assigned name
-     * @return new name
-     */
-    private static String randomAIName() {
-        String name;
-        boolean nameAssigned = false;
-        do {
-            name = AI_NAMES[GameController.randomInInterval(0, AI_NAMES.length - 1)];
-            for (Player player : GameController.gameController.players) {
-                nameAssigned = name.equals(player.getName());
-                if (nameAssigned) break;
-            }
-        } while (nameAssigned);
-        return name;
     }
 
     /**
      * Use the AI strategy to select action
      */
-    public void play() {
-        System.out.println("Currently using " + this.getName() + "'s player.Strategy !"); //Used for debug
-        this.strategy.use(this);
+    public PlayerAction play(List<PlayerAction> possibleActions) {
+        return strategy.use(this, possibleActions);
     }
 
     /**
      * Use the AI strategy to select identity
      */
     public void selectIdentity() {
-        this.strategy.selectIdentity(this);
+        strategy.selectIdentity(this);
     }
 
+    public Player selectPlayer(List<Player> players) {
+        return strategy.selectPlayer(players);
+    }
+
+    public RumourCard selectCard(List<RumourCard> rumourCards) {
+        return strategy.selectCard(rumourCards);
+    }
 }

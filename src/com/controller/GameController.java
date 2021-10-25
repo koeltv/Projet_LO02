@@ -7,7 +7,6 @@ import com.model.player.AI;
 import com.model.player.Player;
 import com.view.CommandLineView;
 import com.view.View;
-import com.view.Views;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,10 +22,6 @@ public class GameController {
 
     public final List<RumourCard> deck;
 
-    public static GameController gameController;
-
-    public RoundController roundController;
-
     private final View view;
 
     GameState gameState;
@@ -38,8 +33,6 @@ public class GameController {
         this.view = view;
         this.gameState = GameState.ADDING_PLAYERS;
         view.setController(this);
-
-        GameController.gameController = this; //TODO Get rid of
     }
 
     private void askForPlayerRepartition() {
@@ -122,7 +115,7 @@ public class GameController {
                 case PET_NEWT -> huntEffect.add(new TakeRevealedFromOtherEffect());
             }
 
-            this.deck.add(new RumourCard(cardName, witchEffects, huntEffect));
+            deck.add(new RumourCard(cardName, witchEffects, huntEffect));
         }
         gameState = GameState.GAME_INITIATED;
     }
@@ -138,7 +131,7 @@ public class GameController {
                 case PLAYERS_ADDED -> setupGame();
                 case GAME_INITIATED -> {
                     if (!verifyScores()) {
-                        roundController = new RoundController(view);
+                        RoundController roundController = new RoundController(this, view);
                         roundController.run();
                     } else {
                         gameState = GameState.GAME_COMPLETED;
@@ -167,7 +160,7 @@ public class GameController {
         }
 
         if (winners.size() > 1) {
-            settleTie();
+            settleTie(winners);
         } else if (winners.size() == 1) {
             view.showGameWinner(winners.get(0).getName(), RoundController.getNumberOfRound());
         }
@@ -175,7 +168,9 @@ public class GameController {
         RoundController.reset();
     }
 
-    private void settleTie() {
+    private void settleTie(List<Player> winners) {
+        Player winner = winners.get(randomInInterval(0, winners.size() - 1));
+        view.showGameWinner(winner.getName(), RoundController.getNumberOfRound());
     }
 
     /**
@@ -191,11 +186,25 @@ public class GameController {
         return random.nextInt((max + 1) - min) + min;
     }
 
-    public static void main(String[] args) {
-        Views views = new Views();
-        views.addView(new CommandLineView());
+    private static final String[] NAMES = {"Jean", "Antoine", "Fabrice", "Patrick", "Clara", "June", "Louis", "Silvain"};
 
-        GameController gameController = new GameController(views);
+    /**
+     * Get a random not already assigned name
+     *
+     * @return new name
+     */
+    public static String randomAIName() {
+        String name;
+        boolean nameAssigned;
+        do {
+            name = NAMES[GameController.randomInInterval(0, NAMES.length - 1)];
+            nameAssigned = false; //TODO Check if the name is already assigned
+        } while (nameAssigned);
+        return name;
+    }
+
+    public static void main(String[] args) {
+        GameController gameController = new GameController(new CommandLineView());
         gameController.run();
     }
 }
