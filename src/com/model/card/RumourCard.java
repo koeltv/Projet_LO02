@@ -1,7 +1,7 @@
 package com.model.card;
 
-import com.model.card.effect.Effect;
 import com.controller.RoundController;
+import com.model.card.effect.Effect;
 import com.model.player.Player;
 
 import java.util.List;

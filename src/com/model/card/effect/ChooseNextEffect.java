@@ -1,6 +1,5 @@
 package com.model.card.effect;
 
-import com.controller.GameController;
 import com.controller.RoundController;
 import com.model.card.CardName;
 import com.model.player.Player;

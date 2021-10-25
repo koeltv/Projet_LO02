@@ -7,6 +7,7 @@ import com.model.player.AI;
 import com.model.player.Player;
 import com.view.CommandLineView;
 import com.view.View;
+import com.view.Views;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -204,7 +205,10 @@ public class GameController {
     }
 
     public static void main(String[] args) {
-        GameController gameController = new GameController(new CommandLineView());
+        Views views = new Views();
+        views.addView(new CommandLineView());
+
+        GameController gameController = new GameController(views);
         gameController.run();
     }
 }

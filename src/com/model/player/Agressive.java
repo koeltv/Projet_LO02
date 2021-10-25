@@ -3,6 +3,7 @@ package com.model.player;
 import com.controller.GameController;
 import com.controller.RoundController;
 import com.model.card.RumourCard;
+import com.model.game.IdentityCard;
 
 import java.util.List;
 
@@ -18,7 +19,8 @@ public class Agressive implements Strategy {
 
     @Override
     public void selectIdentity(AI ai) {
-        ai.identityCard.setWitch(GameController.randomInInterval(0, 1) > 0);
+        IdentityCard identityCard = RoundController.getRoundController().getPlayerIdentityCard(ai);
+        identityCard.setWitch(GameController.randomInInterval(0, 1) > 0);
     }
 
     @Override

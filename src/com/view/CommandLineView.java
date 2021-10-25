@@ -100,16 +100,16 @@ public class CommandLineView implements View {
 
     @Override
     public void showPlayerAction(String name) {
-        System.out.println(name + " is revealing is identity !");
+        System.out.println("Player " + name + " is revealing his identity !");
     }
 
     @Override
     public void showPlayerAction(String name, String targetedPlayerName) {
-        System.out.println(name + " is accusing " + targetedPlayerName + " !");
+        System.out.println("Player " + name + " is accusing " + targetedPlayerName + " !");
     }
 
     @Override
     public void showPlayerAction(String name, CardName chosenCardName) {
-        System.out.println(name + " is using " + chosenCardName + " !");
+        System.out.println("Player " + name + " is using " + chosenCardName + " !");
     }
 }

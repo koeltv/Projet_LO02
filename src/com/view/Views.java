@@ -102,7 +102,7 @@ public class Views implements View {
     @Override
     public PlayerAction promptForAction(String playerName, List<PlayerAction> possibleActions) {
         for (View view : views) {
-            view.promptForAction(playerName, possibleActions);
+            if (view != activeView) view.promptForAction(playerName, possibleActions);
         }
         return activeView.promptForAction(playerName, possibleActions);
     }

@@ -28,7 +28,7 @@ public class RoundController {
 
     private static Player currentPlayer;
 
-    public int numberOfNotRevealedPlayers;
+    private int numberOfNotRevealedPlayers;
 
     private Player nextPlayer;
 
@@ -36,7 +36,7 @@ public class RoundController {
 
     private final View view;
 
-    public RoundState roundState;
+    private RoundState roundState;
 
     /**
      * The Discard pile.
@@ -56,7 +56,7 @@ public class RoundController {
         this.view = view;
         this.gameController = gameController;
 
-        RoundController.roundController = this; //TODO Get rid of
+        RoundController.roundController = this;
     }
 
     public static RoundController getRoundController() {
@@ -170,7 +170,7 @@ public class RoundController {
      * This method will call the play method of the current player
      */
     public void askPlayerForAction(Player player) {
-        view.showCurrentPlayer(player.getName());
+        //        view.showCurrentPlayer(player.getName());
 
         //Get possible actions
         List<PlayerAction> possibleActions = new ArrayList<>();
@@ -190,19 +190,25 @@ public class RoundController {
     }
 
     public void applyPlayerAction(Player player, PlayerAction action) {
-        //Apply action
         switch (action) {
             case REVEAL_IDENTITY -> {
                 view.showPlayerAction(player.getName());
-                player.revealIdentity();
+                view.showPlayerIdentity(player.getName(), getPlayerIdentityCard(player).isWitch());
+
+                revealIdentity(player);
+
                 numberOfNotRevealedPlayers--;
-                view.showPlayerIdentity(player.getName(), player.identityCard.isWitch());
             }
             case ACCUSE -> {
                 Player targetedPlayer = choosePlayer(player);
                 view.showPlayerAction(player.getName(), targetedPlayer.getName());
+
                 askPlayerForAction(targetedPlayer);
-                player.accuse(targetedPlayer);
+
+                //If the player is a witch, its identity card is deleted, so if null the player was revealed as a witch
+                if (getPlayerIdentityCard(targetedPlayer) == null) {
+                    player.addToScore(1);
+                }
             }
             case USE_CARD -> {
                 boolean cardUsedSuccessfully;
@@ -213,6 +219,27 @@ public class RoundController {
                 } while (!cardUsedSuccessfully);
             }
         }
+    }
+
+    private void revealIdentity(Player player) {
+        IdentityCard playerIdentityCard = getPlayerIdentityCard(player);
+        playerIdentityCard.setIdentityRevealed(true);
+        if (playerIdentityCard.isWitch()) {
+            //If a player is revealed as a witch, we exclude him from the round
+            identityCards.removeIf(identityCard -> identityCard.player == player);
+            setNextPlayer(RoundController.getCurrentPlayer());
+        } else {
+            setNextPlayer(player);
+        }
+    }
+
+    public IdentityCard getPlayerIdentityCard(Player targetedPlayer) {
+        for (IdentityCard identityCard : identityCards) {
+            if (identityCard.player == targetedPlayer) {
+                return identityCard;
+            }
+        }
+        return null;
     }
 
     /**
@@ -278,7 +305,6 @@ public class RoundController {
         for (Player player : gameController.players) {
             IdentityCard playerIdentityCard = new IdentityCard(player);
             identityCards.add(playerIdentityCard);
-            player.identityCard = playerIdentityCard;
         }
         numberOfNotRevealedPlayers = identityCards.size();
 
@@ -310,7 +336,7 @@ public class RoundController {
             if (!identityCard.isIdentityRevealed()) {
                 Player winner = identityCard.player;
                 //Reveal player identity and give points
-                winner.revealIdentity();
+                revealIdentity(winner);
                 view.showRoundWinner(winner.getName());
                 view.showPlayerIdentity(winner.getName(), identityCard.isWitch());
                 winner.addToScore(identityCard.isWitch() ? 2 : 1);

@@ -2,8 +2,6 @@ package com.model.player;
 
 import com.model.card.RumourCard;
 import com.model.game.CardState;
-import com.model.game.IdentityCard;
-import com.controller.RoundController;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -15,12 +13,6 @@ public class Player {
     private int score;
 
     private final String name;
-
-    /**
-     * The Identity card.
-     * Identity card of the player attributed at the start of each round.
-     */
-    public IdentityCard identityCard; //TODO Check if necessary
 
     /**
      * The Hand.
@@ -87,17 +79,6 @@ public class Player {
     }
 
     /**
-     * Accuse the chosen player
-     *
-     * @param accusedPlayer player to accuse
-     */
-    public void accuse(Player accusedPlayer) {
-        if (accusedPlayer.identityCard.isIdentityRevealed() && accusedPlayer.identityCard.isWitch()) {
-            addToScore(1);
-        }
-    }
-
-    /**
      * Reveal a Rumour card
      * This method reveal the chosen card from the player hand and call its effects
      *
@@ -112,20 +93,6 @@ public class Player {
             }
         }
         return cardToReveal.useCard(this);
-    }
-
-    /**
-     * Reveal the player identity
-     */
-    public void revealIdentity() {
-        this.identityCard.setIdentityRevealed(true);
-        if (this.identityCard.isWitch()) {
-            //If a player is revealed as a witch, we exclude him from the round
-            RoundController.getRoundController().identityCards.removeIf(identityCard -> identityCard.player == this);
-            RoundController.getRoundController().setNextPlayer(RoundController.getCurrentPlayer());
-        } else {
-            RoundController.getRoundController().setNextPlayer(this);
-        }
     }
 
 }
