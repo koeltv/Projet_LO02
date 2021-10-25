@@ -18,8 +18,23 @@ import java.util.List;
  */
 public class RoundController {
 
-    enum RoundState {
-        INITIALIZING_ROUND, PLAYING_ROUND, ENDING_ROUND, ROUND_ENDED
+    private enum RoundState {
+        /**
+         * Initializing round state.
+         */
+        INITIALIZING_ROUND,
+        /**
+         * Playing round state.
+         */
+        PLAYING_ROUND,
+        /**
+         * Ending round state.
+         */
+        ENDING_ROUND,
+        /**
+         * Round ended state.
+         */
+        ROUND_ENDED
     }
 
     private static RoundController roundController;
@@ -48,6 +63,12 @@ public class RoundController {
      */
     public final List<IdentityCard> identityCards;
 
+    /**
+     * Instantiates a new Round controller.
+     *
+     * @param gameController the game controller
+     * @param view           the view
+     */
     RoundController(GameController gameController, View view) {
         this.discardPile = new ArrayList<>();
         this.identityCards = new ArrayList<>();
@@ -59,10 +80,18 @@ public class RoundController {
         RoundController.roundController = this;
     }
 
+    /**
+     * Gets round controller.
+     *
+     * @return the round controller
+     */
     public static RoundController getRoundController() {
         return roundController;
     }
 
+    /**
+     * Reset static attributes.
+     */
     public static void reset() {
         numberOfRound = 0;
         currentPlayer = null;
@@ -96,8 +125,24 @@ public class RoundController {
     }
 
     /**
-     * Get the list of not revealed card from the player's hand
+     * Gets player identity card.
      *
+     * @param targetedPlayer the targeted player
+     * @return the player identity card
+     */
+    public IdentityCard getPlayerIdentityCard(Player targetedPlayer) {
+        for (IdentityCard identityCard : identityCards) {
+            if (identityCard.player == targetedPlayer) {
+                return identityCard;
+            }
+        }
+        return null;
+    }
+
+    /**
+     * Get the list of not revealed cards from the player's hand.
+     *
+     * @param player the player
      * @return selectable cards
      */
     public List<CardState> getSelectableCards(Player player) {
@@ -109,8 +154,9 @@ public class RoundController {
     }
 
     /**
-     * Prompt the player to choose a card
+     * Ask the player to choose a card.
      *
+     * @param player the player
      * @return chosen card
      */
     public RumourCard chooseCard(Player player) {
@@ -130,14 +176,15 @@ public class RoundController {
     }
 
     /**
-     * Get the list of not revealed player in the current round
+     * Get the list of not revealed player in the current round.
      *
+     * @param player the player
      * @return selectable players
      */
     public List<IdentityCard> getSelectablePlayers(Player player) {
         List<IdentityCard> selectablePlayers = new ArrayList<>();
         for (IdentityCard identityCard : identityCards) {
-            if (identityCard.player != player && !identityCard.isIdentityRevealed()) {
+            if (identityCard.player != player && identityCard.isIdentityNotRevealed()) {
                 selectablePlayers.add(identityCard);
             }
         }
@@ -145,8 +192,9 @@ public class RoundController {
     }
 
     /**
-     * Prompt the player to choose another player
+     * Ask the player to choose another player.
      *
+     * @param player the player
      * @return chosen player
      */
     public Player choosePlayer(Player player) {
@@ -166,29 +214,30 @@ public class RoundController {
     }
 
     /**
-     * Ask the current player for his next action
-     * This method will call the play method of the current player
+     * Ask the current player for his next action.
+     * This method will call the play method of the current player.
      */
-    public void askPlayerForAction(Player player) {
-        //        view.showCurrentPlayer(player.getName());
-
+    private void askPlayerForAction(Player player) {
         //Get possible actions
         List<PlayerAction> possibleActions = new ArrayList<>();
         if (player == RoundController.getCurrentPlayer()) possibleActions.add(PlayerAction.ACCUSE);
         else possibleActions.add(PlayerAction.REVEAL_IDENTITY);
         if (player.hand.size() > 0) possibleActions.add(PlayerAction.USE_CARD);
 
-        //Ask the player to choose
+        //Ask the player to choose his next action
         PlayerAction action;
-        if (player instanceof AI) {
-            action = ((AI) player).play(possibleActions);
-        } else {
-            action = view.promptForAction(player.getName(), possibleActions);
-        }
+        if (player instanceof AI) action = ((AI) player).play(possibleActions);
+        else action = view.promptForAction(player.getName(), possibleActions);
 
         applyPlayerAction(player, action);
     }
 
+    /**
+     * Apply player action.
+     *
+     * @param player the player
+     * @param action the action
+     */
     public void applyPlayerAction(Player player, PlayerAction action) {
         switch (action) {
             case REVEAL_IDENTITY -> {
@@ -233,18 +282,9 @@ public class RoundController {
         }
     }
 
-    public IdentityCard getPlayerIdentityCard(Player targetedPlayer) {
-        for (IdentityCard identityCard : identityCards) {
-            if (identityCard.player == targetedPlayer) {
-                return identityCard;
-            }
-        }
-        return null;
-    }
-
     /**
-     * Distribute Rumour cards
-     * This method distribute the Rumour cards at the start of a round based on the number of players
+     * Distribute Rumour cards.
+     * This method distribute the Rumour cards at the start of a round based on the number of players.
      */
     private void distributeRumourCards() {
         int nbOfExcessCards = CardName.values().length % identityCards.size();
@@ -268,8 +308,8 @@ public class RoundController {
     }
 
     /**
-     * Ask players for their chosen identity
-     * This method will call the selectIdentity() method to prompt players to choose a role for the round
+     * Ask players for their chosen identity.
+     * This method will call the selectIdentity() method to prompt players to choose a role for the round.
      */
     private void askPlayersForIdentity() {
         for (IdentityCard identityCard : identityCards) {
@@ -284,8 +324,8 @@ public class RoundController {
     }
 
     /**
-     * Select the first player
-     * This method will only be used on the first round to select a random player to start
+     * Select the first player.
+     * This method will only be used on the first round to select a random player to start.
      */
     private void selectFirstPlayer() {
         List<Player> playerList = gameController.players;
@@ -293,10 +333,10 @@ public class RoundController {
     }
 
     /**
-     * Set up the round
-     * This method will do everything necessary to set up a round (select 1st player, create identity cards, distribute Rumour cards, ask players for identity)
+     * Set up the round.
+     * This method will do everything necessary to set up a round (select 1st player, create identity cards, distribute Rumour cards, ask players for identity).
      */
-    public void startRound() {
+    private void startRound() {
         numberOfRound++;
         view.showStartOfRound(numberOfRound);
 
@@ -314,8 +354,8 @@ public class RoundController {
     }
 
     /**
-     * Round playing loop
-     * This method will prompt the current player for action, then set the current player to the next and loop while there is more than 1 not revealed player
+     * Round playing loop.
+     * This method will prompt the current player for action, then set the current player to the next and loop while there is more than 1 not revealed player.
      */
     private void playRound() {
         do {
@@ -327,13 +367,13 @@ public class RoundController {
     }
 
     /**
-     * Wrap up the round
-     * This method will do everything necessary to wrap up a round (reveal last player and give him points, gather all cards)
+     * Wrap up the round.
+     * This method will do everything necessary to wrap up a round (reveal last player and give him points, gather all cards).
      */
     private void endRound() {
         //We search the last not revealed player, reveal is identity and give him points
         for (IdentityCard identityCard : identityCards) {
-            if (!identityCard.isIdentityRevealed()) {
+            if (identityCard.isIdentityNotRevealed()) {
                 Player winner = identityCard.player;
                 //Reveal player identity and give points
                 revealIdentity(winner);
@@ -364,6 +404,9 @@ public class RoundController {
         roundState = RoundState.ROUND_ENDED;
     }
 
+    /**
+     * Run the round.
+     */
     public void run() {
         while (roundState != RoundState.ROUND_ENDED) {
             switch (roundState) {

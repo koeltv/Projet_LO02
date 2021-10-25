@@ -13,6 +13,8 @@ public class AI extends Player {
 
     /**
      * Instantiates a new AI.
+     *
+     * @param name the AI name
      */
     public AI(final String name) {
         super(name);
@@ -23,23 +25,38 @@ public class AI extends Player {
     }
 
     /**
-     * Use the AI strategy to select action
+     * Use the AI strategy to select action.
+     *
+     * @param possibleActions the possible actions
+     * @return the player action
      */
     public PlayerAction play(List<PlayerAction> possibleActions) {
         return strategy.use(this, possibleActions);
     }
 
     /**
-     * Use the AI strategy to select identity
+     * Use the AI strategy to select identity.
      */
     public void selectIdentity() {
         strategy.selectIdentity(this);
     }
 
+    /**
+     * Select the target player.
+     *
+     * @param players the players
+     * @return the chosen player
+     */
     public Player selectPlayer(List<Player> players) {
         return strategy.selectPlayer(players);
     }
 
+    /**
+     * Select card rumour card.
+     *
+     * @param rumourCards the rumour cards
+     * @return the chosen rumour card
+     */
     public RumourCard selectCard(List<RumourCard> rumourCards) {
         return strategy.selectCard(rumourCards);
     }

@@ -38,6 +38,9 @@ public class Player {
         return this.score;
     }
 
+    /**
+     * Reset score.
+     */
     public void resetScore() {
         this.score = 0;
     }
@@ -45,7 +48,7 @@ public class Player {
     /**
      * Add to score.
      *
-     * @param value the value
+     * @param value the value to add
      */
     public void addToScore(int value) {
         this.score += value;
@@ -79,8 +82,8 @@ public class Player {
     }
 
     /**
-     * Reveal a Rumour card
-     * This method reveal the chosen card from the player hand and call its effects
+     * Reveal a Rumour card.
+     * This method reveal the chosen card from the player hand and call its effects.
      *
      * @param cardToReveal card to reveal
      * @return whether the card has been used successfully or not
