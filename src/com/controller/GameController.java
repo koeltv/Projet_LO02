@@ -113,8 +113,8 @@ public class GameController {
     /**
      * Create players.
      *
-     * @param nbPlayers the nb players
-     * @param nbAIs     the nb a is
+     * @param nbPlayers the number of players
+     * @param nbAIs     the number of AIs
      */
     public void createPlayers(int nbPlayers, int nbAIs) {
         int i = 1;
