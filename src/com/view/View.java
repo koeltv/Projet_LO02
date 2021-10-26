@@ -11,7 +11,7 @@ public interface View {
 
     void promptForPlayerName(int playerIndex);
 
-    void promptForNewGame();
+    boolean promptForNewGame();
 
     int promptForPlayerChoice(List<String> playerNames);
 

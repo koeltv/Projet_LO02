@@ -16,31 +16,7 @@ import java.util.Random;
 /**
  * The type Game controller.
  */
-public class GameController {
-
-    private enum GameState {
-        /**
-         * Adding players game state.
-         */
-        ADDING_PLAYERS,
-        /**
-         * Players added game state.
-         */
-        PLAYERS_ADDED,
-        /**
-         * Game initiated game state.
-         */
-        GAME_INITIATED,
-        /**
-         * Game completed game state.
-         */
-        GAME_COMPLETED,
-        /**
-         * End of session game state.
-         */
-        END_OF_SESSION
-    }
-
+public class GameController { //TODO Patron de conception visitor pour le comptage des points
     /**
      * The Players.
      */
@@ -54,11 +30,6 @@ public class GameController {
     private final View view;
 
     /**
-     * The Game state.
-     */
-    GameState gameState;
-
-    /**
      * Instantiates a new Game controller.
      *
      * @param view the view
@@ -67,7 +38,6 @@ public class GameController {
         this.players = new ArrayList<>();
         this.deck = new ArrayList<>();
         this.view = view;
-        this.gameState = GameState.ADDING_PLAYERS;
         view.setController(this);
     }
 
@@ -105,9 +75,7 @@ public class GameController {
     }
 
     private void askForPlayerRepartition() {
-        if (gameState == GameState.ADDING_PLAYERS) {
-            view.promptForRepartition();
-        }
+        view.promptForRepartition();
     }
 
     /**
@@ -125,7 +93,6 @@ public class GameController {
         for (i = nbPlayers; i < nbPlayers + nbAIs; i++) {
             players.add(new AI(randomAIName()));
         }
-        gameState = GameState.PLAYERS_ADDED;
     }
 
     /**
@@ -134,15 +101,13 @@ public class GameController {
      * @param playerName the player name
      */
     public void addPlayer(String playerName) {
-        if (gameState == GameState.ADDING_PLAYERS) {
-            boolean nameAlreadyAssigned = false;
-            for (Player player : players) {
-                nameAlreadyAssigned = player.getName().equals(playerName);
-                if (nameAlreadyAssigned) break;
-            }
-            if (!nameAlreadyAssigned) {
-                players.add(new Player(playerName));
-            }
+        boolean nameAlreadyAssigned = false;
+        for (Player player : players) {
+            nameAlreadyAssigned = player.getName().equals(playerName);
+            if (nameAlreadyAssigned) break;
+        }
+        if (!nameAlreadyAssigned) {
+            players.add(new Player(playerName));
         }
     }
 
@@ -204,7 +169,6 @@ public class GameController {
 
             deck.add(new RumourCard(cardName, witchEffects, huntEffect));
         }
-        gameState = GameState.GAME_INITIATED;
     }
 
     /**
@@ -212,8 +176,8 @@ public class GameController {
      *
      * @param nextChoice the choice
      */
-    public void nextAction(String nextChoice) {
-        gameState = "q".equals(nextChoice) ? GameState.END_OF_SESSION : GameState.GAME_INITIATED;
+    public boolean nextAction(String nextChoice) {
+        return "q".equals(nextChoice);
     }
 
     private boolean verifyScores() {
@@ -248,30 +212,23 @@ public class GameController {
      * Run the game.
      */
     public void run() {
-        while (gameState != GameState.END_OF_SESSION) {
-            switch (gameState) {
-                case ADDING_PLAYERS -> askForPlayerRepartition();
-                case PLAYERS_ADDED -> setupGame();
-                case GAME_INITIATED -> {
-                    if (!verifyScores()) {
-                        RoundController roundController = new RoundController(this, view);
-                        roundController.run();
-                    } else {
-                        gameState = GameState.GAME_COMPLETED;
-                    }
-                }
-                case GAME_COMPLETED -> {
-                    wrapUpGame();
-                    view.promptForNewGame();
-                }
-            }
-        }
+        boolean endProgram;
+        askForPlayerRepartition();
+        setupGame();
+        do {
+            do {
+                RoundController roundController = new RoundController(this, view);
+                roundController.run();
+            } while (!verifyScores());
+            wrapUpGame();
+            endProgram = view.promptForNewGame();
+        } while (!endProgram);
     }
 
     /**
      * The entry point of application.
      *
-     * @param args the input arguments
+     * @param args the input arguments, currently unused
      */
     public static void main(String[] args) {
         Views views = new Views();

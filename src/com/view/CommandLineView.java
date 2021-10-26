@@ -23,9 +23,9 @@ public class CommandLineView implements View {
     }
 
     @Override
-    public void promptForNewGame() {
+    public boolean promptForNewGame() {
         System.out.println("Press enter to play again or q to exit");
-        controller.nextAction(keyboard.nextLine());
+        return controller.nextAction(keyboard.nextLine());
     }
 
     @Override

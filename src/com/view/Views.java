@@ -41,10 +41,11 @@ public class Views implements View {
     }
 
     @Override
-    public void promptForNewGame() {
+    public boolean promptForNewGame() {
         for (View view : views) {
-            view.promptForNewGame();
+            if (view != activeView) view.promptForNewGame();
         }
+        return activeView.promptForNewGame();
     }
 
     @Override

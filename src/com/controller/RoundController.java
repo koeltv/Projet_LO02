@@ -17,26 +17,6 @@ import java.util.List;
  * Round is the class that contains all methods to supervise a round. It is a singleton.
  */
 public class RoundController {
-
-    private enum RoundState {
-        /**
-         * Initializing round state.
-         */
-        INITIALIZING_ROUND,
-        /**
-         * Playing round state.
-         */
-        PLAYING_ROUND,
-        /**
-         * Ending round state.
-         */
-        ENDING_ROUND,
-        /**
-         * Round ended state.
-         */
-        ROUND_ENDED
-    }
-
     private static RoundController roundController;
 
     private static int numberOfRound;
@@ -50,8 +30,6 @@ public class RoundController {
     private final GameController gameController;
 
     private final View view;
-
-    private RoundState roundState;
 
     /**
      * The Discard pile.
@@ -72,7 +50,6 @@ public class RoundController {
     RoundController(GameController gameController, View view) {
         this.discardPile = new ArrayList<>();
         this.identityCards = new ArrayList<>();
-        this.roundState = RoundState.INITIALIZING_ROUND;
 
         this.view = view;
         this.gameController = gameController;
@@ -350,7 +327,6 @@ public class RoundController {
 
         distributeRumourCards();
         askPlayersForIdentity();
-        roundState = RoundState.PLAYING_ROUND;
     }
 
     /**
@@ -361,9 +337,7 @@ public class RoundController {
         do {
             askPlayerForAction(RoundController.getCurrentPlayer());
             RoundController.currentPlayer = nextPlayer;
-            //TODO Playing loop, currently there is a risk of not setting next player
         } while (numberOfNotRevealedPlayers > 1);
-        roundState = RoundState.ENDING_ROUND;
     }
 
     /**
@@ -401,20 +375,15 @@ public class RoundController {
             this.discardPile.remove(removedCard);
             gameController.deck.add(removedCard);
         }
-        roundState = RoundState.ROUND_ENDED;
     }
 
     /**
      * Run the round.
      */
     public void run() {
-        while (roundState != RoundState.ROUND_ENDED) {
-            switch (roundState) {
-                case INITIALIZING_ROUND -> startRound();
-                case PLAYING_ROUND -> playRound();
-                case ENDING_ROUND -> endRound();
-            }
-        }
+        startRound();
+        playRound();
+        endRound();
     }
 
 }
