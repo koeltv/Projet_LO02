@@ -35,111 +35,81 @@ public class Views implements View {
 
     @Override
     public void promptForPlayerName(int playerIndex) {
-        for (View view : views) {
-            view.promptForPlayerName(playerIndex);
-        }
+        views.forEach(view -> view.promptForPlayerName(playerIndex));
     }
 
     @Override
     public boolean promptForNewGame() {
-        for (View view : views) {
-            if (view != activeView) view.promptForNewGame();
-        }
+        views.stream().filter(view -> view != activeView).forEach(View::promptForNewGame);
         return activeView.promptForNewGame();
     }
 
     @Override
     public int promptForPlayerChoice(List<String> playerNames) {
-        for (View view : views) {
-            if (view != activeView) view.promptForPlayerChoice(playerNames);
-        }
+        views.stream().filter(view -> view != activeView).forEach(view -> view.promptForPlayerChoice(playerNames));
         return activeView.promptForPlayerChoice(playerNames);
     }
 
     @Override
     public int promptForCardChoice(List<CardName> rumourCardNames) {
-        for (View view : views) {
-            if (view != activeView) view.promptForCardChoice(rumourCardNames);
-        }
+        views.stream().filter(view -> view != activeView).forEach(view -> view.promptForCardChoice(rumourCardNames));
         return activeView.promptForCardChoice(rumourCardNames);
     }
 
     @Override
     public void promptForRepartition() {
-        for (View view : views) {
-            view.promptForRepartition();
-        }
+        views.forEach(View::promptForRepartition);
     }
 
     @Override
     public void showGameWinner(String name, int numberOfRound) {
-        for (View view : views) {
-            view.showGameWinner(name, numberOfRound);
-        }
+        views.forEach(view -> view.showGameWinner(name, numberOfRound));
     }
 
     @Override
     public void showRoundWinner(String name) {
-        for (View view : views) {
-            view.showRoundWinner(name);
-        }
+        views.forEach(view -> view.showRoundWinner(name));
     }
 
     @Override
     public void showStartOfRound(int numberOfRound) {
-        for (View view : views) {
-            view.showStartOfRound(numberOfRound);
-        }
+        views.forEach(view -> view.showStartOfRound(numberOfRound));
     }
 
     @Override
     public int promptForPlayerIdentity(String name) {
-        for (View view : views) {
-            if (view != activeView) view.promptForPlayerIdentity(name);
-        }
+        views.stream().filter(view -> view != activeView).forEach(view -> view.promptForPlayerIdentity(name));
         return activeView.promptForPlayerIdentity(name);
     }
 
     @Override
     public PlayerAction promptForAction(String playerName, List<PlayerAction> possibleActions) {
-        for (View view : views) {
-            if (view != activeView) view.promptForAction(playerName, possibleActions);
-        }
+        views.stream().filter(view -> view != activeView).forEach(view -> view.promptForAction(playerName, possibleActions));
         return activeView.promptForAction(playerName, possibleActions);
     }
 
     @Override
     public void showPlayerIdentity(String name, boolean witch) {
-        for (View view : views) {
-            view.showPlayerIdentity(name, witch);
-        }
+        views.forEach(view -> view.showPlayerIdentity(name, witch));
     }
 
     @Override
     public void showCurrentPlayer(String name) {
-        for (View view : views) {
-            view.showCurrentPlayer(name);
-        }
+        views.forEach(view -> view.showCurrentPlayer(name));
     }
 
     @Override
     public void showPlayerAction(String name) {
-        for (View view : views) {
-            view.showPlayerAction(name);
-        }
+        views.forEach(view -> view.showPlayerAction(name));
     }
 
     @Override
     public void showPlayerAction(String name, String targetedPlayerName) {
-        for (View view : views) {
-            view.showPlayerAction(name, targetedPlayerName);
-        }
+        views.forEach(view -> view.showPlayerAction(name, targetedPlayerName));
     }
 
     @Override
     public void showPlayerAction(String name, CardName chosenCardName) {
-        for (View view : views) {
-            view.showPlayerAction(name, chosenCardName);
-        }
+        views.forEach(view -> view.showPlayerAction(name, chosenCardName));
     }
 }

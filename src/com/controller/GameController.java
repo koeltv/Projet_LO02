@@ -175,6 +175,7 @@ public class GameController { //TODO Patron de conception visitor pour le compta
      * Exit or start a new game.
      *
      * @param nextChoice the choice
+     * @return the choice, false to continue, true to exit
      */
     public boolean nextAction(String nextChoice) {
         return "q".equals(nextChoice);

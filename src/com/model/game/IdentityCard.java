@@ -43,7 +43,7 @@ public class IdentityCard {
     }
 
     /**
-     * Is identity revealed boolean.
+     * Is identity not revealed boolean.
      *
      * @return whether the identity is revealed or not
      */

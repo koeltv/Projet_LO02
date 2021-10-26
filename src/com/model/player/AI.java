@@ -42,7 +42,7 @@ public class AI extends Player {
     }
 
     /**
-     * Select the target player.
+     * Use the AI strategy to select the target player.
      *
      * @param players the players
      * @return the chosen player
@@ -52,7 +52,7 @@ public class AI extends Player {
     }
 
     /**
-     * Select card rumour card.
+     * Use the AI strategy to select a rumour card.
      *
      * @param rumourCards the rumour cards
      * @return the chosen rumour card
