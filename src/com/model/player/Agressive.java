@@ -1,26 +1,36 @@
 package com.model.player;
 
 import com.controller.GameController;
-import com.model.game.IdentityCard;
 import com.controller.RoundController;
+import com.model.card.RumourCard;
+import com.model.game.IdentityCard;
 
 import java.util.List;
 
 public class Agressive implements Strategy {
-    public void use(AI ai) { //TODO Temporary implementation, need to be developed
+    @Override
+    public PlayerAction use(AI ai, List<PlayerAction> possibleActions) { //TODO Temporary implementation, need to be developed
         if (RoundController.getCurrentPlayer() == ai) {
-            List<IdentityCard> selectablePlayers = ai.getSelectablePlayers();
-            Player selectedPlayer = selectablePlayers.get(GameController.randomInInterval(0, selectablePlayers.size() - 1)).player;
-            System.out.println(ai.getName() + " is accusing " + selectedPlayer.getName() + " !");
-            ai.accuse(selectedPlayer);
+            return PlayerAction.ACCUSE;
         } else {
-            System.out.println(ai.getName() + " is revealing his identity !");
-            ai.revealIdentity();
+            return PlayerAction.REVEAL_IDENTITY;
         }
     }
 
+    @Override
     public void selectIdentity(AI ai) {
-        ai.identityCard.setWitch(GameController.randomInInterval(0, 1) > 0);
+        IdentityCard identityCard = RoundController.getRoundController().getPlayerIdentityCard(ai);
+        identityCard.setWitch(GameController.randomInInterval(0, 1) > 0);
+    }
+
+    @Override
+    public Player selectPlayer(List<Player> players) {
+        return players.get(GameController.randomInInterval(0, players.size() - 1));
+    }
+
+    @Override
+    public RumourCard selectCard(List<RumourCard> rumourCards) {
+        return rumourCards.get(GameController.randomInInterval(0, rumourCards.size() - 1));
     }
 
 }

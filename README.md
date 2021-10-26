@@ -4,7 +4,13 @@
 Le but de ce projet est de créer un logiciel reproduisant le jeu Witch Hunt disponible sur [ce site](http://www.goodlittlegames.co.uk/games/09-witch-hunt.html).
 
 ## Fonctionnalités
-Les fonctionnalités seront ajoutées au fur et à mesure du développement du projet.
+- Recréation du jeu Witch Hunt © sous la forme d'un logiciel avec Java
+- Possibilité de compléter la partie avec des IAs (en respectant le nombre total de joueur entre 3 et 6)
+- Initialisation une fois, répétition infinie. Une fois la partie initialisée (nombre de joueurs, etc), elle peut être
+  répétée indéfiniment.
+- Modularité à travers l'utilisation de l'architecture MVC
+  - Possibilité d'ajouter différentes interfaces (vues), actuellement uniquement par ligne de commande
+  - Possibilité d'extraire les règles pour les faire varier
 
 ## Contexte
 Ce projet a été effectué dans le cadre d'un cours sur les principes et pratique de la programmation objet en Java ([LO02](https://moodle.utt.fr/course/view.php?id=1470)) dirigé par M.LANGERON à [l'Université de Technologie de Troyes (UTT)](https://www.utt.fr).  

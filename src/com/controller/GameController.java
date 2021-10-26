@@ -3,53 +3,114 @@ package com.controller;
 import com.model.card.CardName;
 import com.model.card.RumourCard;
 import com.model.card.effect.*;
-import com.view.CommandLineView;
 import com.model.player.AI;
 import com.model.player.Player;
+import com.view.CommandLineView;
+import com.view.View;
+import com.view.Views;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
-import java.util.Scanner;
 
 /**
- * The type Game.
- * Game is the main class that supervise the whole game. It is a singleton.
+ * The type Game controller.
  */
-public class GameController extends Observable {
-    private static final GameController game = new GameController();
-
+public class GameController { //TODO Patron de conception visitor pour le comptage des points
     /**
      * The Players.
-     * List of all the players in the game
      */
-    public final List<Player> players = new ArrayList<>();
+    public final List<Player> players;
 
     /**
      * The Deck.
      */
-    public final List<RumourCard> deck = new ArrayList<>();
+    public final List<RumourCard> deck;
+
+    private final View view;
 
     /**
-     * The Round.
-     */
-    public RoundController roundController = RoundController.getRound();
-
-    private GameController() {}
-
-    /**
-     * Gets game instance.
+     * Instantiates a new Game controller.
      *
-     * @return the game instance
+     * @param view the view
      */
-    public static GameController getGame() {
-        return game;
+    public GameController(View view) {
+        this.players = new ArrayList<>();
+        this.deck = new ArrayList<>();
+        this.view = view;
+        view.setController(this);
     }
 
     /**
-     * Set up the game
-     * This is where the cards are instantiated before a new game
+     * Get random integer in a given interval.
+     * This function is a utility function used to get a random integer between 2 limits (included).
+     *
+     * @param min the minimum value to be returned (included)
+     * @param max the maximum value to be returned (included)
+     * @return random integer in the interval
      */
+    public static int randomInInterval(int min, int max) {
+        Random random = new Random();
+        return random.nextInt((max + 1) - min) + min;
+    }
+
+    /**
+     * Get a random not already assigned name.
+     *
+     * @return new name
+     */
+    public String randomAIName() {
+        String[] NAMES = {"Jean", "Antoine", "Fabrice", "Patrick", "Clara", "June", "Louis", "Silvain"};
+
+        String name;
+        boolean nameAssigned = false;
+        do {
+            name = NAMES[GameController.randomInInterval(0, NAMES.length - 1)];
+            for (Player player : players) {
+                nameAssigned = player.getName().equals(name);
+                if (nameAssigned) break;
+            }
+        } while (nameAssigned);
+        return name;
+    }
+
+    private void askForPlayerRepartition() {
+        view.promptForRepartition();
+    }
+
+    /**
+     * Create players.
+     *
+     * @param nbPlayers the number of players
+     * @param nbAIs     the number of AIs
+     */
+    public void createPlayers(int nbPlayers, int nbAIs) {
+        int i = 1;
+        while (players.size() < nbPlayers) {
+            view.promptForPlayerName(i);
+            if (players.size() > i - 1) i++;
+        }
+        for (i = nbPlayers; i < nbPlayers + nbAIs; i++) {
+            players.add(new AI(randomAIName()));
+        }
+    }
+
+    /**
+     * Add player.
+     *
+     * @param playerName the player name
+     */
+    public void addPlayer(String playerName) {
+        boolean nameAlreadyAssigned = false;
+        for (Player player : players) {
+            nameAlreadyAssigned = player.getName().equals(playerName);
+            if (nameAlreadyAssigned) break;
+        }
+        if (!nameAlreadyAssigned) {
+            players.add(new Player(playerName));
+        }
+    }
+
     private void setupGame() {
         for (CardName cardName : CardName.values()) {
             List<Effect> witchEffects = new ArrayList<>();
@@ -106,102 +167,75 @@ public class GameController extends Observable {
                 case PET_NEWT -> huntEffect.add(new TakeRevealedFromOtherEffect());
             }
 
-            this.deck.add(new RumourCard(cardName, witchEffects, huntEffect));
+            deck.add(new RumourCard(cardName, witchEffects, huntEffect));
         }
     }
 
     /**
-     * Wrap up the game
-     * This is where we congratulate the winner and settle ties if needed
+     * Exit or start a new game.
+     *
+     * @param nextChoice the choice
+     * @return the choice, false to continue, true to exit
      */
-    private void wrapUpGame() {
-        List<Player> winners = new ArrayList<>();
-
-        for (Player player : this.players) {
-            if (player.getScore() >= 5) winners.add(player);
-        }
-
-        if (winners.size() > 1) {
-            settleTie();
-        } else if (winners.size() == 1) {
-            System.out.println("Congratulations " + winners.get(0).getName() + ", you won this game !");
-        } else {
-            System.out.println("No winner ? Oh wait...");
-        }
+    public boolean nextAction(String nextChoice) {
+        return "q".equals(nextChoice);
     }
 
-    /**
-     * Ask for player repartition
-     * This function asks for the repartition of players and AIs, along with the players name
-     */
-    private void askForPlayerRepartition() {
-        Scanner sc = new Scanner(System.in);
-        int nbPlayers, nbAIs;
-        do {
-            System.out.println("Number of players ?");
-            nbPlayers = sc.nextInt();
-            System.out.println("Number of AI ?");
-            nbAIs = sc.nextInt();
-        } while (nbPlayers + nbAIs < 3 || nbPlayers + nbAIs > 6);
-
-        for (int i = 0; i < nbPlayers; i++) { //TODO Make sure that names are unique
-            System.out.println("Name of player " + (i+1) + " ?");
-            this.players.add(new Player(sc.next()));
-        }
-        for (int i = nbPlayers; i < nbPlayers + nbAIs; i++) {
-            this.players.add(new AI());
-        }
-    }
-
-    /**
-     * Verify the scores
-     * This function verify the score of each player to know the current state of the game
-     * @return true if at least 1 player has at least 5 points, false otherwise
-     */
     private boolean verifyScores() {
-        for (Player player : this.players)
+        for (Player player : players)
             if (player.getScore() >= 5) return true;
         return false;
     }
 
-    /**
-     * Settle ties
-     * This function is used when more than 1 player has at least 5 points in order to decide a single winner
-     */
-    private void settleTie() {
+    private void wrapUpGame() {
+        List<Player> winners = new ArrayList<>();
+
+        for (Player player : players) {
+            if (player.getScore() >= 5) winners.add(player);
+            player.resetScore();
+        }
+
+        if (winners.size() > 1) {
+            settleTie(winners);
+        } else if (winners.size() == 1) {
+            view.showGameWinner(winners.get(0).getName(), RoundController.getNumberOfRound());
+        }
+
+        RoundController.reset();
+    }
+
+    private void settleTie(List<Player> winners) {
+        Player winner = winners.get(randomInInterval(0, winners.size() - 1));
+        view.showGameWinner(winner.getName(), RoundController.getNumberOfRound());
     }
 
     /**
-     * Get random integer in a given interval
-     * This function is a utility function used to get a random integer between 2 limits (included)
-     *
-     * @param min the minimum value to be returned (included)
-     * @param max the maximum value to be returned (included)
-     * @return random integer in the interval
+     * Run the game.
      */
-    public static int randomInInterval(int min, int max) {
-        Random random = new Random();
-        return random.nextInt((max + 1) - min) + min;
+    public void run() {
+        boolean endProgram;
+        askForPlayerRepartition();
+        setupGame();
+        do {
+            do {
+                RoundController roundController = new RoundController(this, view);
+                roundController.run();
+            } while (!verifyScores());
+            wrapUpGame();
+            endProgram = view.promptForNewGame();
+        } while (!endProgram);
     }
 
     /**
      * The entry point of application.
      *
-     * @param args the input arguments
+     * @param args the input arguments, currently unused
      */
     public static void main(String[] args) {
-        GameController gameController = GameController.getGame();
+        Views views = new Views();
+        views.addView(new CommandLineView());
 
-        CommandLineView commandLineView = new CommandLineView();
-        gameController.addObserver(commandLineView);
-
-        gameController.askForPlayerRepartition();
-        gameController.setupGame();
-        do {
-            gameController.roundController.startRound();
-            gameController.roundController = RoundController.getRound();
-        } while (!gameController.verifyScores());
-        gameController.wrapUpGame();
+        GameController gameController = new GameController(views);
+        gameController.run();
     }
-
 }

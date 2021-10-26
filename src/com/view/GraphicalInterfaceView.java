@@ -1,7 +1,5 @@
 package com.view;
 
-public class GraphicalInterfaceView implements Observer {
-    public void update(String message) {
-    }
+public abstract class GraphicalInterfaceView implements View {
 
 }

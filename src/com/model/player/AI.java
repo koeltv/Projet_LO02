@@ -1,65 +1,63 @@
 package com.model.player;
 
 import com.controller.GameController;
+import com.model.card.RumourCard;
+
+import java.util.List;
 
 /**
  * The type AI.
  */
 public class AI extends Player {
-    private static final String[] AI_NAMES = {"Jean", "Antoine", "Fabrice", "Patrick", "Clara", "June", "Louis", "Silvain"};
-
     private final Strategy strategy;
 
     /**
      * Instantiates a new AI.
+     *
+     * @param name the AI name
      */
-    public AI() {
-        super(randomAIName());
-        System.out.print("AI " + this.getName() + " is ");
+    public AI(final String name) {
+        super(name);
         this.strategy = switch (GameController.randomInInterval(0, 1)) {
-            case 0 -> {
-                System.out.println("agressive !");
-                yield new Agressive();
-            }
-            default -> {
-                System.out.println("defensive !");
-                yield new Defensive();
-            }
+            case 0 -> new Agressive();
+            default -> new Defensive();
         };
     }
 
     /**
-     * Get a random not already assigned name
-     * @return new name
+     * Use the AI strategy to select action.
+     *
+     * @param possibleActions the possible actions
+     * @return the player action
      */
-    private static String randomAIName() {
-        String name;
-        boolean nameAssigned = false;
-        do {
-            name = AI_NAMES[GameController.randomInInterval(0, AI_NAMES.length - 1)];
-            for (Player player : GameController.getGame().players) {
-                nameAssigned = name.equals(player.getName());
-                if (nameAssigned) break;
-            }
-        } while (nameAssigned);
-        return name;
+    public PlayerAction play(List<PlayerAction> possibleActions) {
+        return strategy.use(this, possibleActions);
     }
 
     /**
-     * Use the AI strategy to select action
+     * Use the AI strategy to select identity.
      */
-    @Override
-    public void play() {
-        System.out.println("Currently using " + this.getName() + "'s player.Strategy !"); //Used for debug
-        this.strategy.use(this);
-    }
-
-    /**
-     * Use the AI strategy to select identity
-     */
-    @Override
     public void selectIdentity() {
-        this.strategy.selectIdentity(this);
+        strategy.selectIdentity(this);
     }
 
+    /**
+     * Use the AI strategy to select the target player.
+     *
+     * @param players the players
+     * @return the chosen player
+     */
+    public Player selectPlayer(List<Player> players) {
+        return strategy.selectPlayer(players);
+    }
+
+    /**
+     * Use the AI strategy to select a rumour card.
+     *
+     * @param rumourCards the rumour cards
+     * @return the chosen rumour card
+     */
+    public RumourCard selectCard(List<RumourCard> rumourCards) {
+        return strategy.selectCard(rumourCards);
+    }
 }
