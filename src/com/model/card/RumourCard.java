@@ -49,6 +49,14 @@ public class RumourCard {
         return cardUser == RoundController.getCurrentPlayer() ? applyHuntEffects(cardUser) : applyWitchEffects(cardUser);
     }
 
+    private Player chooseTarget(Player cardUser, Effect witchEffect) {
+        Player target;
+        do {
+            target = witchEffect.chooseTarget(this.cardName, cardUser);
+        } while (target == null);
+        return target;
+    }
+
     /**
      * Apply the witch? effects of a card.
      *
@@ -57,7 +65,7 @@ public class RumourCard {
      */
     public boolean applyWitchEffects(Player cardUser) {
         for (Effect witchEffect : this.witchEffects) {
-            if (!witchEffect.applyEffect(cardUser, witchEffect.chooseTarget(this.cardName, cardUser))) return false;
+            if (!witchEffect.applyEffect(cardUser, chooseTarget(cardUser, witchEffect))) return false;
         }
         return true;
     }
@@ -70,7 +78,7 @@ public class RumourCard {
      */
     public boolean applyHuntEffects(Player cardUser) {
         for (Effect huntEffect : this.huntEffects) {
-            if (!huntEffect.applyEffect(cardUser, huntEffect.chooseTarget(this.cardName, cardUser))) return false;
+            if (!huntEffect.applyEffect(cardUser, chooseTarget(cardUser, huntEffect))) return false;
         }
         return true;
     }

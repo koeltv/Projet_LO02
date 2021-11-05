@@ -123,10 +123,10 @@ public class RoundController {
      * @param player the player
      * @return selectable cards
      */
-    public List<CardState> getSelectableCards(Player player) {
-        List<CardState> selectableCards = new ArrayList<>();
+    public List<RumourCard> getSelectableCards(Player player) {
+        List<RumourCard> selectableCards = new ArrayList<>();
         for (CardState cardState : player.hand) {
-            if (!cardState.isRevealed()) selectableCards.add(cardState);
+            if (!cardState.isRevealed()) selectableCards.add(cardState.rumourCard);
         }
         return selectableCards;
     }
@@ -134,15 +134,16 @@ public class RoundController {
     /**
      * Ask the player to choose a card.
      *
-     * @param player the player
+     * @param player         the player
+     * @param rumourCardList the list of card to select from
      * @return chosen card
      */
-    public RumourCard chooseCard(Player player) {
+    public RumourCard chooseCard(Player player, List<RumourCard> rumourCardList) {
         List<RumourCard> selectableCards = new ArrayList<>();
         List<CardName> selectableCardNames = new ArrayList<>();
-        for (CardState cardState : getSelectableCards(player)) {
-            selectableCards.add(cardState.rumourCard);
-            selectableCardNames.add(cardState.rumourCard.getCardName());
+        for (RumourCard rumourCard : rumourCardList) {
+            selectableCards.add(rumourCard);
+            selectableCardNames.add(rumourCard.getCardName());
         }
         //Printing selectable cards
         if (player instanceof AI) {
@@ -240,7 +241,7 @@ public class RoundController {
             case USE_CARD -> {
                 boolean cardUsedSuccessfully;
                 do {
-                    RumourCard chosenRumourCard = chooseCard(player);
+                    RumourCard chosenRumourCard = chooseCard(player, getSelectableCards(player));
                     view.showPlayerAction(player.getName(), chosenRumourCard.getCardName());
                     cardUsedSuccessfully = player.revealRumourCard(chosenRumourCard);
                 } while (!cardUsedSuccessfully);
