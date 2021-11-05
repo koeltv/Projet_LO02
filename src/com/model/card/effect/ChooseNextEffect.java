@@ -13,9 +13,8 @@ public class ChooseNextEffect implements Effect {
             return false;
     }
 
-    public Player chooseTarget(final CardName cardName) { //TODO
-        System.out.println("Choose the next player");
-//        player.Player chosenPlayer;
+    public Player chooseTarget(final CardName cardName, Player cardUser) {
+        RoundController.getRoundController().choosePlayer(cardUser);
         return null;
     }
 

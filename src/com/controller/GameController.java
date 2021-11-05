@@ -234,6 +234,7 @@ public class GameController { //TODO Patron de conception visitor pour le compta
     public static void main(String[] args) {
         Views views = new Views();
         views.addView(new CommandLineView());
+        views.addView(new CommandLineView());
 
         GameController gameController = new GameController(views);
         gameController.run();

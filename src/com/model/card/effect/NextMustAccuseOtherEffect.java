@@ -9,7 +9,7 @@ public class NextMustAccuseOtherEffect implements Effect {
         return false;
     }
 
-    public Player chooseTarget(final CardName cardName) {
+    public Player chooseTarget(final CardName cardName, Player cardUser) {
         // TODO Auto-generated return
         return null;
     }

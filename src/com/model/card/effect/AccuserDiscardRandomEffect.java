@@ -9,7 +9,7 @@ import com.model.player.Player;
 public class AccuserDiscardRandomEffect implements Effect {
     public boolean applyEffect(Player cardUser, Player target) {
         if (target.hand.size() > 0) {
-            RumourCard chosenCard = target.hand.get(GameController.randomInInterval(0, target.hand.size())).rumourCard;
+            RumourCard chosenCard = target.hand.get(GameController.randomInInterval(0, target.hand.size() - 1)).rumourCard;
             RoundController.getCurrentPlayer().removeCardFromHand(chosenCard);
             RoundController.getRoundController().discardPile.add(chosenCard);
             return true;
@@ -17,7 +17,7 @@ public class AccuserDiscardRandomEffect implements Effect {
             return false;
     }
 
-    public Player chooseTarget(CardName cardName) {
+    public Player chooseTarget(CardName cardName, Player cardUser) {
         return RoundController.getCurrentPlayer();
     }
 

@@ -6,13 +6,12 @@ import com.model.player.Player;
 
 public class TakeNextTurnEffect implements Effect {
     public boolean applyEffect(final Player cardUser, final Player target) {
-        RoundController.getRoundController().setNextPlayer(cardUser);
+        RoundController.getRoundController().setNextPlayer(target);
         return true;
     }
 
-    public Player chooseTarget(final CardName cardName) {
-        // TODO Auto-generated return
-        return null;
+    public Player chooseTarget(final CardName cardName, Player cardUser) {
+        return cardUser;
     }
 
 }
