@@ -17,7 +17,7 @@ public class AccuserDiscardRandomEffect implements Effect {
             return false;
     }
 
-    public Player chooseTarget(CardName cardName) {
+    public Player chooseTarget(CardName cardName, Player cardUser) {
         return RoundController.getCurrentPlayer();
     }
 

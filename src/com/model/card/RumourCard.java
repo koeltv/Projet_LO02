@@ -57,7 +57,7 @@ public class RumourCard {
      */
     public boolean applyWitchEffects(Player cardUser) {
         for (Effect witchEffect : this.witchEffects) {
-            if (!witchEffect.applyEffect(cardUser, witchEffect.chooseTarget(this.cardName))) return false;
+            if (!witchEffect.applyEffect(cardUser, witchEffect.chooseTarget(this.cardName, null))) return false;
         }
         return true;
     }
@@ -70,7 +70,7 @@ public class RumourCard {
      */
     public boolean applyHuntEffects(Player cardUser) {
         for (Effect huntEffect : this.huntEffects) {
-            if (!huntEffect.applyEffect(cardUser, huntEffect.chooseTarget(this.cardName))) return false;
+            if (!huntEffect.applyEffect(cardUser, huntEffect.chooseTarget(this.cardName, null))) return false;
         }
         return true;
     }

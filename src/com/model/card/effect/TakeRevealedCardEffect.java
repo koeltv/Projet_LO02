@@ -11,7 +11,7 @@ public class TakeRevealedCardEffect implements Effect {
         return true;
     }
 
-    public Player chooseTarget(final CardName cardName) {
+    public Player chooseTarget(final CardName cardName, Player cardUser) {
         return null;
     }
 

@@ -20,8 +20,9 @@ public interface Effect {
      * Choose target player.
      *
      * @param cardName the card name
+     * @param cardUser TODO
      * @return the chosen player
      */
-    Player chooseTarget(CardName cardName);
+    Player chooseTarget(CardName cardName, Player cardUser);
 
 }
