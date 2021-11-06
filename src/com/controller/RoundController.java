@@ -11,6 +11,7 @@ import com.view.View;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * The type Round.
@@ -108,12 +109,7 @@ public class RoundController {
      * @return the player identity card
      */
     public IdentityCard getPlayerIdentityCard(Player targetedPlayer) {
-        for (IdentityCard identityCard : identityCards) {
-            if (identityCard.player == targetedPlayer) {
-                return identityCard;
-            }
-        }
-        return null;
+        return identityCards.stream().filter(identityCard -> identityCard.player == targetedPlayer).findFirst().orElse(null);
     }
 
     /**
@@ -123,11 +119,7 @@ public class RoundController {
      * @return selectable cards
      */
     public List<RumourCard> getSelectableCardsFromHand(Player player) {
-        List<RumourCard> selectableCards = new ArrayList<>();
-        for (CardState cardState : player.hand) {
-            if (!cardState.isRevealed()) selectableCards.add(cardState.rumourCard);
-        }
-        return selectableCards;
+        return player.hand.stream().filter(cardState -> !cardState.isRevealed()).map(cardState -> cardState.rumourCard).collect(Collectors.toList());
     }
 
     /**
@@ -137,11 +129,7 @@ public class RoundController {
      * @return revealed cards
      */
     public List<RumourCard> getRevealedCards(Player player) {
-        List<RumourCard> selectableCards = new ArrayList<>();
-        player.hand.forEach(cardState -> {
-            if (cardState.isRevealed()) selectableCards.add(cardState.rumourCard);
-        });
-        return selectableCards;
+        return player.hand.stream().filter(CardState::isRevealed).map(cardState -> cardState.rumourCard).collect(Collectors.toList());
     }
 
     /**
@@ -154,10 +142,10 @@ public class RoundController {
     public RumourCard chooseCard(Player player, List<RumourCard> rumourCardList) {
         List<RumourCard> selectableCards = new ArrayList<>();
         List<CardName> selectableCardNames = new ArrayList<>();
-        for (RumourCard rumourCard : rumourCardList) {
+        rumourCardList.forEach(rumourCard -> {
             selectableCards.add(rumourCard);
             selectableCardNames.add(rumourCard.getCardName());
-        }
+        });
         //Printing selectable cards
         if (player instanceof AI) {
             return ((AI) player).selectCard(selectableCards);
@@ -174,11 +162,7 @@ public class RoundController {
      * @return selectable players
      */
     public List<Player> getSelectablePlayers(Player player) {
-        List<Player> selectablePlayers = new ArrayList<>();
-        identityCards.forEach(identityCard -> {
-            if (identityCard.player != player) selectablePlayers.add(identityCard.player);
-        });
-        return selectablePlayers;
+        return identityCards.stream().filter(identityCard -> identityCard.player != player).map(identityCard -> identityCard.player).collect(Collectors.toList());
     }
 
     /**
@@ -188,13 +172,7 @@ public class RoundController {
      * @return selectable players
      */
     public List<Player> getNotRevealedPlayers(Player player) {
-        List<Player> selectablePlayers = new ArrayList<>();
-        identityCards.forEach(identityCard -> {
-            if (identityCard.player != player && identityCard.isIdentityNotRevealed()) {
-                selectablePlayers.add(identityCard.player);
-            }
-        });
-        return selectablePlayers;
+        return identityCards.stream().filter(identityCard -> identityCard.player != player && identityCard.isIdentityNotRevealed()).map(identityCard -> identityCard.player).collect(Collectors.toList());
     }
 
     /**
@@ -318,15 +296,14 @@ public class RoundController {
      * This method will call the selectIdentity() method to prompt players to choose a role for the round.
      */
     private void askPlayersForIdentity() {
-        for (IdentityCard identityCard : identityCards) {
+        identityCards.forEach(identityCard -> {
             if (!(identityCard.player instanceof AI)) {
                 int identity = view.promptForPlayerIdentity(identityCard.player.getName());
                 identityCard.setWitch(identity > 0);
             } else {
                 ((AI) (identityCard.player)).selectIdentity();
             }
-
-        }
+        });
     }
 
     /**
@@ -389,14 +366,14 @@ public class RoundController {
             }
         }
         //Gather all players cards
-        for (Player player : gameController.players) {
+        gameController.players.forEach(player -> {
             int startingNumberOfCard = player.hand.size();
             for (int i = 0; i < startingNumberOfCard; i++) {
                 RumourCard removedCard = player.hand.get(0).rumourCard;
                 player.removeCardFromHand(removedCard);
                 gameController.deck.add(removedCard);
             }
-        }
+        });
         //Gather the discarded cards
         int startingNumberOfCard = this.discardPile.size();
         for (int i = 0; i < startingNumberOfCard; i++) {
