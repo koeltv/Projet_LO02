@@ -15,6 +15,7 @@ public interface ActiveView extends View {
      * Prompt for player name.
      *
      * @param playerIndex the player index
+     * @return chosen player name
      */
     String promptForPlayerName(int playerIndex);
 
@@ -43,6 +44,8 @@ public interface ActiveView extends View {
 
     /**
      * Prompt for repartition.
+     *
+     * @return chosen player/AI repartition
      */
     int[] promptForRepartition();
 

@@ -6,6 +6,10 @@ import com.model.player.PlayerAction;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * The type Views.
+ * Contain a list of passive views and 1 active view. Made to be able to handle more than 1 view at a time.
+ */
 public class Views implements ActiveView {
 
     final List<PassiveView> views;
