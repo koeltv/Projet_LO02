@@ -283,12 +283,12 @@ public class RoundController {
 
         //Distribute the rest equally
         int numberOfCardsPerPlayer = CardName.values().length / identityCards.size();
-        for (Player player : gameController.players) {
+        gameController.players.forEach(player -> {
             for (int i = 0; i < numberOfCardsPerPlayer; i++) {
                 int index = GameController.randomInInterval(0, gameController.deck.size() - 1);
                 player.addCardToHand(gameController.deck.remove(index));
             }
-        }
+        });
     }
 
     /**
@@ -325,10 +325,7 @@ public class RoundController {
 
         if (currentPlayer == null) selectFirstPlayer();
         //Fill up the list of active players at the start
-        for (Player player : gameController.players) {
-            IdentityCard playerIdentityCard = new IdentityCard(player);
-            identityCards.add(playerIdentityCard);
-        }
+        gameController.players.forEach(player -> identityCards.add(new IdentityCard(player)));
         numberOfNotRevealedPlayers = identityCards.size();
 
         distributeRumourCards();
@@ -375,10 +372,10 @@ public class RoundController {
             }
         });
         //Gather the discarded cards
-        int startingNumberOfCard = this.discardPile.size();
+        int startingNumberOfCard = discardPile.size();
         for (int i = 0; i < startingNumberOfCard; i++) {
-            RumourCard removedCard = this.discardPile.get(0);
-            this.discardPile.remove(removedCard);
+            RumourCard removedCard = discardPile.get(0);
+            discardPile.remove(removedCard);
             gameController.deck.add(removedCard);
         }
     }

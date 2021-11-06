@@ -78,7 +78,6 @@ public class GameController { //TODO Patron de conception visitor pour le compta
         do {
             values = view.promptForRepartition();
         } while (values.length < 2 || values[0] + values[1] < 3 || values[0] + values[1] > 6);
-        view.promptForRepartition();
 
         for (int i = 0; i < values[0]; i++) {
             addPlayer(view.promptForPlayerName(i));

@@ -30,41 +30,49 @@ public class Views implements ActiveView {
     @Override
     public void showGameWinner(String name, int numberOfRound) {
         views.forEach(view -> view.showGameWinner(name, numberOfRound));
+        activeView.showGameWinner(name, numberOfRound);
     }
 
     @Override
     public void showRoundWinner(String name) {
         views.forEach(view -> view.showRoundWinner(name));
+        activeView.showRoundWinner(name);
     }
 
     @Override
     public void showStartOfRound(int numberOfRound) {
         views.forEach(view -> view.showStartOfRound(numberOfRound));
+        activeView.showStartOfRound(numberOfRound);
     }
 
     @Override
     public void showPlayerIdentity(String name, boolean witch) {
         views.forEach(view -> view.showPlayerIdentity(name, witch));
+        activeView.showPlayerIdentity(name, witch);
     }
 
     @Override
     public void showCurrentPlayer(String name) {
         views.forEach(view -> view.showCurrentPlayer(name));
+        activeView.showCurrentPlayer(name);
     }
 
     @Override
     public void showPlayerAction(String name) {
         views.forEach(view -> view.showPlayerAction(name));
+        activeView.showPlayerAction(name);
     }
 
     @Override
     public void showPlayerAction(String name, String targetedPlayerName) {
         views.forEach(view -> view.showPlayerAction(name, targetedPlayerName));
+        activeView.showPlayerAction(name, targetedPlayerName);
     }
 
     @Override
     public void showPlayerAction(String name, CardName chosenCardName) {
         views.forEach(view -> view.showPlayerAction(name, chosenCardName));
+        activeView.showPlayerAction(name, chosenCardName);
     }
 
     ///////////////////////////////////////////////////////////////////////////
