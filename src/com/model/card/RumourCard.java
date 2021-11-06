@@ -46,39 +46,26 @@ public class RumourCard {
      * @return whether the card has been used successfully or not
      */
     public boolean useCard(Player cardUser) {
-        return cardUser == RoundController.getCurrentPlayer() ? applyHuntEffects(cardUser) : applyWitchEffects(cardUser);
+        return applyEffects(cardUser, cardUser == RoundController.getCurrentPlayer() ? huntEffects : witchEffects);
     }
 
-    private Player chooseTarget(Player cardUser, Effect witchEffect) {
+    private Player chooseTarget(Player cardUser, Effect effect) {
         Player target;
         do {
-            target = witchEffect.chooseTarget(this.cardName, cardUser);
+            target = effect.chooseTarget(this.cardName, cardUser);
         } while (target == null);
         return target;
     }
 
     /**
-     * Apply the witch? effects of a card.
+     * Apply the needed effects of a card.
      *
      * @param cardUser the player that used this card
      * @return whether the effects have been used successfully or not
      */
-    public boolean applyWitchEffects(Player cardUser) {
-        for (Effect witchEffect : this.witchEffects) {
-            if (!witchEffect.applyEffect(cardUser, chooseTarget(cardUser, witchEffect))) return false;
-        }
-        return true;
-    }
-
-    /**
-     * Apply the hunt! effects of a card.
-     *
-     * @param cardUser the player that used this card
-     * @return whether the effects have been used successfully or not
-     */
-    public boolean applyHuntEffects(Player cardUser) {
-        for (Effect huntEffect : this.huntEffects) {
-            if (!huntEffect.applyEffect(cardUser, chooseTarget(cardUser, huntEffect))) return false;
+    private boolean applyEffects(Player cardUser, List<Effect> effectList) {
+        for (Effect effect : effectList) {
+            if (!effect.applyEffect(cardUser, chooseTarget(cardUser, effect))) return false;
         }
         return true;
     }
