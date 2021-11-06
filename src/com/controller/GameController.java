@@ -5,8 +5,8 @@ import com.model.card.RumourCard;
 import com.model.card.effect.*;
 import com.model.player.AI;
 import com.model.player.Player;
+import com.view.ActiveView;
 import com.view.CommandLineView;
-import com.view.View;
 import com.view.Views;
 
 import java.util.ArrayList;
@@ -27,18 +27,17 @@ public class GameController { //TODO Patron de conception visitor pour le compta
      */
     public final List<RumourCard> deck;
 
-    private final View view;
+    private final ActiveView view;
 
     /**
      * Instantiates a new Game controller.
      *
      * @param view the view
      */
-    public GameController(View view) {
+    public GameController(ActiveView view) {
         this.players = new ArrayList<>();
         this.deck = new ArrayList<>();
         this.view = view;
-        view.setController(this);
     }
 
     /**
@@ -75,22 +74,17 @@ public class GameController { //TODO Patron de conception visitor pour le compta
     }
 
     private void askForPlayerRepartition() {
+        int[] values;
+        do {
+            values = view.promptForRepartition();
+        } while (values.length < 2 || values[0] + values[1] < 3 || values[0] + values[1] > 6);
         view.promptForRepartition();
-    }
 
-    /**
-     * Create players.
-     *
-     * @param nbPlayers the number of players
-     * @param nbAIs     the number of AIs
-     */
-    public void createPlayers(int nbPlayers, int nbAIs) {
-        int i = 1;
-        while (players.size() < nbPlayers) {
-            view.promptForPlayerName(i);
-            if (players.size() > i - 1) i++;
+        for (int i = 0; i < values[0]; i++) {
+            addPlayer(view.promptForPlayerName(i));
         }
-        for (i = nbPlayers; i < nbPlayers + nbAIs; i++) {
+
+        for (int i = 0; i < values[1]; i++) {
             players.add(new AI(randomAIName()));
         }
     }
@@ -100,7 +94,7 @@ public class GameController { //TODO Patron de conception visitor pour le compta
      *
      * @param playerName the player name
      */
-    public void addPlayer(String playerName) {
+    private void addPlayer(String playerName) {
         boolean nameAlreadyAssigned = false;
         for (Player player : players) {
             nameAlreadyAssigned = player.getName().equals(playerName);
@@ -174,11 +168,10 @@ public class GameController { //TODO Patron de conception visitor pour le compta
     /**
      * Exit or start a new game.
      *
-     * @param nextChoice the choice
      * @return the choice, false to continue, true to exit
      */
-    public boolean nextAction(String nextChoice) {
-        return "q".equals(nextChoice);
+    public boolean nextAction() {
+        return "q".equals(view.promptForNewGame());
     }
 
     private boolean verifyScores() {
@@ -222,7 +215,7 @@ public class GameController { //TODO Patron de conception visitor pour le compta
                 roundController.run();
             } while (!verifyScores());
             wrapUpGame();
-            endProgram = view.promptForNewGame();
+            endProgram = nextAction();
         } while (!endProgram);
     }
 
@@ -232,8 +225,7 @@ public class GameController { //TODO Patron de conception visitor pour le compta
      * @param args the input arguments, currently unused
      */
     public static void main(String[] args) {
-        Views views = new Views();
-        views.addView(new CommandLineView());
+        Views views = new Views(new CommandLineView());
 
         GameController gameController = new GameController(views);
         gameController.run();

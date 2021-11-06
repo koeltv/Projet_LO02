@@ -7,7 +7,7 @@ import com.model.game.IdentityCard;
 import com.model.player.AI;
 import com.model.player.Player;
 import com.model.player.PlayerAction;
-import com.view.View;
+import com.view.ActiveView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -30,7 +30,7 @@ public class RoundController {
 
     private final GameController gameController;
 
-    private final View view;
+    private final ActiveView view;
 
     /**
      * The Discard pile.
@@ -48,7 +48,7 @@ public class RoundController {
      * @param gameController the game controller
      * @param view           the view
      */
-    RoundController(GameController gameController, View view) {
+    RoundController(GameController gameController, ActiveView view) {
         this.discardPile = new ArrayList<>();
         this.identityCards = new ArrayList<>();
 

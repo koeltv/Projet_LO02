@@ -1,57 +1,12 @@
 package com.view;
 
-import com.controller.GameController;
 import com.model.card.CardName;
-import com.model.player.PlayerAction;
-
-import java.util.List;
 
 /**
  * The interface View.
+ * A view is a way to interact with users.
  */
 public interface View {
-    /**
-     * Sets controller.
-     *
-     * @param gameController the game controller
-     */
-    void setController(GameController gameController);
-
-    /**
-     * Prompt for player name.
-     *
-     * @param playerIndex the player index
-     */
-    void promptForPlayerName(int playerIndex);
-
-    /**
-     * Prompt for new game.
-     *
-     * @return the boolean
-     */
-    boolean promptForNewGame();
-
-    /**
-     * Prompt for player choice.
-     *
-     * @param playerNames the player names
-     * @return the chosen player index
-     */
-    int promptForPlayerChoice(List<String> playerNames);
-
-    /**
-     * Prompt for card choice.
-     *
-     * @param rumourCardNames the rumour card names
-     * @return the chosen card index
-     */
-    int promptForCardChoice(List<CardName> rumourCardNames);
-
-    /**
-     * Prompt for repartition.
-     */
-    void promptForRepartition();
-
     /**
      * Show game winner.
      *
@@ -73,23 +28,6 @@ public interface View {
      * @param numberOfRound the number of the round
      */
     void showStartOfRound(int numberOfRound);
-
-    /**
-     * Prompt for player identity.
-     *
-     * @param name the name
-     * @return the chosen identity (0 or less for villager, 1 or more for witch)
-     */
-    int promptForPlayerIdentity(String name);
-
-    /**
-     * Prompt for player action.
-     *
-     * @param playerName      the player name
-     * @param possibleActions the possible actions
-     * @return the chosen player action
-     */
-    PlayerAction promptForAction(String playerName, List<PlayerAction> possibleActions);
 
     /**
      * Show player identity.

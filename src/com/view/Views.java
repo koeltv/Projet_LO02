@@ -1,64 +1,30 @@
 package com.view;
 
-import com.controller.GameController;
 import com.model.card.CardName;
 import com.model.player.PlayerAction;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class Views implements View {
+public class Views implements ActiveView {
 
-    final List<View> views;
+    final List<PassiveView> views;
 
-    public View activeView;
+    public ActiveView activeView;
 
-    public Views() {
-        views = new ArrayList<>();
+    public Views(ActiveView activeView) {
+        this.views = new ArrayList<>();
+
+        this.activeView = activeView;
     }
 
     public void addView(View view) {
-        if (activeView == null) activeView = view;
-        views.add(view);
+        if (activeView == null && view instanceof ActiveView) activeView = (ActiveView) view;
+        else if (view instanceof PassiveView) views.add((PassiveView) view);
     }
 
-    public void switchActiveView(View view) {
-        if (views.contains(view)) {
-            this.activeView = view;
-        }
-    }
-
-    @Override
-    public void setController(GameController gameController) {
-        views.forEach(view -> view.setController(gameController));
-    }
-
-    @Override
-    public void promptForPlayerName(int playerIndex) {
-        views.forEach(view -> view.promptForPlayerName(playerIndex));
-    }
-
-    @Override
-    public boolean promptForNewGame() {
-        views.stream().filter(view -> view != activeView).forEach(View::promptForNewGame);
-        return activeView.promptForNewGame();
-    }
-
-    @Override
-    public int promptForPlayerChoice(List<String> playerNames) {
-        views.stream().filter(view -> view != activeView).forEach(view -> view.promptForPlayerChoice(playerNames));
-        return activeView.promptForPlayerChoice(playerNames);
-    }
-
-    @Override
-    public int promptForCardChoice(List<CardName> rumourCardNames) {
-        views.stream().filter(view -> view != activeView).forEach(view -> view.promptForCardChoice(rumourCardNames));
-        return activeView.promptForCardChoice(rumourCardNames);
-    }
-
-    @Override
-    public void promptForRepartition() {
-        views.forEach(View::promptForRepartition);
+    public void switchActiveView(ActiveView view) {
+        this.activeView = view;
     }
 
     @Override
@@ -74,18 +40,6 @@ public class Views implements View {
     @Override
     public void showStartOfRound(int numberOfRound) {
         views.forEach(view -> view.showStartOfRound(numberOfRound));
-    }
-
-    @Override
-    public int promptForPlayerIdentity(String name) {
-        views.stream().filter(view -> view != activeView).forEach(view -> view.promptForPlayerIdentity(name));
-        return activeView.promptForPlayerIdentity(name);
-    }
-
-    @Override
-    public PlayerAction promptForAction(String playerName, List<PlayerAction> possibleActions) {
-        views.stream().filter(view -> view != activeView).forEach(view -> view.promptForAction(playerName, possibleActions));
-        return activeView.promptForAction(playerName, possibleActions);
     }
 
     @Override
@@ -111,5 +65,51 @@ public class Views implements View {
     @Override
     public void showPlayerAction(String name, CardName chosenCardName) {
         views.forEach(view -> view.showPlayerAction(name, chosenCardName));
+    }
+
+    ///////////////////////////////////////////////////////////////////////////
+    // Active Methods
+    ///////////////////////////////////////////////////////////////////////////
+
+    @Override
+    public String promptForPlayerName(int playerIndex) {
+        views.forEach(view -> view.waitForPlayerName(playerIndex));
+        return activeView.promptForPlayerName(playerIndex);
+    }
+
+    @Override
+    public String promptForNewGame() {
+        views.forEach(PassiveView::waitForNewGame);
+        return activeView.promptForNewGame();
+    }
+
+    @Override
+    public int promptForPlayerChoice(List<String> playerNames) {
+        views.forEach(passiveView -> passiveView.waitForPlayerChoice(playerNames));
+        return activeView.promptForPlayerChoice(playerNames);
+    }
+
+    @Override
+    public int promptForCardChoice(List<CardName> rumourCardNames) {
+        views.forEach(passiveView -> passiveView.waitForCardChoice(rumourCardNames));
+        return activeView.promptForCardChoice(rumourCardNames);
+    }
+
+    @Override
+    public int[] promptForRepartition() {
+        views.forEach(PassiveView::waitForRepartition);
+        return activeView.promptForRepartition();
+    }
+
+    @Override
+    public int promptForPlayerIdentity(String name) {
+        views.forEach(passiveView -> passiveView.waitForPlayerIdentity(name));
+        return activeView.promptForPlayerIdentity(name);
+    }
+
+    @Override
+    public PlayerAction promptForAction(String playerName, List<PlayerAction> possibleActions) {
+        views.forEach(passiveView -> passiveView.waitForAction(playerName, possibleActions));
+        return activeView.promptForAction(playerName, possibleActions);
     }
 }
