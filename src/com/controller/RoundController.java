@@ -10,6 +10,7 @@ import com.model.player.PlayerAction;
 import com.view.ActiveView;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -364,19 +365,13 @@ public class RoundController {
         }
         //Gather all players cards
         gameController.players.forEach(player -> {
-            int startingNumberOfCard = player.hand.size();
-            for (int i = 0; i < startingNumberOfCard; i++) {
-                RumourCard removedCard = player.hand.get(0).rumourCard;
-                player.removeCardFromHand(removedCard);
-                gameController.deck.add(removedCard);
+            for (Iterator<CardState> iterator = player.hand.iterator(); iterator.hasNext(); ) {
+                gameController.deck.add(player.removeCardFromHand(player.hand.get(0).rumourCard));
             }
         });
         //Gather the discarded cards
-        int startingNumberOfCard = discardPile.size();
-        for (int i = 0; i < startingNumberOfCard; i++) {
-            RumourCard removedCard = discardPile.get(0);
-            discardPile.remove(removedCard);
-            gameController.deck.add(removedCard);
+        for (Iterator<RumourCard> iterator = discardPile.iterator(); iterator.hasNext(); ) {
+            gameController.deck.add(discardPile.remove(0));
         }
     }
 

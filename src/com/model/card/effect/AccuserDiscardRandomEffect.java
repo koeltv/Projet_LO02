@@ -11,8 +11,7 @@ public class AccuserDiscardRandomEffect implements Effect {
     public boolean applyEffect(Player cardUser, Player target) {
         if (target.hand.size() > 0) {
             RumourCard chosenCard = target.hand.get(GameController.randomInInterval(0, target.hand.size() - 1)).rumourCard;
-            RoundController.getCurrentPlayer().removeCardFromHand(chosenCard);
-            RoundController.getRoundController().discardPile.add(chosenCard);
+            RoundController.getRoundController().discardPile.add(RoundController.getCurrentPlayer().removeCardFromHand(chosenCard));
             return true;
         } else
             return false;

@@ -76,9 +76,14 @@ public class Player {
      * Remove card from hand.
      *
      * @param rumourCard the rumour card to remove
+     * @return removed rumour card or null if the card wasn't found
      */
-    public void removeCardFromHand(RumourCard rumourCard) {
-        this.hand.removeIf(cardState -> cardState.rumourCard == rumourCard);
+    public RumourCard removeCardFromHand(RumourCard rumourCard) {
+        if (this.hand.removeIf(cardState -> cardState.rumourCard == rumourCard)) {
+            return rumourCard;
+        } else {
+            return null;
+        }
     }
 
     /**
