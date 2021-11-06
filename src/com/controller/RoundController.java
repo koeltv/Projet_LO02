@@ -122,11 +122,25 @@ public class RoundController {
      * @param player the player
      * @return selectable cards
      */
-    public List<RumourCard> getSelectableCards(Player player) {
+    public List<RumourCard> getSelectableCardsFromHand(Player player) {
         List<RumourCard> selectableCards = new ArrayList<>();
         for (CardState cardState : player.hand) {
             if (!cardState.isRevealed()) selectableCards.add(cardState.rumourCard);
         }
+        return selectableCards;
+    }
+
+    /**
+     * Get the list of revealed cards from the player.
+     *
+     * @param player the player
+     * @return revealed cards
+     */
+    public List<RumourCard> getRevealedCards(Player player) {
+        List<RumourCard> selectableCards = new ArrayList<>();
+        player.hand.forEach(cardState -> {
+            if (cardState.isRevealed()) selectableCards.add(cardState.rumourCard);
+        });
         return selectableCards;
     }
 
@@ -154,37 +168,51 @@ public class RoundController {
     }
 
     /**
-     * Get the list of not revealed player in the current round.
+     * Get the list of all players in the current round.
      *
      * @param player the player
      * @return selectable players
      */
-    public List<IdentityCard> getSelectablePlayers(Player player) {
-        List<IdentityCard> selectablePlayers = new ArrayList<>();
-        for (IdentityCard identityCard : identityCards) {
-            if (identityCard.player != player && identityCard.isIdentityNotRevealed()) {
-                selectablePlayers.add(identityCard);
-            }
-        }
+    public List<Player> getSelectablePlayers(Player player) {
+        List<Player> selectablePlayers = new ArrayList<>();
+        identityCards.forEach(identityCard -> {
+            if (identityCard.player != player) selectablePlayers.add(identityCard.player);
+        });
         return selectablePlayers;
     }
 
     /**
-     * Ask the player to choose another player.
+     * Get the list of not revealed players in the current round.
      *
      * @param player the player
+     * @return selectable players
+     */
+    public List<Player> getNotRevealedPlayers(Player player) {
+        List<Player> selectablePlayers = new ArrayList<>();
+        identityCards.forEach(identityCard -> {
+            if (identityCard.player != player && identityCard.isIdentityNotRevealed()) {
+                selectablePlayers.add(identityCard.player);
+            }
+        });
+        return selectablePlayers;
+    }
+
+    /**
+     * Ask a player to choose another player.
+     *
+     * @param choosingPlayer the player
      * @return chosen player
      */
-    public Player choosePlayer(Player player) {
+    public Player choosePlayer(Player choosingPlayer, List<Player> playerList) {
         List<Player> selectablePlayers = new ArrayList<>();
         List<String> selectablePlayerNames = new ArrayList<>();
-        for (IdentityCard identityCard : getSelectablePlayers(player)) {
-            selectablePlayers.add(identityCard.player);
-            selectablePlayerNames.add(identityCard.player.getName());
-        }
+        playerList.forEach(player -> {
+            selectablePlayers.add(player);
+            selectablePlayerNames.add(player.getName());
+        });
         //Printing selectable players
-        if (player instanceof AI) {
-            return ((AI) player).selectPlayer(selectablePlayers);
+        if (choosingPlayer instanceof AI) {
+            return ((AI) choosingPlayer).selectPlayer(selectablePlayers);
         } else {
             int index = view.promptForPlayerChoice(selectablePlayerNames);
             return selectablePlayers.get(index);
@@ -227,7 +255,7 @@ public class RoundController {
                 numberOfNotRevealedPlayers--;
             }
             case ACCUSE -> {
-                Player targetedPlayer = choosePlayer(player);
+                Player targetedPlayer = choosePlayer(player, getNotRevealedPlayers(player));
                 view.showPlayerAction(player.getName(), targetedPlayer.getName());
 
                 askPlayerForAction(targetedPlayer);
@@ -240,7 +268,7 @@ public class RoundController {
             case USE_CARD -> {
                 boolean cardUsedSuccessfully;
                 do {
-                    RumourCard chosenRumourCard = chooseCard(player, getSelectableCards(player));
+                    RumourCard chosenRumourCard = chooseCard(player, getSelectableCardsFromHand(player));
                     view.showPlayerAction(player.getName(), chosenRumourCard.getCardName());
                     cardUsedSuccessfully = player.revealRumourCard(chosenRumourCard);
                 } while (!cardUsedSuccessfully);

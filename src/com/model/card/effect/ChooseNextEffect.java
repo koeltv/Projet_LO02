@@ -9,13 +9,13 @@ public class ChooseNextEffect implements Effect {
         if (cardUser != target) {
             RoundController.getRoundController().setNextPlayer(target);
             return true;
-        } else
+        } else {
             return false;
+        }
     }
 
     public Player chooseTarget(final CardName cardName, Player cardUser) {
-        RoundController.getRoundController().choosePlayer(cardUser);
-        return null;
+        return RoundController.getRoundController().choosePlayer(cardUser, RoundController.getRoundController().getSelectablePlayers(cardUser));
     }
 
 }
