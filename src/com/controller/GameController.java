@@ -182,10 +182,10 @@ public class GameController { //TODO Patron de conception visitor pour le compta
     private void wrapUpGame() {
         List<Player> winners = new ArrayList<>();
 
-        for (Player player : players) {
+        players.forEach(player -> {
             if (player.getScore() >= 5) winners.add(player);
             player.resetScore();
-        }
+        });
 
         if (winners.size() > 1) {
             settleTie(winners);
