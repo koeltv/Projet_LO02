@@ -111,7 +111,10 @@ public class RoundController {
      * @return the player identity card
      */
     public IdentityCard getPlayerIdentityCard(Player targetedPlayer) {
-        return identityCards.stream().filter(identityCard -> identityCard.player == targetedPlayer).findFirst().orElse(null);
+        return identityCards
+                .stream()
+                .filter(identityCard -> identityCard.player == targetedPlayer)
+                .findFirst().orElse(null);
     }
 
     /**
@@ -121,7 +124,11 @@ public class RoundController {
      * @return selectable cards
      */
     public List<RumourCard> getSelectableCardsFromHand(Player player) {
-        return player.hand.stream().filter(cardState -> !cardState.isRevealed()).map(cardState -> cardState.rumourCard).collect(Collectors.toList());
+        return player.hand
+                .stream()
+                .filter(cardState -> !cardState.isRevealed())
+                .map(cardState -> cardState.rumourCard)
+                .collect(Collectors.toList());
     }
 
     /**
@@ -131,7 +138,11 @@ public class RoundController {
      * @return revealed cards
      */
     public List<RumourCard> getRevealedCards(Player player) {
-        return player.hand.stream().filter(CardState::isRevealed).map(cardState -> cardState.rumourCard).collect(Collectors.toList());
+        return player.hand
+                .stream()
+                .filter(CardState::isRevealed)
+                .map(cardState -> cardState.rumourCard)
+                .collect(Collectors.toList());
     }
 
     /**
@@ -158,7 +169,11 @@ public class RoundController {
      * @return selectable players
      */
     public List<Player> getSelectablePlayers(Player player) {
-        return identityCards.stream().filter(identityCard -> identityCard.player != player).map(identityCard -> identityCard.player).collect(Collectors.toList());
+        return identityCards
+                .stream()
+                .filter(identityCard -> identityCard.player != player)
+                .map(identityCard -> identityCard.player)
+                .collect(Collectors.toList());
     }
 
     /**
@@ -168,7 +183,11 @@ public class RoundController {
      * @return selectable players
      */
     public List<Player> getNotRevealedPlayers(Player player) {
-        return identityCards.stream().filter(identityCard -> identityCard.player != player && identityCard.isIdentityNotRevealed()).map(identityCard -> identityCard.player).collect(Collectors.toList());
+        return identityCards
+                .stream()
+                .filter(identityCard -> identityCard.player != player && identityCard.isIdentityNotRevealed())
+                .map(identityCard -> identityCard.player)
+                .collect(Collectors.toList());
     }
 
     /**
@@ -178,7 +197,6 @@ public class RoundController {
      * @return chosen player
      */
     public Player choosePlayer(Player choosingPlayer, List<Player> playerList) {
-        //Printing selectable players
         if (choosingPlayer instanceof AI) {
             return ((AI) choosingPlayer).selectPlayer(playerList);
         } else {
