@@ -18,7 +18,7 @@ sur [ce site](http://www.goodlittlegames.co.uk/games/09-witch-hunt.html).
 
 - Implémentation des effets.
 - Implémentation des stratégies des IAs.
-- Patron de conception visitor pour le comptage des points.
+- Patron de conception visitor pour le comptage de points de chaque joueur.
 - Implémentation de l'interface graphique.
 - Documentation JavaDoc.
 
