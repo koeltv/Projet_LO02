@@ -23,8 +23,7 @@ public class Views implements ActiveView {
     }
 
     public void addView(View view) {
-        if (activeView == null && view instanceof ActiveView) activeView = (ActiveView) view;
-        else if (view instanceof PassiveView) views.add((PassiveView) view);
+        if (view instanceof PassiveView) views.add((PassiveView) view);
     }
 
     public void switchActiveView(ActiveView view) {

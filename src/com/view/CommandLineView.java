@@ -6,7 +6,7 @@ import com.model.player.PlayerAction;
 import java.util.List;
 import java.util.Scanner;
 
-public class CommandLineView implements ActiveView, PassiveView {
+public class CommandLineView implements PassiveView, ActiveView {
     final Scanner keyboard = new Scanner(System.in);
 
     @Override
@@ -26,8 +26,7 @@ public class CommandLineView implements ActiveView, PassiveView {
 
     @Override
     public void showPlayerIdentity(String name, boolean witch) {
-        System.out.print(name + " is a ");
-        System.out.println(witch ? "witch !" : "villager !");
+        System.out.println(name + " is a " + (witch ? "witch" : "villager") + " !");
     }
 
     @Override
@@ -104,7 +103,7 @@ public class CommandLineView implements ActiveView, PassiveView {
 
     @Override
     public String promptForNewGame() {
-        System.out.println("Press any key to play again, q to exit or r to reset");
+        System.out.println("Press enter to play again, q to exit or r to reset");
         return keyboard.nextLine();
     }
 

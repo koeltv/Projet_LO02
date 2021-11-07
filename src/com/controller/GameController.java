@@ -7,6 +7,7 @@ import com.model.player.AI;
 import com.model.player.Player;
 import com.view.ActiveView;
 import com.view.CommandLineView;
+import com.view.GraphicalInterfaceView;
 import com.view.Views;
 
 import java.util.ArrayList;
@@ -240,6 +241,8 @@ public class GameController {
                 endProgram = nextAction();
             } while (endProgram == GameAction.RESTART_GAME);
         } while (endProgram == GameAction.RESET_GAME);
+        //Force exit, not needed with CommandLineView but needed for GraphicalView types
+        System.exit(0);
     }
 
     /**
@@ -248,7 +251,8 @@ public class GameController {
      * @param args the input arguments, currently unused
      */
     public static void main(String[] args) {
-        Views views = new Views(new CommandLineView());
+        Views views = new Views(new GraphicalInterfaceView());
+        views.addView(new CommandLineView());
 
         GameController gameController = new GameController(views);
         gameController.run();
