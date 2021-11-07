@@ -61,6 +61,7 @@ public class RoundController {
 
     /**
      * Gets round controller.
+     * Return the single available instance of round controller (Singleton).
      *
      * @return the round controller
      */
@@ -141,17 +142,11 @@ public class RoundController {
      * @return chosen card
      */
     public RumourCard chooseCard(Player player, List<RumourCard> rumourCardList) {
-        List<RumourCard> selectableCards = new ArrayList<>();
-        List<CardName> selectableCardNames = new ArrayList<>();
-        rumourCardList.forEach(rumourCard -> {
-            selectableCards.add(rumourCard);
-            selectableCardNames.add(rumourCard.getCardName());
-        });
         //Printing selectable cards
         if (player instanceof AI) {
-            return ((AI) player).selectCard(selectableCards);
+            return ((AI) player).selectCard(rumourCardList);
         } else {
-            int index = view.promptForCardChoice(selectableCardNames);
+            int index = view.promptForCardChoice(rumourCardList.stream().map(RumourCard::toString).collect(Collectors.toList()));
             return player.hand.get(index).rumourCard;
         }
     }
@@ -183,18 +178,12 @@ public class RoundController {
      * @return chosen player
      */
     public Player choosePlayer(Player choosingPlayer, List<Player> playerList) {
-        List<Player> selectablePlayers = new ArrayList<>();
-        List<String> selectablePlayerNames = new ArrayList<>();
-        playerList.forEach(player -> {
-            selectablePlayers.add(player);
-            selectablePlayerNames.add(player.getName());
-        });
         //Printing selectable players
         if (choosingPlayer instanceof AI) {
-            return ((AI) choosingPlayer).selectPlayer(selectablePlayers);
+            return ((AI) choosingPlayer).selectPlayer(playerList);
         } else {
-            int index = view.promptForPlayerChoice(selectablePlayerNames);
-            return selectablePlayers.get(index);
+            int index = view.promptForPlayerChoice(playerList.stream().map(Player::getName).collect(Collectors.toList()));
+            return playerList.get(index);
         }
     }
 
@@ -298,11 +287,11 @@ public class RoundController {
      */
     private void askPlayersForIdentity() {
         identityCards.forEach(identityCard -> {
-            if (!(identityCard.player instanceof AI)) {
+            if (identityCard.player instanceof AI) {
+                ((AI) (identityCard.player)).selectIdentity();
+            } else {
                 int identity = view.promptForPlayerIdentity(identityCard.player.getName());
                 identityCard.setWitch(identity > 0);
-            } else {
-                ((AI) (identityCard.player)).selectIdentity();
             }
         });
     }
@@ -339,8 +328,8 @@ public class RoundController {
      */
     private void playRound() {
         do {
-            askPlayerForAction(RoundController.getCurrentPlayer());
-            RoundController.currentPlayer = nextPlayer;
+            askPlayerForAction(getCurrentPlayer());
+            currentPlayer = nextPlayer;
         } while (numberOfNotRevealedPlayers > 1);
     }
 

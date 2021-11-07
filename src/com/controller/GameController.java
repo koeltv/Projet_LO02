@@ -149,7 +149,6 @@ public class GameController {
                     huntEffect.add(new ChooseNextEffect());
                     huntEffect.add(new TakeRandomCardFromNextEffect());
                 }
-                case BROOMSTICK, WART -> huntEffect.add(new ChooseNextEffect());
                 case DUCKING_STOOL -> huntEffect.add(new RevealOrDiscardEffect());
                 case CAULDRON, TOAD -> huntEffect.add(new RevealOwnIdentityEffect());
                 case EVIL_EYE -> {
@@ -158,6 +157,7 @@ public class GameController {
                 }
                 case BLACK_CAT -> huntEffect.add(new DiscardedToHandEffect());
                 case PET_NEWT -> huntEffect.add(new TakeRevealedFromOtherEffect());
+                default -> huntEffect.add(new ChooseNextEffect());
             }
 
             deck.add(new RumourCard(cardName, witchEffects, huntEffect));

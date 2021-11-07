@@ -6,7 +6,12 @@ import com.model.card.CardName;
 import com.model.card.RumourCard;
 import com.model.player.Player;
 
-public class AccuserDiscardRandomEffect implements Effect {
+public class AccuserDiscardRandomEffect extends Effect {
+    @Override
+    public String toString() {
+        return "The player who accused you discards a random card from their hand.";
+    }
+
     @Override
     public boolean applyEffect(Player cardUser, Player target) {
         if (target.hand.size() > 0) {

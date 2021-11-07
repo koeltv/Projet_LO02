@@ -1,6 +1,5 @@
 package com.view;
 
-import com.model.card.CardName;
 import com.model.player.PlayerAction;
 
 import java.util.List;
@@ -37,10 +36,10 @@ public interface ActiveView extends View {
     /**
      * Prompt for card choice.
      *
-     * @param rumourCardNames the rumour card names
+     * @param rumourCardDescriptions the rumour card descriptions
      * @return the chosen card index
      */
-    int promptForCardChoice(List<CardName> rumourCardNames);
+    int promptForCardChoice(List<String> rumourCardDescriptions);
 
     /**
      * Prompt for repartition.

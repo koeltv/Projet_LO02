@@ -102,9 +102,9 @@ public class Views implements ActiveView {
     }
 
     @Override
-    public int promptForCardChoice(List<CardName> rumourCardNames) {
-        views.forEach(passiveView -> passiveView.waitForCardChoice(rumourCardNames));
-        return activeView.promptForCardChoice(rumourCardNames);
+    public int promptForCardChoice(List<String> rumourCardDescriptions) {
+        views.forEach(passiveView -> passiveView.waitForCardChoice(rumourCardDescriptions));
+        return activeView.promptForCardChoice(rumourCardDescriptions);
     }
 
     @Override

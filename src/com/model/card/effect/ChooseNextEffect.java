@@ -4,7 +4,12 @@ import com.controller.RoundController;
 import com.model.card.CardName;
 import com.model.player.Player;
 
-public class ChooseNextEffect implements Effect {
+public class ChooseNextEffect extends Effect {
+    @Override
+    public String toString() {
+        return "Choose next player.";
+    }
+
     @Override
     public boolean applyEffect(final Player cardUser, final Player target) {
         if (cardUser != target) {

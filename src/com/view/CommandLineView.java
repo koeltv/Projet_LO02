@@ -71,9 +71,9 @@ public class CommandLineView implements ActiveView, PassiveView {
     }
 
     @Override
-    public void waitForCardChoice(List<CardName> rumourCardNames) {
+    public void waitForCardChoice(List<String> rumourCardDescriptions) {
         System.out.println("Waiting for card choice");
-        rumourCardNames.forEach(System.out::println);
+        rumourCardDescriptions.forEach(System.out::println);
     }
 
     @Override
@@ -118,10 +118,10 @@ public class CommandLineView implements ActiveView, PassiveView {
     }
 
     @Override
-    public int promptForCardChoice(List<CardName> rumourCardNames) {
+    public int promptForCardChoice(List<String> rumourCardDescriptions) {
         System.out.println("Choose a card by index");
-        for (int i = 0; i < rumourCardNames.size(); i++) {
-            System.out.println(i + "- " + rumourCardNames.get(i));
+        for (int i = 0; i < rumourCardDescriptions.size(); i++) {
+            System.out.println(i + "- " + rumourCardDescriptions.get(i));
         }
         return Integer.parseInt(keyboard.nextLine());
     }

@@ -6,7 +6,15 @@ import com.model.player.Player;
 /**
  * The interface Effect.
  */
-public interface Effect {
+public abstract class Effect {
+    /**
+     * Get effect description.
+     *
+     * @return effect description.
+     */
+    @Override
+    public abstract String toString();
+
     /**
      * Apply effect.
      *
@@ -14,7 +22,7 @@ public interface Effect {
      * @param target   the target
      * @return whether the effect was successfully applied or not
      */
-    boolean applyEffect(Player cardUser, Player target);
+    public abstract boolean applyEffect(Player cardUser, Player target);
 
     /**
      * Choose target player.
@@ -23,6 +31,6 @@ public interface Effect {
      * @param cardUser the player using the card and applying its effects
      * @return the chosen player
      */
-    Player chooseTarget(CardName cardName, Player cardUser);
+    public abstract Player chooseTarget(CardName cardName, Player cardUser);
 
 }

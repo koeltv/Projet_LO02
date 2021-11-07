@@ -18,7 +18,7 @@ public class Player {
      * The Hand.
      * Hand of the player including revealed cards
      */
-    public final List<CardState> hand = new ArrayList<>();
+    public final List<CardState> hand;
 
     /**
      * Instantiates a new Player.
@@ -26,6 +26,7 @@ public class Player {
      * @param name the player name
      */
     public Player(final String name) {
+        this.hand = new ArrayList<>();
         this.name = name;
     }
 

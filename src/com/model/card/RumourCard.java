@@ -30,6 +30,22 @@ public class RumourCard {
     }
 
     /**
+     * Get card description.
+     *
+     * @return card description
+     */
+    @Override
+    public String toString() {
+        StringBuilder stringBuilder = new StringBuilder();
+        stringBuilder.append("==========").append(cardName).append("==========\n");
+        stringBuilder.append("----------Witch Effects----------\n");
+        witchEffects.forEach(effect -> stringBuilder.append(effect).append("\n"));
+        stringBuilder.append("----------Hunt Effects----------\n");
+        huntEffects.forEach(effect -> stringBuilder.append(effect).append("\n"));
+        return stringBuilder.toString();
+    }
+
+    /**
      * Gets card name.
      *
      * @return the card name
