@@ -20,7 +20,7 @@ public class GameController {
     /**
      * The Players.
      */
-    public final List<Player> players;
+    public List<Player> players;
 
     /**
      * The Deck.
@@ -29,13 +29,18 @@ public class GameController {
 
     private final ActiveView view;
 
+    enum GameAction {
+        RESTART_GAME,
+        RESET_GAME,
+        STOP
+    }
+
     /**
      * Instantiates a new Game controller.
      *
      * @param view the view
      */
     public GameController(ActiveView view) {
-        this.players = new ArrayList<>();
         this.deck = new ArrayList<>();
         this.view = view;
     }
@@ -169,8 +174,12 @@ public class GameController {
      *
      * @return the choice, false to continue, true to exit
      */
-    public boolean nextAction() {
-        return "q".equals(view.promptForNewGame());
+    public GameAction nextAction() {
+        return switch (view.promptForNewGame()) {
+            case "q" -> GameAction.STOP;
+            case "r" -> GameAction.RESET_GAME;
+            default -> GameAction.RESTART_GAME;
+        };
     }
 
     private boolean verifyScores() {
@@ -205,17 +214,20 @@ public class GameController {
      * Run the game.
      */
     public void run() {
-        boolean endProgram;
-        askForPlayerRepartition();
+        GameAction endProgram;
         setupGame();
         do {
+            players = new ArrayList<>();
+            askForPlayerRepartition();
             do {
-                RoundController roundController = new RoundController(this, view);
-                roundController.run();
-            } while (!verifyScores());
-            wrapUpGame();
-            endProgram = nextAction();
-        } while (!endProgram);
+                do {
+                    RoundController roundController = new RoundController(this, view);
+                    roundController.run();
+                } while (!verifyScores());
+                wrapUpGame();
+                endProgram = nextAction();
+            } while (endProgram == GameAction.RESTART_GAME);
+        } while (endProgram == GameAction.RESET_GAME);
     }
 
     /**

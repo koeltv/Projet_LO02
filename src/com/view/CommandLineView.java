@@ -104,7 +104,7 @@ public class CommandLineView implements ActiveView, PassiveView {
 
     @Override
     public String promptForNewGame() {
-        System.out.println("Press enter to play again or q to exit");
+        System.out.println("Press any key to play again, q to exit or r to reset");
         return keyboard.nextLine();
     }
 
