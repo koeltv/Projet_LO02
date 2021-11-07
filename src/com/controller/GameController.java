@@ -16,7 +16,7 @@ import java.util.Random;
 /**
  * The type Game controller.
  */
-public class GameController { //TODO Patron de conception visitor pour le comptage des points
+public class GameController {
     /**
      * The Players.
      */
