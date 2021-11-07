@@ -7,8 +7,8 @@ import com.model.player.AI;
 import com.model.player.Player;
 import com.view.ActiveView;
 import com.view.CommandLineView;
-import com.view.GraphicalInterfaceView;
 import com.view.Views;
+import com.view.graphic.GraphicView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -251,8 +251,8 @@ public class GameController {
      * @param args the input arguments, currently unused
      */
     public static void main(String[] args) {
-        Views views = new Views(new GraphicalInterfaceView());
-        views.addView(new CommandLineView());
+        Views views = new Views(new CommandLineView());
+        views.addView(new GraphicView());
 
         GameController gameController = new GameController(views);
         gameController.run();
