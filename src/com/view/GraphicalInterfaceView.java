@@ -12,8 +12,9 @@ import java.util.List;
  * Made to display user's interaction in a graphical interface using a text window and input boxes.
  */
 public class GraphicalInterfaceView implements PassiveView, ActiveView {
-    JTextArea textArea;
-    JFrame frame;
+    private JTextArea textArea;
+
+    private final JFrame frame;
 
     public GraphicalInterfaceView() {
         //Create main frame
@@ -32,6 +33,8 @@ public class GraphicalInterfaceView implements PassiveView, ActiveView {
 
     /**
      * A simple place to display what the controller is telling, very similar to the command line version.
+     *
+     * @param contentPane the container
      */
     private void addControllerCommandTracker(Container contentPane) {
         textArea = new JTextArea("Game Status\n", 100, 1);
@@ -42,6 +45,9 @@ public class GraphicalInterfaceView implements PassiveView, ActiveView {
 
     /**
      * All controls are added, so they are centered horizontally in the area.
+     *
+     * @param component   the component to add
+     * @param contentPane the container in which to place the component
      */
     private void addCenteredComponent(JComponent component, Container contentPane) {
         component.setAlignmentX(Component.CENTER_ALIGNMENT);
@@ -58,6 +64,13 @@ public class GraphicalInterfaceView implements PassiveView, ActiveView {
         textArea.setCaretPosition(textArea.getDocument().getLength());
     }
 
+    /**
+     * Prompt player with input box.
+     *
+     * @param title   title of the input box
+     * @param message message to display
+     * @return user input
+     */
     private String prompt(String title, String message) {
         return (String) JOptionPane.showInputDialog(
                 frame,
