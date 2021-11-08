@@ -4,11 +4,12 @@ import com.controller.RoundController;
 import com.model.card.RumourCard;
 import com.model.card.effect.Effect;
 import com.model.game.CardState;
+import com.model.game.IdentityCard;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.geom.AffineTransform;
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class Panel extends JPanel {
     //Constantes
@@ -153,9 +154,76 @@ public class Panel extends JPanel {
         drawEffects(x, effectRectangleY, cardWidth, rumourCard.huntEffects);
     }
 
+    private void drawCard(int x, int y) {
+        int cardHeight = getHeight() / SIZE_FACTOR, cardWidth = (int) (cardHeight / 1.35);
+
+        //The card itself
+        g2D.drawImage(cardBack, x, y, cardWidth, cardHeight, this);
+    }
+
     private void drawHand(List<CardState> hand) {
+        int cardWidth = ((int) (getHeight() / SIZE_FACTOR / 1.35));
+
         for (int i = 0; i < hand.size(); i++) {
-            drawCard(hand.get(i).rumourCard, (getWidth() / 2) + (i - hand.size() / 2) * (int) (getWidth() / (SIZE_FACTOR * 2.5)), getHeight() - (10 + getHeight() / SIZE_FACTOR));
+            //even number of card : place around the center, odd : center them
+            int centerFactor = getWidth() / 2;
+            if (hand.size() % 2 != 0) centerFactor -= cardWidth / 2;
+
+            int relativePosition = i - hand.size() / 2;
+
+            int margin = signOfAbsolutePositive(relativePosition) * 10;
+            if (hand.size() % 2 != 0) margin *= (int) Math.signum(i);
+
+            //Settle problem with even on right side
+            int nbOfMargin = hand.size() % 2 == 0 && i > 0 ?
+                    Math.abs(relativePosition + 1 == 0 ? 1 : relativePosition + 1) :
+                    Math.abs(relativePosition == 0 ? 1 : relativePosition);
+
+            //Settle 2x margin in middle
+            if (hand.size() % 2 == 0 && (relativePosition == -1 || relativePosition == 0)) {
+                margin /= 2;
+            }
+
+            drawCard(
+                    hand.get(i).rumourCard,
+                    centerFactor + relativePosition * cardWidth + margin * nbOfMargin,
+                    getHeight() - (10 + getHeight() / SIZE_FACTOR)
+            );
+        }
+    }
+
+    private int signOfAbsolutePositive(int i) {
+        return i == 0 ? 1 : (int) Math.signum(i);
+    }
+
+    private void drawHand(int size) {
+        int cardWidth = ((int) (getHeight() / SIZE_FACTOR / 1.35));
+
+        for (int i = 0; i < size; i++) {
+            int centerFactor = getWidth() / 2;
+            if (size % 2 != 0) centerFactor -= cardWidth / 2;
+
+            int relativePosition = i - size / 2;
+
+            //Pour nb pair 2 du milieu moitié de marge
+
+            int margin = signOfAbsolutePositive(relativePosition) * 10;
+            if (size % 2 != 0) margin *= (int) Math.signum(i);
+
+            //Settle problem with even on right side
+            int nbOfMargin = size % 2 == 0 && i > 0 ?
+                    Math.abs(relativePosition + 1 == 0 ? 1 : relativePosition + 1) :
+                    Math.abs(relativePosition == 0 ? 1 : relativePosition);
+
+            //Settle 2x margin in middle
+            if (size % 2 == 0 && (relativePosition == -1 || relativePosition == 0)) {
+                margin /= 2;
+            }
+
+            drawCard(
+                    centerFactor + relativePosition * cardWidth + margin * nbOfMargin,
+                    getHeight() - (10 + getHeight() / SIZE_FACTOR)
+            );
         }
     }
 
@@ -178,14 +246,36 @@ public class Panel extends JPanel {
             //Draw hand of the current player at the bottom
             drawHand(RoundController.getCurrentPlayer().hand);
 
+
             //Draw the hand of each player hidden
-            roundController.identityCards
-                    .stream()
-                    .map(identityCard -> identityCard.player)
-                    .collect(Collectors.toList())
-                    .forEach(player -> {
-                        //TODO Draw each hidden hand
-                    });
+            AffineTransform oldRotation = g2D.getTransform();
+            double currentAngle = 0;
+
+            for (IdentityCard card : roundController.identityCards) {
+                if (card.player != RoundController.getCurrentPlayer()) {
+                    double angle = (double) 360 / roundController.identityCards.size();
+                    currentAngle += angle;
+
+                    //Rotation to make all players on a circle
+                    g2D.rotate(Math.toRadians(angle), (float) getWidth() / 2, (float) getHeight() / 2);
+
+                    //The players on the side are set back a little to have some more room
+                    AffineTransform temp = g2D.getTransform();
+                    if (currentAngle % 180 != 0) {
+                        int XTranslation = getWidth() / 40;
+                        if ((currentAngle > 0 && currentAngle < 90) || (currentAngle > 180 && currentAngle < 270)) {
+                            XTranslation = -XTranslation;
+                        }
+                        g2D.translate(XTranslation, getHeight() / 3);
+                    }
+                    //We draw the player hand
+                    drawHand(card.player.hand.size());
+
+                    //We reset change to the transform matrix
+                    g2D.setTransform(temp);
+                }
+            }
+            g2D.setTransform(oldRotation);
 
             //Draw the discard pile
         }
