@@ -1,8 +1,8 @@
 package com.view.graphic;
 
 import com.controller.RoundController;
+import com.model.card.RumourCard;
 import com.model.game.CardState;
-import com.model.game.IdentityCard;
 
 import javax.swing.*;
 import java.awt.*;
@@ -16,9 +16,29 @@ public class Panel extends JPanel {
     private final Image cardFront = getToolkit().getImage("data/CardFrontEmpty.png");
     private final Image cardBack = getToolkit().getImage("data/CardBack.png");
 
-    private final RoundController roundController = RoundController.getRoundController();
+    private RoundController roundController = RoundController.getRoundController();
 
     int mouseXPos, mouseYPos;
+
+    private void drawCard(Graphics graphics, RumourCard rumourCard, int x, int y) {
+        int cardWidth = getWidth() / 12, cardHeight = getHeight() / 5;
+
+        graphics.drawImage(cardFront, x, y, cardWidth, cardHeight, this);
+        graphics.setColor(Color.BLACK);
+        graphics.drawString(rumourCard.getCardName().toString(), x, y + cardHeight / 4);
+
+        //Witch effects
+        graphics.setColor(Color.BLACK);
+        graphics.drawString("Witch Effects", x, y + cardHeight / 4);
+        graphics.setColor(Color.ORANGE);
+        graphics.fillRect(x, y + cardHeight / 3, cardWidth, cardHeight / 4);
+
+        //Hunt effects
+        graphics.setColor(Color.BLACK);
+        graphics.drawString("Hunt Effects", x, y + cardHeight / 4);
+        graphics.setColor(Color.GREEN);
+        graphics.fillRect(x, (int) (y + (cardHeight / 1.5)), cardWidth, cardHeight / 4);
+    }
 
     /**
      * Draw contained objects
@@ -28,23 +48,20 @@ public class Panel extends JPanel {
     public void paintComponent(Graphics graphics) {
         super.paintComponents(graphics);
 
+        if (roundController == null) roundController = RoundController.getRoundController();
+
         //Draw background
         graphics.drawImage(background, 0, 0, getWidth(), getHeight(), this);
 
         if (roundController != null && roundController.identityCards.size() > 0) {
             int nbOfPlayers = roundController.identityCards.size();
-            for (IdentityCard identityCard : roundController.identityCards) {
-                //If the player is the current player, display at the bottom
-                if (identityCard.player == RoundController.getCurrentPlayer()) {
-                    int nbOfCards = identityCard.player.hand.size();
-                    List<CardState> hand = identityCard.player.hand;
+            //If the player is the current player, display at the bottom
+            List<CardState> hand = RoundController.getCurrentPlayer().hand;
 
-                    for (int i = 0; i < hand.size(); i++) {
-                        CardState cardState = hand.get(i);
-                        graphics.drawImage(cardBack, getWidth() / 2 - (i) * getWidth() / 12, getWidth() - 100, getWidth() / 12, getHeight() / 5, this);
-                        graphics.drawString(cardState.rumourCard.toString(), getWidth() / 2 - (i) * getWidth() / 12, getWidth() - 100 + 10);
-                    }
-                }
+            int xCenter = getWidth() / 2;
+            for (int i = 0; i < hand.size(); i++) {
+                CardState cardState = hand.get(i);
+                drawCard(graphics, cardState.rumourCard, getWidth() / 2 + (i - hand.size() / 2) * getWidth() / 10, getHeight() - 200);
             }
         }
 
