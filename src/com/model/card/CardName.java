@@ -51,5 +51,14 @@ public enum CardName {
     /**
      * Pet newt card name.
      */
-    PET_NEWT
+    PET_NEWT;
+
+    @Override
+    public String toString() {
+        char[] charArray = super.toString().replace("_", " ").toCharArray();
+        for (int i = 1; i < charArray.length; i++) {
+            if (charArray[i - 1] != ' ') charArray[i] = Character.toLowerCase(charArray[i]);
+        }
+        return new String(charArray);
+    }
 }

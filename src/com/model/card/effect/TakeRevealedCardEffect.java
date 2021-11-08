@@ -7,7 +7,9 @@ import com.model.player.Player;
 public class TakeRevealedCardEffect extends Effect {
     @Override
     public String toString() {
-        return "Take one of your own revealed Rumour cards into your hand.";
+        return """
+                Take one of your own revealed
+                Rumour cards into your hand.""";
     }
 
     @Override
