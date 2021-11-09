@@ -1,129 +1,29 @@
 package com.view.graphic;
 
-import com.model.card.CardName;
 import com.model.player.PlayerAction;
 import com.view.ActiveView;
 import com.view.PassiveView;
 
 import javax.swing.*;
-import java.awt.*;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseMotionListener;
 import java.util.List;
 
-public class GraphicView extends JFrame implements ActiveView, PassiveView, Runnable {
-    private final Panel panel = new Panel();
-
-    public GraphicView() {
-        //Create main frame
-        this.setTitle("Witch Hunt");
-        this.setResizable(true);
-        this.setLocationRelativeTo(null);
-        this.setContentPane(panel);
-
-        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        this.setSize(750, 400);
-
-        //Display vertically
-        Container contentPane = this.getContentPane();
-        contentPane.setLayout(new BoxLayout(contentPane, BoxLayout.Y_AXIS));
-
-        this.addMouseMotionListener(mouseMotionListener);
-        this.setVisible(true);
-
-        Thread thread = new Thread(this);
-        thread.start();
-    }
-
-    MouseMotionListener mouseMotionListener = new MouseMotionListener() {
-        @Override
-        public void mouseDragged(MouseEvent e) {
-            panel.mouseXPos = e.getX();
-            panel.mouseYPos = e.getY();
-        }
-
-        @Override
-        public void mouseMoved(MouseEvent e) {
-        }
-    };
-
-    @Override
-    public void showGameWinner(String name, int numberOfRound) {
-
-    }
-
-    @Override
-    public void showRoundWinner(String name) {
-
-    }
-
-    @Override
-    public void showStartOfRound(int numberOfRound) {
-
-    }
-
-    @Override
-    public void showPlayerIdentity(String name, boolean witch) {
-
-    }
-
-    @Override
-    public void showCurrentPlayer(String name) {
-
-    }
-
-    @Override
-    public void showPlayerAction(String name) {
-
-    }
-
-    @Override
-    public void showPlayerAction(String name, String targetedPlayerName) {
-
-    }
-
-    @Override
-    public void showPlayerAction(String name, CardName chosenCardName) {
-
-    }
-
-    ///////////////////////////////////////////////////////////////////////////
-    // Passive Methods
-    ///////////////////////////////////////////////////////////////////////////
-
-    @Override
-    public void waitForPlayerName(int playerIndex) {
-
-    }
-
-    @Override
-    public void waitForNewGame() {
-
-    }
-
-    @Override
-    public void waitForPlayerChoice(List<String> playerNames) {
-
-    }
-
-    @Override
-    public void waitForCardChoice(List<String> rumourCardDescriptions) {
-
-    }
-
-    @Override
-    public void waitForRepartition() {
-
-    }
-
-    @Override
-    public void waitForPlayerIdentity(String name) {
-
-    }
-
-    @Override
-    public void waitForAction(String playerName, List<PlayerAction> possibleActions) {
-
+public abstract class GraphicView extends JFrame implements PassiveView, ActiveView {
+    /**
+     * Prompt player with input box.
+     *
+     * @param title   title of the input box
+     * @param message message to display
+     * @return user input
+     */
+    String prompt(String title, String message) {
+        return (String) JOptionPane.showInputDialog(
+                this,
+                message,
+                title, JOptionPane.PLAIN_MESSAGE,
+                null,
+                null,
+                ""
+        );
     }
 
     ///////////////////////////////////////////////////////////////////////////
@@ -132,41 +32,57 @@ public class GraphicView extends JFrame implements ActiveView, PassiveView, Runn
 
     @Override
     public String promptForPlayerName(int playerIndex) {
-        return null;
+        return prompt("", "Enter player " + playerIndex + " name");
     }
 
     @Override
     public String promptForNewGame() {
-        return null;
+        return prompt("New game", "Press enter to play again, q to exit or r to reset");
     }
 
     @Override
     public int promptForPlayerChoice(List<String> playerNames) {
-        return 0;
+        StringBuilder message = new StringBuilder();
+        message.append("Choose a player by index\n");
+        for (int i = 0; i < playerNames.size(); i++) {
+            message.append(i).append("- ").append(playerNames.get(i)).append("\n");
+        }
+
+        return Integer.parseInt(prompt("Player choice", message.toString()));
     }
 
     @Override
     public int promptForCardChoice(List<String> rumourCardDescriptions) {
-        return 0;
+        StringBuilder message = new StringBuilder();
+        message.append("Choose a card by index\n");
+        for (int i = 0; i < rumourCardDescriptions.size(); i++) {
+            message.append(i).append("- ").append(rumourCardDescriptions.get(i)).append("\n");
+        }
+
+        return Integer.parseInt(prompt("Card choice", message.toString()));
     }
 
     @Override
     public int[] promptForRepartition() {
-        return new int[0];
+        int nbPlayers = Integer.parseInt(prompt("Number of players", "Number of players ?"));
+        int nbAIs = Integer.parseInt(prompt("Number of AIs", "Number of AIs ?"));
+        return new int[]{nbPlayers, nbAIs};
     }
 
     @Override
     public int promptForPlayerIdentity(String name) {
-        return 0;
+        return Integer.parseInt(prompt("Identity", name + ", type 0 for villager and 1 for witch"));
     }
 
     @Override
     public PlayerAction promptForAction(String playerName, List<PlayerAction> possibleActions) {
-        return null;
-    }
+        StringBuilder message = new StringBuilder();
+        message.append(playerName).append(", please choose your next action");
+        for (int i = 0; i < possibleActions.size(); i++) {
+            message.append(i).append("- ").append(possibleActions.get(i)).append("\n");
+        }
 
-    @Override
-    public void run() {
-        while (true) panel.repaint();
+        int index = Integer.parseInt(prompt("Action", message.toString()));
+        return possibleActions.get(index);
     }
 }
