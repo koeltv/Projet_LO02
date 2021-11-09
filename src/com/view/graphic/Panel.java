@@ -10,6 +10,10 @@ import java.awt.*;
 import java.awt.geom.AffineTransform;
 import java.util.List;
 
+/**
+ * The type Panel.
+ * Graphical container where all 2D Graphics are drawn.
+ */
 public class Panel extends JPanel {
     //Constantes
     private static final int SIZE_FACTOR = 3;
@@ -25,16 +29,37 @@ public class Panel extends JPanel {
     //Card dimensions, based on window size
     private int cardWidth, cardHeight;
 
-    //Mouse position, actualized on click & drag
-    public int mouseXPos, mouseYPos;
+    /**
+     * The Mouse x pos.
+     */
+    public int mouseXPos;
+    /**
+     * The Mouse y pos.
+     */
+    public int mouseYPos;
 
-    //Used for title texts
+    /**
+     * The enum Gradient.
+     * Used for title texts
+     */
     enum Gradient {
+        /**
+         * Name gradient.
+         */
         NAME,
+        /**
+         * Witch gradient.
+         */
         WITCH,
+        /**
+         * Hunt gradient.
+         */
         HUNT
     }
 
+    /**
+     * Instantiates a new Panel.
+     */
     Panel() {
         this.background = getToolkit().getImage("data/Tabletop.jpg");
         this.cardFront = getToolkit().getImage("data/CardFrontEmpty.png");

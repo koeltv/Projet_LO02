@@ -10,9 +10,16 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionListener;
 import java.util.List;
 
+/**
+ * The type Graphical 2D view.
+ * Graphical view which display the whole game in 2D graphics. It is resizable.
+ */
 public class Graphical2DView extends GraphicView implements ActiveView, Runnable {
     private final Panel panel = new Panel();
 
+    /**
+     * Instantiates a new Graphical 2D view.
+     */
     public Graphical2DView() {
         //Create main frame
         this.setTitle("Witch Hunt");
@@ -34,6 +41,10 @@ public class Graphical2DView extends GraphicView implements ActiveView, Runnable
         thread.start();
     }
 
+    /**
+     * The Mouse motion listener.
+     * Used to get mouse position on click. Not used right now.
+     */
     MouseMotionListener mouseMotionListener = new MouseMotionListener() {
         @Override
         public void mouseDragged(MouseEvent e) {
@@ -131,6 +142,7 @@ public class Graphical2DView extends GraphicView implements ActiveView, Runnable
 
     @Override
     public void run() {
+        //noinspection InfiniteLoopStatement
         while (true) panel.repaint();
     }
 }
