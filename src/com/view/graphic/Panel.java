@@ -3,7 +3,6 @@ package com.view.graphic;
 import com.controller.RoundController;
 import com.model.card.RumourCard;
 import com.model.card.effect.Effect;
-import com.model.game.CardState;
 import com.model.game.IdentityCard;
 
 import javax.swing.*;
@@ -20,12 +19,16 @@ public class Panel extends JPanel {
     private final Image cardFront;
     private final Image cardBack;
 
+    //Panel 2D converted graphics
     private Graphics2D g2D;
 
+    //Card dimensions, based on window size
     private int cardWidth, cardHeight;
 
+    //Mouse position, actualized on click & drag
     public int mouseXPos, mouseYPos;
 
+    //Used for title texts
     enum Gradient {
         NAME,
         WITCH,
@@ -36,8 +39,6 @@ public class Panel extends JPanel {
         this.background = getToolkit().getImage("data/Tabletop.jpg");
         this.cardFront = getToolkit().getImage("data/CardFrontEmpty.png");
         this.cardBack = getToolkit().getImage("data/CardBack.png");
-
-        this.g2D = (Graphics2D) this.getGraphics();
     }
 
     /**
@@ -71,7 +72,7 @@ public class Panel extends JPanel {
         };
     }
 
-    //Draw a centered string on X axis
+    //Draw a centered string on X axis within [x; x + width]
     private int drawXCenteredString(String string, int x, int y, int width) {
         //We need to forcefully split lines. The method drawString() doesn't apply \n
         if (string.contains("\n")) {
@@ -85,7 +86,8 @@ public class Panel extends JPanel {
         return 0;
     }
 
-    private void drawEffects(int x, int y, int cardWidth, List<Effect> effects) {
+    //Draw a list of effects within a card X-axis bounds at y position
+    private void drawEffects(int x, int y, List<Effect> effects) {
         //Find good font
         Font font = g2D.getFont();
 
@@ -95,9 +97,7 @@ public class Panel extends JPanel {
             String[] array = effect.toString().split("\n");
             for (int i = 0; i < array.length; i++) {
                 int lengthOfCurrentString = g2D.getFontMetrics(font).stringWidth(array[i]);
-                if (lengthOfCurrentString > longestString) {
-                    longestString = lengthOfCurrentString;
-                }
+                if (lengthOfCurrentString > longestString) longestString = lengthOfCurrentString;
             }
         }
         //We set the font so that each effect fit
@@ -118,7 +118,7 @@ public class Panel extends JPanel {
     }
 
     //Draw a complete card
-    private void drawCard(RumourCard rumourCard, int x, int y) {
+    private void drawCard(int x, int y, RumourCard rumourCard) {
         //The card itself
         g2D.drawImage(cardFront, x, y, cardWidth, cardHeight, this);
 
@@ -138,7 +138,7 @@ public class Panel extends JPanel {
 
         g2D.setColor(Color.BLACK);
         g2D.setFont(g2D.getFont().deriveFont((float) (getWidth() / 200)));
-        drawEffects(x, effectRectangleY, cardWidth, rumourCard.witchEffects);
+        drawEffects(x, effectRectangleY, rumourCard.witchEffects);
 
         //Hunt effects
         effectRectangleY = (int) (y + (cardHeight / 1.5));
@@ -151,54 +151,16 @@ public class Panel extends JPanel {
 
         g2D.setColor(Color.BLACK);
         g2D.setFont(g2D.getFont().deriveFont((float) (getWidth() / 200)));
-        drawEffects(x, effectRectangleY, cardWidth, rumourCard.huntEffects);
+        drawEffects(x, effectRectangleY, rumourCard.huntEffects);
     }
 
+    //Draw a turned card
     private void drawCard(int x, int y) {
-        int cardHeight = getHeight() / SIZE_FACTOR, cardWidth = (int) (cardHeight / 1.35);
-
-        //The card itself
         g2D.drawImage(cardBack, x, y, cardWidth, cardHeight, this);
     }
 
-    private void drawHand(List<CardState> hand) {
-        boolean even = hand.size() % 2 == 0;
-
-        for (int i = 0; i < hand.size(); i++) {
-            //Center position, subtract half a card width for odd number of card
-            int centerFactor = getWidth() / 2;
-            if (!even) centerFactor -= cardWidth / 2;
-
-            //Position of the card in the hand
-            int relativePosition = i - hand.size() / 2;
-
-            //margin to the center as multiple of 10px
-            int margin = 10 * (even ? signOfAbsolutePositive(relativePosition) : Math.abs(relativePosition) * (int) Math.signum(relativePosition));
-
-            //used for even numbers
-            int nbOfMargin = 1;
-            if (even) {
-                int value = relativePosition;
-                if (i > 0) value = relativePosition + 1 == 0 ? 1 : relativePosition + 1;
-                nbOfMargin = Math.abs(value);
-            }
-
-            //Settle 2x margin at center for even number of cards
-            if (even && (relativePosition == -1 || relativePosition == 0)) margin /= 2;
-
-            drawCard(
-                    hand.get(i).rumourCard,
-                    centerFactor + relativePosition * cardWidth + margin * nbOfMargin,
-                    getHeight() - (10 + getHeight() / SIZE_FACTOR)
-            );
-        }
-    }
-
-    private int signOfAbsolutePositive(int i) {
-        return i == 0 ? 1 : (int) Math.signum(i);
-    }
-
-    private void drawHand(int size) {
+    //Draw a complete hand
+    private void drawCardList(List<RumourCard> hand, int size) {
         boolean even = size % 2 == 0;
 
         for (int i = 0; i < size; i++) {
@@ -210,7 +172,7 @@ public class Panel extends JPanel {
             int relativePosition = i - size / 2;
 
             //margin to the center as multiple of 10px
-            int margin = 10 * (even ? signOfAbsolutePositive(relativePosition) : Math.abs(relativePosition) * (int) Math.signum(relativePosition));
+            int margin = 10 * (even ? (i == 0 ? 1 : (int) Math.signum(i)) : Math.abs(relativePosition) * (int) Math.signum(relativePosition));
 
             //used for even numbers
             int nbOfMargin = 1;
@@ -223,10 +185,18 @@ public class Panel extends JPanel {
             //Settle 2x margin at center for even number of cards
             if (even && (relativePosition == -1 || relativePosition == 0)) margin /= 2;
 
-            drawCard(
-                    centerFactor + relativePosition * cardWidth + margin * nbOfMargin,
-                    getHeight() - (10 + getHeight() / SIZE_FACTOR)
-            );
+            if (hand != null) {
+                drawCard(
+                        centerFactor + relativePosition * cardWidth + margin * nbOfMargin,
+                        getHeight() - (10 + getHeight() / SIZE_FACTOR),
+                        hand.get(i)
+                );
+            } else {
+                drawCard(
+                        centerFactor + relativePosition * cardWidth + margin * nbOfMargin,
+                        getHeight() - (10 + getHeight() / SIZE_FACTOR)
+                );
+            }
         }
     }
 
@@ -238,6 +208,7 @@ public class Panel extends JPanel {
     public void paintComponent(Graphics graphics) { //TODO Place action buttons somewhere
         super.paintComponents(graphics);
 
+        //Actualise object values
         g2D = (Graphics2D) graphics;
         RoundController roundController = RoundController.getRoundController();
 
@@ -250,9 +221,10 @@ public class Panel extends JPanel {
         //Draw content
         if (roundController != null && roundController.identityCards.size() > 0) {
             //Draw hand of the current player at the bottom
-            drawHand(RoundController.getCurrentPlayer().hand);
+            List<RumourCard> selectableCards = roundController.getSelectableCardsFromHand(RoundController.getCurrentPlayer());
+            drawCardList(selectableCards, selectableCards.size());
 
-            //Draw the hand of each player hidden
+            //Draw the hand of each other player hidden
             AffineTransform oldRotation = g2D.getTransform();
             double currentAngle = 0;
 
@@ -275,7 +247,7 @@ public class Panel extends JPanel {
                         g2D.translate(XTranslation, getHeight() / 3);
                     }
                     //We draw the player hand
-                    drawHand(card.player.hand.size());
+                    drawCardList(null, card.player.hand.size());
 
                     //We reset change to the transform matrix
                     g2D.setTransform(temp);
@@ -284,6 +256,10 @@ public class Panel extends JPanel {
             g2D.setTransform(oldRotation);
 
             //Draw the discard pile
+            g2D.translate(getWidth() / 2, getHeight() / 2);
+            List<RumourCard> discardPile = RoundController.getRoundController().discardPile;
+            drawCardList(discardPile, discardPile.size());
+            g2D.setTransform(oldRotation);
         }
     }
 }
