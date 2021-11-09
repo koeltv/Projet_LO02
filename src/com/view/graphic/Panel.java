@@ -22,7 +22,9 @@ public class Panel extends JPanel {
 
     private Graphics2D g2D;
 
-    int mouseXPos, mouseYPos;
+    private int cardWidth, cardHeight;
+
+    public int mouseXPos, mouseYPos;
 
     enum Gradient {
         NAME,
@@ -117,8 +119,6 @@ public class Panel extends JPanel {
 
     //Draw a complete card
     private void drawCard(RumourCard rumourCard, int x, int y) {
-        int cardHeight = getHeight() / SIZE_FACTOR, cardWidth = (int) (cardHeight / 1.35);
-
         //The card itself
         g2D.drawImage(cardFront, x, y, cardWidth, cardHeight, this);
 
@@ -162,27 +162,29 @@ public class Panel extends JPanel {
     }
 
     private void drawHand(List<CardState> hand) {
-        int cardWidth = ((int) (getHeight() / SIZE_FACTOR / 1.35));
+        boolean even = hand.size() % 2 == 0;
 
         for (int i = 0; i < hand.size(); i++) {
-            //even number of card : place around the center, odd : center them
+            //Center position, subtract half a card width for odd number of card
             int centerFactor = getWidth() / 2;
-            if (hand.size() % 2 != 0) centerFactor -= cardWidth / 2;
+            if (!even) centerFactor -= cardWidth / 2;
 
+            //Position of the card in the hand
             int relativePosition = i - hand.size() / 2;
 
-            int margin = signOfAbsolutePositive(relativePosition) * 10;
-            if (hand.size() % 2 != 0) margin *= (int) Math.signum(i);
+            //margin to the center as multiple of 10px
+            int margin = 10 * (even ? signOfAbsolutePositive(relativePosition) : Math.abs(relativePosition) * (int) Math.signum(relativePosition));
 
-            //Settle problem with even on right side
-            int nbOfMargin = hand.size() % 2 == 0 && i > 0 ?
-                    Math.abs(relativePosition + 1 == 0 ? 1 : relativePosition + 1) :
-                    Math.abs(relativePosition == 0 ? 1 : relativePosition);
-
-            //Settle 2x margin in middle
-            if (hand.size() % 2 == 0 && (relativePosition == -1 || relativePosition == 0)) {
-                margin /= 2;
+            //used for even numbers
+            int nbOfMargin = 1;
+            if (even) {
+                int value = relativePosition;
+                if (i > 0) value = relativePosition + 1 == 0 ? 1 : relativePosition + 1;
+                nbOfMargin = Math.abs(value);
             }
+
+            //Settle 2x margin at center for even number of cards
+            if (even && (relativePosition == -1 || relativePosition == 0)) margin /= 2;
 
             drawCard(
                     hand.get(i).rumourCard,
@@ -197,28 +199,29 @@ public class Panel extends JPanel {
     }
 
     private void drawHand(int size) {
-        int cardWidth = ((int) (getHeight() / SIZE_FACTOR / 1.35));
+        boolean even = size % 2 == 0;
 
         for (int i = 0; i < size; i++) {
+            //Center position, subtract half a card width for odd number of card
             int centerFactor = getWidth() / 2;
-            if (size % 2 != 0) centerFactor -= cardWidth / 2;
+            if (!even) centerFactor -= cardWidth / 2;
 
+            //Position of the card in the hand
             int relativePosition = i - size / 2;
 
-            //Pour nb pair 2 du milieu moitié de marge
+            //margin to the center as multiple of 10px
+            int margin = 10 * (even ? signOfAbsolutePositive(relativePosition) : Math.abs(relativePosition) * (int) Math.signum(relativePosition));
 
-            int margin = signOfAbsolutePositive(relativePosition) * 10;
-            if (size % 2 != 0) margin *= (int) Math.signum(i);
-
-            //Settle problem with even on right side
-            int nbOfMargin = size % 2 == 0 && i > 0 ?
-                    Math.abs(relativePosition + 1 == 0 ? 1 : relativePosition + 1) :
-                    Math.abs(relativePosition == 0 ? 1 : relativePosition);
-
-            //Settle 2x margin in middle
-            if (size % 2 == 0 && (relativePosition == -1 || relativePosition == 0)) {
-                margin /= 2;
+            //used for even numbers
+            int nbOfMargin = 1;
+            if (even) {
+                int value = relativePosition;
+                if (i > 0) value = relativePosition + 1 == 0 ? 1 : relativePosition + 1;
+                nbOfMargin = Math.abs(value);
             }
+
+            //Settle 2x margin at center for even number of cards
+            if (even && (relativePosition == -1 || relativePosition == 0)) margin /= 2;
 
             drawCard(
                     centerFactor + relativePosition * cardWidth + margin * nbOfMargin,
@@ -238,6 +241,9 @@ public class Panel extends JPanel {
         g2D = (Graphics2D) graphics;
         RoundController roundController = RoundController.getRoundController();
 
+        cardHeight = getHeight() / SIZE_FACTOR;
+        cardWidth = (int) (cardHeight / 1.35);
+
         //Draw background
         graphics.drawImage(background, 0, 0, getWidth(), getHeight(), this);
 
@@ -245,7 +251,6 @@ public class Panel extends JPanel {
         if (roundController != null && roundController.identityCards.size() > 0) {
             //Draw hand of the current player at the bottom
             drawHand(RoundController.getCurrentPlayer().hand);
-
 
             //Draw the hand of each player hidden
             AffineTransform oldRotation = g2D.getTransform();
@@ -262,7 +267,8 @@ public class Panel extends JPanel {
                     //The players on the side are set back a little to have some more room
                     AffineTransform temp = g2D.getTransform();
                     if (currentAngle % 180 != 0) {
-                        int XTranslation = getWidth() / 40;
+                        int XTranslation = currentAngle % 90 == 0 ? 0 : getWidth() / 40;
+                        //Reverse in lower-left and upper-right cadrans
                         if ((currentAngle > 0 && currentAngle < 90) || (currentAngle > 180 && currentAngle < 270)) {
                             XTranslation = -XTranslation;
                         }
