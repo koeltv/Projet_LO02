@@ -3,12 +3,14 @@ package com.view.graphic;
 import com.controller.RoundController;
 import com.model.card.RumourCard;
 import com.model.card.effect.Effect;
+import com.model.game.CardState;
 import com.model.game.IdentityCard;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.geom.AffineTransform;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * The type Panel.
@@ -16,12 +18,13 @@ import java.util.List;
  */
 public class Panel extends JPanel {
     //Constantes
-    private static final int SIZE_FACTOR = 3;
+    private static final int SIZE_FACTOR = 5; //Inversement proportionnel, + grand ==> - grandes cartes
 
     //Images
     private final Image background;
     private final Image cardFront;
     private final Image cardBack;
+    private final Image identityCard;
 
     //Panel 2D converted graphics
     private Graphics2D g2D;
@@ -63,7 +66,8 @@ public class Panel extends JPanel {
     Panel() {
         this.background = getToolkit().getImage("data/Tabletop.jpg");
         this.cardFront = getToolkit().getImage("data/CardFrontEmpty.png");
-        this.cardBack = getToolkit().getImage("data/CardBack.png");
+        this.cardBack = getToolkit().getImage("data/CatBack.jpg");
+        this.identityCard = getToolkit().getImage("data/IdentityCard.png");
     }
 
     /**
@@ -184,8 +188,13 @@ public class Panel extends JPanel {
         g2D.drawImage(cardBack, x, y, cardWidth, cardHeight, this);
     }
 
+    //Draw an identity card
+    private void drawIdentityCard(int x, int y) {
+        g2D.drawImage(identityCard, x, y, cardWidth, cardHeight, this);
+    }
+
     //Draw a complete hand
-    private void drawCardList(List<RumourCard> hand, int size) {
+    private void drawCardList(List<?> hand, int size) {
         boolean even = size % 2 == 0;
 
         for (int i = 0; i < size; i++) {
@@ -197,7 +206,12 @@ public class Panel extends JPanel {
             int relativePosition = i - size / 2;
 
             //margin to the center as multiple of 10px
-            int margin = 10 * (even ? (i == 0 ? 1 : (int) Math.signum(i)) : Math.abs(relativePosition) * (int) Math.signum(relativePosition));
+            int margin = 10;
+            if (even) {
+                margin *= relativePosition == 0 ? 1 : (int) Math.signum(relativePosition);
+            } else {
+                margin *= Math.abs(relativePosition) * (int) Math.signum(relativePosition);
+            }
 
             //used for even numbers
             int nbOfMargin = 1;
@@ -210,11 +224,22 @@ public class Panel extends JPanel {
             //Settle 2x margin at center for even number of cards
             if (even && (relativePosition == -1 || relativePosition == 0)) margin /= 2;
 
+            //Check the list, we only display card from rumour card list or revealed ones from card state list
+            RumourCard rumourCard = null;
             if (hand != null) {
+                if (hand.get(0) instanceof RumourCard) {
+                    rumourCard = (RumourCard) hand.get(i);
+                } else if (hand.get(0) instanceof CardState && ((CardState) hand.get(i)).isRevealed()) {
+                    rumourCard = ((CardState) hand.get(i)).rumourCard;
+                }
+            }
+
+            //Show the card
+            if (rumourCard != null) {
                 drawCard(
                         centerFactor + relativePosition * cardWidth + margin * nbOfMargin,
                         getHeight() - (10 + getHeight() / SIZE_FACTOR),
-                        hand.get(i)
+                        rumourCard
                 );
             } else {
                 drawCard(
@@ -223,6 +248,20 @@ public class Panel extends JPanel {
                 );
             }
         }
+    }
+
+    //Draw player
+    private void drawPlayer(IdentityCard card) {
+        if (card.player == RoundController.getCurrentPlayer()) {
+            List<RumourCard> hand = card.player.hand.stream().map(cardState -> cardState.rumourCard).collect(Collectors.toList());
+            drawCardList(hand, hand.size());
+        } else {
+            drawCardList(card.player.hand, card.player.hand.size());
+        }
+
+        int XCenter = getWidth() / 2 - cardWidth / 2;
+        int YPos = getHeight() - (10 * 2 + getHeight() / SIZE_FACTOR) - cardHeight;
+        drawIdentityCard(XCenter, YPos);
     }
 
     /**
@@ -246,8 +285,7 @@ public class Panel extends JPanel {
         //Draw content
         if (roundController != null && roundController.identityCards.size() > 0) {
             //Draw hand of the current player at the bottom
-            List<RumourCard> selectableCards = roundController.getSelectableCardsFromHand(RoundController.getCurrentPlayer());
-            drawCardList(selectableCards, selectableCards.size());
+            drawPlayer(roundController.getPlayerIdentityCard(RoundController.getCurrentPlayer()));
 
             //Draw the hand of each other player hidden
             AffineTransform oldRotation = g2D.getTransform();
@@ -272,7 +310,7 @@ public class Panel extends JPanel {
                         g2D.translate(XTranslation, getHeight() / 3);
                     }
                     //We draw the player hand
-                    drawCardList(null, card.player.hand.size());
+                    drawPlayer(card);
 
                     //We reset change to the transform matrix
                     g2D.setTransform(temp);
@@ -281,10 +319,12 @@ public class Panel extends JPanel {
             g2D.setTransform(oldRotation);
 
             //Draw the discard pile
-            g2D.translate(getWidth() / 2, getHeight() / 2);
             List<RumourCard> discardPile = RoundController.getRoundController().discardPile;
-            drawCardList(discardPile, discardPile.size());
-            g2D.setTransform(oldRotation);
+            if (discardPile.size() > 0) {
+                g2D.translate(0, (-getHeight() / 2) + cardHeight / 2);
+                drawCardList(discardPile, discardPile.size());
+                g2D.setTransform(oldRotation);
+            }
         }
     }
 }
