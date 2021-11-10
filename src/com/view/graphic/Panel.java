@@ -5,6 +5,7 @@ import com.model.card.RumourCard;
 import com.model.card.effect.Effect;
 import com.model.game.CardState;
 import com.model.game.IdentityCard;
+import com.model.player.Player;
 
 import javax.swing.*;
 import java.awt.*;
@@ -48,6 +49,8 @@ public class Panel extends JPanel {
      */
     private final Queue<PrintableAction> actions;
 
+    public Player mainPlayer;
+
     private static class PrintableAction {
         String action;
         int displayTime;
@@ -76,6 +79,7 @@ public class Panel extends JPanel {
         this.cardFront = getToolkit().getImage("data/CardFrontEmpty.png");
         this.cardBack = getToolkit().getImage("data/CatBack.jpg");
         this.identityCard = getToolkit().getImage("data/IdentityCard.png");
+        this.mainPlayer = RoundController.getCurrentPlayer();
 
         this.actions = new LinkedList<>();
     }
@@ -89,6 +93,10 @@ public class Panel extends JPanel {
      */
     public void displayAction(String action) {
         actions.add(new PrintableAction(action));
+    }
+
+    public void resetActions() {
+        actions.clear();
     }
 
     /**
@@ -258,16 +266,18 @@ public class Panel extends JPanel {
 
     //Draw player
     private void drawPlayer(IdentityCard card) {
-        if (card.player == RoundController.getCurrentPlayer()) {
-            List<RumourCard> hand = card.player.hand.stream().map(cardState -> cardState.rumourCard).collect(Collectors.toList());
-            drawCardList(hand, hand.size());
-        } else {
-            drawCardList(card.player.hand, card.player.hand.size());
-        }
+        if (card != null) {
+            if (card.player == mainPlayer) {
+                List<RumourCard> hand = card.player.hand.stream().map(cardState -> cardState.rumourCard).collect(Collectors.toList());
+                drawCardList(hand, hand.size());
+            } else {
+                drawCardList(card.player.hand, card.player.hand.size());
+            }
 
-        int XCenter = getWidth() / 2 - cardWidth / 2;
-        int YPos = getHeight() - (10 * 2 + getHeight() / SIZE_FACTOR) - cardHeight;
-        drawIdentityCard(XCenter, YPos);
+            int XCenter = getWidth() / 2 - cardWidth / 2;
+            int YPos = getHeight() - (10 * 2 + getHeight() / SIZE_FACTOR) - cardHeight;
+            drawIdentityCard(XCenter, YPos);
+        }
     }
 
     //Display the current action if there is one
@@ -275,8 +285,6 @@ public class Panel extends JPanel {
         if (actions.size() > 0) {
             PrintableAction currentAction = actions.peek();
             if (currentAction != null) {
-                int x = getWidth() / 2;
-                int y = getHeight() / 2;
                 int padding = getWidth() / 20;
 
                 //We adapt the size to the current screen size
@@ -289,16 +297,24 @@ public class Panel extends JPanel {
                 Graphics2D tempGraph = (Graphics2D) g2D.create();
                 tempGraph.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 0.75f));
                 tempGraph.setColor(new Color(68, 88, 129));
-                tempGraph.fillRect(x - width / 2 - padding, y - height / 2, width + 2 * padding, height);
+                tempGraph.fillRect(getWidth() / 2 - width / 2 - padding, getHeight() / 2 - height / 2, width + 2 * padding, height);
                 tempGraph.dispose();
 
                 //We add the text
                 g2D.setColor(Color.WHITE);
-                drawXCenteredString(currentAction.action, x - width / 2, y - height / 2 + (int) (height * 0.875), width);
+                drawXCenteredString(currentAction.action, getWidth() / 2 - width / 2, getHeight() / 2 - height / 2 + (int) (height * 0.875), width);
 
                 //We reduce the lifetime of the action message
                 currentAction.displayTime--;
                 if (currentAction.displayTime <= 0) actions.remove();
+
+                //If too many actions are in the queue, skip some
+                if (actions.size() > 8) {
+                    do {
+                        actions.remove();
+                    } while (actions.size() > 8);
+                    System.out.println("Too fast ! Deleting some actions !");
+                }
             }
         }
     }
@@ -325,14 +341,15 @@ public class Panel extends JPanel {
         //Draw content
         if (roundController != null && roundController.identityCards.size() > 0) {
             //Draw hand of the current player at the bottom
-            drawPlayer(roundController.getPlayerIdentityCard(RoundController.getCurrentPlayer()));
+            if (mainPlayer == null) mainPlayer = RoundController.getCurrentPlayer();
+            drawPlayer(roundController.getPlayerIdentityCard(mainPlayer));
 
             //Draw the hand of each other player hidden
             AffineTransform oldRotation = g2D.getTransform();
             double currentAngle = 0;
 
             for (IdentityCard card : roundController.identityCards) {
-                if (card.player != RoundController.getCurrentPlayer()) {
+                if (card.player != mainPlayer) {
                     double angle = (double) 360 / roundController.identityCards.size();
                     currentAngle += angle;
 
@@ -365,8 +382,8 @@ public class Panel extends JPanel {
                 drawCardList(discardPile, discardPile.size());
                 g2D.setTransform(oldRotation);
             }
-
-            drawAction();
         }
+
+        drawAction();
     }
 }

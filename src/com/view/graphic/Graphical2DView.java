@@ -1,6 +1,8 @@
 package com.view.graphic;
 
+import com.controller.RoundController;
 import com.model.card.CardName;
+import com.model.game.IdentityCard;
 import com.model.player.PlayerAction;
 import com.view.ActiveView;
 
@@ -9,6 +11,7 @@ import java.awt.*;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionListener;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * The type Graphical 2D view.
@@ -16,6 +19,8 @@ import java.util.List;
  */
 public class Graphical2DView extends GraphicView implements ActiveView, Runnable {
     private final Panel panel = new Panel();
+
+    private Thread thread;
 
     /**
      * Instantiates a new Graphical 2D view.
@@ -37,7 +42,7 @@ public class Graphical2DView extends GraphicView implements ActiveView, Runnable
         this.addMouseMotionListener(mouseMotionListener);
         this.setVisible(true);
 
-        Thread thread = new Thread(this);
+        thread = new Thread(this);
         thread.start();
     }
 
@@ -58,12 +63,18 @@ public class Graphical2DView extends GraphicView implements ActiveView, Runnable
     };
 
     @Override
-    public void showGameWinner(String name, int numberOfRound) {
+    public synchronized void showGameWinner(String name, int numberOfRound) {
         panel.displayAction("Congratulations " + name + ", you won in " + numberOfRound + " rounds !");
+
+        //We restart the thread to stop the panel from trying to access the deleted RoundController
+        thread.interrupt();
+        thread = new Thread(this);
+        thread.start();
     }
 
     @Override
     public void showRoundWinner(String name) {
+        panel.resetActions();
         panel.displayAction(name + " won this round !");
     }
 
@@ -133,7 +144,12 @@ public class Graphical2DView extends GraphicView implements ActiveView, Runnable
 
     @Override
     public void waitForAction(String playerName, List<PlayerAction> possibleActions) {
-
+        //We change the player at the bottom of the display to the player currently playing
+        List<IdentityCard> identityCards = RoundController.getRoundController().identityCards
+                .stream()
+                .filter(identityCard -> identityCard.player.getName().equals(playerName))
+                .collect(Collectors.toList());
+        panel.mainPlayer = identityCards.size() > 0 ? identityCards.get(0).player : null;
     }
 
     ///////////////////////////////////////////////////////////////////////////
@@ -149,8 +165,8 @@ public class Graphical2DView extends GraphicView implements ActiveView, Runnable
                 panel.repaint();
                 wait(500);
             }
-        } catch (InterruptedException e) {
-            e.printStackTrace();
+        } catch (InterruptedException ignored) {
+            //When we restart the thread, an exception is thrown, see https://stackoverflow.com/questions/35474536/wait-is-always-throwing-interruptedexception
         }
     }
 }
