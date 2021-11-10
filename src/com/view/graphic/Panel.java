@@ -159,6 +159,19 @@ public class Panel extends JPanel {
         }
     }
 
+    private void drawEffectsContainer(int x, int y, List<Effect> effects, boolean witch) {
+        g2D.setColor(Color.decode(witch ? "#ffebcc" : "#d6ebd6"));
+        g2D.fillRect(x, y, cardWidth, cardHeight / 4);
+
+        g2D.setFont(g2D.getFont().deriveFont((float) (getWidth() / 110)).deriveFont(Font.BOLD));
+        g2D.setPaint(getGradient(y, witch ? Gradient.WITCH : Gradient.HUNT));
+        drawXCenteredString(witch ? "Witch?" : "Hunt!", x, y, cardWidth);
+
+        g2D.setColor(Color.BLACK);
+        g2D.setFont(g2D.getFont().deriveFont((float) (getWidth() / 200)));
+        drawEffects(x, y, effects);
+    }
+
     //Draw a complete card
     private void drawCard(int x, int y, RumourCard rumourCard) {
         //The card itself
@@ -170,30 +183,10 @@ public class Panel extends JPanel {
         drawXCenteredString(rumourCard.getCardName().toString(), x, y + cardHeight / 5, cardWidth);
 
         //Witch effects
-        int effectRectangleY = y + cardHeight / 3;
-        g2D.setColor(Color.decode("#ffebcc"));
-        g2D.fillRect(x, effectRectangleY, cardWidth, cardHeight / 4);
-
-        g2D.setFont(g2D.getFont().deriveFont((float) (getWidth() / 110)).deriveFont(Font.BOLD));
-        g2D.setPaint(getGradient(effectRectangleY, Gradient.WITCH));
-        drawXCenteredString("Witch?", x, effectRectangleY, cardWidth);
-
-        g2D.setColor(Color.BLACK);
-        g2D.setFont(g2D.getFont().deriveFont((float) (getWidth() / 200)));
-        drawEffects(x, effectRectangleY, rumourCard.witchEffects);
+        drawEffectsContainer(x, y + cardHeight / 3, rumourCard.witchEffects, true);
 
         //Hunt effects
-        effectRectangleY = (int) (y + (cardHeight / 1.5));
-        g2D.setColor(Color.decode("#d6ebd6"));
-        g2D.fillRect(x, effectRectangleY, cardWidth, cardHeight / 4);
-
-        g2D.setFont(g2D.getFont().deriveFont((float) (getWidth() / 110)).deriveFont(Font.BOLD));
-        g2D.setPaint(getGradient(effectRectangleY, Gradient.HUNT));
-        drawXCenteredString("Hunt!", x, effectRectangleY, cardWidth);
-
-        g2D.setColor(Color.BLACK);
-        g2D.setFont(g2D.getFont().deriveFont((float) (getWidth() / 200)));
-        drawEffects(x, effectRectangleY, rumourCard.huntEffects);
+        drawEffectsContainer(x, y + (int) (cardHeight / 1.5), rumourCard.huntEffects, false);
     }
 
     //Draw a turned card
