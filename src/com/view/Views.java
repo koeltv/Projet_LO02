@@ -1,6 +1,7 @@
 package com.view;
 
 import com.model.card.CardName;
+import com.model.card.RumourCard;
 import com.model.player.PlayerAction;
 
 import java.util.ArrayList;
@@ -101,9 +102,9 @@ public class Views implements ActiveView {
     }
 
     @Override
-    public int promptForCardChoice(List<String> rumourCardDescriptions) {
-        views.forEach(passiveView -> passiveView.waitForCardChoice(rumourCardDescriptions));
-        return activeView.promptForCardChoice(rumourCardDescriptions);
+    public int promptForCardChoice(List<RumourCard> rumourCards) {
+        views.forEach(passiveView -> passiveView.waitForCardChoice(rumourCards));
+        return activeView.promptForCardChoice(rumourCards);
     }
 
     @Override

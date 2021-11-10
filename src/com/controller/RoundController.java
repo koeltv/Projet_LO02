@@ -157,7 +157,7 @@ public class RoundController {
         if (player instanceof AI) {
             return ((AI) player).selectCard(rumourCardList);
         } else {
-            int index = view.promptForCardChoice(rumourCardList.stream().map(RumourCard::toString).collect(Collectors.toList()));
+            int index = view.promptForCardChoice(rumourCardList);
             return rumourCardList.get(index);
         }
     }

@@ -2,14 +2,13 @@ package com.view.graphic;
 
 import com.controller.RoundController;
 import com.model.card.CardName;
+import com.model.card.RumourCard;
 import com.model.game.IdentityCard;
 import com.model.player.PlayerAction;
 import com.view.ActiveView;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseMotionListener;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -26,41 +25,29 @@ public class Graphical2DView extends GraphicView implements ActiveView, Runnable
      * Instantiates a new Graphical 2D view.
      */
     public Graphical2DView() {
+        super();
         //Create main frame
-        this.setTitle("Witch Hunt");
-        this.setResizable(true);
-        this.setLocationRelativeTo(null);
         this.setContentPane(panel);
-
-        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setSize(750, 400);
 
         //Display vertically
         Container contentPane = this.getContentPane();
         contentPane.setLayout(new BoxLayout(contentPane, BoxLayout.Y_AXIS));
 
-        this.addMouseMotionListener(mouseMotionListener);
         this.setVisible(true);
 
         thread = new Thread(this);
         thread.start();
     }
 
-    /**
-     * The Mouse motion listener.
-     * Used to get mouse position on click. Not used right now.
-     */
-    MouseMotionListener mouseMotionListener = new MouseMotionListener() {
-        @Override
-        public void mouseDragged(MouseEvent e) {
-            panel.mouseXPos = e.getX();
-            panel.mouseYPos = e.getY();
-        }
-
-        @Override
-        public void mouseMoved(MouseEvent e) {
-        }
-    };
+    private void actualiseMainPlayer(String playerName) {
+        //We change the player at the bottom of the display to the player currently playing
+        List<IdentityCard> identityCards = RoundController.getRoundController().identityCards
+                .stream()
+                .filter(identityCard -> identityCard.player.getName().equals(playerName))
+                .collect(Collectors.toList());
+        panel.mainPlayer = identityCards.size() > 0 ? identityCards.get(0).player : null;
+    }
 
     @Override
     public synchronized void showGameWinner(String name, int numberOfRound) {
@@ -128,7 +115,7 @@ public class Graphical2DView extends GraphicView implements ActiveView, Runnable
     }
 
     @Override
-    public void waitForCardChoice(List<String> rumourCardDescriptions) {
+    public void waitForCardChoice(List<RumourCard> rumourCards) {
 
     }
 
@@ -144,13 +131,19 @@ public class Graphical2DView extends GraphicView implements ActiveView, Runnable
 
     @Override
     public void waitForAction(String playerName, List<PlayerAction> possibleActions) {
-        //We change the player at the bottom of the display to the player currently playing
-        List<IdentityCard> identityCards = RoundController.getRoundController().identityCards
-                .stream()
-                .filter(identityCard -> identityCard.player.getName().equals(playerName))
-                .collect(Collectors.toList());
-        panel.mainPlayer = identityCards.size() > 0 ? identityCards.get(0).player : null;
+        actualiseMainPlayer(playerName);
     }
+
+    ///////////////////////////////////////////////////////////////////////////
+    // Active methods
+    ///////////////////////////////////////////////////////////////////////////
+
+    @Override
+    public PlayerAction promptForAction(String playerName, List<PlayerAction> possibleActions) {
+        actualiseMainPlayer(playerName);
+        return super.promptForAction(playerName, possibleActions);
+    }
+
 
     ///////////////////////////////////////////////////////////////////////////
     // Runnable method

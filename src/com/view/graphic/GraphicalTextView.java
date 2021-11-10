@@ -1,6 +1,7 @@
 package com.view.graphic;
 
 import com.model.card.CardName;
+import com.model.card.RumourCard;
 import com.model.player.PlayerAction;
 import com.view.ActiveView;
 
@@ -16,9 +17,8 @@ public class GraphicalTextView extends GraphicView implements ActiveView {
     private JTextArea textArea;
 
     public GraphicalTextView() {
+        super();
         //Create main frame
-        this.setTitle("WitchHunt-Game");
-        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setSize(500, 500);
 
         //Display vertically
@@ -125,9 +125,9 @@ public class GraphicalTextView extends GraphicView implements ActiveView {
     }
 
     @Override
-    public void waitForCardChoice(List<String> rumourCardDescriptions) {
+    public void waitForCardChoice(List<RumourCard> rumourCards) {
         appendText("Waiting for card choice");
-        rumourCardDescriptions.forEach(this::appendText);
+        rumourCards.forEach(rumourCard -> appendText(rumourCard.toString()));
     }
 
     @Override
