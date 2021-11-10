@@ -23,12 +23,13 @@ public class Views implements ActiveView {
         this.activeView = activeView;
     }
 
-    public void addView(View view) {
-        if (view instanceof PassiveView) views.add((PassiveView) view);
+    public void addView(PassiveView view) {
+        views.add(view);
     }
 
     public void switchActiveView(ActiveView view) {
-        this.activeView = view;
+        if (activeView instanceof PassiveView) views.add((PassiveView) activeView);
+        activeView = view;
     }
 
     @Override
