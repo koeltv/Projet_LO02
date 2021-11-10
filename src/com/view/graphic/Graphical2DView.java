@@ -141,8 +141,16 @@ public class Graphical2DView extends GraphicView implements ActiveView, Runnable
     ///////////////////////////////////////////////////////////////////////////
 
     @Override
-    public void run() {
-        //noinspection InfiniteLoopStatement
-        while (true) panel.repaint();
+    public synchronized void run() {
+        try {
+            //noinspection InfiniteLoopStatement
+            while (true) {
+                //repaint is called each time the screen size is changed or by this loop
+                panel.repaint();
+                wait(500);
+            }
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
     }
 }
