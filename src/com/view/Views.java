@@ -56,12 +56,6 @@ public class Views implements ActiveView {
     }
 
     @Override
-    public void showCurrentPlayer(String name) {
-        views.forEach(view -> view.showCurrentPlayer(name));
-        activeView.showCurrentPlayer(name);
-    }
-
-    @Override
     public void showPlayerAction(String name) {
         views.forEach(view -> view.showPlayerAction(name));
         activeView.showPlayerAction(name);

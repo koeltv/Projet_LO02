@@ -38,13 +38,6 @@ public interface View {
     void showPlayerIdentity(String name, boolean witch);
 
     /**
-     * Show current player.
-     *
-     * @param name the player name
-     */
-    void showCurrentPlayer(String name);
-
-    /**
      * Show player action (revealing identity).
      *
      * @param name the player name

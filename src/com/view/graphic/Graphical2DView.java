@@ -76,11 +76,6 @@ public class Graphical2DView extends GraphicView implements ActiveView, Runnable
     }
 
     @Override
-    public void showCurrentPlayer(String name) {
-        panel.displayAction("This is now " + name + "'s turn !");
-    }
-
-    @Override
     public void showPlayerAction(String name) {
         panel.displayAction("Player " + name + " is revealing his identity !");
     }

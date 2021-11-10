@@ -84,11 +84,6 @@ public class GraphicalTextView extends GraphicView implements ActiveView {
     }
 
     @Override
-    public void showCurrentPlayer(String name) {
-        appendText("This is now " + name + "'s turn !");
-    }
-
-    @Override
     public void showPlayerAction(String name) {
         appendText("Player " + name + " is revealing his identity !");
     }

@@ -31,11 +31,6 @@ public class CommandLineView implements PassiveView, ActiveView {
     }
 
     @Override
-    public void showCurrentPlayer(String name) {
-        System.out.println("This is now " + name + "'s turn !");
-    }
-
-    @Override
     public void showPlayerAction(String name) {
         System.out.println("Player " + name + " is revealing his identity !");
     }

@@ -36,15 +36,6 @@ public class Panel extends JPanel {
     private int cardWidth, cardHeight;
 
     /**
-     * The Mouse x pos.
-     */
-    public int mouseXPos;
-    /**
-     * The Mouse y pos.
-     */
-    public int mouseYPos;
-
-    /**
      * The queue containing all actions to display
      */
     private final Queue<PrintableAction> actions;
@@ -52,7 +43,7 @@ public class Panel extends JPanel {
     public Player mainPlayer;
 
     private static class PrintableAction {
-        String action;
+        final String action;
         int displayTime;
 
         PrintableAction(String action) {
@@ -325,7 +316,7 @@ public class Panel extends JPanel {
      * @param graphics basis needed for basic rendering operations
      */
     @Override
-    public void paintComponent(Graphics graphics) { //TODO Place action buttons somewhere
+    public void paintComponent(Graphics graphics) {
         super.paintComponents(graphics);
 
         //Actualise object values
