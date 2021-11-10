@@ -247,7 +247,7 @@ public class GameController {
      *
      * @param args the input arguments, currently unused
      */
-    public static void main(String[] args) {
+    public static void main(String[] args) { //TODO Implement ability to switch and add/remove views
         Views views = new Views(new CommandLineView());
         views.addView(new Graphical2DView());
 
