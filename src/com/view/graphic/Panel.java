@@ -9,7 +9,9 @@ import com.model.game.IdentityCard;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.geom.AffineTransform;
+import java.util.LinkedList;
 import java.util.List;
+import java.util.Queue;
 import java.util.stream.Collectors;
 
 /**
@@ -42,21 +44,27 @@ public class Panel extends JPanel {
     public int mouseYPos;
 
     /**
+     * The queue containing all actions to display
+     */
+    private final Queue<PrintableAction> actions;
+
+    private static class PrintableAction {
+        String action;
+        int displayTime;
+
+        PrintableAction(String action) {
+            this.action = action;
+            this.displayTime = action.length() / 10 + 5;
+        }
+    }
+
+    /**
      * The enum Gradient.
      * Used for title texts
      */
     enum Gradient {
-        /**
-         * Name gradient.
-         */
         NAME,
-        /**
-         * Witch gradient.
-         */
         WITCH,
-        /**
-         * Hunt gradient.
-         */
         HUNT
     }
 
@@ -68,6 +76,19 @@ public class Panel extends JPanel {
         this.cardFront = getToolkit().getImage("data/CardFrontEmpty.png");
         this.cardBack = getToolkit().getImage("data/CatBack.jpg");
         this.identityCard = getToolkit().getImage("data/IdentityCard.png");
+
+        this.actions = new LinkedList<>();
+    }
+
+    /**
+     * Display action.
+     * Set the action to be displayed at the center of the screen. The time it will stay there depend on the length of the String l.
+     * With rf being the refresh rate, the time on screen t is t = (l/2 + 4) * rf.
+     *
+     * @param action the action
+     */
+    public void displayAction(String action) {
+        actions.add(new PrintableAction(action));
     }
 
     /**
@@ -79,26 +100,18 @@ public class Panel extends JPanel {
      */
     private GradientPaint getGradient(int y, Gradient gradient) {
         FontMetrics fontMetrics = getFontMetrics(g2D.getFont());
-        return switch (gradient) {
-            case WITCH -> new GradientPaint(
-                    0, y - fontMetrics.getHeight(),
-                    new Color(255, 159, 64),
-                    0, y + fontMetrics.getHeight(),
-                    Color.BLACK
-            );
-            case HUNT -> new GradientPaint(
-                    0, y - fontMetrics.getHeight(),
-                    new Color(51, 153, 51),
-                    0, y + fontMetrics.getHeight(),
-                    Color.BLACK
-            );
-            default -> new GradientPaint(
-                    0, y - 2 * fontMetrics.getHeight(),
-                    Color.BLACK,
-                    0, y + fontMetrics.getHeight(),
-                    new Color(99, 125, 157)
-            );
-        };
+        Color firstColor = Color.BLACK, secondColor = new Color(99, 125, 157);
+        switch (gradient) {
+            case HUNT -> {
+                firstColor = new Color(255, 159, 64);
+                secondColor = Color.BLACK;
+            }
+            case WITCH -> {
+                firstColor = new Color(51, 153, 51);
+                secondColor = Color.BLACK;
+            }
+        }
+        return new GradientPaint(0, y - 2 * fontMetrics.getHeight(), firstColor, 0, y + fontMetrics.getHeight(), secondColor);
     }
 
     //Draw a centered string on X axis within [x; x + width]
@@ -264,11 +277,45 @@ public class Panel extends JPanel {
         drawIdentityCard(XCenter, YPos);
     }
 
+    //Display the current action if there is one
+    private void drawAction() {
+        if (actions.size() > 0) {
+            PrintableAction currentAction = actions.peek();
+            if (currentAction != null) {
+                int x = getWidth() / 2;
+                int y = getHeight() / 2;
+                int padding = getWidth() / 20;
+
+                //We adapt the size to the current screen size
+                Font font = getFont().deriveFont((float) padding);
+                g2D.setFont(font);
+                int width = g2D.getFontMetrics().stringWidth(currentAction.action);
+                int height = g2D.getFontMetrics().getAscent();
+
+                //We do a background on which we put the text
+                Graphics2D tempGraph = (Graphics2D) g2D.create();
+                tempGraph.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 0.75f));
+                tempGraph.setColor(new Color(68, 88, 129));
+                tempGraph.fillRect(x - width / 2 - padding, y - height / 2, width + 2 * padding, height);
+                tempGraph.dispose();
+
+                //We add the text
+                g2D.setColor(Color.WHITE);
+                drawXCenteredString(currentAction.action, x - width / 2, y - height / 2 + (int) (height * 0.875), width);
+
+                //We reduce the lifetime of the action message
+                currentAction.displayTime--;
+                if (currentAction.displayTime <= 0) actions.remove();
+            }
+        }
+    }
+
     /**
      * Draw contained objects
      *
      * @param graphics basis needed for basic rendering operations
      */
+    @Override
     public void paintComponent(Graphics graphics) { //TODO Place action buttons somewhere
         super.paintComponents(graphics);
 
@@ -325,6 +372,8 @@ public class Panel extends JPanel {
                 drawCardList(discardPile, discardPile.size());
                 g2D.setTransform(oldRotation);
             }
+
+            drawAction();
         }
     }
 }

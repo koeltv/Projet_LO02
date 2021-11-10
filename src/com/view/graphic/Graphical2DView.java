@@ -59,42 +59,42 @@ public class Graphical2DView extends GraphicView implements ActiveView, Runnable
 
     @Override
     public void showGameWinner(String name, int numberOfRound) {
-
+        panel.displayAction("Congratulations " + name + ", you won in " + numberOfRound + " rounds !");
     }
 
     @Override
     public void showRoundWinner(String name) {
-
+        panel.displayAction(name + " won this round !");
     }
 
     @Override
     public void showStartOfRound(int numberOfRound) {
-
+        panel.displayAction("Start of Round " + numberOfRound);
     }
 
     @Override
     public void showPlayerIdentity(String name, boolean witch) {
-
+        panel.displayAction(name + " is a " + (witch ? "witch" : "villager") + " !");
     }
 
     @Override
     public void showCurrentPlayer(String name) {
-
+        panel.displayAction("This is now " + name + "'s turn !");
     }
 
     @Override
     public void showPlayerAction(String name) {
-
+        panel.displayAction("Player " + name + " is revealing his identity !");
     }
 
     @Override
     public void showPlayerAction(String name, String targetedPlayerName) {
-
+        panel.displayAction("Player " + name + " is accusing " + targetedPlayerName + " !");
     }
 
     @Override
     public void showPlayerAction(String name, CardName chosenCardName) {
-
+        panel.displayAction("Player " + name + " is using " + chosenCardName + " !");
     }
 
     ///////////////////////////////////////////////////////////////////////////
