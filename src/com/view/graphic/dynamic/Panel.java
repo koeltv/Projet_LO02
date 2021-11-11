@@ -1,4 +1,4 @@
-package com.view.graphic;
+package com.view.graphic.dynamic;
 
 import com.controller.RoundController;
 import com.model.card.RumourCard;
@@ -40,27 +40,7 @@ public class Panel extends JPanel {
      */
     private final Queue<PrintableAction> actions;
 
-    public Player mainPlayer;
-
-    private static class PrintableAction {
-        final String action;
-        int displayTime;
-
-        PrintableAction(String action) {
-            this.action = action;
-            this.displayTime = action.length() / 10 + 5;
-        }
-    }
-
-    /**
-     * The enum Gradient.
-     * Used for title texts
-     */
-    enum Gradient {
-        NAME,
-        WITCH,
-        HUNT
-    }
+    private Player mainPlayer;
 
     /**
      * Instantiates a new Panel.
@@ -73,6 +53,10 @@ public class Panel extends JPanel {
         this.mainPlayer = RoundController.getCurrentPlayer();
 
         this.actions = new LinkedList<>();
+    }
+
+    void setMainPlayer(Player mainPlayer) {
+        this.mainPlayer = mainPlayer;
     }
 
     /**
@@ -88,29 +72,6 @@ public class Panel extends JPanel {
 
     public void resetActions() {
         actions.clear();
-    }
-
-    /**
-     * Get correct gradient to draw
-     *
-     * @param y        position of the text
-     * @param gradient the gradient to pick
-     * @return created gradient
-     */
-    private GradientPaint getGradient(int y, Gradient gradient) {
-        FontMetrics fontMetrics = getFontMetrics(g2D.getFont());
-        Color firstColor = Color.BLACK, secondColor = new Color(99, 125, 157);
-        switch (gradient) {
-            case HUNT -> {
-                firstColor = new Color(255, 159, 64);
-                secondColor = Color.BLACK;
-            }
-            case WITCH -> {
-                firstColor = new Color(51, 153, 51);
-                secondColor = Color.BLACK;
-            }
-        }
-        return new GradientPaint(0, y - 2 * fontMetrics.getHeight(), firstColor, 0, y + fontMetrics.getHeight(), secondColor);
     }
 
     //Draw a centered string on X axis within [x; x + width]
@@ -163,7 +124,7 @@ public class Panel extends JPanel {
         g2D.fillRect(x, y, cardWidth, cardHeight / 4);
 
         g2D.setFont(g2D.getFont().deriveFont((float) (getWidth() / 110)).deriveFont(Font.BOLD));
-        g2D.setPaint(getGradient(y, witch ? Gradient.WITCH : Gradient.HUNT));
+        g2D.setPaint(Gradient.getGradient(g2D, y, witch ? Gradient.WITCH : Gradient.HUNT));
         drawXCenteredString(witch ? "Witch?" : "Hunt!", x, y, cardWidth);
 
         g2D.setColor(Color.BLACK);
@@ -178,7 +139,7 @@ public class Panel extends JPanel {
 
         //Card name
         g2D.setFont(g2D.getFont().deriveFont((float) (getWidth() / 100)).deriveFont(Font.BOLD));
-        g2D.setPaint(getGradient(y + cardHeight / 5, Gradient.NAME));
+        g2D.setPaint(Gradient.getGradient(g2D, y + cardHeight / 5, Gradient.NAME));
         drawXCenteredString(rumourCard.getCardName().toString(), x, y + cardHeight / 5, cardWidth);
 
         //Witch effects

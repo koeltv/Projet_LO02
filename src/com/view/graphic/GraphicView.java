@@ -11,7 +11,7 @@ import java.util.List;
 
 public abstract class GraphicView extends JFrame implements PassiveView, ActiveView {
 
-    GraphicView() {
+    public GraphicView() {
         this.setTitle("Witch Hunt");
         this.setResizable(true);
         this.setLocationRelativeTo(null);

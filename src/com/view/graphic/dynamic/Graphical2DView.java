@@ -1,4 +1,4 @@
-package com.view.graphic;
+package com.view.graphic.dynamic;
 
 import com.controller.RoundController;
 import com.model.card.CardName;
@@ -6,9 +6,8 @@ import com.model.card.RumourCard;
 import com.model.game.IdentityCard;
 import com.model.player.PlayerAction;
 import com.view.ActiveView;
+import com.view.graphic.GraphicView;
 
-import javax.swing.*;
-import java.awt.*;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -17,7 +16,7 @@ import java.util.stream.Collectors;
  * Graphical view which display the whole game in 2D graphics. It is resizable.
  */
 public class Graphical2DView extends GraphicView implements ActiveView, Runnable {
-    private final Panel panel = new Panel();
+    private final Panel panel;
 
     private Thread thread;
 
@@ -27,12 +26,9 @@ public class Graphical2DView extends GraphicView implements ActiveView, Runnable
     public Graphical2DView() {
         super();
         //Create main frame
+        panel = new Panel();
         this.setContentPane(panel);
         this.setSize(750, 400);
-
-        //Display vertically
-        Container contentPane = this.getContentPane();
-        contentPane.setLayout(new BoxLayout(contentPane, BoxLayout.Y_AXIS));
 
         this.setVisible(true);
 
@@ -51,7 +47,7 @@ public class Graphical2DView extends GraphicView implements ActiveView, Runnable
                 .stream()
                 .filter(identityCard -> identityCard.player.getName().equals(playerName))
                 .collect(Collectors.toList());
-        panel.mainPlayer = identityCards.size() > 0 ? identityCards.get(0).player : null;
+        panel.setMainPlayer(identityCards.size() > 0 ? identityCards.get(0).player : null);
     }
 
     ///////////////////////////////////////////////////////////////////////////

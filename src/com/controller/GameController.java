@@ -8,7 +8,7 @@ import com.model.player.Player;
 import com.view.ActiveView;
 import com.view.CommandLineView;
 import com.view.Views;
-import com.view.graphic.Graphical2DView;
+import com.view.graphic.dynamic.Graphical2DView;
 
 import java.util.ArrayList;
 import java.util.List;

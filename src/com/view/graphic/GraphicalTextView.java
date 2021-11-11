@@ -19,12 +19,10 @@ public class GraphicalTextView extends GraphicView implements ActiveView {
     public GraphicalTextView() {
         super();
         //Create main frame
-        this.setSize(500, 500);
+        this.setSize(350, 500);
 
         //Display vertically
         Container contentPane = this.getContentPane();
-        contentPane.setLayout(new BoxLayout(contentPane, BoxLayout.Y_AXIS));
-
         addControllerCommandTracker(contentPane);
 
         this.setVisible(true);
@@ -44,7 +42,7 @@ public class GraphicalTextView extends GraphicView implements ActiveView {
         textArea = new JTextArea("Game Status\n", 100, 1);
         JScrollPane scrollPane = new JScrollPane(textArea);
         addCenteredComponent(scrollPane, contentPane);
-        textArea.setSize(500, 500);
+        textArea.setSize(350, 500);
     }
 
     /**
