@@ -140,4 +140,9 @@ public class GraphicalTextView extends GraphicView implements ActiveView {
         appendText("Waiting for " + playerName + " action choice");
         possibleActions.forEach(possibleAction -> appendText(possibleAction.toString()));
     }
+
+    @Override
+    public String toString() {
+        return "Graphical Text View";
+    }
 }

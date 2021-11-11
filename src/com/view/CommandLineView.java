@@ -144,4 +144,9 @@ public class CommandLineView implements PassiveView, ActiveView {
         }
         return possibleActions.get(Integer.parseInt(keyboard.nextLine()));
     }
+
+    @Override
+    public String toString() {
+        return "Command Line View";
+    }
 }

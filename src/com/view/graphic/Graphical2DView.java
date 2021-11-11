@@ -157,4 +157,9 @@ public class Graphical2DView extends GraphicView implements ActiveView, Runnable
             //When we restart the thread, an exception is thrown, see https://stackoverflow.com/questions/35474536/wait-is-always-throwing-interruptedexception
         }
     }
+
+    @Override
+    public String toString() {
+        return "Graphical 2D View";
+    }
 }

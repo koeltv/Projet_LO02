@@ -4,14 +4,17 @@ import com.model.card.CardName;
 import com.model.card.RumourCard;
 import com.model.player.PlayerAction;
 
+import javax.swing.*;
+import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * The type Views.
  * Contain a list of passive views and 1 active view. Made to be able to handle more than 1 view at a time.
  */
-public class Views implements ActiveView {
+public class Views extends JFrame implements ActiveView, Runnable {
 
     final List<PassiveView> views;
 
@@ -19,8 +22,12 @@ public class Views implements ActiveView {
 
     public Views(ActiveView activeView) {
         this.views = new ArrayList<>();
-
         this.activeView = activeView;
+
+        //Used to enable the ability to switch the active view dynamically
+        this.setModalExclusionType(Dialog.ModalExclusionType.APPLICATION_EXCLUDE);
+        Thread thread = new Thread(this);
+        thread.start();
     }
 
     public void addView(PassiveView view) {
@@ -29,6 +36,8 @@ public class Views implements ActiveView {
 
     public void switchActiveView(ActiveView view) {
         if (activeView instanceof PassiveView) views.add((PassiveView) activeView);
+        if (views.contains((PassiveView) view)) views.remove(view);
+
         activeView = view;
     }
 
@@ -118,5 +127,37 @@ public class Views implements ActiveView {
     public PlayerAction promptForAction(String playerName, List<PlayerAction> possibleActions) {
         views.forEach(passiveView -> passiveView.waitForAction(playerName, possibleActions));
         return activeView.promptForAction(playerName, possibleActions);
+    }
+
+    @Override
+    public synchronized void run() {
+        //noinspection InfiniteLoopStatement
+        while (true) {
+            if (views != null && views.size() > 0) {
+                List<ActiveView> activeViews = views
+                        .stream()
+                        .filter(passiveView -> passiveView instanceof ActiveView)
+                        .map(passiveView -> (ActiveView) passiveView)
+                        .collect(Collectors.toList());
+
+                String[] viewsToString = activeViews.stream().map(View::toString).toArray(String[]::new);
+
+                switchActiveView(activeViews.get(
+                        JOptionPane.showOptionDialog(
+                                rootPane,
+                                "Please choose which view do you want as the main view", "Main View",
+                                JOptionPane.DEFAULT_OPTION, JOptionPane.PLAIN_MESSAGE,
+                                null,
+                                viewsToString, viewsToString[0]
+                        )
+                ));
+            }
+
+            try {
+                wait(500);
+            } catch (InterruptedException ignored) {
+                //Ignored right now, could be used later
+            }
+        }
     }
 }
