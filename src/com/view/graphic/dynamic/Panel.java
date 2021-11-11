@@ -216,7 +216,7 @@ public class Panel extends JPanel {
      * @param y          the y coordinate
      * @param rumourCard the rumour card to draw
      */
-    private void drawCard(int x, int y, RumourCard rumourCard) {
+    private void drawCard(int x, int y, RumourCard rumourCard) { // TODO: 11/11/2021 add border for revealed cards of main player
         //The card itself
         g2D.drawImage(cardFront, x, y, cardWidth, cardHeight, this);
 
@@ -320,7 +320,7 @@ public class Panel extends JPanel {
      *
      * @param identityCard the identityCard of the player
      */
-    private void drawPlayer(IdentityCard identityCard) {
+    private void drawPlayer(IdentityCard identityCard) { // TODO: 11/11/2021 Add score and name
         if (identityCard != null) {
             if (identityCard.player == mainPlayer) {
                 List<RumourCard> hand = identityCard.player.hand.stream().map(cardState -> cardState.rumourCard).collect(Collectors.toList());
@@ -363,7 +363,7 @@ public class Panel extends JPanel {
     }
 
     @Override
-    public void paintComponent(Graphics graphics) {
+    public void paintComponent(Graphics graphics) { // TODO: 11/11/2021 Modify positioning to always fit
         super.paintComponents(graphics);
 
         //Actualise object values
@@ -426,3 +426,5 @@ public class Panel extends JPanel {
         drawAction();
     }
 }
+
+// TODO: 11/11/2021 Eventually, add the rules somewhere (just a png)

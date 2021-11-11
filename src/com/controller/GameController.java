@@ -215,7 +215,7 @@ public class GameController {
         RoundController.reset();
     }
 
-    private void settleTie(List<Player> winners) {
+    private void settleTie(List<Player> winners) { //TODO Find better alternative
         Player winner = winners.get(randomInInterval(0, winners.size() - 1));
         view.showGameWinner(winner.getName(), RoundController.getNumberOfRound());
     }
@@ -247,7 +247,7 @@ public class GameController {
      *
      * @param args the input arguments, currently unused
      */
-    public static void main(String[] args) { //TODO Implement ability to switch and add/remove views
+    public static void main(String[] args) {
         Views views = new Views(new CommandLineView());
         views.addView(new Graphical2DView());
 
