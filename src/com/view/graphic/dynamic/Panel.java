@@ -20,26 +20,49 @@ import java.util.stream.Collectors;
  * Graphical container where all 2D Graphics are drawn.
  */
 public class Panel extends JPanel {
-    //Constantes
-    private static final int SIZE_FACTOR = 5; //Inversement proportionnel, + grand ==> - grandes cartes
+    /**
+     * The constant SIZE_FACTOR.
+     * Proportional inversion : a bigger number means smaller cards.
+     */
+    private static final int SIZE_FACTOR = 5;
 
-    //Images
+    /**
+     * The Background.
+     */
     private final Image background;
+    /**
+     * The Card front.
+     */
     private final Image cardFront;
+    /**
+     * The Card back.
+     */
     private final Image cardBack;
+    /**
+     * The Identity card.
+     */
     private final Image identityCard;
 
-    //Panel 2D converted graphics
+    /**
+     * The 2D graphics used in the whole class.
+     */
     private Graphics2D g2D;
 
-    //Card dimensions, based on window size
-    private int cardWidth, cardHeight;
-
+    /**
+     * The Card width.
+     */
+    private int cardWidth;
+    /**
+     * The Card height.
+     */
+    private int cardHeight;
     /**
      * The queue containing all actions to display
      */
     private final Queue<PrintableAction> actions;
-
+    /**
+     * The Main player.
+     */
     private Player mainPlayer;
 
     /**
@@ -55,10 +78,22 @@ public class Panel extends JPanel {
         this.actions = new LinkedList<>();
     }
 
+    /**
+     * Sets main player.
+     *
+     * @param mainPlayer the main player
+     */
     void setMainPlayer(Player mainPlayer) {
         this.mainPlayer = mainPlayer;
     }
 
+    /**
+     * Gets next action.
+     * Does all the processing necessary of the queue before returning the next action.
+     * This includes making sure that the queue isn't empty, decreasing the action lifetime and trimming the queue if it becomes too long.
+     *
+     * @return the next action
+     */
     private PrintableAction getNextAction() {
         if (actions.size() > 0) {
             if (actions.peek().displayTime < 0) actions.remove();
@@ -87,13 +122,24 @@ public class Panel extends JPanel {
         actions.add(new PrintableAction(action));
     }
 
+    /**
+     * Reset all actions.
+     */
     void resetActions() {
         actions.clear();
     }
 
-    //Draw a centered string on X axis within [x; x + width]
+    /**
+     * Draw x centered string within [x; x + width].
+     * We need to forcefully split lines since the drawString() method doesn't apply the new line feed.
+     *
+     * @param string the string
+     * @param x      the x coordinate used as center
+     * @param y      the y coordinate
+     * @param width  the width in which to fit the string
+     * @return the additional number of lines (0 if only 1 line)
+     */
     private int drawXCenteredString(String string, int x, int y, int width) {
-        //We need to forcefully split lines. The method drawString() doesn't apply \n
         if (string.contains("\n")) {
             String[] array = string.split("\n");
             for (int i = 0; i < array.length; i++) {
@@ -105,7 +151,13 @@ public class Panel extends JPanel {
         return 0;
     }
 
-    //Draw a list of effects within a card X-axis bounds at y position
+    /**
+     * Draw a list of effects.
+     *
+     * @param x       the x coordinate
+     * @param y       the y coordinate
+     * @param effects the effects to draw
+     */
     private void drawEffects(int x, int y, List<Effect> effects) {
         //Find good font
         Font font = g2D.getFont();
@@ -136,6 +188,14 @@ public class Panel extends JPanel {
         }
     }
 
+    /**
+     * Draw effects container.
+     *
+     * @param x       the x coordinate
+     * @param y       the y coordinate
+     * @param effects the effects to draw
+     * @param witch   whether those effects are witch effects or hunt effects
+     */
     private void drawEffectsContainer(int x, int y, List<Effect> effects, boolean witch) {
         g2D.setColor(Color.decode(witch ? "#ffebcc" : "#d6ebd6"));
         g2D.fillRect(x, y, cardWidth, cardHeight / 4);
@@ -149,7 +209,13 @@ public class Panel extends JPanel {
         drawEffects(x, y, effects);
     }
 
-    //Draw a complete card
+    /**
+     * Draw a card facing up.
+     *
+     * @param x          the x coordinate
+     * @param y          the y coordinate
+     * @param rumourCard the rumour card to draw
+     */
     private void drawCard(int x, int y, RumourCard rumourCard) {
         //The card itself
         g2D.drawImage(cardFront, x, y, cardWidth, cardHeight, this);
@@ -166,18 +232,34 @@ public class Panel extends JPanel {
         drawEffectsContainer(x, y + (int) (cardHeight / 1.5), rumourCard.huntEffects, false);
     }
 
-    //Draw a turned card
+    /**
+     * Draw a card facing down.
+     *
+     * @param x the x coordinate
+     * @param y the y coordinate
+     */
     private void drawCard(int x, int y) {
         g2D.drawImage(cardBack, x, y, cardWidth, cardHeight, this);
     }
 
-    //Draw an identity card
+    /**
+     * Draw an identity card.
+     *
+     * @param x the x coordinate
+     * @param y the y coordinate
+     */
     private void drawIdentityCard(int x, int y) {
         g2D.drawImage(identityCard, x, y, cardWidth, cardHeight, this);
     }
 
-    //Draw a complete hand
-    private void drawCardList(List<?> hand, int size) {
+    /**
+     * Draw a card list.
+     * This can take a list of either CardStates or RumourCards.
+     *
+     * @param cardList the card list
+     * @param size     the size of the card list
+     */
+    private void drawCardList(List<?> cardList, int size) {
         boolean even = size % 2 == 0;
 
         for (int i = 0; i < size; i++) {
@@ -185,7 +267,7 @@ public class Panel extends JPanel {
             int centerFactor = getWidth() / 2;
             if (!even) centerFactor -= cardWidth / 2;
 
-            //Position of the card in the hand
+            //Position of the card in the cardList
             int relativePosition = i - size / 2;
 
             //margin to the center as multiple of 10px
@@ -209,11 +291,11 @@ public class Panel extends JPanel {
 
             //Check the list, we only display card from rumour card list or revealed ones from card state list
             RumourCard rumourCard = null;
-            if (hand != null) {
-                if (hand.get(0) instanceof RumourCard) {
-                    rumourCard = (RumourCard) hand.get(i);
-                } else if (hand.get(0) instanceof CardState && ((CardState) hand.get(i)).isRevealed()) {
-                    rumourCard = ((CardState) hand.get(i)).rumourCard;
+            if (cardList != null) {
+                if (cardList.get(0) instanceof RumourCard) {
+                    rumourCard = (RumourCard) cardList.get(i);
+                } else if (cardList.get(0) instanceof CardState && ((CardState) cardList.get(i)).isRevealed()) {
+                    rumourCard = ((CardState) cardList.get(i)).rumourCard;
                 }
             }
 
@@ -233,14 +315,18 @@ public class Panel extends JPanel {
         }
     }
 
-    //Draw player
-    private void drawPlayer(IdentityCard card) {
-        if (card != null) {
-            if (card.player == mainPlayer) {
-                List<RumourCard> hand = card.player.hand.stream().map(cardState -> cardState.rumourCard).collect(Collectors.toList());
+    /**
+     * Draw a player.
+     *
+     * @param identityCard the identityCard of the player
+     */
+    private void drawPlayer(IdentityCard identityCard) {
+        if (identityCard != null) {
+            if (identityCard.player == mainPlayer) {
+                List<RumourCard> hand = identityCard.player.hand.stream().map(cardState -> cardState.rumourCard).collect(Collectors.toList());
                 drawCardList(hand, hand.size());
             } else {
-                drawCardList(card.player.hand, card.player.hand.size());
+                drawCardList(identityCard.player.hand, identityCard.player.hand.size());
             }
 
             int XCenter = getWidth() / 2 - cardWidth / 2;
@@ -249,7 +335,9 @@ public class Panel extends JPanel {
         }
     }
 
-    //Display the current action if there is one
+    /**
+     * Display the current action if there is one.
+     */
     private void drawAction() {
         PrintableAction currentAction = getNextAction();
         if (currentAction != null) {
@@ -274,11 +362,6 @@ public class Panel extends JPanel {
         }
     }
 
-    /**
-     * Draw contained objects
-     *
-     * @param graphics basis needed for basic rendering operations
-     */
     @Override
     public void paintComponent(Graphics graphics) {
         super.paintComponents(graphics);
