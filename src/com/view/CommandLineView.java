@@ -11,6 +11,15 @@ public class CommandLineView implements PassiveView, ActiveView {
     final Scanner keyboard = new Scanner(System.in);
 
     @Override
+    public String toString() {
+        return "Command Line View";
+    }
+
+    ///////////////////////////////////////////////////////////////////////////
+    // View Methods
+    ///////////////////////////////////////////////////////////////////////////
+
+    @Override
     public void showGameWinner(String name, int numberOfRound) {
         System.out.println("Congratulations " + name + ", you won in " + numberOfRound + " rounds !");
     }
@@ -143,10 +152,5 @@ public class CommandLineView implements PassiveView, ActiveView {
             System.out.println(i + "- " + possibleActions.get(i));
         }
         return possibleActions.get(Integer.parseInt(keyboard.nextLine()));
-    }
-
-    @Override
-    public String toString() {
-        return "Command Line View";
     }
 }

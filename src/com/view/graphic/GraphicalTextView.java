@@ -30,6 +30,11 @@ public class GraphicalTextView extends GraphicView implements ActiveView {
         this.setVisible(true);
     }
 
+    @Override
+    public String toString() {
+        return "Graphical Text View";
+    }
+
     /**
      * A simple place to display what the controller is telling, very similar to the command line version.
      *
@@ -62,6 +67,10 @@ public class GraphicalTextView extends GraphicView implements ActiveView {
         textArea.append(text + "\n");
         textArea.setCaretPosition(textArea.getDocument().getLength());
     }
+
+    ///////////////////////////////////////////////////////////////////////////
+    // View Methods
+    ///////////////////////////////////////////////////////////////////////////
 
     @Override
     public void showGameWinner(String name, int numberOfRound) {
@@ -139,10 +148,5 @@ public class GraphicalTextView extends GraphicView implements ActiveView {
     public void waitForAction(String playerName, List<PlayerAction> possibleActions) {
         appendText("Waiting for " + playerName + " action choice");
         possibleActions.forEach(possibleAction -> appendText(possibleAction.toString()));
-    }
-
-    @Override
-    public String toString() {
-        return "Graphical Text View";
     }
 }

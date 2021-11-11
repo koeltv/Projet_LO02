@@ -40,6 +40,11 @@ public class Graphical2DView extends GraphicView implements ActiveView, Runnable
         thread.start();
     }
 
+    @Override
+    public String toString() {
+        return "Graphical 2D View";
+    }
+
     private void actualiseMainPlayer(String playerName) {
         //We change the player at the bottom of the display to the player currently playing
         List<IdentityCard> identityCards = RoundController.getRoundController().identityCards
@@ -48,6 +53,10 @@ public class Graphical2DView extends GraphicView implements ActiveView, Runnable
                 .collect(Collectors.toList());
         panel.mainPlayer = identityCards.size() > 0 ? identityCards.get(0).player : null;
     }
+
+    ///////////////////////////////////////////////////////////////////////////
+    // View Methods
+    ///////////////////////////////////////////////////////////////////////////
 
     @Override
     public synchronized void showGameWinner(String name, int numberOfRound) {
@@ -156,10 +165,5 @@ public class Graphical2DView extends GraphicView implements ActiveView, Runnable
         } catch (InterruptedException ignored) {
             //When we restart the thread, an exception is thrown, see https://stackoverflow.com/questions/35474536/wait-is-always-throwing-interruptedexception
         }
-    }
-
-    @Override
-    public String toString() {
-        return "Graphical 2D View";
     }
 }

@@ -8,7 +8,6 @@ import com.view.PassiveView;
 import javax.swing.*;
 import java.awt.*;
 import java.util.List;
-import java.util.stream.Collectors;
 
 public abstract class GraphicView extends JFrame implements PassiveView, ActiveView {
 
@@ -21,6 +20,10 @@ public abstract class GraphicView extends JFrame implements PassiveView, ActiveV
         //We specify that we don't want the access to the window to be shut off when a JOptionPane appear
         this.setModalExclusionType(Dialog.ModalExclusionType.APPLICATION_EXCLUDE);
     }
+
+    ///////////////////////////////////////////////////////////////////////////
+    // Active Methods
+    ///////////////////////////////////////////////////////////////////////////
 
     /**
      * Prompt player with input box.
@@ -50,10 +53,6 @@ public abstract class GraphicView extends JFrame implements PassiveView, ActiveV
         );
     }
 
-    ///////////////////////////////////////////////////////////////////////////
-    // Active Methods
-    ///////////////////////////////////////////////////////////////////////////
-
     @Override
     public String promptForPlayerName(int playerIndex) {
         return promptForInput("", "Enter player " + playerIndex + " name");
@@ -77,11 +76,7 @@ public abstract class GraphicView extends JFrame implements PassiveView, ActiveV
 
     @Override
     public int promptForCardChoice(List<RumourCard> rumourCards) {
-        List<String> strings = rumourCards.stream().map(rumourCard -> rumourCard.getCardName().toString()).collect(Collectors.toList());
-        String[] cardNames = new String[strings.size()];
-        for (int i = 0, stringsSize = strings.size(); i < stringsSize; i++) {
-            cardNames[i] = strings.get(i);
-        }
+        String[] cardNames = rumourCards.stream().map(rumourCard -> rumourCard.getCardName().toString()).toArray(String[]::new);
         return promptForOptions("Card choice", "Choose a card", cardNames);
     }
 
@@ -100,11 +95,7 @@ public abstract class GraphicView extends JFrame implements PassiveView, ActiveV
 
     @Override
     public PlayerAction promptForAction(String playerName, List<PlayerAction> possibleActions) {
-        List<String> strings = possibleActions.stream().map(Enum::toString).collect(Collectors.toList());
-        String[] actions = new String[strings.size()];
-        for (int i = 0, stringsSize = strings.size(); i < stringsSize; i++) {
-            actions[i] = strings.get(i);
-        }
+        String[] actions = possibleActions.stream().map(Enum::toString).toArray(String[]::new);
         return possibleActions.get(promptForOptions("Action", playerName + ", please choose your next action", actions));
     }
 }

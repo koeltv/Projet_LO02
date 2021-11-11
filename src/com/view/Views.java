@@ -41,6 +41,10 @@ public class Views extends JFrame implements ActiveView, Runnable {
         activeView = view;
     }
 
+    ///////////////////////////////////////////////////////////////////////////
+    // View Methods
+    ///////////////////////////////////////////////////////////////////////////
+
     @Override
     public void showGameWinner(String name, int numberOfRound) {
         views.forEach(view -> view.showGameWinner(name, numberOfRound));
@@ -128,6 +132,10 @@ public class Views extends JFrame implements ActiveView, Runnable {
         views.forEach(passiveView -> passiveView.waitForAction(playerName, possibleActions));
         return activeView.promptForAction(playerName, possibleActions);
     }
+
+    ///////////////////////////////////////////////////////////////////////////
+    // Runnable Method
+    ///////////////////////////////////////////////////////////////////////////
 
     @Override
     public synchronized void run() {
