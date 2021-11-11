@@ -59,6 +59,23 @@ public class Panel extends JPanel {
         this.mainPlayer = mainPlayer;
     }
 
+    private PrintableAction getNextAction() {
+        if (actions.size() > 0) {
+            if (actions.peek().displayTime < 0) actions.remove();
+            PrintableAction action = actions.peek();
+            if (action != null) {
+                //We reduce the lifetime of the action message
+                action.displayTime--;
+
+                //If too many actions are in the queue, skip some
+                while (actions.size() > 8) actions.remove();
+
+                return action;
+            }
+        }
+        return null;
+    }
+
     /**
      * Display action.
      * Set the action to be displayed at the center of the screen. The time it will stay there depend on the length of the String l.
@@ -66,11 +83,11 @@ public class Panel extends JPanel {
      *
      * @param action the action
      */
-    public void displayAction(String action) {
+    void displayAction(String action) {
         actions.add(new PrintableAction(action));
     }
 
-    public void resetActions() {
+    void resetActions() {
         actions.clear();
     }
 
@@ -234,40 +251,26 @@ public class Panel extends JPanel {
 
     //Display the current action if there is one
     private void drawAction() {
-        if (actions.size() > 0) {
-            PrintableAction currentAction = actions.peek();
-            if (currentAction != null) {
-                int padding = getWidth() / 20;
+        PrintableAction currentAction = getNextAction();
+        if (currentAction != null) {
+            int padding = getWidth() / 20;
 
-                //We adapt the size to the current screen size
-                Font font = getFont().deriveFont((float) padding);
-                g2D.setFont(font);
-                int width = g2D.getFontMetrics().stringWidth(currentAction.action);
-                int height = g2D.getFontMetrics().getAscent();
+            //We adapt the size to the current screen size
+            Font font = getFont().deriveFont((float) padding);
+            g2D.setFont(font);
+            int width = g2D.getFontMetrics().stringWidth(currentAction.action);
+            int height = g2D.getFontMetrics().getAscent();
 
-                //We do a background on which we put the text
-                Graphics2D tempGraph = (Graphics2D) g2D.create();
-                tempGraph.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 0.75f));
-                tempGraph.setColor(new Color(68, 88, 129));
-                tempGraph.fillRect(getWidth() / 2 - width / 2 - padding, getHeight() / 2 - height / 2, width + 2 * padding, height);
-                tempGraph.dispose();
+            //We do a background on which we put the text
+            Graphics2D tempGraph = (Graphics2D) g2D.create();
+            tempGraph.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 0.75f));
+            tempGraph.setColor(new Color(68, 88, 129));
+            tempGraph.fillRect(getWidth() / 2 - width / 2 - padding, getHeight() / 2 - height / 2, width + 2 * padding, height);
+            tempGraph.dispose();
 
-                //We add the text
-                g2D.setColor(Color.WHITE);
-                drawXCenteredString(currentAction.action, getWidth() / 2 - width / 2, getHeight() / 2 - height / 2 + (int) (height * 0.875), width);
-
-                //We reduce the lifetime of the action message
-                currentAction.displayTime--;
-                if (currentAction.displayTime <= 0) actions.remove();
-
-                //If too many actions are in the queue, skip some
-                if (actions.size() > 8) {
-                    do {
-                        actions.remove();
-                    } while (actions.size() > 8);
-                    System.out.println("Too fast ! Deleting some actions !");
-                }
-            }
+            //We add the text
+            g2D.setColor(Color.WHITE);
+            drawXCenteredString(currentAction.action, getWidth() / 2 - width / 2, getHeight() / 2 - height / 2 + (int) (height * 0.875), width);
         }
     }
 
@@ -321,10 +324,11 @@ public class Panel extends JPanel {
                     //We draw the player hand
                     drawPlayer(card);
 
-                    //We reset change to the transform matrix
+                    //We reset change to the transform matrix, in case a translation was made
                     g2D.setTransform(temp);
                 }
             }
+            //We reset the transform matrix to its original value
             g2D.setTransform(oldRotation);
 
             //Draw the discard pile
