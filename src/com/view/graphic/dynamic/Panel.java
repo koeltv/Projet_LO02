@@ -93,30 +93,6 @@ public class Panel extends JPanel {
     }
 
     /**
-     * Gets next action.
-     * Does all the processing necessary of the queue before returning the next action.
-     * This includes making sure that the queue isn't empty, decreasing the action lifetime and trimming the queue if it becomes too long.
-     *
-     * @return the next action
-     */
-    private PrintableAction getNextAction() {
-        if (actions.size() > 0) {
-            if (actions.peek().displayTime < 0) actions.remove();
-            PrintableAction action = actions.peek();
-            if (action != null) {
-                //We reduce the lifetime of the action message
-                action.displayTime--;
-
-                //If too many actions are in the queue, skip some
-                while (actions.size() > 8) actions.remove();
-
-                return action;
-            }
-        }
-        return null;
-    }
-
-    /**
      * Display action.
      * Set the action to be displayed at the center of the screen. The time it will stay there depend on the length of the String l.
      * With rf being the refresh rate, the time on screen t is t = (l/2 + 4) * rf.
@@ -125,13 +101,6 @@ public class Panel extends JPanel {
      */
     void displayAction(String action) {
         actions.add(new PrintableAction(action));
-    }
-
-    /**
-     * Reset all actions.
-     */
-    void resetActions() {
-        actions.clear();
     }
 
     /**
@@ -355,7 +324,7 @@ public class Panel extends JPanel {
      * Display the current action if there is one.
      */
     private void drawAction() {
-        PrintableAction currentAction = getNextAction();
+        PrintableAction currentAction = actions.peek();
         if (currentAction != null) {
             int padding = getWidth() / 20;
 
@@ -451,6 +420,14 @@ public class Panel extends JPanel {
         }
 
         drawAction();
+    }
+
+    public int getWaitingTime() {
+        if (actions.size() > 0) {
+            PrintableAction printableAction = actions.poll();
+            return 500 * printableAction.displayTime;
+        }
+        return 500;
     }
 }
 

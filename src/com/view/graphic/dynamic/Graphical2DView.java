@@ -15,10 +15,10 @@ import java.util.stream.Collectors;
  * The type Graphical 2D view.
  * Graphical view which display the whole game in 2D graphics. It is resizable.
  */
-public class Graphical2DView extends GraphicView implements ActiveView, Runnable {
+public class Graphical2DView extends GraphicView implements ActiveView {
     private final Panel panel;
 
-    private Thread thread;
+    private int waitingTime;
 
     /**
      * Instantiates a new Graphical 2D view.
@@ -30,10 +30,9 @@ public class Graphical2DView extends GraphicView implements ActiveView, Runnable
         this.setContentPane(panel);
         this.setSize(750, 400);
 
-        this.setVisible(true);
+        this.waitingTime = 10;
 
-        thread = new Thread(this);
-        thread.start();
+        this.setVisible(true);
     }
 
     @Override
@@ -57,42 +56,46 @@ public class Graphical2DView extends GraphicView implements ActiveView, Runnable
     @Override
     public synchronized void showGameWinner(String name, int numberOfRound) {
         panel.displayAction("Congratulations " + name + ", you won in " + numberOfRound + " rounds !");
+        run(true);
 
         //We restart the thread to stop the panel from trying to access the deleted RoundController
-        thread.interrupt();
-        thread = new Thread(this);
-        thread.start();
+
     }
 
     @Override
     public void showRoundWinner(String name) {
-        panel.resetActions();
         panel.displayAction(name + " won this round !");
+        run(true);
     }
 
     @Override
     public void showStartOfRound(int numberOfRound) {
         panel.displayAction("Start of Round " + numberOfRound);
+        run(true);
     }
 
     @Override
     public void showPlayerIdentity(String name, boolean witch) {
         panel.displayAction(name + " is a " + (witch ? "witch" : "villager") + " !");
+        run(true);
     }
 
     @Override
     public void showPlayerAction(String name) {
         panel.displayAction("Player " + name + " is revealing his identity !");
+        run(true);
     }
 
     @Override
     public void showPlayerAction(String name, String targetedPlayerName) {
         panel.displayAction("Player " + name + " is accusing " + targetedPlayerName + " !");
+        run(true);
     }
 
     @Override
     public void showPlayerAction(String name, CardName chosenCardName) {
         panel.displayAction("Player " + name + " is using " + chosenCardName + " !");
+        run(true);
     }
 
     ///////////////////////////////////////////////////////////////////////////
@@ -101,37 +104,39 @@ public class Graphical2DView extends GraphicView implements ActiveView, Runnable
 
     @Override
     public void waitForPlayerName(int playerIndex) {
-
+        run(false);
     }
 
     @Override
     public void waitForNewGame() {
-
+        run(false);
     }
 
     @Override
     public void waitForPlayerChoice(List<String> playerNames) {
-
+        run(false);
     }
 
     @Override
     public void waitForCardChoice(List<RumourCard> rumourCards) {
-
+        run(false);
     }
 
     @Override
     public void waitForRepartition() {
-
+        run(false);
     }
 
     @Override
     public void waitForPlayerIdentity(String name) {
         actualiseMainPlayer(name);
+        run(false);
     }
 
     @Override
     public void waitForAction(String playerName, List<PlayerAction> possibleActions) {
         actualiseMainPlayer(playerName);
+        run(false);
     }
 
     ///////////////////////////////////////////////////////////////////////////
@@ -141,6 +146,7 @@ public class Graphical2DView extends GraphicView implements ActiveView, Runnable
     @Override
     public PlayerAction promptForAction(String playerName, List<PlayerAction> possibleActions) {
         actualiseMainPlayer(playerName);
+        run(true);
         return super.promptForAction(playerName, possibleActions);
     }
 
@@ -149,15 +155,14 @@ public class Graphical2DView extends GraphicView implements ActiveView, Runnable
     // Runnable method
     ///////////////////////////////////////////////////////////////////////////
 
-    @Override
-    public synchronized void run() {
+    public synchronized void run(boolean wait) {
         try {
-            //noinspection InfiniteLoopStatement
-            while (true) {
-                //repaint is called each time the screen size is changed or by this loop
-                panel.repaint();
-                wait(500);
+            //repaint is called each time the screen size is changed or by this loop
+            panel.repaint();
+            if (wait) {
+                wait(waitingTime);
             }
+            waitingTime = panel.getWaitingTime();
         } catch (InterruptedException ignored) {
             //When we restart the thread, an exception is thrown, see https://stackoverflow.com/questions/35474536/wait-is-always-throwing-interruptedexception
         }
