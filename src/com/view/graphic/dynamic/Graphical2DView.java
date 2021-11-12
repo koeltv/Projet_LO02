@@ -126,7 +126,7 @@ public class Graphical2DView extends GraphicView implements ActiveView, Runnable
 
     @Override
     public void waitForPlayerIdentity(String name) {
-
+        actualiseMainPlayer(name);
     }
 
     @Override

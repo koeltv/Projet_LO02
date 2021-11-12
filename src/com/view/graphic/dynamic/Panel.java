@@ -39,9 +39,13 @@ public class Panel extends JPanel {
      */
     private final Image cardBack;
     /**
-     * The Identity card.
+     * The Identity card when the player isn't revealed.
      */
-    private final Image identityCard;
+    private final Image identityCardNotRevealed;
+    /**
+     * The Identity card when the player isn't revealed.
+     */
+    private final Image identityCardRevealed;
 
     /**
      * The 2D graphics used in the whole class.
@@ -72,7 +76,8 @@ public class Panel extends JPanel {
         this.background = getToolkit().getImage("data/Tabletop.jpg");
         this.cardFront = getToolkit().getImage("data/CardFrontEmpty.png");
         this.cardBack = getToolkit().getImage("data/CatBack.jpg");
-        this.identityCard = getToolkit().getImage("data/IdentityCard.png");
+        this.identityCardNotRevealed = getToolkit().getImage("data/IdentityCard.png");
+        this.identityCardRevealed = getToolkit().getImage("data/RevealedVillager.png");
         this.mainPlayer = RoundController.getCurrentPlayer();
 
         this.actions = new LinkedList<>();
@@ -248,8 +253,9 @@ public class Panel extends JPanel {
      * @param x the x coordinate
      * @param y the y coordinate
      */
-    private void drawIdentityCard(int x, int y) {
-        g2D.drawImage(identityCard, x, y, cardWidth, cardHeight, this);
+    private void drawIdentityCard(int x, int y, IdentityCard identityCard) {
+        Image toDraw = identityCard.isIdentityNotRevealed() || identityCard.isWitch() ? identityCardNotRevealed : identityCardRevealed;
+        g2D.drawImage(toDraw, x, y, cardWidth, cardHeight, this);
     }
 
     /**
@@ -320,7 +326,7 @@ public class Panel extends JPanel {
      *
      * @param identityCard the identityCard of the player
      */
-    private void drawPlayer(IdentityCard identityCard) { // TODO: 11/11/2021 Add score and name
+    private void drawPlayer(IdentityCard identityCard) {
         if (identityCard != null) {
             if (identityCard.player == mainPlayer) {
                 List<RumourCard> hand = identityCard.player.hand.stream().map(cardState -> cardState.rumourCard).collect(Collectors.toList());
@@ -331,7 +337,17 @@ public class Panel extends JPanel {
 
             int XCenter = getWidth() / 2 - cardWidth / 2;
             int YPos = getHeight() - (10 * 2 + getHeight() / SIZE_FACTOR) - cardHeight;
-            drawIdentityCard(XCenter, YPos);
+            drawIdentityCard(XCenter, YPos, identityCard);
+
+            //Display player name and score
+            g2D.setColor(Color.WHITE);
+            g2D.setFont(g2D.getFont().deriveFont((float) (getWidth() / 100)).deriveFont(Font.BOLD));
+            String playerName = identityCard.player.getName();
+            String score = "Score : " + identityCard.player.getScore();
+            XCenter -= g2D.getFontMetrics().stringWidth(score) + cardWidth / 2;
+            YPos += cardHeight - g2D.getFontMetrics().getHeight();
+            g2D.drawString(playerName, XCenter, YPos);
+            g2D.drawString(score, XCenter, YPos + g2D.getFontMetrics().getHeight());
         }
     }
 
@@ -363,7 +379,7 @@ public class Panel extends JPanel {
     }
 
     @Override
-    public void paintComponent(Graphics graphics) { // TODO: 11/11/2021 Modify positioning to always fit
+    public void paintComponent(Graphics graphics) {
         super.paintComponents(graphics);
 
         //Actualise object values
@@ -394,16 +410,27 @@ public class Panel extends JPanel {
                     //Rotation to make all players on a circle
                     g2D.rotate(Math.toRadians(angle), (float) getWidth() / 2, (float) getHeight() / 2);
 
-                    //The players on the side are set back a little to have some more room
+                    //The players near the diagonals are set back a little to have some more room
                     AffineTransform temp = g2D.getTransform();
-                    if (currentAngle % 180 != 0) {
-                        int XTranslation = currentAngle % 90 == 0 ? 0 : getWidth() / 40;
-                        //Reverse in lower-left and upper-right cadrans
-                        if ((currentAngle > 0 && currentAngle < 90) || (currentAngle > 180 && currentAngle < 270)) {
-                            XTranslation = -XTranslation;
-                        }
-                        g2D.translate(XTranslation, getHeight() / 3);
+
+                    double yTranslationFactor = Math.sin(Math.toRadians(currentAngle));
+                    double xTranslationFactor = Math.cos(Math.toRadians(currentAngle));
+                    double ellipseFactor = ((float) getHeight() / 3) * Math.abs(yTranslationFactor);
+                    double y0Translation = 0;
+                    //We only apply it to players near the diagonals
+                    if (
+                            roundController.identityCards.size() < 6 && (
+                                    (currentAngle > 15 && currentAngle < 65) ||
+                                            (currentAngle > 105 && currentAngle < 135) ||
+                                            (currentAngle > 225 && currentAngle < 255) ||
+                                            (currentAngle > 295 && currentAngle < 345)
+                            )
+                    ) {
+                        //Translation gets bigger when we approach the top and bottom
+                        y0Translation = -Math.cos(Math.toRadians(currentAngle)) * getHeight() / 3;
                     }
+                    g2D.translate(y0Translation * yTranslationFactor, ellipseFactor + y0Translation * xTranslationFactor);
+
                     //We draw the player hand
                     drawPlayer(card);
 
@@ -417,7 +444,7 @@ public class Panel extends JPanel {
             //Draw the discard pile
             List<RumourCard> discardPile = RoundController.getRoundController().discardPile;
             if (discardPile.size() > 0) {
-                g2D.translate(0, (-getHeight() / 2) + cardHeight / 2);
+                g2D.translate(0, (-getHeight() / 2) + cardHeight / 3);
                 drawCardList(discardPile, discardPile.size());
                 g2D.setTransform(oldRotation);
             }
