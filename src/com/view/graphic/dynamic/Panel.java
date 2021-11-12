@@ -90,8 +90,7 @@ public class Panel extends JPanel {
 
     /**
      * Display action.
-     * Set the action to be displayed at the center of the screen. The time it will stay there depend on the length of the String l.
-     * With rf being the refresh rate, the time on screen t is t = (l/2 + 4) * rf.
+     * Set the action to be displayed at the center of the screen.
      *
      * @param action the action
      */
@@ -418,7 +417,7 @@ public class Panel extends JPanel {
     }
 
     public int getWaitingTime() {
-        return 500 * (action == null ? 1 : action.displayTime);
+        return action == null ? 1 : action.displayTime;
     }
 }
 
