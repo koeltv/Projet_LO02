@@ -18,8 +18,6 @@ import java.util.stream.Collectors;
 public class Graphical2DView extends GraphicView implements ActiveView {
     private final Panel panel;
 
-    private int waitingTime;
-
     /**
      * Instantiates a new Graphical 2D view.
      */
@@ -29,8 +27,6 @@ public class Graphical2DView extends GraphicView implements ActiveView {
         panel = new Panel();
         this.setContentPane(panel);
         this.setSize(750, 400);
-
-        this.waitingTime = 10;
 
         this.setVisible(true);
     }
@@ -57,9 +53,6 @@ public class Graphical2DView extends GraphicView implements ActiveView {
     public synchronized void showGameWinner(String name, int numberOfRound) {
         panel.displayAction("Congratulations " + name + ", you won in " + numberOfRound + " rounds !");
         run(true);
-
-        //We restart the thread to stop the panel from trying to access the deleted RoundController
-
     }
 
     @Override
@@ -146,7 +139,7 @@ public class Graphical2DView extends GraphicView implements ActiveView {
     @Override
     public PlayerAction promptForAction(String playerName, List<PlayerAction> possibleActions) {
         actualiseMainPlayer(playerName);
-        run(true);
+        run(false);
         return super.promptForAction(playerName, possibleActions);
     }
 
@@ -159,10 +152,7 @@ public class Graphical2DView extends GraphicView implements ActiveView {
         try {
             //repaint is called each time the screen size is changed or by this loop
             panel.repaint();
-            if (wait) {
-                wait(waitingTime);
-            }
-            waitingTime = panel.getWaitingTime();
+            if (wait) wait(panel.getWaitingTime());
         } catch (InterruptedException ignored) {
             //When we restart the thread, an exception is thrown, see https://stackoverflow.com/questions/35474536/wait-is-always-throwing-interruptedexception
         }

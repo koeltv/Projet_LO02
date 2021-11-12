@@ -10,9 +10,7 @@ import com.model.player.Player;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.geom.AffineTransform;
-import java.util.LinkedList;
 import java.util.List;
-import java.util.Queue;
 import java.util.stream.Collectors;
 
 /**
@@ -63,7 +61,7 @@ public class Panel extends JPanel {
     /**
      * The queue containing all actions to display
      */
-    private final Queue<PrintableAction> actions;
+    private PrintableAction action;
     /**
      * The Main player.
      */
@@ -79,8 +77,6 @@ public class Panel extends JPanel {
         this.identityCardNotRevealed = getToolkit().getImage("data/IdentityCard.png");
         this.identityCardRevealed = getToolkit().getImage("data/RevealedVillager.png");
         this.mainPlayer = RoundController.getCurrentPlayer();
-
-        this.actions = new LinkedList<>();
     }
 
     /**
@@ -100,7 +96,7 @@ public class Panel extends JPanel {
      * @param action the action
      */
     void displayAction(String action) {
-        actions.add(new PrintableAction(action));
+        this.action = new PrintableAction(action);
     }
 
     /**
@@ -324,14 +320,13 @@ public class Panel extends JPanel {
      * Display the current action if there is one.
      */
     private void drawAction() {
-        PrintableAction currentAction = actions.peek();
-        if (currentAction != null) {
+        if (action != null) {
             int padding = getWidth() / 20;
 
             //We adapt the size to the current screen size
             Font font = getFont().deriveFont((float) padding);
             g2D.setFont(font);
-            int width = g2D.getFontMetrics().stringWidth(currentAction.action);
+            int width = g2D.getFontMetrics().stringWidth(action.text);
             int height = g2D.getFontMetrics().getAscent();
 
             //We do a background on which we put the text
@@ -343,7 +338,7 @@ public class Panel extends JPanel {
 
             //We add the text
             g2D.setColor(Color.WHITE);
-            drawXCenteredString(currentAction.action, getWidth() / 2 - width / 2, getHeight() / 2 - height / 2 + (int) (height * 0.875), width);
+            drawXCenteredString(action.text, getWidth() / 2 - width / 2, getHeight() / 2 - height / 2 + (int) (height * 0.875), width);
         }
     }
 
@@ -423,11 +418,7 @@ public class Panel extends JPanel {
     }
 
     public int getWaitingTime() {
-        if (actions.size() > 0) {
-            PrintableAction printableAction = actions.poll();
-            return 500 * printableAction.displayTime;
-        }
-        return 500;
+        return 500 * (action == null ? 1 : action.displayTime);
     }
 }
 

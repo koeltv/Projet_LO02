@@ -77,7 +77,7 @@ public class GameController {
      * @return new name
      */
     public String randomAIName() {
-        String[] NAMES = {"Jean", "Antoine", "Fabrice", "Patrick", "Clara", "June", "Louis", "Silvain"};
+        String[] NAMES = {"Jean", "Antoine", "Fabrice", "Patrick", "Clara", "June", "Louis", "Sylvain"};
 
         String name;
         boolean nameAssigned = false;

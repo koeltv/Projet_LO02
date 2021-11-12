@@ -361,7 +361,6 @@ public class RoundController {
             if (identityCard.isIdentityNotRevealed()) {
                 Player winner = identityCard.player;
                 //Reveal player identity and give points
-                revealIdentity(winner);
                 view.showRoundWinner(winner.getName());
                 view.showPlayerIdentity(winner.getName(), identityCard.isWitch());
                 winner.addToScore(identityCard.isWitch() ? 2 : 1);
