@@ -237,7 +237,6 @@ public class RoundController {
                 view.showPlayerIdentity(player.getName(), getPlayerIdentityCard(player).isWitch());
 
                 revealIdentity(player);
-
                 numberOfNotRevealedPlayers--;
             }
             case ACCUSE -> {

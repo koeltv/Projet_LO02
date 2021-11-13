@@ -41,7 +41,7 @@ public class Panel extends JPanel {
      */
     private final Image identityCardNotRevealed;
     /**
-     * The Identity card when the player isn't revealed.
+     * The Identity card when the player is revealed as Villager.
      */
     private final Image identityCardRevealed;
 
