@@ -92,10 +92,10 @@ public class GameController {
     }
 
     private void askForPlayerRepartition() {
-        int[] values = new int[]{1, 2};
+        int[] values = view.promptForRepartition();
 
         for (int i = 0; i < values[0]; i++) {
-            addPlayer("J" + (i + 1));
+            addPlayer(view.promptForPlayerName(i));
         }
 
         for (int i = 0; i < values[1]; i++) {
