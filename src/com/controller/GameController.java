@@ -93,30 +93,27 @@ public class GameController {
 
     private void askForPlayerRepartition() {
         int[] values = view.promptForRepartition();
-
-        for (int i = 0; i < values[0]; i++) {
-            addPlayer(view.promptForPlayerName(i));
-        }
-
-        for (int i = 0; i < values[1]; i++) {
-            players.add(new AI(randomAIName()));
-        }
+        for (int i = 0; i < values[0]; i++) addPlayer(i);
+        for (int i = 0; i < values[1]; i++) players.add(new AI(randomAIName()));
     }
 
     /**
      * Add player.
      *
-     * @param playerName the player name
+     * @param id the player id
      */
-    private void addPlayer(String playerName) {
-        boolean nameAlreadyAssigned = false;
-        for (Player player : players) {
-            nameAlreadyAssigned = player.getName().equals(playerName);
-            if (nameAlreadyAssigned) break;
-        }
-        if (!nameAlreadyAssigned) {
-            players.add(new Player(playerName));
-        }
+    private void addPlayer(int id) {
+        String playerName;
+        boolean nameAlreadyAssigned;
+        do {
+            playerName = view.promptForPlayerName(id);
+            nameAlreadyAssigned = false;
+            for (Player player : players) {
+                nameAlreadyAssigned = player.getName().equals(playerName);
+                if (nameAlreadyAssigned) break;
+            }
+        } while (nameAlreadyAssigned);
+        players.add(new Player(playerName));
     }
 
     private void setupGame() {
