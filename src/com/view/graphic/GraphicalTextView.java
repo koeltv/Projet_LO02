@@ -3,7 +3,6 @@ package com.view.graphic;
 import com.model.card.CardName;
 import com.model.card.RumourCard;
 import com.model.player.PlayerAction;
-import com.view.ActiveView;
 
 import javax.swing.*;
 import java.awt.*;
@@ -13,7 +12,7 @@ import java.util.List;
  * The type Graphical Text View.
  * Made to display user's interaction in a graphical interface using a text window and input boxes.
  */
-public class GraphicalTextView extends GraphicView implements ActiveView {
+public class GraphicalTextView extends GraphicView {
     private JTextArea textArea;
 
     public GraphicalTextView() {

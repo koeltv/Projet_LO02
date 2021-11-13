@@ -59,7 +59,7 @@ public class Panel extends JPanel {
      */
     private int cardHeight;
     /**
-     * The queue containing all actions to display
+     * The next action to display.
      */
     private PrintableAction action;
     /**
@@ -76,6 +76,7 @@ public class Panel extends JPanel {
         this.cardBack = getToolkit().getImage("data/CatBack.jpg");
         this.identityCardNotRevealed = getToolkit().getImage("data/IdentityCard.png");
         this.identityCardRevealed = getToolkit().getImage("data/RevealedVillager.png");
+
         this.mainPlayer = RoundController.getCurrentPlayer();
     }
 
@@ -89,13 +90,21 @@ public class Panel extends JPanel {
     }
 
     /**
-     * Display action.
-     * Set the action to be displayed at the center of the screen.
+     * Set next action to display.
      *
      * @param action the action
      */
-    void displayAction(String action) {
+    void setAction(String action) {
         this.action = new PrintableAction(action);
+    }
+
+    /**
+     * Gets waiting time.
+     *
+     * @return the waiting time
+     */
+    public int getWaitingTime() {
+        return action == null ? 0 : action.displayTime;
     }
 
     /**
@@ -214,12 +223,12 @@ public class Panel extends JPanel {
     /**
      * Draw an identity card.
      *
-     * @param x the x coordinate
-     * @param y the y coordinate
+     * @param x            the x coordinate
+     * @param y            the y coordinate
+     * @param identityCard the identity card to display
      */
     private void drawIdentityCard(int x, int y, IdentityCard identityCard) {
-        Image toDraw = identityCard.isIdentityNotRevealed() || identityCard.isWitch() ? identityCardNotRevealed : identityCardRevealed;
-        g2D.drawImage(toDraw, x, y, cardWidth, cardHeight, this);
+        g2D.drawImage(identityCard.isIdentityNotRevealed() ? identityCardNotRevealed : identityCardRevealed, x, y, cardWidth, cardHeight, this);
     }
 
     /**
@@ -233,33 +242,30 @@ public class Panel extends JPanel {
         boolean even = size % 2 == 0;
 
         for (int i = 0; i < size; i++) {
-            //Center position, subtract half a card width for odd number of card
             int centerFactor = getWidth() / 2;
-            if (!even) centerFactor -= cardWidth / 2;
 
-            //Position of the card in the cardList
+            //Position of the card in the cardList, centered around 0
             int relativePosition = i - size / 2;
 
             //margin to the center as multiple of 10px
-            int margin = 10;
+            int margin = 10, nbOfMargin = 1;
             if (even) {
                 margin *= relativePosition == 0 ? 1 : (int) Math.signum(relativePosition);
-            } else {
-                margin *= Math.abs(relativePosition) * (int) Math.signum(relativePosition);
-            }
 
-            //used for even numbers
-            int nbOfMargin = 1;
-            if (even) {
                 int value = relativePosition;
                 if (i > 0) value = relativePosition + 1 == 0 ? 1 : relativePosition + 1;
                 nbOfMargin = Math.abs(value);
+
+                //Settle 2x margin at center for even number of cards
+                if (relativePosition == -1 || relativePosition == 0) margin /= 2;
+            } else {
+                margin *= Math.abs(relativePosition) * (int) Math.signum(relativePosition);
+
+                //we subtract half a card width to the center position for odd number of card
+                centerFactor -= cardWidth / 2;
             }
 
-            //Settle 2x margin at center for even number of cards
-            if (even && (relativePosition == -1 || relativePosition == 0)) margin /= 2;
-
-            //Check the list, we only display card from rumour card list or revealed ones from card state list
+            //Check the list, only return card from rumour card list or revealed ones from card state list
             RumourCard rumourCard = null;
             if (cardList != null) {
                 if (cardList.get(0) instanceof RumourCard) {
@@ -306,11 +312,10 @@ public class Panel extends JPanel {
             //Display player name and score
             g2D.setColor(Color.WHITE);
             g2D.setFont(g2D.getFont().deriveFont((float) (getWidth() / 100)).deriveFont(Font.BOLD));
-            String playerName = identityCard.player.getName();
             String score = "Score : " + identityCard.player.getScore();
             XCenter -= g2D.getFontMetrics().stringWidth(score) + cardWidth / 2;
             YPos += cardHeight - g2D.getFontMetrics().getHeight();
-            g2D.drawString(playerName, XCenter, YPos);
+            g2D.drawString(identityCard.player.getName(), XCenter, YPos);
             g2D.drawString(score, XCenter, YPos + g2D.getFontMetrics().getHeight());
         }
     }
@@ -357,18 +362,25 @@ public class Panel extends JPanel {
 
         //Draw content
         if (roundController != null && roundController.identityCards.size() > 0) {
+            AffineTransform oldRotation = g2D.getTransform();
+
+            //Draw the discard pile
+            List<RumourCard> discardPile = RoundController.getRoundController().discardPile;
+            if (discardPile.size() > 0) {
+                g2D.translate(0, (-getHeight() / 2) + cardHeight / 3);
+                drawCardList(discardPile, discardPile.size());
+                g2D.setTransform(oldRotation);
+            }
+
             //Draw hand of the current player at the bottom
-            if (mainPlayer == null) mainPlayer = RoundController.getCurrentPlayer();
             drawPlayer(roundController.getPlayerIdentityCard(mainPlayer));
 
             //Draw the hand of each other player hidden
-            AffineTransform oldRotation = g2D.getTransform();
             double currentAngle = 0;
 
             for (IdentityCard card : roundController.identityCards) {
                 if (card.player != mainPlayer) {
                     double angle = (double) 360 / roundController.identityCards.size();
-                    currentAngle += angle;
 
                     //Rotation to make all players on a circle
                     g2D.rotate(Math.toRadians(angle), (float) getWidth() / 2, (float) getHeight() / 2);
@@ -376,6 +388,7 @@ public class Panel extends JPanel {
                     //The players near the diagonals are set back a little to have some more room
                     AffineTransform temp = g2D.getTransform();
 
+                    currentAngle += angle;
                     double yTranslationFactor = Math.sin(Math.toRadians(currentAngle));
                     double xTranslationFactor = Math.cos(Math.toRadians(currentAngle));
                     double ellipseFactor = ((float) getHeight() / 3) * Math.abs(yTranslationFactor);
@@ -403,22 +416,7 @@ public class Panel extends JPanel {
             }
             //We reset the transform matrix to its original value
             g2D.setTransform(oldRotation);
-
-            //Draw the discard pile
-            List<RumourCard> discardPile = RoundController.getRoundController().discardPile;
-            if (discardPile.size() > 0) {
-                g2D.translate(0, (-getHeight() / 2) + cardHeight / 3);
-                drawCardList(discardPile, discardPile.size());
-                g2D.setTransform(oldRotation);
-            }
         }
-
         drawAction();
     }
-
-    public int getWaitingTime() {
-        return action == null ? 1 : action.displayTime;
-    }
 }
-
-// TODO: 11/11/2021 Eventually, add the rules somewhere (just a png)
