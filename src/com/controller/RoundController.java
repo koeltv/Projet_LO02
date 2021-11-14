@@ -25,8 +25,6 @@ public class RoundController {
 
     private static Player currentPlayer;
 
-    private int numberOfNotRevealedPlayers;
-
     private Player nextPlayer;
 
     private final GameController gameController;
@@ -93,6 +91,10 @@ public class RoundController {
      */
     public static Player getCurrentPlayer() {
         return currentPlayer;
+    }
+
+    private int getNumberOfNotRevealedPlayers() {
+        return (int) identityCards.stream().filter(IdentityCard::isIdentityNotRevealed).count();
     }
 
     /**
@@ -237,7 +239,6 @@ public class RoundController {
                 view.showPlayerIdentity(player.getName(), getPlayerIdentityCard(player).isWitch());
 
                 revealIdentity(player);
-                numberOfNotRevealedPlayers--;
             }
             case ACCUSE -> {
                 Player targetedPlayer = choosePlayer(player, getNotRevealedPlayers(player));
@@ -333,7 +334,6 @@ public class RoundController {
         if (currentPlayer == null) selectFirstPlayer();
         //Fill up the list of active players at the start
         gameController.players.forEach(player -> identityCards.add(new IdentityCard(player)));
-        numberOfNotRevealedPlayers = identityCards.size();
 
         distributeRumourCards();
         askPlayersForIdentity();
@@ -347,7 +347,7 @@ public class RoundController {
         do {
             askPlayerForAction(getCurrentPlayer());
             currentPlayer = nextPlayer;
-        } while (numberOfNotRevealedPlayers > 1);
+        } while (getNumberOfNotRevealedPlayers() > 1);
     }
 
     /**

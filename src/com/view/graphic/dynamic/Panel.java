@@ -144,8 +144,8 @@ public class Panel extends JPanel {
         int longestString = 0;
         for (Effect effect : effects) {
             String[] array = effect.toString().split("\n");
-            for (int i = 0; i < array.length; i++) {
-                int lengthOfCurrentString = g2D.getFontMetrics(font).stringWidth(array[i]);
+            for (String s : array) {
+                int lengthOfCurrentString = g2D.getFontMetrics(font).stringWidth(s);
                 if (lengthOfCurrentString > longestString) longestString = lengthOfCurrentString;
             }
         }
