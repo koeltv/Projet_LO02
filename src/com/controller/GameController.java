@@ -1,8 +1,6 @@
 package com.controller;
 
-import com.model.card.CardName;
-import com.model.card.RumourCard;
-import com.model.card.effect.*;
+import com.model.card.Deck;
 import com.model.player.AI;
 import com.model.player.Player;
 import com.view.ActiveView;
@@ -26,8 +24,11 @@ public class GameController {
     /**
      * The Deck.
      */
-    public final List<RumourCard> deck;
+    public final Deck deck;
 
+    /**
+     * The View.
+     */
     private final ActiveView view;
 
     /**
@@ -54,7 +55,7 @@ public class GameController {
      * @param view the view
      */
     public GameController(ActiveView view) {
-        this.deck = new ArrayList<>();
+        this.deck = new Deck();
         this.view = view;
     }
 
@@ -91,7 +92,11 @@ public class GameController {
         return name;
     }
 
+    /**
+     * Ask for player repartition.
+     */
     private void askForPlayerRepartition() {
+        players = new ArrayList<>();
         int[] values = view.promptForRepartition();
         for (int i = 0; i < values[0]; i++) addPlayer(i);
         for (int i = 0; i < values[1]; i++) players.add(new AI(randomAIName()));
@@ -116,66 +121,6 @@ public class GameController {
         players.add(new Player(playerName));
     }
 
-    private void setupGame() {
-        for (CardName cardName : CardName.values()) {
-            List<Effect> witchEffects = new ArrayList<>();
-            List<Effect> huntEffect = new ArrayList<>();
-
-            //Witch? effects
-            switch (cardName) {
-                case THE_INQUISITION -> {
-                    witchEffects.add(new DiscardFromHandEffect());
-                    witchEffects.add(new TakeNextTurnEffect());
-                }
-                case POINTED_HAT -> {
-                    witchEffects.add(new TakeRevealedCardEffect());
-                    witchEffects.add(new TakeNextTurnEffect());
-                }
-                case HOOKED_NOSE -> {
-                    witchEffects.add(new TakeFromAccuserHandEffect());
-                    witchEffects.add(new TakeNextTurnEffect());
-                }
-                case DUCKING_STOOL -> witchEffects.add(new ChooseNextEffect());
-                case CAULDRON -> {
-                    witchEffects.add(new AccuserDiscardRandomEffect());
-                    witchEffects.add(new TakeNextTurnEffect());
-                }
-                case EVIL_EYE -> {
-                    witchEffects.add(new ChooseNextEffect());
-                    witchEffects.add(new NextMustAccuseOtherEffect());
-                }
-                default -> witchEffects.add(new TakeNextTurnEffect());
-            }
-            //Hunt! Effects
-            switch (cardName) {
-                case ANGRY_MOB -> huntEffect.add(new RevealAnotherIdentityEffect());
-                case THE_INQUISITION -> {
-                    huntEffect.add(new ChooseNextEffect());
-                    huntEffect.add(new SecretlyReadIdentityEffect());
-                }
-                case POINTED_HAT -> {
-                    huntEffect.add(new TakeRevealedCardEffect());
-                    huntEffect.add(new ChooseNextEffect());
-                }
-                case HOOKED_NOSE -> {
-                    huntEffect.add(new ChooseNextEffect());
-                    huntEffect.add(new TakeRandomCardFromNextEffect());
-                }
-                case DUCKING_STOOL -> huntEffect.add(new RevealOrDiscardEffect());
-                case CAULDRON, TOAD -> huntEffect.add(new RevealOwnIdentityEffect());
-                case EVIL_EYE -> {
-                    huntEffect.add(new ChooseNextEffect());
-                    huntEffect.add(new NextMustAccuseOtherEffect());
-                }
-                case BLACK_CAT -> huntEffect.add(new DiscardedToHandEffect());
-                case PET_NEWT -> huntEffect.add(new TakeRevealedFromOtherEffect());
-                default -> huntEffect.add(new ChooseNextEffect());
-            }
-
-            deck.add(new RumourCard(cardName, witchEffects, huntEffect));
-        }
-    }
-
     /**
      * Exit or start a new game.
      *
@@ -189,12 +134,20 @@ public class GameController {
         };
     }
 
+    /**
+     * Verify scores.
+     *
+     * @return true if at least 1 player has 5 points or more, and false otherwise
+     */
     private boolean verifyScores() {
         for (Player player : players)
             if (player.getScore() >= 5) return true;
         return false;
     }
 
+    /**
+     * Wrap up game.
+     */
     private void wrapUpGame() {
         List<Player> winners = new ArrayList<>();
 
@@ -212,6 +165,11 @@ public class GameController {
         RoundController.reset();
     }
 
+    /**
+     * Settle tie.
+     *
+     * @param winners the winners
+     */
     private void settleTie(List<Player> winners) { //TODO Find better alternative
         Player winner = winners.get(randomInInterval(0, winners.size() - 1));
         view.showGameWinner(winner.getName(), RoundController.getNumberOfRound());
@@ -222,9 +180,7 @@ public class GameController {
      */
     public void run() {
         GameAction endProgram;
-        setupGame();
         do {
-            players = new ArrayList<>();
             askForPlayerRepartition();
             do {
                 do {
