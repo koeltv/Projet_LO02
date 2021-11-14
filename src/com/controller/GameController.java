@@ -7,8 +7,8 @@ import com.model.player.AI;
 import com.model.player.Player;
 import com.view.ActiveView;
 import com.view.CommandLineView;
-import com.view.GraphicalInterfaceView;
 import com.view.Views;
+import com.view.graphic.dynamic.Graphical2DView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -77,7 +77,7 @@ public class GameController {
      * @return new name
      */
     public String randomAIName() {
-        String[] NAMES = {"Jean", "Antoine", "Fabrice", "Patrick", "Clara", "June", "Louis", "Silvain"};
+        String[] NAMES = {"Jean", "Antoine", "Fabrice", "Patrick", "Clara", "June", "Louis", "Sylvain"};
 
         String name;
         boolean nameAssigned = false;
@@ -92,34 +92,28 @@ public class GameController {
     }
 
     private void askForPlayerRepartition() {
-        int[] values;
-        do {
-            values = view.promptForRepartition();
-        } while (values.length < 2 || values[0] + values[1] < 3 || values[0] + values[1] > 6);
-
-        for (int i = 0; i < values[0]; i++) {
-            addPlayer(view.promptForPlayerName(i));
-        }
-
-        for (int i = 0; i < values[1]; i++) {
-            players.add(new AI(randomAIName()));
-        }
+        int[] values = view.promptForRepartition();
+        for (int i = 0; i < values[0]; i++) addPlayer(i);
+        for (int i = 0; i < values[1]; i++) players.add(new AI(randomAIName()));
     }
 
     /**
      * Add player.
      *
-     * @param playerName the player name
+     * @param id the player id
      */
-    private void addPlayer(String playerName) {
-        boolean nameAlreadyAssigned = false;
-        for (Player player : players) {
-            nameAlreadyAssigned = player.getName().equals(playerName);
-            if (nameAlreadyAssigned) break;
-        }
-        if (!nameAlreadyAssigned) {
-            players.add(new Player(playerName));
-        }
+    private void addPlayer(int id) {
+        String playerName;
+        boolean nameAlreadyAssigned;
+        do {
+            playerName = view.promptForPlayerName(id);
+            nameAlreadyAssigned = false;
+            for (Player player : players) {
+                nameAlreadyAssigned = player.getName().equals(playerName);
+                if (nameAlreadyAssigned) break;
+            }
+        } while (nameAlreadyAssigned);
+        players.add(new Player(playerName));
     }
 
     private void setupGame() {
@@ -218,7 +212,7 @@ public class GameController {
         RoundController.reset();
     }
 
-    private void settleTie(List<Player> winners) {
+    private void settleTie(List<Player> winners) { //TODO Find better alternative
         Player winner = winners.get(randomInInterval(0, winners.size() - 1));
         view.showGameWinner(winner.getName(), RoundController.getNumberOfRound());
     }
@@ -251,8 +245,8 @@ public class GameController {
      * @param args the input arguments, currently unused
      */
     public static void main(String[] args) {
-        Views views = new Views(new GraphicalInterfaceView());
-        views.addView(new CommandLineView());
+        Views views = new Views(new CommandLineView());
+        views.addView(new Graphical2DView());
 
         GameController gameController = new GameController(views);
         gameController.run();

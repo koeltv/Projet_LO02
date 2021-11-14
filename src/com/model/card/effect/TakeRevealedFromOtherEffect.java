@@ -6,7 +6,9 @@ import com.model.player.Player;
 public class TakeRevealedFromOtherEffect extends Effect {
     @Override
     public String toString() {
-        return "Take a revealed Rumour card from any other player into your hand.";
+        return """
+                Take a revealed Rumour card from
+                any other player into your hand.""";
     }
 
     @Override

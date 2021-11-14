@@ -6,7 +6,9 @@ import com.model.player.Player;
 public class NextMustAccuseOtherEffect extends Effect {
     @Override
     public String toString() {
-        return "On their turn they must accuse a player other than you, if possible.";
+        return """
+                On their turn they must accuse a
+                player other than you, if possible.""";
     }
 
     @Override

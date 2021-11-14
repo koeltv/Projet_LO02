@@ -1,6 +1,7 @@
 package com.view;
 
 import com.model.card.CardName;
+import com.model.card.RumourCard;
 import com.model.player.PlayerAction;
 
 import java.util.List;
@@ -8,6 +9,15 @@ import java.util.Scanner;
 
 public class CommandLineView implements PassiveView, ActiveView {
     final Scanner keyboard = new Scanner(System.in);
+
+    @Override
+    public String toString() {
+        return "Command Line View";
+    }
+
+    ///////////////////////////////////////////////////////////////////////////
+    // View Methods
+    ///////////////////////////////////////////////////////////////////////////
 
     @Override
     public void showGameWinner(String name, int numberOfRound) {
@@ -27,11 +37,6 @@ public class CommandLineView implements PassiveView, ActiveView {
     @Override
     public void showPlayerIdentity(String name, boolean witch) {
         System.out.println(name + " is a " + (witch ? "witch" : "villager") + " !");
-    }
-
-    @Override
-    public void showCurrentPlayer(String name) {
-        System.out.println("This is now " + name + "'s turn !");
     }
 
     @Override
@@ -70,9 +75,9 @@ public class CommandLineView implements PassiveView, ActiveView {
     }
 
     @Override
-    public void waitForCardChoice(List<String> rumourCardDescriptions) {
+    public void waitForCardChoice(List<RumourCard> rumourCards) {
         System.out.println("Waiting for card choice");
-        rumourCardDescriptions.forEach(System.out::println);
+        rumourCards.forEach(System.out::println);
     }
 
     @Override
@@ -117,10 +122,10 @@ public class CommandLineView implements PassiveView, ActiveView {
     }
 
     @Override
-    public int promptForCardChoice(List<String> rumourCardDescriptions) {
+    public int promptForCardChoice(List<RumourCard> rumourCards) {
         System.out.println("Choose a card by index");
-        for (int i = 0; i < rumourCardDescriptions.size(); i++) {
-            System.out.println(i + "- " + rumourCardDescriptions.get(i));
+        for (int i = 0; i < rumourCards.size(); i++) {
+            System.out.println(i + "- " + rumourCards.get(i));
         }
         return Integer.parseInt(keyboard.nextLine());
     }

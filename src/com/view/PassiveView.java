@@ -1,5 +1,6 @@
 package com.view;
 
+import com.model.card.RumourCard;
 import com.model.player.PlayerAction;
 
 import java.util.List;
@@ -31,9 +32,9 @@ public interface PassiveView extends View {
     /**
      * Wait for card choice.
      *
-     * @param rumourCardDescriptions the rumour card names
+     * @param rumourCards the rumour card names
      */
-    void waitForCardChoice(List<String> rumourCardDescriptions);
+    void waitForCardChoice(List<RumourCard> rumourCards);
 
     /**
      * Wait for repartition.

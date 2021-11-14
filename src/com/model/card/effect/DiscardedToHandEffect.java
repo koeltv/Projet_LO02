@@ -8,7 +8,9 @@ import com.model.player.Player;
 public class DiscardedToHandEffect extends Effect {
     @Override
     public String toString() {
-        return "Add one discarded card to your hand, and then discard this card.";
+        return """
+                Add one discarded card to your
+                hand, and then discard this card.""";
     }
 
     @Override

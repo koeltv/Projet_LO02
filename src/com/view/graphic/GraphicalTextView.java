@@ -1,6 +1,7 @@
-package com.view;
+package com.view.graphic;
 
 import com.model.card.CardName;
+import com.model.card.RumourCard;
 import com.model.player.PlayerAction;
 
 import javax.swing.*;
@@ -8,27 +9,27 @@ import java.awt.*;
 import java.util.List;
 
 /**
- * The type Graphical Interface View.
+ * The type Graphical Text View.
  * Made to display user's interaction in a graphical interface using a text window and input boxes.
  */
-public class GraphicalInterfaceView implements PassiveView, ActiveView {
+public class GraphicalTextView extends GraphicView {
     private JTextArea textArea;
 
-    private final JFrame frame;
-
-    public GraphicalInterfaceView() {
+    public GraphicalTextView() {
+        super();
         //Create main frame
-        frame = new JFrame("WitchHunt-Game");
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setSize(500, 500);
+        this.setSize(350, 500);
 
         //Display vertically
-        Container contentPane = frame.getContentPane();
-        contentPane.setLayout(new BoxLayout(contentPane, BoxLayout.Y_AXIS));
-
+        Container contentPane = this.getContentPane();
         addControllerCommandTracker(contentPane);
 
-        frame.setVisible(true);
+        this.setVisible(true);
+    }
+
+    @Override
+    public String toString() {
+        return "Graphical Text View";
     }
 
     /**
@@ -40,7 +41,7 @@ public class GraphicalInterfaceView implements PassiveView, ActiveView {
         textArea = new JTextArea("Game Status\n", 100, 1);
         JScrollPane scrollPane = new JScrollPane(textArea);
         addCenteredComponent(scrollPane, contentPane);
-        textArea.setSize(500, 500);
+        textArea.setSize(350, 500);
     }
 
     /**
@@ -64,23 +65,9 @@ public class GraphicalInterfaceView implements PassiveView, ActiveView {
         textArea.setCaretPosition(textArea.getDocument().getLength());
     }
 
-    /**
-     * Prompt player with input box.
-     *
-     * @param title   title of the input box
-     * @param message message to display
-     * @return user input
-     */
-    private String prompt(String title, String message) {
-        return (String) JOptionPane.showInputDialog(
-                frame,
-                message,
-                title, JOptionPane.PLAIN_MESSAGE,
-                null,
-                null,
-                ""
-        );
-    }
+    ///////////////////////////////////////////////////////////////////////////
+    // View Methods
+    ///////////////////////////////////////////////////////////////////////////
 
     @Override
     public void showGameWinner(String name, int numberOfRound) {
@@ -100,11 +87,6 @@ public class GraphicalInterfaceView implements PassiveView, ActiveView {
     @Override
     public void showPlayerIdentity(String name, boolean witch) {
         appendText(name + " is a " + (witch ? "witch" : "villager") + " !");
-    }
-
-    @Override
-    public void showCurrentPlayer(String name) {
-        appendText("This is now " + name + "'s turn !");
     }
 
     @Override
@@ -144,9 +126,9 @@ public class GraphicalInterfaceView implements PassiveView, ActiveView {
     }
 
     @Override
-    public void waitForCardChoice(List<String> rumourCardDescriptions) {
+    public void waitForCardChoice(List<RumourCard> rumourCards) {
         appendText("Waiting for card choice");
-        rumourCardDescriptions.forEach(this::appendText);
+        rumourCards.forEach(rumourCard -> appendText(rumourCard.toString()));
     }
 
     @Override
@@ -163,65 +145,5 @@ public class GraphicalInterfaceView implements PassiveView, ActiveView {
     public void waitForAction(String playerName, List<PlayerAction> possibleActions) {
         appendText("Waiting for " + playerName + " action choice");
         possibleActions.forEach(possibleAction -> appendText(possibleAction.toString()));
-    }
-
-    ///////////////////////////////////////////////////////////////////////////
-    // Active Methods
-    ///////////////////////////////////////////////////////////////////////////
-
-    @Override
-    public String promptForPlayerName(int playerIndex) {
-        return prompt("", "Enter player " + playerIndex + " name");
-    }
-
-    @Override
-    public String promptForNewGame() {
-        return prompt("New game", "Press enter to play again, q to exit or r to reset");
-    }
-
-    @Override
-    public int promptForPlayerChoice(List<String> playerNames) {
-        StringBuilder message = new StringBuilder();
-        message.append("Choose a player by index\n");
-        for (int i = 0; i < playerNames.size(); i++) {
-            message.append(i).append("- ").append(playerNames.get(i)).append("\n");
-        }
-
-        return Integer.parseInt(prompt("Player choice", message.toString()));
-    }
-
-    @Override
-    public int promptForCardChoice(List<String> rumourCardDescriptions) {
-        StringBuilder message = new StringBuilder();
-        message.append("Choose a card by index\n");
-        for (int i = 0; i < rumourCardDescriptions.size(); i++) {
-            message.append(i).append("- ").append(rumourCardDescriptions.get(i)).append("\n");
-        }
-
-        return Integer.parseInt(prompt("Card choice", message.toString()));
-    }
-
-    @Override
-    public int[] promptForRepartition() {
-        int nbPlayers = Integer.parseInt(prompt("Number of players", "Number of players ?"));
-        int nbAIs = Integer.parseInt(prompt("Number of AIs", "Number of AIs ?"));
-        return new int[]{nbPlayers, nbAIs};
-    }
-
-    @Override
-    public int promptForPlayerIdentity(String name) {
-        return Integer.parseInt(prompt("Identity", name + ", type 0 for villager and 1 for witch"));
-    }
-
-    @Override
-    public PlayerAction promptForAction(String playerName, List<PlayerAction> possibleActions) {
-        StringBuilder message = new StringBuilder();
-        message.append(playerName).append(", please choose your next action");
-        for (int i = 0; i < possibleActions.size(); i++) {
-            message.append(i).append("- ").append(possibleActions.get(i)).append("\n");
-        }
-
-        int index = Integer.parseInt(prompt("Action", message.toString()));
-        return possibleActions.get(index);
     }
 }

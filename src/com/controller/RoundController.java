@@ -25,8 +25,6 @@ public class RoundController {
 
     private static Player currentPlayer;
 
-    private int numberOfNotRevealedPlayers;
-
     private Player nextPlayer;
 
     private final GameController gameController;
@@ -95,6 +93,10 @@ public class RoundController {
         return currentPlayer;
     }
 
+    private int getNumberOfNotRevealedPlayers() {
+        return (int) identityCards.stream().filter(IdentityCard::isIdentityNotRevealed).count();
+    }
+
     /**
      * Sets next player.
      *
@@ -157,8 +159,8 @@ public class RoundController {
         if (player instanceof AI) {
             return ((AI) player).selectCard(rumourCardList);
         } else {
-            int index = view.promptForCardChoice(rumourCardList.stream().map(RumourCard::toString).collect(Collectors.toList()));
-            return player.hand.get(index).rumourCard;
+            int index = view.promptForCardChoice(rumourCardList);
+            return rumourCardList.get(index);
         }
     }
 
@@ -237,8 +239,6 @@ public class RoundController {
                 view.showPlayerIdentity(player.getName(), getPlayerIdentityCard(player).isWitch());
 
                 revealIdentity(player);
-
-                numberOfNotRevealedPlayers--;
             }
             case ACCUSE -> {
                 Player targetedPlayer = choosePlayer(player, getNotRevealedPlayers(player));
@@ -334,7 +334,6 @@ public class RoundController {
         if (currentPlayer == null) selectFirstPlayer();
         //Fill up the list of active players at the start
         gameController.players.forEach(player -> identityCards.add(new IdentityCard(player)));
-        numberOfNotRevealedPlayers = identityCards.size();
 
         distributeRumourCards();
         askPlayersForIdentity();
@@ -348,7 +347,7 @@ public class RoundController {
         do {
             askPlayerForAction(getCurrentPlayer());
             currentPlayer = nextPlayer;
-        } while (numberOfNotRevealedPlayers > 1);
+        } while (getNumberOfNotRevealedPlayers() > 1);
     }
 
     /**
@@ -361,7 +360,6 @@ public class RoundController {
             if (identityCard.isIdentityNotRevealed()) {
                 Player winner = identityCard.player;
                 //Reveal player identity and give points
-                revealIdentity(winner);
                 view.showRoundWinner(winner.getName());
                 view.showPlayerIdentity(winner.getName(), identityCard.isWitch());
                 winner.addToScore(identityCard.isWitch() ? 2 : 1);

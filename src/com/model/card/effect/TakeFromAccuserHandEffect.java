@@ -6,7 +6,9 @@ import com.model.player.Player;
 public class TakeFromAccuserHandEffect extends Effect {
     @Override
     public String toString() {
-        return "Take one card from the hand of the player who accused you.";
+        return """
+                Take one card from the hand of
+                the player who accused you.""";
     }
 
     @Override

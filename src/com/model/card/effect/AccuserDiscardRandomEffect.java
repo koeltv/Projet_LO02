@@ -9,7 +9,9 @@ import com.model.player.Player;
 public class AccuserDiscardRandomEffect extends Effect {
     @Override
     public String toString() {
-        return "The player who accused you discards a random card from their hand.";
+        return """
+                The player who accused you discards
+                a random card from their hand.""";
     }
 
     @Override
