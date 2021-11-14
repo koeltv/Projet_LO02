@@ -4,3 +4,5 @@ com.model.card.effect
 com.model.game
 com.model.player
 com.view
+com.view.graphic
+com.view.graphic.dynamic
