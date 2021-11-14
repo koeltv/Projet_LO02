@@ -4,15 +4,15 @@ import com.model.card.effect.*;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.LinkedList;
 import java.util.List;
-import java.util.Random;
 
 public class Deck {
 
-    private final List<RumourCard> cards;
+    private final LinkedList<RumourCard> cards;
 
     public Deck() {
-        this.cards = new ArrayList<>();
+        this.cards = new LinkedList<>();
 
         for (CardName cardName : CardName.values()) {
             List<Effect> witchEffects = new ArrayList<>();
@@ -76,17 +76,14 @@ public class Deck {
     }
 
     public void shuffle() {
-        Random random = new Random();
-        for (int i = 0; i < cards.size(); i++) {
-            Collections.swap(cards, i, random.nextInt(cards.size()));
-        }
+        Collections.shuffle(cards);
     }
 
     public RumourCard removeTopCard() {
-        return cards.remove(0);
+        return cards.poll();
     }
 
     public void returnCardToDeck(RumourCard playingCard) {
-        cards.add(playingCard);
+        cards.addLast(playingCard);
     }
 }
