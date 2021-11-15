@@ -15,5 +15,14 @@ public enum PlayerAction {
     /**
      * Use card player action.
      */
-    USE_CARD
+    USE_CARD;
+
+    @Override
+    public String toString() {
+        char[] charArray = super.toString().replace("_", " ").toCharArray();
+        for (int i = 1; i < charArray.length; i++) {
+            if (charArray[i - 1] != ' ') charArray[i] = Character.toLowerCase(charArray[i]);
+        }
+        return new String(charArray);
+    }
 }

@@ -6,7 +6,9 @@ import com.model.player.Player;
 public class TakeRandomCardFromNextEffect extends Effect {
     @Override
     public String toString() {
-        return "Before their turn, take a random card from their hand and add it to your hand.";
+        return """
+                Before their turn, take a random card
+                from their hand and add it to your hand.""";
     }
 
     @Override

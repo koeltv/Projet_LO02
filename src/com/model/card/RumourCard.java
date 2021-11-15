@@ -12,9 +12,9 @@ import java.util.List;
 public class RumourCard {
     private final CardName cardName;
 
-    private final List<Effect> witchEffects;
+    public final List<Effect> witchEffects;
 
-    private final List<Effect> huntEffects;
+    public final List<Effect> huntEffects;
 
     /**
      * Instantiates a new Rumour card.

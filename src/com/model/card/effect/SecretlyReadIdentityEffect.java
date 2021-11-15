@@ -6,7 +6,9 @@ import com.model.player.Player;
 public class SecretlyReadIdentityEffect extends Effect {
     @Override
     public String toString() {
-        return "Before their turn, secretly look at their identity.";
+        return """
+                Before their turn, secretly
+                look at their identity.""";
     }
 
     @Override
