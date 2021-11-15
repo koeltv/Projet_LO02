@@ -143,34 +143,6 @@ public class RoundController {
     }
 
     /**
-     * Get the list of not revealed cards from the player's hand.
-     *
-     * @param player the player
-     * @return selectable cards
-     */
-    public List<RumourCard> getSelectableCardsFromHand(Player player) {
-        return player.hand
-                .stream()
-                .filter(cardState -> !cardState.isRevealed())
-                .map(cardState -> cardState.rumourCard)
-                .collect(Collectors.toList());
-    }
-
-    /**
-     * Get the list of revealed cards from the player.
-     *
-     * @param player the player
-     * @return revealed cards
-     */
-    public List<RumourCard> getRevealedCards(Player player) {
-        return player.hand
-                .stream()
-                .filter(CardState::isRevealed)
-                .map(cardState -> cardState.rumourCard)
-                .collect(Collectors.toList());
-    }
-
-    /**
      * Ask the player to choose a card.
      *
      * @param player         the player
@@ -280,7 +252,7 @@ public class RoundController {
             case USE_CARD -> {
                 boolean cardUsedSuccessfully;
                 do {
-                    RumourCard chosenRumourCard = chooseCard(player, getSelectableCardsFromHand(player));
+                    RumourCard chosenRumourCard = chooseCard(player, player.getSelectableCardsFromHand());
                     view.showPlayerAction(player.getName(), chosenRumourCard.getCardName());
                     cardUsedSuccessfully = player.revealRumourCard(chosenRumourCard);
                 } while (!cardUsedSuccessfully);

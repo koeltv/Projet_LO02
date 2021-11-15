@@ -5,6 +5,7 @@ import com.model.game.CardState;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * The type Player.
@@ -104,4 +105,29 @@ public class Player {
         return cardToReveal.useCard(this);
     }
 
+    /**
+     * Get the list of not revealed cards from the player's hand.
+     *
+     * @return selectable cards
+     */
+    public List<RumourCard> getSelectableCardsFromHand() {
+        return hand
+                .stream()
+                .filter(cardState -> !cardState.isRevealed())
+                .map(cardState -> cardState.rumourCard)
+                .collect(Collectors.toList());
+    }
+
+    /**
+     * Get the list of revealed cards from the player.
+     *
+     * @return revealed cards
+     */
+    public List<RumourCard> getRevealedCards() {
+        return hand
+                .stream()
+                .filter(CardState::isRevealed)
+                .map(cardState -> cardState.rumourCard)
+                .collect(Collectors.toList());
+    }
 }
