@@ -13,9 +13,13 @@ public class DiscardedToHandEffect extends Effect {
 
     @Override
     public boolean applyEffect(final Player cardUser, final Player target) {
-        RumourCard chosenCard = RoundController.getRoundController().chooseCard(cardUser, RoundController.getRoundController().discardPile);
+        if(RoundController.getRoundController().discardPile.size() > 0) {
+        	RumourCard chosenCard = RoundController.getRoundController().chooseCard(cardUser, RoundController.getRoundController().discardPile);
+        }
+    	
         // TODO Auto-generated return
         return false;
+        
     }
 
     @Override
