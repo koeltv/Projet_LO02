@@ -10,6 +10,7 @@ import com.model.player.PlayerAction;
 import com.view.ActiveView;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -60,6 +61,11 @@ public class RoundController {
     public final List<IdentityCard> identityCards;
 
     /**
+     * The Not selectable players.
+     */
+    public HashMap<Player, List<Player>> notSelectablePlayers; // TODO: 15/11/2021 Take care of effect reveal or discard
+
+    /**
      * Instantiates a new Round controller.
      *
      * @param gameController the game controller
@@ -68,6 +74,7 @@ public class RoundController {
     RoundController(GameController gameController, ActiveView view) {
         this.discardPile = new ArrayList<>();
         this.identityCards = new ArrayList<>();
+        this.notSelectablePlayers = new HashMap<>();
 
         this.view = view;
         this.gameController = gameController;
@@ -127,6 +134,15 @@ public class RoundController {
      */
     public void setNextPlayer(Player nextPlayer) {
         this.nextPlayer = nextPlayer;
+    }
+
+    /**
+     * Gets next player.
+     *
+     * @return the next player
+     */
+    public Player getNextPlayer() {
+        return this.nextPlayer;
     }
 
     /**
