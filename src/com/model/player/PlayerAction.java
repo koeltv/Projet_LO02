@@ -15,7 +15,11 @@ public enum PlayerAction {
     /**
      * Use card player action.
      */
-    USE_CARD;
+    USE_CARD,
+    /**
+     * Look at identity player action.
+     */
+    LOOK_AT_IDENTITY;
 
     @Override
     public String toString() {

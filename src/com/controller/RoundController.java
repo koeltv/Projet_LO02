@@ -248,6 +248,7 @@ public class RoundController {
      */
     public void applyPlayerAction(Player player, PlayerAction action) {
         switch (action) {
+            case LOOK_AT_IDENTITY -> view.showPlayerIdentity(player.getName(), getPlayerIdentityCard(player).isWitch());
             case REVEAL_IDENTITY -> {
                 view.showPlayerAction(player.getName());
                 view.showPlayerIdentity(player.getName(), getPlayerIdentityCard(player).isWitch());
