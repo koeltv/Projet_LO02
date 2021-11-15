@@ -96,13 +96,16 @@ public class Player {
      * @return whether the card has been used successfully or not
      */
     public boolean revealRumourCard(RumourCard cardToReveal) {
-        for (CardState cardState : hand) {
-            if (cardToReveal == cardState.rumourCard) {
-                cardState.setRevealed(true);
-                break;
+        boolean cardUsedSuccessfully = cardToReveal.useCard(this);
+        if (cardUsedSuccessfully) {
+            for (CardState cardState : hand) {
+                if (cardToReveal == cardState.rumourCard) {
+                    cardState.setRevealed(true);
+                    break;
+                }
             }
         }
-        return cardToReveal.useCard(this);
+        return cardUsedSuccessfully;
     }
 
     /**
