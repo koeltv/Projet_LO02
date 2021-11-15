@@ -40,7 +40,7 @@ public interface ActiveView extends View {
      * @param rumourCards the rumour card descriptions
      * @return the chosen card index
      */
-    int promptForCardChoice(List<RumourCard> rumourCards);
+    int promptForCardChoice(List<RumourCard> rumourCards); // TODO: 16/11/2021 Hide cards for take from accuser effect
 
     /**
      * Prompt for repartition.

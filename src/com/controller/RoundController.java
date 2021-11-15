@@ -272,6 +272,7 @@ public class RoundController {
                     RumourCard chosenRumourCard = chooseCard(player, player.getSelectableCardsFromHand());
                     view.showPlayerAction(player.getName(), chosenRumourCard.getCardName());
                     cardUsedSuccessfully = player.revealRumourCard(chosenRumourCard);
+                    System.out.println(cardUsedSuccessfully);
                 } while (!cardUsedSuccessfully);
             }
         }

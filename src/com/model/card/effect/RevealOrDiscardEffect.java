@@ -17,17 +17,17 @@ public class RevealOrDiscardEffect extends Effect {
     }
 
     @Override
-    public boolean applyEffect(final Player cardUser, final Player target) {
-    	
-    	RoundController round = RoundController.getRoundController();
-    	round.applyPlayerAction(target, PlayerAction.REVEAL_IDENTITY);
-    	
-    	if(round.getPlayerIdentityCard(target).isWitch()) {
-    		cardUser.addToScore(1);
-    		round.setNextPlayer(cardUser);
-    	} else {
-    		cardUser.addToScore(-1);
-    		round.setNextPlayer(target);
+	public boolean applyEffect(final Player cardUser, final Player target) { // TODO: 16/11/2021 Implement
+
+		RoundController round = RoundController.getRoundController();
+		round.applyPlayerAction(target, PlayerAction.REVEAL_IDENTITY);
+
+		if (round.getPlayerIdentityCard(target).isWitch()) {
+			cardUser.addToScore(1);
+			round.setNextPlayer(cardUser);
+		} else {
+			cardUser.addToScore(-1);
+			round.setNextPlayer(target);
     	}
     	return true;
     }

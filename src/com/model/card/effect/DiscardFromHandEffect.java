@@ -1,12 +1,11 @@
 package com.model.card.effect;
 
-import java.util.List;
-import java.util.stream.Collectors;
-
 import com.controller.RoundController;
 import com.model.card.CardName;
 import com.model.card.RumourCard;
 import com.model.player.Player;
+
+import java.util.List;
 
 public class DiscardFromHandEffect extends Effect {
     @Override
@@ -30,7 +29,7 @@ public class DiscardFromHandEffect extends Effect {
 
     @Override
     public Player chooseTarget(final CardName cardName, Player cardUser) {
-        return null;
+        return cardUser;
     }
 
 }

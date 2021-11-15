@@ -1,17 +1,17 @@
 package com.model.card.effect;
 
-import java.util.List;
-
 import com.controller.RoundController;
 import com.model.card.CardName;
 import com.model.card.RumourCard;
 import com.model.game.CardState;
 import com.model.player.Player;
 
+import java.util.List;
+
 public class DiscardedToHandEffect extends Effect {
-	
-	private RumourCard takenRumourCard;
-	
+
+    private RumourCard takenRumourCard;
+
     @Override
     public String toString() {
         return """
@@ -42,7 +42,7 @@ public class DiscardedToHandEffect extends Effect {
         		break;
         	}
         }
-        return null;
+        return cardUser;
     }
 
 }
