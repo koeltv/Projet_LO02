@@ -1,6 +1,11 @@
 package com.model.card.effect;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
+import com.controller.RoundController;
 import com.model.card.CardName;
+import com.model.card.RumourCard;
 import com.model.player.Player;
 
 public class DiscardFromHandEffect extends Effect {
@@ -11,13 +16,20 @@ public class DiscardFromHandEffect extends Effect {
 
     @Override
     public boolean applyEffect(final Player cardUser, final Player target) {
-        // TODO Auto-generated return
-        return false;
+        
+    	List<RumourCard> hand = cardUser.getSelectableCardsFromHand(); // cf Player
+    	
+    	if(hand.size() >= 2) {
+    		RumourCard chosenCard = RoundController.getRoundController().chooseCard(cardUser, hand);
+        	RoundController.getRoundController().discardPile.add(cardUser.removeCardFromHand(chosenCard));
+            return true;
+    	} else {
+    		return false;
+    	}
     }
 
     @Override
     public Player chooseTarget(final CardName cardName, Player cardUser) {
-        // TODO Auto-generated return
         return null;
     }
 

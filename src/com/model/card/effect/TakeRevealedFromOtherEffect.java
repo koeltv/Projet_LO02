@@ -1,6 +1,8 @@
 package com.model.card.effect;
 
+import com.controller.RoundController;
 import com.model.card.CardName;
+import com.model.card.RumourCard;
 import com.model.player.Player;
 
 public class TakeRevealedFromOtherEffect extends Effect {
@@ -13,14 +15,19 @@ public class TakeRevealedFromOtherEffect extends Effect {
 
     @Override
     public boolean applyEffect(final Player cardUser, final Player target) {
-        // TODO Auto-generated return
-        return false;
+        
+    	if(target.getRevealedCards().size() > 0) {
+    		RumourCard chosenCard = RoundController.getRoundController().chooseCard(target, target.getRevealedCards());
+    		cardUser.addCardToHand(target.removeCardFromHand(chosenCard));
+    		return true;
+    	} else {
+    		return false;
+    	}
     }
 
     @Override
     public Player chooseTarget(final CardName cardName, Player cardUser) {
-        // TODO Auto-generated return
-        return null;
+        return RoundController.getRoundController().choosePlayer(cardUser, RoundController.getRoundController().getSelectablePlayers(cardUser));
     }
 
 }

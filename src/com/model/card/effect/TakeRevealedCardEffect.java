@@ -1,7 +1,9 @@
 package com.model.card.effect;
 
+import com.controller.RoundController;
 import com.model.card.CardName;
 import com.model.card.RumourCard;
+import com.model.game.CardState;
 import com.model.player.Player;
 
 public class TakeRevealedCardEffect extends Effect {
@@ -14,9 +16,19 @@ public class TakeRevealedCardEffect extends Effect {
 
     @Override
     public boolean applyEffect(final Player cardUser, final Player target) { //TODO
-        RumourCard chosenCard;
-        //        cardUser.hand.get(chosenCard).
-        return true;
+        
+    	if(cardUser.getRevealedCards().size() > 0) {
+    		RumourCard chosenCard = RoundController.getRoundController().chooseCard(cardUser, cardUser.getRevealedCards());
+    		for(CardState card : cardUser.hand) {
+    			if(card.rumourCard == chosenCard) {
+    				card.setRevealed(false); 	//change the status of the Rumour Card
+    				break; 
+    			}
+    		}
+            return true;
+    	} else {
+    		return false;
+    	}
     }
 
     @Override

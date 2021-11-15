@@ -1,7 +1,9 @@
 package com.model.card.effect;
 
+import com.controller.RoundController;
 import com.model.card.CardName;
 import com.model.player.Player;
+import com.model.player.PlayerAction;
 
 public class SecretlyReadIdentityEffect extends Effect {
     @Override
@@ -13,14 +15,13 @@ public class SecretlyReadIdentityEffect extends Effect {
 
     @Override
     public boolean applyEffect(final Player cardUser, final Player target) {
-        // TODO Auto-generated return
-        return false;
+    	RoundController.getRoundController().applyPlayerAction(target, PlayerAction.LOOK_AT_IDENTITY);
+        return true;
     }
 
     @Override
     public Player chooseTarget(final CardName cardName, Player cardUser) {
-        // TODO Auto-generated return
-        return null;
+        return RoundController.getRoundController().getNextPlayer();
     }
 
 }
