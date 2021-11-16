@@ -293,10 +293,10 @@ public class RoundController {
             case ACCUSE -> {
                 List<Player> players = getNotRevealedPlayers(player);
                 //In case an effect forbid a player from accusing a certain other player
-                if (players.size() > 1) {
+                if (players.size() > 1 && notSelectablePlayers.get(player) != null) {
                     players.removeIf(selectablePlayer -> notSelectablePlayers.get(player).contains(selectablePlayer));
+                    notSelectablePlayers.get(player).clear();
                 }
-                notSelectablePlayers.get(player).clear();
 
                 Player targetedPlayer = choosePlayer(player, players);
                 view.showPlayerAction(player.getName(), targetedPlayer.getName());
