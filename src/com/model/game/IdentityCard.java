@@ -11,8 +11,14 @@ public class IdentityCard {
      */
     public final Player player;
 
+    /**
+     * The Witch.
+     */
     private boolean witch;
 
+    /**
+     * The Identity revealed.
+     */
     private boolean identityRevealed;
 
     /**

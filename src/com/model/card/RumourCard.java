@@ -10,10 +10,19 @@ import java.util.List;
  * The type Rumour card.
  */
 public class RumourCard {
+    /**
+     * The Card name.
+     */
     private final CardName cardName;
 
+    /**
+     * The Witch effects.
+     */
     public final List<Effect> witchEffects;
 
+    /**
+     * The Hunt effects.
+     */
     public final List<Effect> huntEffects;
 
     /**
@@ -65,6 +74,13 @@ public class RumourCard {
         return applyEffects(cardUser, cardUser == RoundController.getCurrentPlayer() ? huntEffects : witchEffects);
     }
 
+    /**
+     * Choose target player.
+     *
+     * @param cardUser the card user
+     * @param effect   the effect
+     * @return the player
+     */
     private Player chooseTarget(Player cardUser, Effect effect) {
         Player target;
         do {
@@ -76,7 +92,8 @@ public class RumourCard {
     /**
      * Apply the needed effects of a card.
      *
-     * @param cardUser the player that used this card
+     * @param cardUser   the player that used this card
+     * @param effectList the effect list
      * @return whether the effects have been used successfully or not
      */
     private boolean applyEffects(Player cardUser, List<Effect> effectList) {

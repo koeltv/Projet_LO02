@@ -7,10 +7,19 @@ import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 
+/**
+ * The type Deck.
+ */
 public class Deck {
 
+    /**
+     * The Cards.
+     */
     private final LinkedList<RumourCard> cards;
 
+    /**
+     * Instantiates a new Deck.
+     */
     public Deck() {
         this.cards = new LinkedList<>();
 
@@ -75,14 +84,27 @@ public class Deck {
         shuffle();
     }
 
+    /**
+     * Shuffle.
+     */
     public void shuffle() {
         Collections.shuffle(cards);
     }
 
+    /**
+     * Remove top card rumour card.
+     *
+     * @return the rumour card
+     */
     public RumourCard removeTopCard() {
         return cards.poll();
     }
 
+    /**
+     * Return card to deck.
+     *
+     * @param playingCard the playing card
+     */
     public void returnCardToDeck(RumourCard playingCard) {
         cards.addLast(playingCard);
     }

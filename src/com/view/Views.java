@@ -16,10 +16,21 @@ import java.util.stream.Collectors;
  */
 public class Views extends JFrame implements ActiveView, Runnable {
 
+    /**
+     * The Passive Views.
+     */
     private final List<PassiveView> views;
 
+    /**
+     * The Active view.
+     */
     private ActiveView activeView;
 
+    /**
+     * Instantiates a new Views.
+     *
+     * @param activeView the active view to start with
+     */
     public Views(ActiveView activeView) {
         this.views = new ArrayList<>();
         this.activeView = activeView;
@@ -30,10 +41,20 @@ public class Views extends JFrame implements ActiveView, Runnable {
         thread.start();
     }
 
+    /**
+     * Add view.
+     *
+     * @param view the view
+     */
     public synchronized void addView(PassiveView view) {
         views.add(view);
     }
 
+    /**
+     * Switch active view.
+     *
+     * @param view the view
+     */
     public synchronized void switchActiveView(ActiveView view) {
         if (activeView instanceof PassiveView) views.add((PassiveView) activeView);
         if (views.contains((PassiveView) view)) views.remove(view);

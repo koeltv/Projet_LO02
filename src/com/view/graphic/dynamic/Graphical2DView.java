@@ -15,6 +15,9 @@ import java.util.stream.Collectors;
  * Graphical view which display the whole game in 2D graphics. It is resizable.
  */
 public class Graphical2DView extends GraphicView {
+    /**
+     * The Panel.
+     */
     private final Panel panel;
 
     /**
@@ -35,6 +38,11 @@ public class Graphical2DView extends GraphicView {
         return "Graphical 2D View";
     }
 
+    /**
+     * Actualise main player.
+     *
+     * @param playerName the main player name
+     */
     private void actualiseMainPlayer(String playerName) {
         //We change the player at the bottom of the display to the player currently playing
         List<IdentityCard> identityCards = RoundController.getRoundController().identityCards
@@ -44,10 +52,18 @@ public class Graphical2DView extends GraphicView {
         panel.setMainPlayer(identityCards.size() > 0 ? identityCards.get(0).player : null);
     }
 
+    /**
+     * Display and repaint.
+     */
     public synchronized void displayAndRepaint() {
         panel.repaint();
     }
 
+    /**
+     * Display and repaint with text display.
+     *
+     * @param text the text to display
+     */
     public synchronized void displayAndRepaint(String text) {
         panel.setAction(text);
         try {

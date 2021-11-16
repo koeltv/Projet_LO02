@@ -7,8 +7,17 @@ import java.awt.*;
  * Used for title texts
  */
 enum Gradient {
+    /**
+     * Name gradient.
+     */
     NAME,
+    /**
+     * Witch gradient.
+     */
     WITCH,
+    /**
+     * Hunt gradient.
+     */
     HUNT;
 
     /**

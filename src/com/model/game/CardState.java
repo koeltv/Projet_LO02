@@ -11,6 +11,9 @@ public class CardState {
      */
     public final RumourCard rumourCard;
 
+    /**
+     * Is Revealed boolean.
+     */
     private boolean revealed;
 
     /**

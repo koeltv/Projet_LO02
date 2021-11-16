@@ -9,6 +9,9 @@ import java.util.List;
  * The type AI.
  */
 public class AI extends Player {
+    /**
+     * The Strategy.
+     */
     private final Strategy strategy;
 
     /**

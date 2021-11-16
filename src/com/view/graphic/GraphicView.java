@@ -10,8 +10,14 @@ import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * The type Graphic view.
+ */
 public abstract class GraphicView extends JFrame implements PassiveView, ActiveView {
 
+    /**
+     * Instantiates a new Graphic view.
+     */
     public GraphicView() {
         this.setTitle("Witch Hunt");
         this.setResizable(true);
@@ -44,6 +50,14 @@ public abstract class GraphicView extends JFrame implements PassiveView, ActiveV
         );
     }
 
+    /**
+     * Prompt for options.
+     *
+     * @param title   the title of the box
+     * @param message the message of the box
+     * @param options the options to propose
+     * @return the index of the chosen option
+     */
     int promptForOptions(String title, String message, String[] options) {
         return JOptionPane.showOptionDialog(
                 rootPane,

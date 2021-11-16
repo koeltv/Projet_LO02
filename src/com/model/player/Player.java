@@ -11,8 +11,14 @@ import java.util.stream.Collectors;
  * The type Player.
  */
 public class Player {
+    /**
+     * The Score.
+     */
     private int score;
 
+    /**
+     * The Name.
+     */
     private final String name;
 
     /**

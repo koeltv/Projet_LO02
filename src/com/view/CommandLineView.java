@@ -7,7 +7,13 @@ import com.model.player.PlayerAction;
 import java.util.List;
 import java.util.Scanner;
 
+/**
+ * The type Command line view.
+ */
 public class CommandLineView implements PassiveView, ActiveView {
+    /**
+     * The Keyboard.
+     */
     final Scanner keyboard = new Scanner(System.in);
 
     @Override
