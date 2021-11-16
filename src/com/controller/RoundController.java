@@ -342,6 +342,7 @@ public class RoundController {
      * This method distribute the Rumour cards at the start of a round based on the number of players.
      */
     private void distributeRumourCards() {
+        gameController.deck.shuffle();
         int nbOfExcessCards = CardName.values().length % identityCards.size();
 
         //Take care of excess cards
