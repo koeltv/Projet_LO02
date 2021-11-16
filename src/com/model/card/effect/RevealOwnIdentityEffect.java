@@ -18,7 +18,6 @@ public class RevealOwnIdentityEffect extends Effect {
     public boolean applyEffect(final Player cardUser, final Player target) {
 
         RoundController round = RoundController.getRoundController();
-        round.applyPlayerAction(cardUser, PlayerAction.REVEAL_IDENTITY);
 
         Player nextPlayer = null;
         if (round.getPlayerIdentityCard(cardUser).isWitch()) {
@@ -34,6 +33,7 @@ public class RevealOwnIdentityEffect extends Effect {
         } else {
             nextPlayer = round.choosePlayer(cardUser, round.getSelectablePlayers(cardUser));
         }
+        round.applyPlayerAction(cardUser, PlayerAction.REVEAL_IDENTITY);
         RoundController.getRoundController().setNextPlayer(nextPlayer);
         return true;
     }
