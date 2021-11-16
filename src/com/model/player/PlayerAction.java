@@ -19,7 +19,11 @@ public enum PlayerAction {
     /**
      * Look at identity player action.
      */
-    LOOK_AT_IDENTITY;
+    LOOK_AT_IDENTITY,
+    /**
+     * Discard player action.
+     */
+    DISCARD;
 
     @Override
     public String toString() {

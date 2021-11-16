@@ -63,7 +63,7 @@ public class RoundController {
     /**
      * The Not selectable players.
      */
-    public HashMap<Player, List<Player>> notSelectablePlayers; // TODO: 15/11/2021 Take care of effect reveal or discard
+    public HashMap<Player, List<Player>> notSelectablePlayers;
 
     /**
      * Instantiates a new Round controller.
@@ -146,6 +146,17 @@ public class RoundController {
     }
 
     /**
+     * Add not selectable player to a player.
+     *
+     * @param player              the player
+     * @param notSelectablePlayer the player not selectable by player
+     */
+    public void addNotSelectablePlayer(Player player, Player notSelectablePlayer) {
+        notSelectablePlayers.computeIfAbsent(player, k -> new ArrayList<>());
+        notSelectablePlayers.get(player).add(notSelectablePlayer);
+    }
+
+    /**
      * Gets player identity card.
      *
      * @param targetedPlayer the targeted player
@@ -220,18 +231,27 @@ public class RoundController {
     }
 
     /**
-     * Ask the current player for his next action.
-     * This method will call the play method of the current player.
+     * Gets standard actions.
      *
      * @param player the player
+     * @return the standard actions
      */
-    private void askPlayerForAction(Player player) {
-        //Get possible actions
+    private List<PlayerAction> getStandardActions(Player player) {
         List<PlayerAction> possibleActions = new ArrayList<>();
         if (player == RoundController.getCurrentPlayer()) possibleActions.add(PlayerAction.ACCUSE);
         else possibleActions.add(PlayerAction.REVEAL_IDENTITY);
         if (player.hand.size() > 0) possibleActions.add(PlayerAction.USE_CARD);
+        return possibleActions;
+    }
 
+    /**
+     * Ask the current player for his next action.
+     * This method will call the play method of the current player.
+     *
+     * @param player          the player
+     * @param possibleActions the possible actions
+     */
+    public void askPlayerForAction(Player player, List<PlayerAction> possibleActions) {
         //Ask the player to choose his next action
         PlayerAction action;
         if (player instanceof AI) action = ((AI) player).play(possibleActions);
@@ -248,6 +268,11 @@ public class RoundController {
      */
     public void applyPlayerAction(Player player, PlayerAction action) {
         switch (action) {
+            case DISCARD -> {
+                List<RumourCard> hand = player.getSelectableCardsFromHand();
+                RumourCard chosenCard = hand.get(view.promptForCardChoice(hand));
+                discardPile.add(player.removeCardFromHand(chosenCard));
+            }
             case LOOK_AT_IDENTITY -> view.showPlayerIdentity(player.getName(), getPlayerIdentityCard(player).isWitch());
             case REVEAL_IDENTITY -> {
                 view.showPlayerAction(player.getName());
@@ -256,10 +281,17 @@ public class RoundController {
                 revealIdentity(player);
             }
             case ACCUSE -> {
-                Player targetedPlayer = choosePlayer(player, getNotRevealedPlayers(player));
+                List<Player> players = getNotRevealedPlayers(player);
+                //In case an effect forbid a player from accusing a certain other player
+                if (players.size() > 1) {
+                    players.removeIf(selectablePlayer -> notSelectablePlayers.get(player).contains(selectablePlayer));
+                }
+                notSelectablePlayers.get(player).clear();
+
+                Player targetedPlayer = choosePlayer(player, players);
                 view.showPlayerAction(player.getName(), targetedPlayer.getName());
 
-                askPlayerForAction(targetedPlayer);
+                askPlayerForAction(targetedPlayer, getStandardActions(targetedPlayer));
 
                 //If the player is a witch, its identity card is deleted, so if null the player was revealed as a witch
                 if (getPlayerIdentityCard(targetedPlayer) == null) {
@@ -362,7 +394,7 @@ public class RoundController {
      */
     private void playRound() {
         do {
-            askPlayerForAction(getCurrentPlayer());
+            askPlayerForAction(getCurrentPlayer(), getStandardActions(getCurrentPlayer()));
             currentPlayer = nextPlayer;
         } while (getNumberOfNotRevealedPlayers() > 1);
     }

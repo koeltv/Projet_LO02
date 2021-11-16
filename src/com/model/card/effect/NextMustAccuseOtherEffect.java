@@ -1,5 +1,6 @@
 package com.model.card.effect;
 
+import com.controller.RoundController;
 import com.model.card.CardName;
 import com.model.player.Player;
 
@@ -13,14 +14,13 @@ public class NextMustAccuseOtherEffect extends Effect {
 
     @Override
     public boolean applyEffect(final Player cardUser, final Player target) {
-        // TODO Auto-generated return
-        return false;
+        RoundController.getRoundController().addNotSelectablePlayer(target, cardUser);
+        return true;
     }
 
     @Override
     public Player chooseTarget(final CardName cardName, Player cardUser) {
-        // TODO Auto-generated return
-        return null;
+        return RoundController.getRoundController().choosePlayer(cardUser, RoundController.getRoundController().getSelectablePlayers(cardUser));
     }
 
 }
