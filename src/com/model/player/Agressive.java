@@ -5,16 +5,34 @@ import com.controller.RoundController;
 import com.model.card.RumourCard;
 import com.model.game.IdentityCard;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 public class Agressive implements Strategy {
-    @Override
+    
+	public HashMap<Player, Integer> numberOfAccusationPerPlayer;
+	
+	public Agressive() {
+		this.numberOfAccusationPerPlayer = new HashMap<>();
+	}
+	
+	@Override
     public PlayerAction use(AI ai, List<PlayerAction> possibleActions) { //TODO Temporary implementation, need to be developed
-        if (RoundController.getCurrentPlayer() == ai) {
-            return PlayerAction.ACCUSE;
-        } else {
-            return PlayerAction.REVEAL_IDENTITY;
-        }
+		if(possibleActions.contains(PlayerAction.REVEAL_IDENTITY)) {
+			numberOfAccusationPerPlayer.putIfAbsent(RoundController.getCurrentPlayer(), 0);
+			numberOfAccusationPerPlayer.put(RoundController.getCurrentPlayer(), 1 + numberOfAccusationPerPlayer.get(RoundController.getCurrentPlayer()));
+		}
+		if(possibleActions.contains(PlayerAction.ACCUSE)) {
+			return PlayerAction.ACCUSE;
+		} else if(ai.getSelectableCardsFromHand().size() > 0) {
+			return PlayerAction.USE_CARD;
+		} else {
+			return PlayerAction.REVEAL_IDENTITY;
+		}
     }
 
     @Override
@@ -25,7 +43,17 @@ public class Agressive implements Strategy {
 
     @Override
     public Player selectPlayer(List<Player> players) {
-        return players.get(GameController.randomInInterval(0, players.size() - 1));
+		
+    	Player chosenPlayer;
+    	
+		int max = Collections.max(numberOfAccusationPerPlayer.values());
+        List<Player> chosablePlayers = numberOfAccusationPerPlayer.entrySet()
+                .stream()
+                .filter(entry -> entry.getValue() == max)
+                .map(Map.Entry::getKey)
+                .collect(Collectors.toList());
+        chosenPlayer = chosablePlayers.get(0);
+    	return chosenPlayer;
     }
 
     @Override
