@@ -63,7 +63,7 @@ public class RoundController {
     /**
      * The Not selectable players.
      */
-    public HashMap<Player, List<Player>> notSelectablePlayers;
+    public final HashMap<Player, List<Player>> notSelectablePlayers;
 
     /**
      * Instantiates a new Round controller.
@@ -184,6 +184,16 @@ public class RoundController {
             int index = view.promptForCardChoice(rumourCardList);
             return rumourCardList.get(index);
         }
+    }
+
+    public RumourCard chooseCardBlindly(Player player, List<RumourCard> rumourCardList) {
+        int index;
+        if (player instanceof AI) {
+            index = ((AI) player).selectCard(rumourCardList.size());
+        } else {
+            index = view.promptForCardChoice(rumourCardList.size());
+        }
+        return rumourCardList.get(index);
     }
 
     /**

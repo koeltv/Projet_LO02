@@ -7,6 +7,7 @@ import com.view.PassiveView;
 
 import javax.swing.*;
 import java.awt.*;
+import java.util.ArrayList;
 import java.util.List;
 
 public abstract class GraphicView extends JFrame implements PassiveView, ActiveView {
@@ -71,13 +72,20 @@ public abstract class GraphicView extends JFrame implements PassiveView, ActiveV
 
     @Override
     public int promptForPlayerChoice(List<String> playerNames) {
-        return promptForOptions("Player choice", "Choose a player", playerNames.toArray(new String[0]));
+        return promptForOptions("Player choice", "Choose a player", playerNames.toArray(String[]::new));
     }
 
     @Override
     public int promptForCardChoice(List<RumourCard> rumourCards) {
         String[] cardNames = rumourCards.stream().map(rumourCard -> rumourCard.getCardName().toString()).toArray(String[]::new);
         return promptForOptions("Card choice", "Choose a card", cardNames);
+    }
+
+    @Override
+    public int promptForCardChoice(int listSize) {
+        List<String> strings = new ArrayList<>();
+        for (int i = 0; i < listSize; i++) strings.add("Card n°" + i);
+        return promptForOptions("Card choice", "Choose a card", strings.toArray(String[]::new));
     }
 
     @Override

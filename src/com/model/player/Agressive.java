@@ -33,4 +33,9 @@ public class Agressive implements Strategy {
         return rumourCards.get(GameController.randomInInterval(0, rumourCards.size() - 1));
     }
 
+    @Override
+    public int selectCard(int listSize) {
+        return GameController.randomInInterval(0, listSize - 1);
+    }
+
 }

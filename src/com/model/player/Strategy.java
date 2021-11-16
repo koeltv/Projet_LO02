@@ -39,4 +39,12 @@ public interface Strategy {
      * @return the rumour card
      */
     RumourCard selectCard(List<RumourCard> rumourCards);
+
+    /**
+     * Select a rumour card blindly.
+     *
+     * @param listSize the size of the list
+     * @return the chosen index
+     */
+    int selectCard(int listSize);
 }

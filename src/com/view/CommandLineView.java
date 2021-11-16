@@ -131,6 +131,13 @@ public class CommandLineView implements PassiveView, ActiveView {
     }
 
     @Override
+    public int promptForCardChoice(int listSize) {
+        System.out.println("Choose a card by index");
+        for (int i = 0; i < listSize; i++) System.out.println("Card n°" + i);
+        return Integer.parseInt(keyboard.nextLine());
+    }
+
+    @Override
     public int[] promptForRepartition() {
         System.out.println("Number of players ?");
         int nbPlayers = Integer.parseInt(keyboard.nextLine());

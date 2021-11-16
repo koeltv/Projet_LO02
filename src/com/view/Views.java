@@ -116,6 +116,12 @@ public class Views extends JFrame implements ActiveView, Runnable {
     }
 
     @Override
+    public int promptForCardChoice(int listSize) {
+        views.forEach(passiveView -> passiveView.waitForCardChoice(null));
+        return activeView.promptForCardChoice(listSize);
+    }
+
+    @Override
     public synchronized int[] promptForRepartition() {
         views.forEach(PassiveView::waitForRepartition);
         return activeView.promptForRepartition();

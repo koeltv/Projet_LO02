@@ -60,4 +60,14 @@ public class AI extends Player {
     public RumourCard selectCard(List<RumourCard> rumourCards) {
         return strategy.selectCard(rumourCards);
     }
+
+    /**
+     * Use the AI strategy to select a rumour card blindly.
+     *
+     * @param listSize the size of the list
+     * @return the chosen index
+     */
+    public int selectCard(int listSize) {
+        return strategy.selectCard(listSize);
+    }
 }
