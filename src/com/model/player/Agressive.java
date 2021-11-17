@@ -5,7 +5,6 @@ import com.controller.RoundController;
 import com.model.card.RumourCard;
 import com.model.game.IdentityCard;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
@@ -14,7 +13,7 @@ import java.util.stream.Collectors;
 
 public class Agressive implements Strategy {
     
-	public HashMap<Player, Integer> numberOfAccusationPerPlayer;
+	public final HashMap<Player, Integer> numberOfAccusationPerPlayer;
 	
 	public Agressive() {
 		this.numberOfAccusationPerPlayer = new HashMap<>();
@@ -45,14 +44,14 @@ public class Agressive implements Strategy {
     public Player selectPlayer(List<Player> players) {
 		
     	Player chosenPlayer;
-    	
-		int max = Collections.max(numberOfAccusationPerPlayer.values());
-        List<Player> chosablePlayers = numberOfAccusationPerPlayer.entrySet()
+
+        int max = Collections.max(numberOfAccusationPerPlayer.values());
+        List<Player> selectablePlayers = numberOfAccusationPerPlayer.entrySet()
                 .stream()
                 .filter(entry -> entry.getValue() == max)
                 .map(Map.Entry::getKey)
                 .collect(Collectors.toList());
-        chosenPlayer = chosablePlayers.get(0);
+        chosenPlayer = selectablePlayers.get(0);
     	return chosenPlayer;
     }
 
