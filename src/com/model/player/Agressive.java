@@ -49,13 +49,15 @@ public class Agressive implements Strategy {
             ArrayList<Player> selectablePlayers = new ArrayList<>();
             //Add all players who accused in ascending order, using insertion sorting
             for (Player accuser : numberOfAccusationPerPlayer.keySet()) {
-                if (selectablePlayers.size() < 1) {
-                    selectablePlayers.add(accuser);
-                } else {
-                    for (int i = 0; i < selectablePlayers.size(); i++) {
-                        if (numberOfAccusationPerPlayer.get(accuser) >= numberOfAccusationPerPlayer.get(selectablePlayers.get(i))) {
-                            selectablePlayers.add(i, accuser);
-                            break;
+                if (players.contains(accuser)) {
+                    if (selectablePlayers.size() < 1) {
+                        selectablePlayers.add(accuser);
+                    } else {
+                        for (int i = 0; i < selectablePlayers.size(); i++) {
+                            if (numberOfAccusationPerPlayer.get(accuser) >= numberOfAccusationPerPlayer.get(selectablePlayers.get(i))) {
+                                selectablePlayers.add(i, accuser);
+                                break;
+                            }
                         }
                     }
                 }
@@ -63,7 +65,7 @@ public class Agressive implements Strategy {
             //Add all players who didn't accuse at the end of the list
             selectablePlayers.addAll(players
                     .stream()
-                    .filter(numberOfAccusationPerPlayer::containsKey)
+                    .filter(player -> !numberOfAccusationPerPlayer.containsKey(player))
                     .collect(Collectors.toCollection(LinkedList::new))
             );
             return selectablePlayers.get(0);
@@ -73,7 +75,7 @@ public class Agressive implements Strategy {
     }
 
     @Override
-    public RumourCard selectCard(List<RumourCard> rumourCards) {
+    public RumourCard selectCard(List<RumourCard> rumourCards) { // TODO: 18/11/2021 Fix AI getting stuck on unusable card
         return rumourCards.get(GameController.randomInInterval(0, rumourCards.size() - 1));
     }
 
