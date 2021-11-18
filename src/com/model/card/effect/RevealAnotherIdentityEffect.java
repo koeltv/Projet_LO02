@@ -16,19 +16,19 @@ public class RevealAnotherIdentityEffect extends Effect {
 
     @Override
     public boolean applyEffect(final Player cardUser, final Player target) {
-        
-    	RoundController round = RoundController.getRoundController();
-    	round.applyPlayerAction(target, PlayerAction.REVEAL_IDENTITY);
-    	
-    	if(round.getPlayerIdentityCard(target).isWitch()) {
-    		cardUser.addToScore(2);
-    		round.setNextPlayer(cardUser);
-    	} else {
-    		cardUser.addToScore(-2);
-    		round.setNextPlayer(target);
-    	}
-    	return true;
-    }
+		RoundController round = RoundController.getRoundController();
+
+		if (round.getPlayerIdentityCard(target).isWitch()) {
+			cardUser.addToScore(2);
+			round.setNextPlayer(cardUser);
+		} else {
+			cardUser.addToScore(-2);
+			round.setNextPlayer(target);
+		}
+
+		round.applyPlayerAction(target, PlayerAction.REVEAL_IDENTITY);
+		return true;
+	}
 
     @Override
     public Player chooseTarget(final CardName cardName, Player cardUser) {

@@ -20,7 +20,7 @@ public class NextMustAccuseOtherEffect extends Effect {
 
     @Override
     public Player chooseTarget(final CardName cardName, Player cardUser) {
-        return RoundController.getRoundController().choosePlayer(cardUser, RoundController.getRoundController().getSelectablePlayers(cardUser));
+        return RoundController.getRoundController().getNextPlayer();
     }
 
 }

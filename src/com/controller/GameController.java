@@ -201,8 +201,8 @@ public class GameController {
      * @param args the input arguments, currently unused
      */
     public static void main(String[] args) {
-        Views views = new Views(new CommandLineView());
-        views.addView(new Graphical2DView());
+        Views views = new Views(new Graphical2DView());
+        views.addView(new CommandLineView());
 
         GameController gameController = new GameController(views);
         gameController.run();

@@ -8,8 +8,15 @@ import com.model.game.IdentityCard;
 import java.util.List;
 
 public class Defensive implements Strategy {
+
+    private final AI ai;
+
+    public Defensive(AI ai) {
+        this.ai = ai;
+    }
+
     @Override
-    public PlayerAction use(AI ai, List<PlayerAction> possibleActions) { //TODO Temporary implementation, need to be developed
+    public PlayerAction use(List<PlayerAction> possibleActions) { //TODO Temporary implementation, need to be developed
         if (RoundController.getCurrentPlayer() == ai) {
             return PlayerAction.ACCUSE;
         } else {
@@ -18,7 +25,7 @@ public class Defensive implements Strategy {
     }
 
     @Override
-    public void selectIdentity(AI ai) {
+    public void selectIdentity() {
         IdentityCard identityCard = RoundController.getRoundController().getPlayerIdentityCard(ai);
         identityCard.setWitch(GameController.randomInInterval(0, 1) > 0);
     }

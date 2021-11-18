@@ -165,4 +165,11 @@ public class Graphical2DView extends GraphicView {
         displayAndRepaint();
         return super.promptForAction(playerName, possibleActions);
     }
+
+    @Override
+    public int promptForPlayerIdentity(String name) {
+        actualiseMainPlayer(name);
+        displayAndRepaint();
+        return super.promptForPlayerIdentity(name);
+    }
 }

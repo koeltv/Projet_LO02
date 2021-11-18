@@ -20,7 +20,7 @@ public class RevealOrDiscardEffect extends Effect {
     }
 
 	@Override
-	public boolean applyEffect(final Player cardUser, final Player target) {
+	public boolean applyEffect(final Player cardUser, final Player target) { // TODO: 18/11/2021 Find fix for AIs
 		RoundController round = RoundController.getRoundController();
 
 		List<PlayerAction> actions = new ArrayList<>(List.of(PlayerAction.REVEAL_IDENTITY));

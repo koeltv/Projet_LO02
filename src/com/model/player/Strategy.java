@@ -11,18 +11,15 @@ public interface Strategy {
     /**
      * Use the strategy.
      *
-     * @param ai              the AI using the strategy
      * @param possibleActions the possible actions
      * @return the player action
      */
-    PlayerAction use(AI ai, List<PlayerAction> possibleActions);
+    PlayerAction use(List<PlayerAction> possibleActions);
 
     /**
      * Select identity.
-     *
-     * @param ai the AI using the strategy
      */
-    void selectIdentity(AI ai);
+    void selectIdentity();
 
     /**
      * Select target player.

@@ -11,7 +11,6 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.geom.AffineTransform;
 import java.util.List;
-import java.util.stream.Collectors;
 
 /**
  * The type Panel.
@@ -194,7 +193,7 @@ public class Panel extends JPanel {
      * @param y          the y coordinate
      * @param rumourCard the rumour card to draw
      */
-    private void drawCard(int x, int y, RumourCard rumourCard) { // TODO: 11/11/2021 add border for revealed cards of main player
+    private void drawCard(int x, int y, RumourCard rumourCard) {
         //The card itself
         g2D.drawImage(cardFront, x, y, cardWidth, cardHeight, this);
 
@@ -238,7 +237,7 @@ public class Panel extends JPanel {
      * @param cardList the card list
      * @param size     the size of the card list
      */
-    private void drawCardList(List<?> cardList, int size) {
+    private void drawCardList(List<?> cardList, int size, boolean isMainPlayer) {
         boolean even = size % 2 == 0;
 
         for (int i = 0; i < size; i++) {
@@ -270,13 +269,26 @@ public class Panel extends JPanel {
             if (cardList != null) {
                 if (cardList.get(0) instanceof RumourCard) {
                     rumourCard = (RumourCard) cardList.get(i);
-                } else if (cardList.get(0) instanceof CardState && ((CardState) cardList.get(i)).isRevealed()) {
+                } else if (
+                        cardList.get(0) instanceof CardState && (((CardState) cardList.get(i)).isRevealed() || isMainPlayer)) {
                     rumourCard = ((CardState) cardList.get(i)).rumourCard;
                 }
             }
 
             //Show the card
             if (rumourCard != null) {
+                //If it is a revealed card of the main player, add a green border
+                if (isMainPlayer && ((CardState) cardList.get(i)).isRevealed()) {
+                    Stroke stroke = g2D.getStroke();
+                    g2D.setStroke(new BasicStroke(10));
+                    g2D.setColor(new Color(51, 153, 51));
+                    g2D.drawRect(
+                            centerFactor + relativePosition * cardWidth + margin * nbOfMargin,
+                            getHeight() - (10 + getHeight() / SIZE_FACTOR),
+                            cardWidth, cardHeight
+                    );
+                    g2D.setStroke(stroke);
+                }
                 drawCard(
                         centerFactor + relativePosition * cardWidth + margin * nbOfMargin,
                         getHeight() - (10 + getHeight() / SIZE_FACTOR),
@@ -298,12 +310,7 @@ public class Panel extends JPanel {
      */
     private void drawPlayer(IdentityCard identityCard) {
         if (identityCard != null) {
-            if (identityCard.player == mainPlayer) {
-                List<RumourCard> hand = identityCard.player.hand.stream().map(cardState -> cardState.rumourCard).collect(Collectors.toList());
-                drawCardList(hand, hand.size());
-            } else {
-                drawCardList(identityCard.player.hand, identityCard.player.hand.size());
-            }
+            drawCardList(identityCard.player.hand, identityCard.player.hand.size(), identityCard.player == mainPlayer);
 
             int XCenter = getWidth() / 2 - cardWidth / 2;
             int YPos = getHeight() - (10 * 2 + getHeight() / SIZE_FACTOR) - cardHeight;
@@ -368,7 +375,7 @@ public class Panel extends JPanel {
             List<RumourCard> discardPile = RoundController.getRoundController().discardPile;
             if (discardPile.size() > 0) {
                 g2D.translate(0, (-getHeight() / 2) + cardHeight / 3);
-                drawCardList(discardPile, discardPile.size());
+                drawCardList(discardPile, discardPile.size(), false);
                 g2D.setTransform(oldRotation);
             }
 

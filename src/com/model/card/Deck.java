@@ -74,7 +74,10 @@ public class Deck {
                     huntEffect.add(new NextMustAccuseOtherEffect());
                 }
                 case BLACK_CAT -> huntEffect.add(new DiscardedToHandEffect());
-                case PET_NEWT -> huntEffect.add(new TakeRevealedFromOtherEffect());
+                case PET_NEWT -> {
+                    huntEffect.add(new TakeRevealedFromOtherEffect());
+                    huntEffect.add(new ChooseNextEffect());
+                }
                 default -> huntEffect.add(new ChooseNextEffect());
             }
 

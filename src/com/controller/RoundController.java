@@ -250,7 +250,7 @@ public class RoundController {
         List<PlayerAction> possibleActions = new ArrayList<>();
         if (player == RoundController.getCurrentPlayer()) possibleActions.add(PlayerAction.ACCUSE);
         else possibleActions.add(PlayerAction.REVEAL_IDENTITY);
-        if (player.hand.size() > 0) possibleActions.add(PlayerAction.USE_CARD);
+        if (player.getSelectableCardsFromHand().size() > 0) possibleActions.add(PlayerAction.USE_CARD);
         return possibleActions;
     }
 

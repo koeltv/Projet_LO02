@@ -26,8 +26,8 @@ public class DiscardedToHandEffect extends Effect {
     	
         if(discardPile.size() > 0) {
         	RumourCard chosenCard = RoundController.getRoundController().chooseCard(cardUser, discardPile);
-        	cardUser.addCardToHand(chosenCard);
-        	discardPile.add(cardUser.removeCardFromHand(takenRumourCard));
+        	cardUser.addCardToHand(discardPile.remove(discardPile.indexOf(chosenCard)));
+            discardPile.add(cardUser.removeCardFromHand(takenRumourCard));
         	return true;
         } else {
         	return false;

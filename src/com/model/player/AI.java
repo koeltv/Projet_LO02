@@ -22,8 +22,8 @@ public class AI extends Player {
     public AI(final String name) {
         super(name);
         this.strategy = switch (GameController.randomInInterval(0, 1)) {
-            case 0 -> new Agressive();
-            default -> new Defensive();
+            case 0 -> new Agressive(this);
+            default -> new Defensive(this);
         };
     }
 
@@ -34,14 +34,14 @@ public class AI extends Player {
      * @return the player action
      */
     public PlayerAction play(List<PlayerAction> possibleActions) {
-        return strategy.use(this, possibleActions);
+        return strategy.use(possibleActions);
     }
 
     /**
      * Use the AI strategy to select identity.
      */
     public void selectIdentity() {
-        strategy.selectIdentity(this);
+        strategy.selectIdentity();
     }
 
     /**

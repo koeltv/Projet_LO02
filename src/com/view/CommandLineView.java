@@ -83,7 +83,7 @@ public class CommandLineView implements PassiveView, ActiveView {
     @Override
     public void waitForCardChoice(List<RumourCard> rumourCards) {
         System.out.println("Waiting for card choice");
-        rumourCards.forEach(System.out::println);
+        if (rumourCards != null) rumourCards.forEach(System.out::println);
     }
 
     @Override
