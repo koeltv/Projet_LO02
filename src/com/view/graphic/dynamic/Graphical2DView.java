@@ -1,10 +1,10 @@
 package com.view.graphic.dynamic;
 
+import com.controller.PlayerAction;
 import com.controller.RoundController;
 import com.model.card.CardName;
 import com.model.card.RumourCard;
 import com.model.game.IdentityCard;
-import com.model.player.PlayerAction;
 import com.view.graphic.GraphicView;
 
 import java.util.List;
@@ -45,8 +45,7 @@ public class Graphical2DView extends GraphicView {
      */
     private void actualiseMainPlayer(String playerName) {
         //We change the player at the bottom of the display to the player currently playing
-        List<IdentityCard> identityCards = RoundController.getRoundController().identityCards
-                .stream()
+        List<IdentityCard> identityCards = RoundController.getInstance().getIdentityCards().stream()
                 .filter(identityCard -> identityCard.player.getName().equals(playerName))
                 .collect(Collectors.toList());
         panel.setMainPlayer(identityCards.size() > 0 ? identityCards.get(0).player : null);
@@ -66,8 +65,7 @@ public class Graphical2DView extends GraphicView {
      */
     public synchronized void displayAndRepaint(String text) {
         panel.setAction(text);
-        try {
-            //Repaint is called each time the screen size is changed or here
+        try { //Repaint is called each time the screen size is changed or here
             panel.repaint();
             wait(panel.getWaitingTime());
         } catch (InterruptedException ignored) {

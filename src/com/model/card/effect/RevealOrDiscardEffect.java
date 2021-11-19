@@ -1,9 +1,9 @@
 package com.model.card.effect;
 
+import com.controller.PlayerAction;
 import com.controller.RoundController;
 import com.model.card.CardName;
 import com.model.player.Player;
-import com.model.player.PlayerAction;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,13 +25,13 @@ public class RevealOrDiscardEffect extends Effect {
 
 	@Override
 	public boolean applyEffect(final Player cardUser, final Player target) {
-		RoundController round = RoundController.getRoundController();
+		RoundController round = RoundController.getInstance();
 
 		List<PlayerAction> actions = new ArrayList<>(List.of(PlayerAction.REVEAL_IDENTITY));
 		if (target.getSelectableCardsFromHand().size() > 0) actions.add(PlayerAction.DISCARD);
 		round.askPlayerForAction(target, actions);
 
-		if (!round.getPlayerIdentityCard(target).isIdentityNotRevealed()) {
+		if (round.getPlayerIdentityCard(target).isIdentityRevealed()) {
 			if (round.getPlayerIdentityCard(target).isWitch()) {
 				cardUser.addToScore(1);
 				round.setNextPlayer(cardUser);
@@ -45,19 +45,19 @@ public class RevealOrDiscardEffect extends Effect {
 
 	@Override
 	public Player chooseTarget(final CardName cardName, Player cardUser) {
-		List<Player> selectablePlayers = RoundController.getRoundController().getSelectablePlayers(cardUser);
+		List<Player> selectablePlayers = RoundController.getInstance().getSelectablePlayers(cardUser);
 		if (cardName == CardName.DUCKING_STOOL) {
 			selectablePlayers = selectablePlayers.stream()
 					.filter(player -> player.getRevealedCards().stream().anyMatch(rumourCard -> rumourCard.getCardName() != CardName.WART))
 					.collect(Collectors.toList());
 		}
-		return RoundController.getRoundController().choosePlayer(cardUser, selectablePlayers);
+		return RoundController.getInstance().choosePlayer(cardUser, selectablePlayers);
 	}
 
 	@Override
 	public boolean isApplicable(Player cardUser, CardName cardName) {
 		if (cardName == CardName.DUCKING_STOOL) {
-			List<Player> players = RoundController.getRoundController().getSelectablePlayers(cardUser)
+			List<Player> players = RoundController.getInstance().getSelectablePlayers(cardUser)
 					.stream()
 					.filter(player -> player.getRevealedCards().stream().anyMatch(rumourCard -> rumourCard.getCardName() != CardName.WART))
 					.collect(Collectors.toList());

@@ -10,7 +10,9 @@ import com.view.graphic.dynamic.Graphical2DView;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
+
+import static com.util.GameUtil.randomAIName;
+import static com.util.GameUtil.randomInInterval;
 
 /**
  * The type Game controller.
@@ -19,12 +21,12 @@ public class GameController {
     /**
      * The Players.
      */
-    public List<Player> players;
+    List<Player> players;
 
     /**
      * The Deck.
      */
-    public final Deck deck;
+    final Deck deck;
 
     /**
      * The View.
@@ -60,44 +62,13 @@ public class GameController {
     }
 
     /**
-     * Get random integer between 0 and the max.
-     * This function is a utility function used to get a random integer between 0 and the max value (included).
-     *
-     * @param max the maximum value to be returned (included)
-     * @return random integer in the interval [0;max]
-     */
-    public static int randomInInterval(int max) {
-        return max == 0 ? 0 : new Random().nextInt(max + 1);
-    }
-
-    /**
-     * Get a random not already assigned name.
-     *
-     * @return new name
-     */
-    public String randomAIName() {
-        String[] NAMES = {"Jean", "Antoine", "Fabrice", "Patrick", "Clara", "June", "Louis", "Sylvain"};
-
-        String name;
-        boolean nameAssigned = false;
-        do {
-            name = NAMES[GameController.randomInInterval(NAMES.length - 1)];
-            for (Player player : players) {
-                nameAssigned = player.getName().equals(name);
-                if (nameAssigned) break;
-            }
-        } while (nameAssigned);
-        return name;
-    }
-
-    /**
      * Ask for player repartition.
      */
     private void askForPlayerRepartition() {
         players = new ArrayList<>();
         int[] values = view.promptForRepartition();
         for (int i = 0; i < values[0]; i++) addPlayer(i);
-        for (int i = 0; i < values[1]; i++) players.add(new AI(randomAIName()));
+        for (int i = 0; i < values[1]; i++) players.add(new AI(randomAIName(players)));
     }
 
     /**
@@ -124,7 +95,7 @@ public class GameController {
      *
      * @return the choice, false to continue, true to exit
      */
-    public GameAction nextAction() {
+    private GameAction nextAction() {
         return switch (view.promptForNewGame()) {
             case "q" -> GameAction.STOP;
             case "r" -> GameAction.RESET_GAME;

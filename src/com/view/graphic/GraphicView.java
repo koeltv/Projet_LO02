@@ -1,7 +1,7 @@
 package com.view.graphic;
 
+import com.controller.PlayerAction;
 import com.model.card.RumourCard;
-import com.model.player.PlayerAction;
 import com.view.ActiveView;
 import com.view.PassiveView;
 

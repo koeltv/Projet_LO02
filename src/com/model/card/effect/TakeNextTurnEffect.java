@@ -15,7 +15,7 @@ public class TakeNextTurnEffect extends Effect {
 
     @Override
     public boolean applyEffect(final Player cardUser, final Player target) {
-        RoundController.getRoundController().setNextPlayer(target);
+        RoundController.getInstance().setNextPlayer(target);
         return true;
     }
 

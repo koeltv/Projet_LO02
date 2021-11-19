@@ -1,4 +1,4 @@
-package com.model.player;
+package com.controller;
 
 /**
  * The enum Player action.

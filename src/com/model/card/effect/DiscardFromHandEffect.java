@@ -25,8 +25,8 @@ public class DiscardFromHandEffect extends Effect {
     @Override
     public boolean applyEffect(final Player cardUser, final Player target) {
         if (selectableCards.size() > 0) {
-            RumourCard chosenCard = RoundController.getRoundController().chooseCard(cardUser, selectableCards);
-            RoundController.getRoundController().discardPile.add(cardUser.removeCardFromHand(chosenCard));
+            RumourCard chosenCard = RoundController.getInstance().chooseCard(cardUser, selectableCards);
+            RoundController.getInstance().getDiscardPile().add(cardUser.removeCardFromHand(chosenCard));
             return true;
         } else {
             return false;

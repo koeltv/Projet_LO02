@@ -1,28 +1,25 @@
 package com.model.player;
 
-import com.controller.GameController;
+import com.controller.PlayerAction;
 import com.controller.RoundController;
 import com.model.card.RumourCard;
 import com.model.game.IdentityCard;
 
 import java.util.List;
 
+import static com.util.GameUtil.randomInInterval;
+
 /**
  * The type Defensive.
  */
-public class Defensive implements Strategy {
-    /**
-     * The linked AI.
-     */
-    private final AI ai;
-
+public class Defensive extends Strategy {
     /**
      * Instantiates a new Defensive.
      *
      * @param ai the linked AI
      */
-    public Defensive(AI ai) {
-        this.ai = ai;
+    Defensive(AI ai) {
+        super(ai);
     }
 
     @Override
@@ -36,23 +33,23 @@ public class Defensive implements Strategy {
 
     @Override
     public void selectIdentity() {
-        IdentityCard identityCard = RoundController.getRoundController().getPlayerIdentityCard(ai);
-        identityCard.setWitch(GameController.randomInInterval(1) > 0);
+        IdentityCard identityCard = RoundController.getInstance().getPlayerIdentityCard(ai);
+        identityCard.setWitch(randomInInterval(1) > 0);
     }
 
     @Override
     public Player selectPlayer(List<Player> players) {
-        return players.get(GameController.randomInInterval(players.size() - 1));
+        return players.get(randomInInterval(players.size() - 1));
     }
 
     @Override
     public RumourCard selectCard(List<RumourCard> rumourCards) {
-        return rumourCards.get(GameController.randomInInterval(rumourCards.size() - 1));
+        return rumourCards.get(randomInInterval(rumourCards.size() - 1));
     }
 
     @Override
     public int selectCard(int listSize) {
-        return GameController.randomInInterval(listSize - 1);
+        return randomInInterval(listSize - 1);
     }
 
 }

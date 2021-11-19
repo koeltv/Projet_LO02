@@ -49,12 +49,12 @@ public class IdentityCard {
     }
 
     /**
-     * Is identity not revealed boolean.
+     * Is identity revealed boolean.
      *
      * @return whether the identity is revealed or not
      */
-    public boolean isIdentityNotRevealed() {
-        return !this.identityRevealed;
+    public boolean isIdentityRevealed() {
+        return this.identityRevealed;
     }
 
     /**

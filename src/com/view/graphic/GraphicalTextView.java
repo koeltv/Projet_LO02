@@ -1,8 +1,8 @@
 package com.view.graphic;
 
+import com.controller.PlayerAction;
 import com.model.card.CardName;
 import com.model.card.RumourCard;
-import com.model.player.PlayerAction;
 
 import javax.swing.*;
 import java.awt.*;

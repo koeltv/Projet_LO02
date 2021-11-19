@@ -1,10 +1,10 @@
 package com.model.card.effect;
 
+import com.controller.PlayerAction;
 import com.controller.RoundController;
 import com.model.card.CardName;
 import com.model.game.IdentityCard;
 import com.model.player.Player;
-import com.model.player.PlayerAction;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -23,7 +23,7 @@ public class RevealAnotherIdentityEffect extends Effect {
 
 	@Override
 	public boolean applyEffect(final Player cardUser, final Player target) {
-		RoundController round = RoundController.getRoundController();
+		RoundController round = RoundController.getInstance();
 
 		if (round.getPlayerIdentityCard(target).isWitch()) {
 			cardUser.addToScore(2);
@@ -39,21 +39,21 @@ public class RevealAnotherIdentityEffect extends Effect {
 
 	@Override
 	public Player chooseTarget(final CardName cardName, Player cardUser) {
-		List<Player> selectablePlayers = RoundController.getRoundController().getNotRevealedPlayers(cardUser);
+		List<Player> selectablePlayers = RoundController.getInstance().getNotRevealedPlayers(cardUser);
 		if (cardName == CardName.ANGRY_MOB) {
 			selectablePlayers = selectablePlayers.stream()
 					.filter(player -> player.getRevealedCards().stream().allMatch(rumourCard -> rumourCard.getCardName() != CardName.BROOMSTICK))
 					.collect(Collectors.toList());
 		}
-		return RoundController.getRoundController().choosePlayer(cardUser, selectablePlayers);
+		return RoundController.getInstance().choosePlayer(cardUser, selectablePlayers);
 	}
 
 	@Override
 	public boolean isApplicable(Player cardUser, CardName cardName) {
-		IdentityCard identityCard = RoundController.getRoundController().getPlayerIdentityCard(cardUser);
-		if (!identityCard.isIdentityNotRevealed() && !identityCard.isWitch()) {
+		IdentityCard identityCard = RoundController.getInstance().getPlayerIdentityCard(cardUser);
+		if (identityCard.isIdentityRevealed() && !identityCard.isWitch()) {
 			if (cardName == CardName.ANGRY_MOB) {
-				List<Player> players = RoundController.getRoundController().getSelectablePlayers(cardUser)
+				List<Player> players = RoundController.getInstance().getSelectablePlayers(cardUser)
 						.stream()
 						.filter(player -> player.getRevealedCards().stream().allMatch(rumourCard -> rumourCard.getCardName() != CardName.BROOMSTICK))
 						.collect(Collectors.toList());

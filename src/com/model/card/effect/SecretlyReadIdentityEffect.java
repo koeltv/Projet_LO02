@@ -1,9 +1,9 @@
 package com.model.card.effect;
 
+import com.controller.PlayerAction;
 import com.controller.RoundController;
 import com.model.card.CardName;
 import com.model.player.Player;
-import com.model.player.PlayerAction;
 
 /**
  * The type Secretly read identity effect.
@@ -18,13 +18,13 @@ public class SecretlyReadIdentityEffect extends Effect {
 
     @Override
     public boolean applyEffect(final Player cardUser, final Player target) {
-        RoundController.getRoundController().applyPlayerAction(target, PlayerAction.LOOK_AT_IDENTITY);
+        RoundController.getInstance().applyPlayerAction(target, PlayerAction.LOOK_AT_IDENTITY);
         return true;
     }
 
     @Override
     public Player chooseTarget(final CardName cardName, Player cardUser) {
-        return RoundController.getRoundController().getNextPlayer();
+        return RoundController.getInstance().getNextPlayer();
     }
 
     @Override

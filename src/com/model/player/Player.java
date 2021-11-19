@@ -25,7 +25,7 @@ public class Player {
      * The Hand.
      * Hand of the player including revealed cards
      */
-    public final List<CardState> hand;
+    private final List<CardState> hand;
 
     /**
      * Instantiates a new Player.
@@ -47,13 +47,6 @@ public class Player {
     }
 
     /**
-     * Reset score.
-     */
-    public void resetScore() {
-        this.score = 0;
-    }
-
-    /**
      * Add to score.
      *
      * @param value the value to add
@@ -63,12 +56,28 @@ public class Player {
     }
 
     /**
+     * Reset score.
+     */
+    public void resetScore() {
+        this.score = 0;
+    }
+
+    /**
      * Gets name.
      *
      * @return the name
      */
     public String getName() {
         return this.name;
+    }
+
+    /**
+     * Gets hand.
+     *
+     * @return the hand
+     */
+    public List<CardState> getHand() {
+        return this.hand;
     }
 
     /**
@@ -87,11 +96,7 @@ public class Player {
      * @return removed rumour card or null if the card wasn't found
      */
     public RumourCard removeCardFromHand(RumourCard rumourCard) {
-        if (this.hand.removeIf(cardState -> cardState.rumourCard == rumourCard)) {
-            return rumourCard;
-        } else {
-            return null;
-        }
+        return this.hand.removeIf(card -> card.rumourCard == rumourCard) ? rumourCard : null;
     }
 
     /**
@@ -104,12 +109,10 @@ public class Player {
     public boolean revealRumourCard(RumourCard cardToReveal) {
         boolean cardUsedSuccessfully = cardToReveal.useCard(this);
         if (cardUsedSuccessfully) {
-            for (CardState cardState : hand) {
-                if (cardToReveal == cardState.rumourCard) {
-                    cardState.setRevealed(true);
-                    break;
-                }
-            }
+            hand.stream()
+                    .filter(cardState -> cardToReveal == cardState.rumourCard)
+                    .findFirst()
+                    .ifPresent(cardState -> cardState.setRevealed(true));
         }
         return cardUsedSuccessfully;
     }
@@ -120,8 +123,7 @@ public class Player {
      * @return selectable cards
      */
     public List<RumourCard> getSelectableCardsFromHand() {
-        return hand
-                .stream()
+        return hand.stream()
                 .filter(cardState -> !cardState.isRevealed())
                 .map(cardState -> cardState.rumourCard)
                 .collect(Collectors.toList());
@@ -133,8 +135,7 @@ public class Player {
      * @return revealed cards
      */
     public List<RumourCard> getRevealedCards() {
-        return hand
-                .stream()
+        return hand.stream()
                 .filter(CardState::isRevealed)
                 .map(cardState -> cardState.rumourCard)
                 .collect(Collectors.toList());

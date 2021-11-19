@@ -83,7 +83,6 @@ public class Deck {
 
             cards.add(new RumourCard(cardName, witchEffects, huntEffect));
         }
-
         shuffle();
     }
 

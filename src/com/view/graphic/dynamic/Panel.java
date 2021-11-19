@@ -227,7 +227,7 @@ public class Panel extends JPanel {
      * @param identityCard the identity card to display
      */
     private void drawIdentityCard(int x, int y, IdentityCard identityCard) {
-        g2D.drawImage(identityCard.isIdentityNotRevealed() ? identityCardNotRevealed : identityCardRevealed, x, y, cardWidth, cardHeight, this);
+        g2D.drawImage(!identityCard.isIdentityRevealed() ? identityCardNotRevealed : identityCardRevealed, x, y, cardWidth, cardHeight, this);
     }
 
     /**
@@ -311,7 +311,7 @@ public class Panel extends JPanel {
      */
     private void drawPlayer(IdentityCard identityCard) {
         if (identityCard != null) {
-            drawCardList(identityCard.player.hand, identityCard.player.hand.size(), identityCard.player == mainPlayer);
+            drawCardList(identityCard.player.getHand(), identityCard.player.getHand().size(), identityCard.player == mainPlayer);
 
             int XCenter = getWidth() / 2 - cardWidth / 2;
             int YPos = getHeight() - (10 * 2 + getHeight() / SIZE_FACTOR) - cardHeight;
@@ -360,7 +360,7 @@ public class Panel extends JPanel {
 
         //Actualise object values
         g2D = (Graphics2D) graphics;
-        RoundController roundController = RoundController.getRoundController();
+        RoundController roundController = RoundController.getInstance();
 
         cardHeight = getHeight() / SIZE_FACTOR;
         cardWidth = (int) (cardHeight / 1.35);
@@ -369,11 +369,11 @@ public class Panel extends JPanel {
         graphics.drawImage(background, 0, 0, getWidth(), getHeight(), this);
 
         //Draw content
-        if (roundController != null && roundController.identityCards.size() > 0) {
+        if (roundController != null && roundController.getIdentityCards().size() > 0) {
             AffineTransform oldRotation = g2D.getTransform();
 
             //Draw the discard pile
-            List<RumourCard> discardPile = RoundController.getRoundController().discardPile;
+            List<RumourCard> discardPile = RoundController.getInstance().getDiscardPile();
             if (discardPile.size() > 0) {
                 g2D.translate(0, (-getHeight() / 2) + cardHeight / 3);
                 drawCardList(discardPile, discardPile.size(), false);
@@ -385,11 +385,10 @@ public class Panel extends JPanel {
 
             //Draw the hand of each other player hidden
             double currentAngle = 0;
+            double angle = (double) 360 / roundController.getIdentityCards().size();
 
-            for (IdentityCard card : roundController.identityCards) {
+            for (IdentityCard card : roundController.getIdentityCards()) {
                 if (card.player != mainPlayer) {
-                    double angle = (double) 360 / roundController.identityCards.size();
-
                     //Rotation to make all players on a circle
                     g2D.rotate(Math.toRadians(angle), (float) getWidth() / 2, (float) getHeight() / 2);
 
@@ -403,11 +402,11 @@ public class Panel extends JPanel {
                     double y0Translation = 0;
                     //We only apply it to players near the diagonals
                     if (
-                            roundController.identityCards.size() < 6 && (
-                                    (currentAngle > 15 && currentAngle < 65) ||
-                                            (currentAngle > 105 && currentAngle < 135) ||
-                                            (currentAngle > 225 && currentAngle < 255) ||
-                                            (currentAngle > 295 && currentAngle < 345)
+                            roundController.getIdentityCards().size() < 6 && (
+                                    (currentAngle > 15 && currentAngle < 65)
+                                            || (currentAngle > 105 && currentAngle < 135)
+                                            || (currentAngle > 225 && currentAngle < 255)
+                                            || (currentAngle > 295 && currentAngle < 345)
                             )
                     ) {
                         //Translation gets bigger when we approach the top and bottom

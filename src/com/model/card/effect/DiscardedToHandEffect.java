@@ -26,10 +26,10 @@ public class DiscardedToHandEffect extends Effect {
 
     @Override
     public boolean applyEffect(final Player cardUser, final Player target) {
-        List<RumourCard> discardPile = RoundController.getRoundController().discardPile;
+        List<RumourCard> discardPile = RoundController.getInstance().getDiscardPile();
 
         if(discardPile.size() > 0) {
-            RumourCard chosenCard = RoundController.getRoundController().chooseCard(cardUser, discardPile);
+            RumourCard chosenCard = RoundController.getInstance().chooseCard(cardUser, discardPile);
             cardUser.addCardToHand(discardPile.remove(discardPile.indexOf(chosenCard)));
             discardPile.add(cardUser.removeCardFromHand(takenRumourCard));
             return true;
@@ -40,7 +40,7 @@ public class DiscardedToHandEffect extends Effect {
 
     @Override
     public Player chooseTarget(final CardName cardName, Player cardUser) {
-        for (CardState card : cardUser.hand) {
+        for (CardState card : cardUser.getHand()) {
             if (card.rumourCard.getCardName() == cardName) {
                 takenRumourCard = card.rumourCard;
                 break;
@@ -51,7 +51,7 @@ public class DiscardedToHandEffect extends Effect {
 
     @Override
     public boolean isApplicable(Player cardUser, CardName cardName) {
-        return RoundController.getRoundController().discardPile.size() > 0;
+        return RoundController.getInstance().getDiscardPile().size() > 0;
     }
 
 }

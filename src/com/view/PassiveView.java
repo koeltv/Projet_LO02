@@ -1,7 +1,7 @@
 package com.view;
 
+import com.controller.PlayerAction;
 import com.model.card.RumourCard;
-import com.model.player.PlayerAction;
 
 import java.util.List;
 

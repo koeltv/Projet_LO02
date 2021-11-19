@@ -1,5 +1,6 @@
 package com.model.player;
 
+import com.controller.PlayerAction;
 import com.model.card.RumourCard;
 
 import java.util.List;
@@ -7,19 +8,33 @@ import java.util.List;
 /**
  * The interface Strategy.
  */
-public interface Strategy {
+public abstract class Strategy {
+    /**
+     * The linked AI.
+     */
+    final AI ai;
+
+    /**
+     * Instantiates a new Strategy.
+     *
+     * @param ai the linked AI
+     */
+    Strategy(AI ai) {
+        this.ai = ai;
+    }
+
     /**
      * Use the strategy.
      *
      * @param possibleActions the possible actions
      * @return the player action
      */
-    PlayerAction use(List<PlayerAction> possibleActions);
+    abstract PlayerAction use(List<PlayerAction> possibleActions);
 
     /**
      * Select identity.
      */
-    void selectIdentity();
+    abstract void selectIdentity();
 
     /**
      * Select target player.
@@ -27,7 +42,7 @@ public interface Strategy {
      * @param players the players
      * @return the player
      */
-    Player selectPlayer(List<Player> players);
+    abstract Player selectPlayer(List<Player> players);
 
     /**
      * Select a rumour card.
@@ -35,7 +50,7 @@ public interface Strategy {
      * @param rumourCards the rumour cards
      * @return the rumour card
      */
-    RumourCard selectCard(List<RumourCard> rumourCards);
+    abstract RumourCard selectCard(List<RumourCard> rumourCards);
 
     /**
      * Select a rumour card blindly.
@@ -43,5 +58,5 @@ public interface Strategy {
      * @param listSize the size of the list
      * @return the chosen index
      */
-    int selectCard(int listSize);
+    abstract int selectCard(int listSize);
 }

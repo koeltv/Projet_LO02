@@ -1,9 +1,11 @@
 package com.model.player;
 
-import com.controller.GameController;
+import com.controller.PlayerAction;
 import com.model.card.RumourCard;
 
 import java.util.List;
+
+import static com.util.GameUtil.randomInInterval;
 
 /**
  * The type AI.
@@ -21,7 +23,7 @@ public class AI extends Player {
      */
     public AI(final String name) {
         super(name);
-        this.strategy = GameController.randomInInterval(1) > 0 ? new Agressive(this) : new Defensive(this);
+        this.strategy = randomInInterval(1) > 0 ? new Agressive(this) : new Defensive(this);
     }
 
     /**

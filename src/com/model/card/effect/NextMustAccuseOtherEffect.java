@@ -17,13 +17,13 @@ public class NextMustAccuseOtherEffect extends Effect {
 
     @Override
     public boolean applyEffect(final Player cardUser, final Player target) {
-        RoundController.getRoundController().addNotSelectablePlayer(target, cardUser);
+        RoundController.getInstance().addNotSelectablePlayer(target, cardUser);
         return true;
     }
 
     @Override
     public Player chooseTarget(final CardName cardName, Player cardUser) {
-        return RoundController.getRoundController().getNextPlayer();
+        return RoundController.getInstance().getNextPlayer();
     }
 
     @Override
