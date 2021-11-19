@@ -270,8 +270,7 @@ public class Panel extends JPanel {
             if (cardList != null) {
                 if (cardList.get(0) instanceof RumourCard) {
                     rumourCard = (RumourCard) cardList.get(i);
-                } else if (
-                        cardList.get(0) instanceof CardState && (((CardState) cardList.get(i)).isRevealed() || isMainPlayer)) {
+                } else if (cardList.get(0) instanceof CardState && (((CardState) cardList.get(i)).isRevealed() || isMainPlayer)) {
                     rumourCard = ((CardState) cardList.get(i)).rumourCard;
                 }
             }

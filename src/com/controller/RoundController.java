@@ -223,12 +223,9 @@ public class RoundController {
      * @return the rumour card
      */
     public RumourCard chooseCardBlindly(Player player, List<RumourCard> rumourCardList) {
-        int index;
-        if (player instanceof AI) {
-            index = ((AI) player).selectCard(rumourCardList.size());
-        } else {
-            index = view.promptForCardChoice(rumourCardList.size());
-        }
+        int index = player instanceof AI ai ?
+                ai.selectCard(rumourCardList.size()) :
+                view.promptForCardChoice(rumourCardList.size());
         return rumourCardList.get(index);
     }
 
@@ -266,12 +263,9 @@ public class RoundController {
      * @return chosen player
      */
     public Player choosePlayer(Player choosingPlayer, List<Player> playerList) {
-        if (choosingPlayer instanceof AI) {
-            return ((AI) choosingPlayer).selectPlayer(playerList);
-        } else {
-            int index = view.promptForPlayerChoice(playerList.stream().map(Player::getName).collect(Collectors.toList()));
-            return playerList.get(index);
-        }
+        return choosingPlayer instanceof AI ai ?
+                ai.selectPlayer(playerList) :
+                playerList.get(view.promptForPlayerChoice(playerList.stream().map(Player::getName).collect(Collectors.toList())));
     }
 
     /**
@@ -299,11 +293,10 @@ public class RoundController {
      */
     public void askPlayerForAction(Player player, List<PlayerAction> possibleActions) {
         //Ask the player to choose his next action
-        PlayerAction action;
-        if (player instanceof AI) action = ((AI) player).play(possibleActions);
-        else action = view.promptForAction(player.getName(), possibleActions);
-
-        applyPlayerAction(player, action);
+        applyPlayerAction(player, player instanceof AI ai ?
+                ai.play(possibleActions) :
+                view.promptForAction(player.getName(), possibleActions)
+        );
     }
 
     /**
@@ -399,8 +392,8 @@ public class RoundController {
      */
     private void askPlayersForIdentity() {
         identityCards.forEach(identityCard -> {
-            if (identityCard.player instanceof AI) {
-                ((AI) (identityCard.player)).selectIdentity();
+            if (identityCard.player instanceof AI ai) {
+                ai.selectIdentity();
             } else {
                 int identity = view.promptForPlayerIdentity(identityCard.player.getName());
                 identityCard.setWitch(identity > 0);
