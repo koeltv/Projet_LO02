@@ -8,6 +8,9 @@ import com.model.player.Player;
 
 import java.util.List;
 
+/**
+ * The type Take random card from next effect.
+ */
 public class TakeRandomCardFromNextEffect extends Effect {
     @Override
     public String toString() {
@@ -18,12 +21,12 @@ public class TakeRandomCardFromNextEffect extends Effect {
 
     @Override
     public boolean applyEffect(final Player cardUser, final Player target) {
-    	List<RumourCard> selectableCards = target.getSelectableCardsFromHand();
-    	
-    	if(selectableCards.size() >= 1) {
+        List<RumourCard> selectableCards = target.getSelectableCardsFromHand();
+
+        if(selectableCards.size() >= 1) {
             RumourCard chosenCard = selectableCards.get(GameController.randomInInterval(selectableCards.size() - 1));
-    		cardUser.addCardToHand(target.removeCardFromHand(chosenCard));
-    		return true;
+            cardUser.addCardToHand(target.removeCardFromHand(chosenCard));
+            return true;
         } else {
             return false;
         }

@@ -8,8 +8,13 @@ import com.model.player.Player;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * The type Discard from hand effect.
+ */
 public class DiscardFromHandEffect extends Effect {
-
+    /**
+     * The Selectable cards.
+     */
     private List<RumourCard> selectableCards = new ArrayList<>();
 
     @Override

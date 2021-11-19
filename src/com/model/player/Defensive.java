@@ -7,10 +7,20 @@ import com.model.game.IdentityCard;
 
 import java.util.List;
 
+/**
+ * The type Defensive.
+ */
 public class Defensive implements Strategy {
-
+    /**
+     * The linked AI.
+     */
     private final AI ai;
 
+    /**
+     * Instantiates a new Defensive.
+     *
+     * @param ai the linked AI
+     */
     public Defensive(AI ai) {
         this.ai = ai;
     }

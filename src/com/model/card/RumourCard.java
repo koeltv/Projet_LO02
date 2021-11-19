@@ -103,6 +103,12 @@ public class RumourCard {
         return true;
     }
 
+    /**
+     * Check if the card is usable.
+     *
+     * @param cardUser the card user
+     * @return true if it is, false otherwise
+     */
     public boolean isUsable(Player cardUser) {
         List<Effect> effects = cardUser == RoundController.getCurrentPlayer() ? huntEffects : witchEffects;
         return effects.stream().allMatch(effect -> effect.isApplicable(cardUser, cardName));

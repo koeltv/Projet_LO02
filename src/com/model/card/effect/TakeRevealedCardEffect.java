@@ -6,6 +6,9 @@ import com.model.card.RumourCard;
 import com.model.game.CardState;
 import com.model.player.Player;
 
+/**
+ * The type Take revealed card effect.
+ */
 public class TakeRevealedCardEffect extends Effect {
     @Override
     public String toString() {

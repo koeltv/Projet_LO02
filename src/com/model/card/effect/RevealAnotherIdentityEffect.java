@@ -9,6 +9,9 @@ import com.model.player.PlayerAction;
 import java.util.List;
 import java.util.stream.Collectors;
 
+/**
+ * The type Reveal another identity effect.
+ */
 public class RevealAnotherIdentityEffect extends Effect {
 	@Override
 	public String toString() {
@@ -18,8 +21,8 @@ public class RevealAnotherIdentityEffect extends Effect {
 				Villager: You lose 2pts. They take next turn.""";
 	}
 
-    @Override
-    public boolean applyEffect(final Player cardUser, final Player target) {
+	@Override
+	public boolean applyEffect(final Player cardUser, final Player target) {
 		RoundController round = RoundController.getRoundController();
 
 		if (round.getPlayerIdentityCard(target).isWitch()) {

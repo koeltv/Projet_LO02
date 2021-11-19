@@ -6,6 +6,9 @@ import com.model.card.CardName;
 import com.model.card.RumourCard;
 import com.model.player.Player;
 
+/**
+ * The type Accuser discard random effect.
+ */
 public class AccuserDiscardRandomEffect extends Effect {
     @Override
     public String toString() {

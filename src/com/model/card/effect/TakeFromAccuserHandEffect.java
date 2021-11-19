@@ -5,6 +5,9 @@ import com.model.card.CardName;
 import com.model.card.RumourCard;
 import com.model.player.Player;
 
+/**
+ * The type Take from accuser hand effect.
+ */
 public class TakeFromAccuserHandEffect extends Effect {
     @Override
     public String toString() {
@@ -15,8 +18,8 @@ public class TakeFromAccuserHandEffect extends Effect {
 
     @Override
     public boolean applyEffect(final Player cardUser, final Player target) {
-    	if(target.getSelectableCardsFromHand().size() >= 1) {
-    		RumourCard chosenCard = RoundController.getRoundController().chooseCardBlindly(cardUser, target.getSelectableCardsFromHand());
+        if(target.getSelectableCardsFromHand().size() >= 1) {
+            RumourCard chosenCard = RoundController.getRoundController().chooseCardBlindly(cardUser, target.getSelectableCardsFromHand());
             cardUser.addCardToHand(target.removeCardFromHand(chosenCard));
             return true;
         } else {

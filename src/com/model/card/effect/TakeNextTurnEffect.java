@@ -4,6 +4,9 @@ import com.controller.RoundController;
 import com.model.card.CardName;
 import com.model.player.Player;
 
+/**
+ * The type Take next turn effect.
+ */
 public class TakeNextTurnEffect extends Effect {
     @Override
     public String toString() {
