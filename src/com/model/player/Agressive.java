@@ -7,9 +7,9 @@ import com.model.game.IdentityCard;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 public class Agressive implements Strategy {
 
@@ -34,7 +34,7 @@ public class Agressive implements Strategy {
             return PlayerAction.USE_CARD;
         } else {
             return PlayerAction.REVEAL_IDENTITY;
-		}
+        }
     }
 
     @Override
@@ -48,25 +48,18 @@ public class Agressive implements Strategy {
         if (numberOfAccusationPerPlayer.size() > 0) {
             ArrayList<Player> selectablePlayers = new ArrayList<>();
             //Add all players who accused in ascending order, using insertion sorting
-            for (Player accuser : numberOfAccusationPerPlayer.keySet()) {
-                if (players.contains(accuser)) {
-                    if (selectablePlayers.size() < 1) {
-                        selectablePlayers.add(accuser);
-                    } else {
-                        for (int i = 0; i < selectablePlayers.size(); i++) {
-                            if (numberOfAccusationPerPlayer.get(accuser) >= numberOfAccusationPerPlayer.get(selectablePlayers.get(i))) {
-                                selectablePlayers.add(i, accuser);
-                                break;
-                            }
-                        }
-                    }
-                }
-            }
+            numberOfAccusationPerPlayer.keySet()
+                    .stream()
+                    .filter(players::contains)
+                    .forEach(accuser -> IntStream.range(0, selectablePlayers.size())
+                            .filter(i -> numberOfAccusationPerPlayer.get(accuser) >= numberOfAccusationPerPlayer.get(selectablePlayers.get(i)))
+                            .findFirst()
+                            .ifPresent(i -> selectablePlayers.add(i, accuser)));
             //Add all players who didn't accuse at the end of the list
             selectablePlayers.addAll(players
                     .stream()
                     .filter(player -> !numberOfAccusationPerPlayer.containsKey(player))
-                    .collect(Collectors.toCollection(LinkedList::new))
+                    .collect(Collectors.toCollection(ArrayList::new))
             );
             return selectablePlayers.get(0);
         } else {
