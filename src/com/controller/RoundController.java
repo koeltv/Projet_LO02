@@ -315,8 +315,7 @@ public class RoundController {
     public void applyPlayerAction(Player player, PlayerAction action) {
         switch (action) {
             case DISCARD -> {
-                List<RumourCard> hand = player.getSelectableCardsFromHand();
-                RumourCard chosenCard = hand.get(view.promptForCardChoice(hand));
+                RumourCard chosenCard = chooseCard(player, player.getSelectableCardsFromHand());
                 discardPile.add(player.removeCardFromHand(chosenCard));
             }
             case LOOK_AT_IDENTITY -> view.showPlayerIdentity(player.getName(), getPlayerIdentityCard(player).isWitch());
