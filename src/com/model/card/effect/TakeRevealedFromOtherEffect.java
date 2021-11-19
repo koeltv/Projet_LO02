@@ -5,8 +5,6 @@ import com.model.card.CardName;
 import com.model.card.RumourCard;
 import com.model.player.Player;
 
-import java.util.stream.Collectors;
-
 /**
  * The type Take revealed from other effect.
  */
@@ -36,7 +34,7 @@ public class TakeRevealedFromOtherEffect extends Effect {
                 RoundController.getInstance().getSelectablePlayers(cardUser)
                         .stream()
                         .filter(player -> player.getRevealedCards().size() > 0)
-                        .collect(Collectors.toUnmodifiableList())
+                        .toList()
         );
     }
 

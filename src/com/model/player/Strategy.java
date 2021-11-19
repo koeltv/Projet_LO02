@@ -1,9 +1,13 @@
 package com.model.player;
 
 import com.controller.PlayerAction;
+import com.controller.RoundController;
 import com.model.card.RumourCard;
+import com.model.game.IdentityCard;
 
 import java.util.List;
+
+import static com.util.GameUtil.randomInInterval;
 
 /**
  * The interface Strategy.
@@ -34,7 +38,10 @@ public abstract class Strategy {
     /**
      * Select identity.
      */
-    abstract void selectIdentity();
+    public void selectIdentity() {
+        IdentityCard identityCard = RoundController.getInstance().getPlayerIdentityCard(ai);
+        identityCard.setWitch(randomInInterval(1) > 0);
+    }
 
     /**
      * Select target player.
@@ -42,7 +49,9 @@ public abstract class Strategy {
      * @param players the players
      * @return the player
      */
-    abstract Player selectPlayer(List<Player> players);
+    public Player selectPlayer(List<Player> players) {
+        return players.get(randomInInterval(players.size() - 1));
+    }
 
     /**
      * Select a rumour card.
@@ -50,7 +59,9 @@ public abstract class Strategy {
      * @param rumourCards the rumour cards
      * @return the rumour card
      */
-    abstract RumourCard selectCard(List<RumourCard> rumourCards);
+    public RumourCard selectCard(List<RumourCard> rumourCards) {
+        return rumourCards.get(randomInInterval(rumourCards.size() - 1));
+    }
 
     /**
      * Select a rumour card blindly.
@@ -58,5 +69,7 @@ public abstract class Strategy {
      * @param listSize the size of the list
      * @return the chosen index
      */
-    abstract int selectCard(int listSize);
+    public int selectCard(int listSize) {
+        return randomInInterval(listSize - 1);
+    }
 }

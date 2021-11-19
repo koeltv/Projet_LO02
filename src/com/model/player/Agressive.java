@@ -2,8 +2,6 @@ package com.model.player;
 
 import com.controller.PlayerAction;
 import com.controller.RoundController;
-import com.model.card.RumourCard;
-import com.model.game.IdentityCard;
 
 import java.util.Comparator;
 import java.util.HashMap;
@@ -31,7 +29,7 @@ public class Agressive extends Strategy {
     }
 
     @Override
-    public PlayerAction use(List<PlayerAction> possibleActions) { //TODO Temporary implementation, need to be developed
+    public PlayerAction use(List<PlayerAction> possibleActions) {
         //Add to the number of accusation if the AI was accused
         if (possibleActions.contains(PlayerAction.REVEAL_IDENTITY)) {
             numberOfAccusationPerPlayer.putIfAbsent(RoundController.getCurrentPlayer(), 0);
@@ -40,17 +38,13 @@ public class Agressive extends Strategy {
         //Choose next action, priority to accuse, otherwise use a card and if not possible choose a random action
         if (possibleActions.contains(PlayerAction.ACCUSE)) {
             return PlayerAction.ACCUSE;
+        } else if (possibleActions.contains(PlayerAction.REVEAL_IDENTITY) && !RoundController.getInstance().getPlayerIdentityCard(ai).isWitch()) {
+            return PlayerAction.REVEAL_IDENTITY;
         } else if (possibleActions.contains(PlayerAction.USE_CARD)) {
             return PlayerAction.USE_CARD;
         } else {
             return possibleActions.get(randomInInterval(possibleActions.size() - 1));
         }
-    }
-
-    @Override
-    public void selectIdentity() {
-        IdentityCard identityCard = RoundController.getInstance().getPlayerIdentityCard(ai);
-        identityCard.setWitch(randomInInterval(1) > 0);
     }
 
     @Override
@@ -64,16 +58,6 @@ public class Agressive extends Strategy {
             if (player != null) return player;
         }
         return players.get(randomInInterval(players.size() - 1));
-    }
-
-    @Override
-    public RumourCard selectCard(List<RumourCard> rumourCards) {
-        return rumourCards.get(randomInInterval(rumourCards.size() - 1));
-    }
-
-    @Override
-    public int selectCard(int listSize) {
-        return randomInInterval(listSize - 1);
     }
 
 }

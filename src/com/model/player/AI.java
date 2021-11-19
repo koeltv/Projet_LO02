@@ -23,7 +23,12 @@ public class AI extends Player {
      */
     public AI(final String name) {
         super(name);
-        this.strategy = randomInInterval(1) > 0 ? new Agressive(this) : new Defensive(this);
+        this.strategy = switch (randomInInterval(3)) {
+            case 0 -> new CardUser(this);
+            case 1 -> new Agressive(this);
+            case 2 -> new Defensive(this);
+            default -> new Random(this);
+        };
     }
 
     /**

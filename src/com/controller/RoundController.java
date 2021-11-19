@@ -207,8 +207,8 @@ public class RoundController {
      */
     public RumourCard chooseCard(Player player, List<RumourCard> rumourCardList) {
         //Printing selectable cards
-        if (player instanceof AI) {
-            return ((AI) player).selectCard(rumourCardList);
+        if (player instanceof AI ai) {
+            return ai.selectCard(rumourCardList);
         } else {
             int index = view.promptForCardChoice(rumourCardList);
             return rumourCardList.get(index);
