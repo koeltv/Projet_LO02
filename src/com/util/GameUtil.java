@@ -5,7 +5,13 @@ import com.model.player.Player;
 import java.util.List;
 import java.util.Random;
 
+/**
+ * The type Game util.
+ */
 public final class GameUtil {
+    /**
+     * Instantiates a new Game util.
+     */
     private GameUtil() {
     }
 
@@ -23,6 +29,7 @@ public final class GameUtil {
     /**
      * Get a random not already assigned name.
      *
+     * @param players the players
      * @return new name
      */
     public static String randomAIName(List<Player> players) {

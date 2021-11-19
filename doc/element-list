@@ -3,6 +3,7 @@ com.model.card
 com.model.card.effect
 com.model.game
 com.model.player
+com.util
 com.view
 com.view.graphic
 com.view.graphic.dynamic

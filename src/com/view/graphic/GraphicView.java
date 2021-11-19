@@ -58,7 +58,7 @@ public abstract class GraphicView extends JFrame implements PassiveView, ActiveV
      * @param options the options to propose
      * @return the index of the chosen option
      */
-    int promptForOptions(String title, String message, String[] options) {
+    int promptForOptions(String title, String message, String[] options) { // TODO: 19/11/2021 Take care of unexpected inputs
         return JOptionPane.showOptionDialog(
                 rootPane,
                 message, title,
