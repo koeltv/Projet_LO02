@@ -9,6 +9,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
+/**
+ * The type Reveal or discard effect.
+ */
 public class RevealOrDiscardEffect extends Effect {
 	@Override
 	public String toString() {
@@ -18,7 +21,7 @@ public class RevealOrDiscardEffect extends Effect {
 				Witch: You gain 1pt. You take next turn.
 				Villager: You lose 1pt. They take next turn.
 				If they discard: They take next turn.""";
-    }
+	}
 
 	@Override
 	public boolean applyEffect(final Player cardUser, final Player target) {

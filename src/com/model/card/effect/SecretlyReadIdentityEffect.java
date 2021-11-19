@@ -5,6 +5,9 @@ import com.model.card.CardName;
 import com.model.player.Player;
 import com.model.player.PlayerAction;
 
+/**
+ * The type Secretly read identity effect.
+ */
 public class SecretlyReadIdentityEffect extends Effect {
     @Override
     public String toString() {

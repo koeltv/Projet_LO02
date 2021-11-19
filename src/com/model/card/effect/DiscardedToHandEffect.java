@@ -8,8 +8,13 @@ import com.model.player.Player;
 
 import java.util.List;
 
+/**
+ * The type Discarded to hand effect.
+ */
 public class DiscardedToHandEffect extends Effect {
-
+    /**
+     * The Taken rumour card.
+     */
     private RumourCard takenRumourCard;
 
     @Override
@@ -21,15 +26,15 @@ public class DiscardedToHandEffect extends Effect {
 
     @Override
     public boolean applyEffect(final Player cardUser, final Player target) {
-    	List<RumourCard> discardPile = RoundController.getRoundController().discardPile;
-    	
+        List<RumourCard> discardPile = RoundController.getRoundController().discardPile;
+
         if(discardPile.size() > 0) {
-        	RumourCard chosenCard = RoundController.getRoundController().chooseCard(cardUser, discardPile);
-        	cardUser.addCardToHand(discardPile.remove(discardPile.indexOf(chosenCard)));
+            RumourCard chosenCard = RoundController.getRoundController().chooseCard(cardUser, discardPile);
+            cardUser.addCardToHand(discardPile.remove(discardPile.indexOf(chosenCard)));
             discardPile.add(cardUser.removeCardFromHand(takenRumourCard));
-        	return true;
+            return true;
         } else {
-        	return false;
+            return false;
         }
     }
 

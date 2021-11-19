@@ -5,6 +5,9 @@ import com.model.card.CardName;
 import com.model.player.Player;
 import com.model.player.PlayerAction;
 
+/**
+ * The type Reveal own identity effect.
+ */
 public class RevealOwnIdentityEffect extends Effect {
     @Override
     public String toString() {

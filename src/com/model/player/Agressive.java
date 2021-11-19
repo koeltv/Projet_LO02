@@ -11,8 +11,10 @@ import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
+/**
+ * The type Agressive.
+ */
 public class Agressive implements Strategy {
-
     /**
      * The linked AI.
      */
@@ -23,6 +25,11 @@ public class Agressive implements Strategy {
      */
     public final HashMap<Player, Integer> numberOfAccusationPerPlayer;
 
+    /**
+     * Instantiates a new Agressive.
+     *
+     * @param ai the linked AI
+     */
     public Agressive(AI ai) {
         this.numberOfAccusationPerPlayer = new HashMap<>();
         this.ai = ai;

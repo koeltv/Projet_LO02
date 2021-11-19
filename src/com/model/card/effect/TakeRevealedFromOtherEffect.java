@@ -7,6 +7,9 @@ import com.model.player.Player;
 
 import java.util.stream.Collectors;
 
+/**
+ * The type Take revealed from other effect.
+ */
 public class TakeRevealedFromOtherEffect extends Effect {
     @Override
     public String toString() {
@@ -17,7 +20,7 @@ public class TakeRevealedFromOtherEffect extends Effect {
 
     @Override
     public boolean applyEffect(final Player cardUser, final Player target) {
-    	if(target.getRevealedCards().size() > 0) {
+        if(target.getRevealedCards().size() > 0) {
             RumourCard chosenCard = RoundController.getRoundController().chooseCard(target, target.getRevealedCards());
             cardUser.addCardToHand(target.removeCardFromHand(chosenCard));
             return true;

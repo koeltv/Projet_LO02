@@ -234,10 +234,11 @@ public class Panel extends JPanel {
      * Draw a card list.
      * This can take a list of either CardStates or RumourCards.
      *
-     * @param cardList the card list
-     * @param size     the size of the card list
+     * @param cardList     the card list
+     * @param size         the size of the card list
+     * @param isMainPlayer whether this is for the main player or not
      */
-    private void drawCardList(List<?> cardList, int size, boolean isMainPlayer) {
+    private void drawCardList(List<?> cardList, int size, boolean isMainPlayer) { // TODO: 19/11/2021 Correct card positioning
         boolean even = size % 2 == 0;
 
         for (int i = 0; i < size; i++) {
