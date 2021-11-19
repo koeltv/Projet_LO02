@@ -2,6 +2,7 @@ package com.controller;
 
 import com.model.card.CardName;
 import com.model.card.RumourCard;
+import com.model.game.CardState;
 import com.model.game.IdentityCard;
 import com.model.player.AI;
 import com.model.player.Player;
@@ -461,10 +462,11 @@ public class RoundController {
         currentPlayer = identityCard.player;
 
         //Gather all players cards
-        gameController.players.stream()
-                .flatMap(player -> player.getHand().stream())
-                .map(cardState -> cardState.rumourCard)
-                .forEach(gameController.deck::returnCardToDeck);
+        gameController.players.forEach(player -> {
+            for (Iterator<CardState> iterator = player.getHand().iterator(); iterator.hasNext(); ) {
+                gameController.deck.returnCardToDeck(player.removeCardFromHand(player.getHand().get(0).rumourCard));
+            }
+        });
         //Gather the discarded cards
         for (Iterator<RumourCard> iterator = discardPile.iterator(); iterator.hasNext(); ) {
             gameController.deck.returnCardToDeck(discardPile.poll());

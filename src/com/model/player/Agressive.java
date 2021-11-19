@@ -5,11 +5,9 @@ import com.controller.RoundController;
 import com.model.card.RumourCard;
 import com.model.game.IdentityCard;
 
-import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
-import java.util.stream.Collectors;
-import java.util.stream.IntStream;
 
 import static com.util.GameUtil.randomInInterval;
 
@@ -58,21 +56,12 @@ public class Agressive extends Strategy {
     @Override
     public Player selectPlayer(List<Player> players) {
         if (numberOfAccusationPerPlayer.size() > 0) {
-            ArrayList<Player> selectablePlayers = new ArrayList<>();
-            //Add all players who accused in ascending order, using insertion sorting
-            numberOfAccusationPerPlayer.keySet().stream()
+            //Select the player who accused the most
+            Player player = numberOfAccusationPerPlayer.keySet().stream()
                     .filter(players::contains)
-                    .forEach(accuser -> IntStream.range(0, selectablePlayers.size())
-                            .filter(i -> numberOfAccusationPerPlayer.get(accuser) >= numberOfAccusationPerPlayer.get(selectablePlayers.get(i)))
-                            .findFirst()
-                            .ifPresent(i -> selectablePlayers.add(i, accuser))
-                    );
-            //Add all players who didn't accuse at the end of the list
-            selectablePlayers.addAll(players.stream()
-                    .filter(player -> !numberOfAccusationPerPlayer.containsKey(player))
-                    .collect(Collectors.toCollection(ArrayList::new))
-            );
-            return selectablePlayers.get(0);
+                    .max(Comparator.comparing(numberOfAccusationPerPlayer::get))
+                    .orElse(null);
+            if (player != null) return player;
         }
         return players.get(randomInInterval(players.size() - 1));
     }
