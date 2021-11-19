@@ -23,4 +23,9 @@ public class NextMustAccuseOtherEffect extends Effect {
         return RoundController.getRoundController().getNextPlayer();
     }
 
+    @Override
+    public boolean isApplicable(Player cardUser, CardName cardName) {
+        return true;
+    }
+
 }

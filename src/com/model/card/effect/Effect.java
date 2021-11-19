@@ -33,4 +33,13 @@ public abstract class Effect {
      */
     public abstract Player chooseTarget(CardName cardName, Player cardUser);
 
+
+    /**
+     * Check if applicable.
+     *
+     * @param cardUser the card user
+     * @param cardName the card name
+     * @return true if the effect can be used, false otherwise
+     */
+    public abstract boolean isApplicable(Player cardUser, CardName cardName);
 }

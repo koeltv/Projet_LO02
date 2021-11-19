@@ -13,8 +13,14 @@ import java.util.stream.IntStream;
 
 public class Agressive implements Strategy {
 
+    /**
+     * The linked AI.
+     */
     private final AI ai;
 
+    /**
+     * The Number of accusation per player.
+     */
     public final HashMap<Player, Integer> numberOfAccusationPerPlayer;
 
     public Agressive(AI ai) {
@@ -24,23 +30,25 @@ public class Agressive implements Strategy {
 
     @Override
     public PlayerAction use(List<PlayerAction> possibleActions) { //TODO Temporary implementation, need to be developed
+        //Add to the number of accusation if the AI was accused
         if (possibleActions.contains(PlayerAction.REVEAL_IDENTITY)) {
             numberOfAccusationPerPlayer.putIfAbsent(RoundController.getCurrentPlayer(), 0);
             numberOfAccusationPerPlayer.put(RoundController.getCurrentPlayer(), 1 + numberOfAccusationPerPlayer.get(RoundController.getCurrentPlayer()));
         }
+        //Choose next action, priority to accuse, otherwise use a card and if not possible choose a random action
         if (possibleActions.contains(PlayerAction.ACCUSE)) {
             return PlayerAction.ACCUSE;
-        } else if (ai.getSelectableCardsFromHand().size() > 0) {
+        } else if (possibleActions.contains(PlayerAction.USE_CARD)) {
             return PlayerAction.USE_CARD;
         } else {
-            return PlayerAction.REVEAL_IDENTITY;
+            return possibleActions.get(GameController.randomInInterval(possibleActions.size() - 1));
         }
     }
 
     @Override
     public void selectIdentity() {
         IdentityCard identityCard = RoundController.getRoundController().getPlayerIdentityCard(ai);
-        identityCard.setWitch(GameController.randomInInterval(0, 1) > 0);
+        identityCard.setWitch(GameController.randomInInterval(1) > 0);
     }
 
     @Override
@@ -61,20 +69,19 @@ public class Agressive implements Strategy {
                     .filter(player -> !numberOfAccusationPerPlayer.containsKey(player))
                     .collect(Collectors.toCollection(ArrayList::new))
             );
-            return selectablePlayers.get(0);
-        } else {
-            return players.get(GameController.randomInInterval(0, players.size() - 1));
+            if (selectablePlayers.size() > 0) return selectablePlayers.get(0);
         }
+        return players.get(GameController.randomInInterval(players.size() - 1));
     }
 
     @Override
-    public RumourCard selectCard(List<RumourCard> rumourCards) { // TODO: 18/11/2021 Fix AI getting stuck on unusable card
-        return rumourCards.get(GameController.randomInInterval(0, rumourCards.size() - 1));
+    public RumourCard selectCard(List<RumourCard> rumourCards) {
+        return rumourCards.get(GameController.randomInInterval(rumourCards.size() - 1));
     }
 
     @Override
     public int selectCard(int listSize) {
-        return GameController.randomInInterval(0, listSize - 1);
+        return GameController.randomInInterval(listSize - 1);
     }
 
 }

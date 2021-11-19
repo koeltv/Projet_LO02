@@ -17,7 +17,7 @@ public class AccuserDiscardRandomEffect extends Effect {
     @Override
     public boolean applyEffect(Player cardUser, Player target) {
         if (target.hand.size() > 0) {
-            RumourCard chosenCard = target.hand.get(GameController.randomInInterval(0, target.hand.size() - 1)).rumourCard;
+            RumourCard chosenCard = target.hand.get(GameController.randomInInterval(target.hand.size() - 1)).rumourCard;
             RoundController.getRoundController().discardPile.add(RoundController.getCurrentPlayer().removeCardFromHand(chosenCard));
             return true;
         } else
@@ -27,6 +27,11 @@ public class AccuserDiscardRandomEffect extends Effect {
     @Override
     public Player chooseTarget(CardName cardName, Player cardUser) {
         return RoundController.getCurrentPlayer();
+    }
+
+    @Override
+    public boolean isApplicable(Player cardUser, CardName cardName) {
+        return RoundController.getCurrentPlayer().getSelectableCardsFromHand().size() > 0;
     }
 
 }

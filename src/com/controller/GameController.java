@@ -60,16 +60,14 @@ public class GameController {
     }
 
     /**
-     * Get random integer in a given interval.
-     * This function is a utility function used to get a random integer between 2 limits (included).
+     * Get random integer between 0 and the max.
+     * This function is a utility function used to get a random integer between 0 and the max value (included).
      *
-     * @param min the minimum value to be returned (included)
      * @param max the maximum value to be returned (included)
-     * @return random integer in the interval
+     * @return random integer in the interval [0;max]
      */
-    public static int randomInInterval(int min, int max) {
-        Random random = new Random();
-        return random.nextInt((max + 1) - min) + min;
+    public static int randomInInterval(int max) {
+        return max == 0 ? 0 : new Random().nextInt(max + 1);
     }
 
     /**
@@ -83,7 +81,7 @@ public class GameController {
         String name;
         boolean nameAssigned = false;
         do {
-            name = NAMES[GameController.randomInInterval(0, NAMES.length - 1)];
+            name = NAMES[GameController.randomInInterval(NAMES.length - 1)];
             for (Player player : players) {
                 nameAssigned = player.getName().equals(name);
                 if (nameAssigned) break;
@@ -171,7 +169,7 @@ public class GameController {
      * @param winners the winners
      */
     private void settleTie(List<Player> winners) { //TODO Find better alternative
-        Player winner = winners.get(randomInInterval(0, winners.size() - 1));
+        Player winner = winners.get(randomInInterval(winners.size() - 1));
         view.showGameWinner(winner.getName(), RoundController.getNumberOfRound());
     }
 

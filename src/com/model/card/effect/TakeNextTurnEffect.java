@@ -21,4 +21,9 @@ public class TakeNextTurnEffect extends Effect {
         return cardUser;
     }
 
+    @Override
+    public boolean isApplicable(Player cardUser, CardName cardName) {
+        return true;
+    }
+
 }

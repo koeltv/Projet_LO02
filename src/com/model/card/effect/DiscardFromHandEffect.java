@@ -30,10 +30,14 @@ public class DiscardFromHandEffect extends Effect {
 
     @Override
     public Player chooseTarget(final CardName cardName, Player cardUser) {
-        List<RumourCard> hand = cardUser.getSelectableCardsFromHand();
-        hand.removeIf(rumourCard -> rumourCard.getCardName() == cardName);
-        selectableCards = hand;
+        selectableCards = cardUser.getSelectableCardsFromHand();
+        selectableCards.removeIf(rumourCard -> rumourCard.getCardName() == cardName);
         return cardUser;
+    }
+
+    @Override
+    public boolean isApplicable(Player cardUser, CardName cardName) {
+        return cardUser.getSelectableCardsFromHand().size() > 1;
     }
 
 }

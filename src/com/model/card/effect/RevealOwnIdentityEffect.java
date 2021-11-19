@@ -16,7 +16,6 @@ public class RevealOwnIdentityEffect extends Effect {
 
     @Override
     public boolean applyEffect(final Player cardUser, final Player target) {
-
         RoundController round = RoundController.getRoundController();
 
         Player nextPlayer = null;
@@ -41,6 +40,11 @@ public class RevealOwnIdentityEffect extends Effect {
     @Override
     public Player chooseTarget(final CardName cardName, Player cardUser) {
         return cardUser;
+    }
+
+    @Override
+    public boolean isApplicable(Player cardUser, CardName cardName) {
+        return true;
     }
 
 }

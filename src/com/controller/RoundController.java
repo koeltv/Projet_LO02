@@ -170,6 +170,21 @@ public class RoundController {
     }
 
     /**
+     * Gets usable cards.
+     * Return the cards from the input list that can be used by the player.
+     *
+     * @param player the player
+     * @param cards  the cards
+     * @return the usable cards
+     */
+    public List<RumourCard> getUsableCards(Player player, List<RumourCard> cards) {
+        return cards
+                .stream()
+                .filter(rumourCard -> rumourCard.isUsable(player))
+                .collect(Collectors.toList());
+    }
+
+    /**
      * Ask the player to choose a card.
      *
      * @param player         the player
@@ -186,6 +201,13 @@ public class RoundController {
         }
     }
 
+    /**
+     * Choose card blindly rumour card.
+     *
+     * @param player         the player
+     * @param rumourCardList the rumour card list
+     * @return the rumour card
+     */
     public RumourCard chooseCardBlindly(Player player, List<RumourCard> rumourCardList) {
         int index;
         if (player instanceof AI) {
@@ -250,7 +272,9 @@ public class RoundController {
         List<PlayerAction> possibleActions = new ArrayList<>();
         if (player == RoundController.getCurrentPlayer()) possibleActions.add(PlayerAction.ACCUSE);
         else possibleActions.add(PlayerAction.REVEAL_IDENTITY);
-        if (player.getSelectableCardsFromHand().size() > 0) possibleActions.add(PlayerAction.USE_CARD);
+        //If the player has at least 1 usable card, we add the possibility to use it
+        List<RumourCard> hand = player.getSelectableCardsFromHand();
+        if (hand.size() > 0 && getUsableCards(player, hand).size() > 0) possibleActions.add(PlayerAction.USE_CARD);
         return possibleActions;
     }
 
@@ -311,7 +335,7 @@ public class RoundController {
             case USE_CARD -> {
                 boolean cardUsedSuccessfully;
                 do {
-                    RumourCard chosenRumourCard = chooseCard(player, player.getSelectableCardsFromHand());
+                    RumourCard chosenRumourCard = chooseCard(player, getUsableCards(player, player.getSelectableCardsFromHand()));
                     view.showPlayerAction(player.getName(), chosenRumourCard.getCardName());
                     cardUsedSuccessfully = player.revealRumourCard(chosenRumourCard);
                 } while (!cardUsedSuccessfully);
@@ -379,7 +403,7 @@ public class RoundController {
      */
     private void selectFirstPlayer() {
         List<Player> playerList = gameController.players;
-        RoundController.currentPlayer = playerList.get(GameController.randomInInterval(0, playerList.size() - 1));
+        RoundController.currentPlayer = playerList.get(GameController.randomInInterval(playerList.size() - 1));
     }
 
     /**

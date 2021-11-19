@@ -27,22 +27,22 @@ public class Defensive implements Strategy {
     @Override
     public void selectIdentity() {
         IdentityCard identityCard = RoundController.getRoundController().getPlayerIdentityCard(ai);
-        identityCard.setWitch(GameController.randomInInterval(0, 1) > 0);
+        identityCard.setWitch(GameController.randomInInterval(1) > 0);
     }
 
     @Override
     public Player selectPlayer(List<Player> players) {
-        return players.get(GameController.randomInInterval(0, players.size() - 1));
+        return players.get(GameController.randomInInterval(players.size() - 1));
     }
 
     @Override
     public RumourCard selectCard(List<RumourCard> rumourCards) {
-        return rumourCards.get(GameController.randomInInterval(0, rumourCards.size() - 1));
+        return rumourCards.get(GameController.randomInInterval(rumourCards.size() - 1));
     }
 
     @Override
     public int selectCard(int listSize) {
-        return GameController.randomInInterval(0, listSize - 1);
+        return GameController.randomInInterval(listSize - 1);
     }
 
 }

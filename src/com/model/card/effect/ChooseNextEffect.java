@@ -12,17 +12,18 @@ public class ChooseNextEffect extends Effect {
 
     @Override
     public boolean applyEffect(final Player cardUser, final Player target) {
-        if (cardUser != target) {
-            RoundController.getRoundController().setNextPlayer(target);
-            return true;
-        } else {
-            return false;
-        }
+        RoundController.getRoundController().setNextPlayer(target);
+        return true;
     }
 
     @Override
     public Player chooseTarget(final CardName cardName, Player cardUser) {
         return RoundController.getRoundController().choosePlayer(cardUser, RoundController.getRoundController().getSelectablePlayers(cardUser));
+    }
+
+    @Override
+    public boolean isApplicable(Player cardUser, CardName cardName) {
+        return true;
     }
 
 }

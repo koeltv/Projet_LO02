@@ -5,6 +5,8 @@ import com.model.card.CardName;
 import com.model.card.RumourCard;
 import com.model.player.Player;
 
+import java.util.stream.Collectors;
+
 public class TakeRevealedFromOtherEffect extends Effect {
     @Override
     public String toString() {
@@ -15,19 +17,29 @@ public class TakeRevealedFromOtherEffect extends Effect {
 
     @Override
     public boolean applyEffect(final Player cardUser, final Player target) {
-        
     	if(target.getRevealedCards().size() > 0) {
-    		RumourCard chosenCard = RoundController.getRoundController().chooseCard(target, target.getRevealedCards());
-    		cardUser.addCardToHand(target.removeCardFromHand(chosenCard));
-    		return true;
-    	} else {
-    		return false;
-    	}
+            RumourCard chosenCard = RoundController.getRoundController().chooseCard(target, target.getRevealedCards());
+            cardUser.addCardToHand(target.removeCardFromHand(chosenCard));
+            return true;
+        } else {
+            return false;
+        }
     }
 
     @Override
     public Player chooseTarget(final CardName cardName, Player cardUser) {
-        return RoundController.getRoundController().choosePlayer(cardUser, RoundController.getRoundController().getSelectablePlayers(cardUser));
+        return RoundController.getRoundController().choosePlayer(
+                cardUser,
+                RoundController.getRoundController().getSelectablePlayers(cardUser)
+                        .stream()
+                        .filter(player -> player.getRevealedCards().size() > 0)
+                        .collect(Collectors.toUnmodifiableList())
+        );
+    }
+
+    @Override
+    public boolean isApplicable(Player cardUser, CardName cardName) {
+        return RoundController.getRoundController().getSelectablePlayers(cardUser).stream().anyMatch(player -> player.getRevealedCards().size() > 0);
     }
 
 }

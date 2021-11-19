@@ -7,6 +7,7 @@ import com.model.player.PlayerAction;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class RevealOrDiscardEffect extends Effect {
 	@Override
@@ -20,7 +21,7 @@ public class RevealOrDiscardEffect extends Effect {
     }
 
 	@Override
-	public boolean applyEffect(final Player cardUser, final Player target) { // TODO: 18/11/2021 Find fix for AIs
+	public boolean applyEffect(final Player cardUser, final Player target) {
 		RoundController round = RoundController.getRoundController();
 
 		List<PlayerAction> actions = new ArrayList<>(List.of(PlayerAction.REVEAL_IDENTITY));
@@ -39,9 +40,27 @@ public class RevealOrDiscardEffect extends Effect {
 		return true;
 	}
 
-    @Override
-    public Player chooseTarget(final CardName cardName, Player cardUser) {
-    	return RoundController.getRoundController().choosePlayer(cardUser, RoundController.getRoundController().getNotRevealedPlayers(cardUser));
-    }
+	@Override
+	public Player chooseTarget(final CardName cardName, Player cardUser) {
+		List<Player> selectablePlayers = RoundController.getRoundController().getSelectablePlayers(cardUser);
+		if (cardName == CardName.DUCKING_STOOL) {
+			selectablePlayers = selectablePlayers.stream()
+					.filter(player -> player.getRevealedCards().stream().anyMatch(rumourCard -> rumourCard.getCardName() != CardName.WART))
+					.collect(Collectors.toList());
+		}
+		return RoundController.getRoundController().choosePlayer(cardUser, selectablePlayers);
+	}
+
+	@Override
+	public boolean isApplicable(Player cardUser, CardName cardName) {
+		if (cardName == CardName.DUCKING_STOOL) {
+			List<Player> players = RoundController.getRoundController().getSelectablePlayers(cardUser)
+					.stream()
+					.filter(player -> player.getRevealedCards().stream().anyMatch(rumourCard -> rumourCard.getCardName() != CardName.WART))
+					.collect(Collectors.toList());
+			return players.size() > 0;
+		}
+		return true;
+	}
 
 }

@@ -15,19 +15,23 @@ public class TakeFromAccuserHandEffect extends Effect {
 
     @Override
     public boolean applyEffect(final Player cardUser, final Player target) {
-        
     	if(target.getSelectableCardsFromHand().size() >= 1) {
     		RumourCard chosenCard = RoundController.getRoundController().chooseCardBlindly(cardUser, target.getSelectableCardsFromHand());
             cardUser.addCardToHand(target.removeCardFromHand(chosenCard));
             return true;
-    	} else {
-    		return false;
-    	} 
+        } else {
+            return false;
+        }
     }
 
     @Override
     public Player chooseTarget(final CardName cardName, Player cardUser) {
         return RoundController.getCurrentPlayer();
+    }
+
+    @Override
+    public boolean isApplicable(Player cardUser, CardName cardName) {
+        return RoundController.getCurrentPlayer().getSelectableCardsFromHand().size() > 0;
     }
 
 }

@@ -84,7 +84,7 @@ public class RumourCard {
     private Player chooseTarget(Player cardUser, Effect effect) {
         Player target;
         do {
-            target = effect.chooseTarget(this.cardName, cardUser);
+            target = effect.chooseTarget(cardName, cardUser);
         } while (target == null);
         return target;
     }
@@ -101,6 +101,11 @@ public class RumourCard {
             if (!effect.applyEffect(cardUser, chooseTarget(cardUser, effect))) return false;
         }
         return true;
+    }
+
+    public boolean isUsable(Player cardUser) {
+        List<Effect> effects = cardUser == RoundController.getCurrentPlayer() ? huntEffects : witchEffects;
+        return effects.stream().allMatch(effect -> effect.isApplicable(cardUser, cardName));
     }
 
 }

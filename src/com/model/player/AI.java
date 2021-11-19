@@ -21,10 +21,7 @@ public class AI extends Player {
      */
     public AI(final String name) {
         super(name);
-        this.strategy = switch (GameController.randomInInterval(0, 1)) {
-            case 0 -> new Agressive(this);
-            default -> new Defensive(this);
-        };
+        this.strategy = GameController.randomInInterval(1) > 0 ? new Agressive(this) : new Defensive(this);
     }
 
     /**

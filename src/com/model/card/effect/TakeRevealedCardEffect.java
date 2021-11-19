@@ -16,7 +16,6 @@ public class TakeRevealedCardEffect extends Effect {
 
     @Override
     public boolean applyEffect(final Player cardUser, final Player target) {
-
         if (cardUser.getRevealedCards().size() > 0) {
             RumourCard chosenCard = RoundController.getRoundController().chooseCard(cardUser, cardUser.getRevealedCards());
             for (CardState card : cardUser.hand) {
@@ -26,14 +25,19 @@ public class TakeRevealedCardEffect extends Effect {
                 }
             }
             return true;
-    	} else {
-    		return false;
-    	}
+        } else {
+            return false;
+        }
     }
 
     @Override
     public Player chooseTarget(final CardName cardName, Player cardUser) {
         return cardUser;
+    }
+
+    @Override
+    public boolean isApplicable(Player cardUser, CardName cardName) {
+        return cardUser.getRevealedCards().size() > 0;
     }
 
 }
