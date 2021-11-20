@@ -238,41 +238,19 @@ public class Panel extends JPanel {
      * @param size         the size of the card list
      * @param isMainPlayer whether this is for the main player or not
      */
-    private void drawCardList(List<?> cardList, int size, boolean isMainPlayer) { // TODO: 19/11/2021 Correct card positioning
-        boolean even = size % 2 == 0;
+    private void drawCardList(List<?> cardList, int size, boolean isMainPlayer) {
+        int margin = 10, xf = (size - 1) * (cardWidth + margin), offset = (getWidth() - (xf + cardWidth)) / 2;
+        int y = getHeight() - (margin + getHeight() / SIZE_FACTOR);
 
         for (int i = 0; i < size; i++) {
-            int centerFactor = getWidth() / 2;
-
-            //Position of the card in the cardList, centered around 0
-            int relativePosition = i - size / 2;
-
-            //margin to the center as multiple of 10px
-            int margin = 10, nbOfMargin = 1;
-            if (even) {
-                margin *= relativePosition == 0 ? 1 : (int) Math.signum(relativePosition);
-
-                int value = relativePosition;
-                if (i > 0) value = relativePosition + 1 == 0 ? 1 : relativePosition + 1;
-                nbOfMargin = Math.abs(value);
-
-                //Settle 2x margin at center for even number of cards
-                if (relativePosition == -1 || relativePosition == 0) margin /= 2;
-            } else {
-                margin *= Math.abs(relativePosition) * (int) Math.signum(relativePosition);
-
-                //we subtract half a card width to the center position for odd number of card
-                centerFactor -= cardWidth / 2;
-            }
+            int xi = offset + i * (cardWidth + margin);
 
             //Check the list, only return card from rumour card list or revealed ones from card state list
             RumourCard rumourCard = null;
             if (cardList != null && cardList.size() > 0) {
-                if (cardList.get(0) instanceof RumourCard) {
-                    rumourCard = (RumourCard) cardList.get(i);
-                } else if (cardList.get(0) instanceof CardState && (((CardState) cardList.get(i)).isRevealed() || isMainPlayer)) {
-                    rumourCard = ((CardState) cardList.get(i)).rumourCard;
-                }
+                if (cardList.get(i) instanceof RumourCard card) rumourCard = card;
+                else if (cardList.get(i) instanceof CardState card && (card.isRevealed() || isMainPlayer))
+                    rumourCard = card.rumourCard;
             }
 
             //Show the card
@@ -280,25 +258,14 @@ public class Panel extends JPanel {
                 //If it is a revealed card of the main player, add a green border
                 if (isMainPlayer && ((CardState) cardList.get(i)).isRevealed()) {
                     Stroke stroke = g2D.getStroke();
-                    g2D.setStroke(new BasicStroke(10));
+                    g2D.setStroke(new BasicStroke(margin));
                     g2D.setColor(new Color(51, 153, 51));
-                    g2D.drawRect(
-                            centerFactor + relativePosition * cardWidth + margin * nbOfMargin,
-                            getHeight() - (10 + getHeight() / SIZE_FACTOR),
-                            cardWidth, cardHeight
-                    );
+                    g2D.drawRect(xi, y, cardWidth, cardHeight);
                     g2D.setStroke(stroke);
                 }
-                drawCard(
-                        centerFactor + relativePosition * cardWidth + margin * nbOfMargin,
-                        getHeight() - (10 + getHeight() / SIZE_FACTOR),
-                        rumourCard
-                );
+                drawCard(xi, y, rumourCard);
             } else {
-                drawCard(
-                        centerFactor + relativePosition * cardWidth + margin * nbOfMargin,
-                        getHeight() - (10 + getHeight() / SIZE_FACTOR)
-                );
+                drawCard(xi, y);
             }
         }
     }
