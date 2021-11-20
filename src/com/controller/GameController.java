@@ -62,11 +62,29 @@ public class GameController {
     }
 
     /**
+     * Check if the given repartition is allowed.
+     *
+     * @param nbOfPlayers the number of players
+     * @param nbOfAIs     the number of AIs
+     * @return true if the repartition is valid, false otherwise
+     */
+    private boolean repartitionAllowed(int nbOfPlayers, int nbOfAIs) {
+        if (nbOfPlayers + nbOfAIs >= 3 && nbOfPlayers + nbOfAIs <= 6) {
+            return nbOfPlayers >= 0 && nbOfPlayers <= 6 && nbOfAIs >= 0 && nbOfAIs <= 6;
+        }
+        return false;
+    }
+
+    /**
      * Ask for player repartition.
      */
     private void askForPlayerRepartition() {
         players = new ArrayList<>();
-        int[] values = view.promptForRepartition();
+        int[] values;
+        do {
+            values = view.promptForRepartition();
+        } while (!repartitionAllowed(values[0], values[1]));
+
         for (int i = 0; i < values[0]; i++) addPlayer(i);
         for (int i = 0; i < values[1]; i++) players.add(new AI(randomAIName(players)));
     }

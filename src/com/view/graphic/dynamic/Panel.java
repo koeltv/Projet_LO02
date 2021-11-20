@@ -267,7 +267,7 @@ public class Panel extends JPanel {
 
             //Check the list, only return card from rumour card list or revealed ones from card state list
             RumourCard rumourCard = null;
-            if (cardList != null) {
+            if (cardList != null && cardList.size() > 0) {
                 if (cardList.get(0) instanceof RumourCard) {
                     rumourCard = (RumourCard) cardList.get(i);
                 } else if (cardList.get(0) instanceof CardState && (((CardState) cardList.get(i)).isRevealed() || isMainPlayer)) {

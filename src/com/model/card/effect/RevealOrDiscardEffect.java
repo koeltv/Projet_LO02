@@ -3,6 +3,7 @@ package com.model.card.effect;
 import com.controller.PlayerAction;
 import com.controller.RoundController;
 import com.model.card.CardName;
+import com.model.game.IdentityCard;
 import com.model.player.Player;
 
 import java.util.ArrayList;
@@ -31,14 +32,13 @@ public class RevealOrDiscardEffect extends Effect {
 		if (target.getSelectableCardsFromHand().size() > 0) actions.add(PlayerAction.DISCARD);
 		round.askPlayerForAction(target, actions);
 
-		if (round.getPlayerIdentityCard(target).isIdentityRevealed()) {
-			if (round.getPlayerIdentityCard(target).isWitch()) {
-				cardUser.addToScore(1);
-				round.setNextPlayer(cardUser);
-			} else {
-				cardUser.addToScore(-1);
-				round.setNextPlayer(target);
-			}
+		IdentityCard identityCard = round.getPlayerIdentityCard(target);
+		if (identityCard == null) {
+			cardUser.addToScore(1);
+			round.setNextPlayer(cardUser);
+		} else if (identityCard.isIdentityRevealed() && !identityCard.isWitch()) {
+			cardUser.addToScore(-1);
+			round.setNextPlayer(target);
 		}
 		return true;
 	}
