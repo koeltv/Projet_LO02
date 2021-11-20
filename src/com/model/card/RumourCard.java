@@ -2,6 +2,7 @@ package com.model.card;
 
 import com.controller.RoundController;
 import com.model.card.effect.Effect;
+import com.model.card.effect.EffectList;
 import com.model.player.Player;
 
 import java.util.List;
@@ -18,12 +19,12 @@ public class RumourCard {
     /**
      * The Witch effects.
      */
-    public final List<Effect> witchEffects;
+    public final EffectList witchEffects;
 
     /**
      * The Hunt effects.
      */
-    public final List<Effect> huntEffects;
+    public final EffectList huntEffects;
 
     /**
      * Instantiates a new Rumour card.
@@ -32,7 +33,7 @@ public class RumourCard {
      * @param witchEffects the witch effects
      * @param huntEffects  the hunt effects
      */
-    public RumourCard(CardName name, List<Effect> witchEffects, List<Effect> huntEffects) {
+    public RumourCard(CardName name, EffectList witchEffects, EffectList huntEffects) {
         this.cardName = name;
         this.witchEffects = witchEffects;
         this.huntEffects = huntEffects;
@@ -48,9 +49,9 @@ public class RumourCard {
         StringBuilder stringBuilder = new StringBuilder();
         stringBuilder.append("==========").append(cardName).append("==========\n");
         stringBuilder.append("----------Witch Effects----------\n");
-        witchEffects.forEach(effect -> stringBuilder.append(effect).append("\n"));
+        witchEffects.effects.forEach(effect -> stringBuilder.append(effect).append("\n"));
         stringBuilder.append("----------Hunt Effects----------\n");
-        huntEffects.forEach(effect -> stringBuilder.append(effect).append("\n"));
+        huntEffects.effects.forEach(effect -> stringBuilder.append(effect).append("\n"));
         return stringBuilder.toString();
     }
 
@@ -71,7 +72,7 @@ public class RumourCard {
      * @return whether the card has been used successfully or not
      */
     public boolean useCard(Player cardUser) {
-        return applyEffects(cardUser, cardUser == RoundController.getCurrentPlayer() ? huntEffects : witchEffects);
+        return applyEffects(cardUser, cardUser == RoundController.getCurrentPlayer() ? huntEffects.effects : witchEffects.effects);
     }
 
     /**
@@ -110,7 +111,7 @@ public class RumourCard {
      * @return true if it is, false otherwise
      */
     public boolean isUsable(Player cardUser) {
-        List<Effect> effects = cardUser == RoundController.getCurrentPlayer() ? huntEffects : witchEffects;
+        List<Effect> effects = cardUser == RoundController.getCurrentPlayer() ? huntEffects.effects : witchEffects.effects;
         return effects.stream().allMatch(effect -> effect.isApplicable(cardUser, cardName));
     }
 

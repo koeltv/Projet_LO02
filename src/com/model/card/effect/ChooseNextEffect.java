@@ -7,7 +7,7 @@ import com.model.player.Player;
 /**
  * The type Choose next effect.
  */
-public class ChooseNextEffect extends Effect {
+public class ChooseNextEffect extends TurnEffect {
     @Override
     public String toString() {
         return "Choose next player.";

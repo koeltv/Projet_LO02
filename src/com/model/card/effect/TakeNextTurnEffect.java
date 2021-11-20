@@ -7,7 +7,7 @@ import com.model.player.Player;
 /**
  * The type Take next turn effect.
  */
-public class TakeNextTurnEffect extends Effect {
+public class TakeNextTurnEffect extends TurnEffect {
     @Override
     public String toString() {
         return "Take next turn.";

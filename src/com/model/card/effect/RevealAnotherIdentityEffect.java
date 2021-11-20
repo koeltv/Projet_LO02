@@ -12,7 +12,7 @@ import java.util.stream.Collectors;
 /**
  * The type Reveal another identity effect.
  */
-public class RevealAnotherIdentityEffect extends Effect {
+public class RevealAnotherIdentityEffect extends TurnEffect {
 	@Override
 	public String toString() {
 		return """

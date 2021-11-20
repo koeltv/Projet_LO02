@@ -203,10 +203,10 @@ public class Panel extends JPanel {
         drawXCenteredString(rumourCard.getCardName().toString(), x, y + cardHeight / 5, cardWidth);
 
         //Witch effects
-        drawEffectsContainer(x, y + cardHeight / 3, rumourCard.witchEffects, true);
+        drawEffectsContainer(x, y + cardHeight / 3, rumourCard.witchEffects.effects, true);
 
         //Hunt effects
-        drawEffectsContainer(x, y + (int) (cardHeight / 1.5), rumourCard.huntEffects, false);
+        drawEffectsContainer(x, y + (int) (cardHeight / 1.5), rumourCard.huntEffects.effects, false);
     }
 
     /**

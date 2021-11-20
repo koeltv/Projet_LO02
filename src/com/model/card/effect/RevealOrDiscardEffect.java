@@ -13,7 +13,7 @@ import java.util.stream.Collectors;
 /**
  * The type Reveal or discard effect.
  */
-public class RevealOrDiscardEffect extends Effect {
+public class RevealOrDiscardEffect extends TurnEffect {
 	@Override
 	public String toString() {
 		return """

@@ -11,7 +11,7 @@ import java.util.List;
 /**
  * The type Reveal own identity effect.
  */
-public class RevealOwnIdentityEffect extends Effect {
+public class RevealOwnIdentityEffect extends TurnEffect {
     @Override
     public String toString() {
         return """
