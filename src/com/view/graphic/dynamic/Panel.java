@@ -10,6 +10,8 @@ import com.model.player.Player;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.geom.AffineTransform;
+import java.util.Arrays;
+import java.util.Comparator;
 import java.util.List;
 
 /**
@@ -136,20 +138,16 @@ public class Panel extends JPanel {
      * @param effects the effects to draw
      */
     private void drawEffects(int x, int y, List<Effect> effects) {
-        //Find good font
-        Font font = g2D.getFont();
+        int lengthOfLongestString = g2D.getFontMetrics().stringWidth(
+                effects.stream()
+                        .flatMap(effect -> Arrays.stream(effect.toString().split("\n")))
+                        .max(Comparator.comparing(String::length))
+                        .orElseThrow()
+        );
 
-        //We compare each effect to make it so that the longest one fit in width
-        int longestString = 0;
-        for (Effect effect : effects) {
-            String[] array = effect.toString().split("\n");
-            for (String s : array) {
-                int lengthOfCurrentString = g2D.getFontMetrics(font).stringWidth(s);
-                if (lengthOfCurrentString > longestString) longestString = lengthOfCurrentString;
-            }
-        }
         //We set the font so that each effect fit
-        g2D.setFont(font.deriveFont((float) (font.getSize() * cardWidth) / longestString));
+        Font font = g2D.getFont();
+        g2D.setFont(font.deriveFont((float) (font.getSize() * cardWidth) / lengthOfLongestString));
 
         //Draw effects
         int yDelta = 0;
