@@ -32,8 +32,7 @@ public class Agressive extends Strategy {
     public PlayerAction use(List<PlayerAction> possibleActions) {
         //Add to the number of accusation if the AI was accused
         if (possibleActions.contains(PlayerAction.REVEAL_IDENTITY)) {
-            numberOfAccusationPerPlayer.putIfAbsent(RoundController.getCurrentPlayer(), 0);
-            numberOfAccusationPerPlayer.put(RoundController.getCurrentPlayer(), 1 + numberOfAccusationPerPlayer.get(RoundController.getCurrentPlayer()));
+            numberOfAccusationPerPlayer.merge(RoundController.getCurrentPlayer(), 0, (existingValue, unused) -> existingValue++);
         }
         //Choose next action, priority to accuse, otherwise use a card and if not possible choose a random action
         if (possibleActions.contains(PlayerAction.ACCUSE)) {
