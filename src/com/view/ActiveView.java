@@ -9,7 +9,7 @@ import java.util.List;
  * The interface Active View.
  * All Controller should have 1 active view. The active view is the view that take care of player entries.
  */
-public interface ActiveView extends View { // TODO: 19/11/2021 Make something to wait between players
+public interface ActiveView extends View {
 
     /**
      * Prompt for player name.
