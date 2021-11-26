@@ -1,7 +1,7 @@
 package com.model.player;
 
 import com.controller.PlayerAction;
-import com.controller.RoundController;
+import com.model.game.Round;
 
 import java.util.List;
 
@@ -20,7 +20,7 @@ public class Random extends Strategy {
 
     @Override
     public PlayerAction use(List<PlayerAction> possibleActions) {
-        if (RoundController.getCurrentPlayer() == ai) {
+        if (Round.getCurrentPlayer() == ai) {
             return PlayerAction.ACCUSE;
         } else {
             return PlayerAction.REVEAL_IDENTITY;

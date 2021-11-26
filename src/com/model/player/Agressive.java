@@ -1,7 +1,7 @@
 package com.model.player;
 
 import com.controller.PlayerAction;
-import com.controller.RoundController;
+import com.model.game.Round;
 
 import java.util.Comparator;
 import java.util.HashMap;
@@ -32,12 +32,12 @@ public class Agressive extends Strategy {
     public PlayerAction use(List<PlayerAction> possibleActions) {
         //Add to the number of accusation if the AI was accused
         if (possibleActions.contains(PlayerAction.REVEAL_IDENTITY)) {
-            numberOfAccusationPerPlayer.merge(RoundController.getCurrentPlayer(), 0, (existingValue, unused) -> existingValue++);
+            numberOfAccusationPerPlayer.merge(Round.getCurrentPlayer(), 0, (existingValue, unused) -> existingValue++);
         }
         //Choose next action, priority to accuse, otherwise use a card and if not possible choose a random action
         if (possibleActions.contains(PlayerAction.ACCUSE)) {
             return PlayerAction.ACCUSE;
-        } else if (possibleActions.contains(PlayerAction.REVEAL_IDENTITY) && !RoundController.getInstance().getPlayerIdentityCard(ai).isWitch()) {
+        } else if (possibleActions.contains(PlayerAction.REVEAL_IDENTITY) && !Round.getInstance().getPlayerIdentityCard(ai).isWitch()) {
             return PlayerAction.REVEAL_IDENTITY;
         } else if (possibleActions.contains(PlayerAction.USE_CARD)) {
             return PlayerAction.USE_CARD;

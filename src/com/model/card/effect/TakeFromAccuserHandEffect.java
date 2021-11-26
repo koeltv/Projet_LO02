@@ -3,6 +3,7 @@ package com.model.card.effect;
 import com.controller.RoundController;
 import com.model.card.CardName;
 import com.model.card.RumourCard;
+import com.model.game.Round;
 import com.model.player.Player;
 
 /**
@@ -29,12 +30,12 @@ public class TakeFromAccuserHandEffect extends Effect {
 
     @Override
     public Player chooseTarget(final CardName cardName, Player cardUser) {
-        return RoundController.getCurrentPlayer();
+        return Round.getCurrentPlayer();
     }
 
     @Override
     public boolean isApplicable(Player cardUser, CardName cardName) {
-        return RoundController.getCurrentPlayer().getSelectableCardsFromHand().size() > 0;
+        return Round.getCurrentPlayer().getSelectableCardsFromHand().size() > 0;
     }
 
 }

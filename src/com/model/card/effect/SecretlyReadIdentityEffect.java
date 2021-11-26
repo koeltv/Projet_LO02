@@ -3,6 +3,7 @@ package com.model.card.effect;
 import com.controller.PlayerAction;
 import com.controller.RoundController;
 import com.model.card.CardName;
+import com.model.game.Round;
 import com.model.player.Player;
 
 /**
@@ -24,7 +25,7 @@ public class SecretlyReadIdentityEffect extends Effect {
 
     @Override
     public Player chooseTarget(final CardName cardName, Player cardUser) {
-        return RoundController.getInstance().getNextPlayer();
+        return Round.getInstance().getNextPlayer();
     }
 
     @Override

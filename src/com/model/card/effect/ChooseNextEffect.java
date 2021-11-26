@@ -2,6 +2,7 @@ package com.model.card.effect;
 
 import com.controller.RoundController;
 import com.model.card.CardName;
+import com.model.game.Round;
 import com.model.player.Player;
 
 /**
@@ -15,13 +16,13 @@ public class ChooseNextEffect extends TurnEffect {
 
     @Override
     public boolean applyEffect(final Player cardUser, final Player target) {
-        RoundController.getInstance().setNextPlayer(target);
+        Round.getInstance().setNextPlayer(target);
         return true;
     }
 
     @Override
     public Player chooseTarget(final CardName cardName, Player cardUser) {
-        return RoundController.getInstance().choosePlayer(cardUser, RoundController.getInstance().getSelectablePlayers(cardUser));
+        return RoundController.getInstance().choosePlayer(cardUser, Round.getInstance().getSelectablePlayers(cardUser));
     }
 
     @Override

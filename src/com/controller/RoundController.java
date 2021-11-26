@@ -26,6 +26,8 @@ public class RoundController {
      */
     private final GameController gameController;
 
+    private static RoundController instance;
+
     /**
      * The View.
      */
@@ -43,7 +45,12 @@ public class RoundController {
         this.view = view;
         this.gameController = gameController;
 
-        this.round = Round.getInstance();
+        this.round = new Round();
+        instance = this;
+    }
+
+    public static RoundController getInstance() {
+        return instance;
     }
 
     /**
@@ -293,14 +300,14 @@ public class RoundController {
         Round.setCurrentPlayer(identityCard.player);
 
         //Gather all players cards
-        gameController.players.forEach(player -> {
+        for (Player player : gameController.players) {
             for (Iterator<CardState> iterator = player.getHand().iterator(); iterator.hasNext(); ) {
                 gameController.deck.returnCardToDeck(player.removeCardFromHand(player.getHand().get(0).rumourCard));
             }
-        });
+        }
         //Gather the discarded cards
         for (Iterator<RumourCard> iterator = round.getDiscardPile().iterator(); iterator.hasNext(); ) {
-            gameController.deck.returnCardToDeck(round.getDiscardPile().get(0));
+            gameController.deck.returnCardToDeck(round.getDiscardPile().poll());
         }
     }
 
