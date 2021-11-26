@@ -27,6 +27,10 @@ public class RoundController {
      */
     private final GameController gameController;
 
+    /**
+     * Gets round controller instance.
+     * Return the single available instance of RoundController (Singleton).
+     */
     private static RoundController instance;
 
     /**
@@ -34,6 +38,9 @@ public class RoundController {
      */
     private final ActiveView view;
 
+    /**
+     * The linked Round.
+     */
     private final Round round;
 
     ///////////////////////////////////////////////////////////////////////////
@@ -54,6 +61,11 @@ public class RoundController {
         instance = this;
     }
 
+    /**
+     * Gets instance.
+     *
+     * @return the instance
+     */
     public static RoundController getInstance() {
         return instance;
     }
@@ -65,38 +77,88 @@ public class RoundController {
         Round.reset();
     }
 
+    /**
+     * Gets number of round.
+     *
+     * @return the number of round
+     */
     public static int getNumberOfRound() {
         return Round.getNumberOfRound();
     }
 
+    /**
+     * Sets next player.
+     *
+     * @param nextPlayer the next player
+     */
     public void setNextPlayer(Player nextPlayer) {
         round.setNextPlayer(nextPlayer);
     }
 
+    /**
+     * Gets next player.
+     *
+     * @return the next player
+     */
     public Player getNextPlayer() {
         return round.getNextPlayer();
     }
 
+    /**
+     * Gets discard pile.
+     *
+     * @return the discard pile
+     */
     public LinkedList<RumourCard> getDiscardPile() {
         return round.getDiscardPile();
     }
 
+    /**
+     * Gets identity cards.
+     *
+     * @return the identity cards
+     */
     public List<IdentityCard> getIdentityCards() {
         return round.getIdentityCards();
     }
 
+    /**
+     * Gets player identity card.
+     *
+     * @param targetedPlayer the targeted player
+     * @return the player identity card
+     */
     public IdentityCard getPlayerIdentityCard(Player targetedPlayer) {
         return round.getPlayerIdentityCard(targetedPlayer);
     }
 
+    /**
+     * Gets usable cards.
+     *
+     * @param player the player
+     * @param cards  the cards
+     * @return the usable cards
+     */
     public List<RumourCard> getUsableCards(Player player, List<RumourCard> cards) {
         return round.getUsableCards(player, cards);
     }
 
+    /**
+     * Gets not revealed players.
+     *
+     * @param player the player
+     * @return the not revealed players
+     */
     public List<Player> getNotRevealedPlayers(Player player) {
         return round.getNotRevealedPlayers(player);
     }
 
+    /**
+     * Gets not selectable players.
+     *
+     * @param player the player
+     * @return the not selectable players
+     */
     public List<Player> getNotSelectablePlayers(Player player) {
         return round.getNotSelectablePlayers(player);
     }
@@ -105,6 +167,12 @@ public class RoundController {
     // Controller methods
     ///////////////////////////////////////////////////////////////////////////
 
+    /**
+     * Gets player controller.
+     *
+     * @param player the player
+     * @return the player controller
+     */
     public PlayerController getPlayerController(Player player) {
         return gameController.players.stream()
                 .filter(playerController -> playerController.getPlayer() == player)
@@ -273,5 +341,4 @@ public class RoundController {
         playRound();
         endRound();
     }
-
 }

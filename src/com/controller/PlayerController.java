@@ -9,45 +9,94 @@ import com.view.ActiveView;
 import java.util.List;
 import java.util.stream.Collectors;
 
+/**
+ * The type Player controller.
+ */
 public class PlayerController {
 
+    /**
+     * The Player.
+     */
     protected Player player;
 
+    /**
+     * The View.
+     */
     protected final ActiveView view;
 
     ///////////////////////////////////////////////////////////////////////////
     // Constructor, getter and setters
     ///////////////////////////////////////////////////////////////////////////
 
+    /**
+     * Instantiates a new Player controller.
+     *
+     * @param playerName the player name
+     * @param view       the view
+     */
     PlayerController(String playerName, ActiveView view) {
         this.player = new Player(playerName);
         this.view = view;
     }
 
+    /**
+     * Instantiates a new Player controller.
+     *
+     * @param view the view
+     */
     PlayerController(ActiveView view) {
         this.view = view;
     }
 
+    /**
+     * Gets score.
+     *
+     * @return the score
+     */
     public int getScore() {
         return player.getScore();
     }
 
+    /**
+     * Reset score.
+     */
     public void resetScore() {
         player.resetScore();
     }
 
+    /**
+     * Gets name.
+     *
+     * @return the name
+     */
     public String getName() {
         return player.getName();
     }
 
+    /**
+     * Gets hand.
+     *
+     * @return the hand
+     */
     public List<CardState> getHand() {
         return player.getHand();
     }
 
+    /**
+     * Add card to hand.
+     *
+     * @param rumourCard the rumour card
+     */
     public void addCardToHand(RumourCard rumourCard) {
         player.addCardToHand(rumourCard);
     }
 
+    /**
+     * Remove card from hand rumour card.
+     *
+     * @param rumourCard the rumour card
+     * @return the rumour card
+     */
     public RumourCard removeCardFromHand(RumourCard rumourCard) {
         return player.removeCardFromHand(rumourCard);
     }
@@ -56,10 +105,18 @@ public class PlayerController {
     // Controller methods
     ///////////////////////////////////////////////////////////////////////////
 
+    /**
+     * Gets player.
+     *
+     * @return the player
+     */
     Player getPlayer() {
         return player;
     }
 
+    /**
+     * Choose identity.
+     */
     public void chooseIdentity() {
         int identity = view.promptForPlayerIdentity(player.getName());
         Round.getInstance().getPlayerIdentityCard(player).setWitch(identity > 0);
