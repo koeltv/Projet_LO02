@@ -31,7 +31,7 @@ public class RevealOrDiscardEffect extends TurnEffect {
 
 		List<PlayerAction> actions = new ArrayList<>(List.of(PlayerAction.REVEAL_IDENTITY));
 		if (target.getSelectableCardsFromHand().size() > 0) actions.add(PlayerAction.DISCARD);
-		RoundController.getInstance().askPlayerForAction(target, actions);
+		RoundController.getInstance().getPlayerController(target).askPlayerForAction(actions);
 
 		IdentityCard identityCard = round.getPlayerIdentityCard(target);
 		if (identityCard == null) {
@@ -52,17 +52,14 @@ public class RevealOrDiscardEffect extends TurnEffect {
 					.filter(player -> player.getRevealedCards().stream().anyMatch(rumourCard -> rumourCard.getCardName() != CardName.WART))
 					.collect(Collectors.toList());
 		}
-		return RoundController.getInstance().choosePlayer(cardUser, selectablePlayers);
+		return RoundController.getInstance().getPlayerController(cardUser).choosePlayer(selectablePlayers);
 	}
 
 	@Override
 	public boolean isApplicable(Player cardUser, CardName cardName) {
 		if (cardName == CardName.DUCKING_STOOL) {
-			List<Player> players = Round.getInstance().getSelectablePlayers(cardUser)
-					.stream()
-					.filter(player -> player.getRevealedCards().stream().anyMatch(rumourCard -> rumourCard.getCardName() != CardName.WART))
-					.collect(Collectors.toList());
-			return players.size() > 0;
+			return Round.getInstance().getSelectablePlayers(cardUser).stream()
+					.anyMatch(player -> player.getRevealedCards().stream().anyMatch(rumourCard -> rumourCard.getCardName() != CardName.WART));
 		}
 		return true;
 	}

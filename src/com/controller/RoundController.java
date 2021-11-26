@@ -11,6 +11,7 @@ import com.view.ActiveView;
 
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -25,6 +26,8 @@ public class RoundController {
      * The Game controller.
      */
     private final GameController gameController;
+
+    private final List<PlayerController> playerControllers;
 
     private static RoundController instance;
 
@@ -48,6 +51,7 @@ public class RoundController {
     RoundController(GameController gameController, ActiveView view) {
         this.view = view;
         this.gameController = gameController;
+        this.playerControllers = gameController.players;
 
         this.round = new Round();
         instance = this;
@@ -58,30 +62,46 @@ public class RoundController {
     }
 
     /**
-     * Ask the player to choose a card.
-     *
-     * @param player         the player
-     * @param rumourCardList the list of card to select from
-     * @return chosen card
+     * Reset static attributes.
      */
-    public RumourCard chooseCard(Player player, List<RumourCard> rumourCardList) {
-        return player instanceof AI ai ?
-                ai.selectCard(rumourCardList) :
-                rumourCardList.get(view.promptForCardChoice(rumourCardList));
+    public static void reset() {
+        Round.reset();
     }
 
-    /**
-     * Choose card blindly rumour card.
-     *
-     * @param player         the player
-     * @param rumourCardList the rumour card list
-     * @return the rumour card
-     */
-    public RumourCard chooseCardBlindly(Player player, List<RumourCard> rumourCardList) {
-        int index = player instanceof AI ai ?
-                ai.selectCard(rumourCardList.size()) :
-                view.promptForCardChoice(rumourCardList.size());
-        return rumourCardList.get(index);
+    public static int getNumberOfRound() {
+        return Round.getNumberOfRound();
+    }
+
+    public void setNextPlayer(Player nextPlayer) {
+        round.setNextPlayer(nextPlayer);
+    }
+
+    public Player getNextPlayer() {
+        return round.getNextPlayer();
+    }
+
+    public LinkedList<RumourCard> getDiscardPile() {
+        return round.getDiscardPile();
+    }
+
+    public List<IdentityCard> getIdentityCards() {
+        return round.getIdentityCards();
+    }
+
+    public IdentityCard getPlayerIdentityCard(Player targetedPlayer) {
+        return round.getPlayerIdentityCard(targetedPlayer);
+    }
+
+    public List<RumourCard> getUsableCards(Player player, List<RumourCard> cards) {
+        return round.getUsableCards(player, cards);
+    }
+
+    public List<Player> getNotRevealedPlayers(Player player) {
+        return round.getNotRevealedPlayers(player);
+    }
+
+    public List<Player> getNotSelectablePlayers(Player player) {
+        return round.getNotSelectablePlayers(player);
     }
 
     ///////////////////////////////////////////////////////////////////////////
@@ -89,10 +109,27 @@ public class RoundController {
     ///////////////////////////////////////////////////////////////////////////
 
     public PlayerController getPlayerController(Player player) {
-        return gameController.players.stream()
+        return playerControllers.stream()
                 .filter(playerController -> playerController.getPlayer() == player)
                 .findFirst()
                 .orElseThrow();
+    }
+
+    /**
+     * Reveal identity.
+     *
+     * @param toReveal player to reveal
+     */
+    void revealIdentity(Player toReveal) {
+        IdentityCard identityCard = Round.getInstance().getPlayerIdentityCard(toReveal);
+        identityCard.setIdentityRevealed(true);
+        if (identityCard.isWitch()) {
+            //If a player is revealed as a witch, we exclude him from the round
+            getIdentityCards().removeIf(card -> card.player == identityCard.player);
+            setNextPlayer(Round.getCurrentPlayer());
+        } else {
+            setNextPlayer(identityCard.player);
+        }
     }
 
     /**
@@ -101,7 +138,7 @@ public class RoundController {
      * @param player the player
      * @return the standard actions
      */
-    private List<PlayerAction> getStandardActions(Player player) {
+    List<PlayerAction> getStandardActions(Player player) {
         List<PlayerAction> possibleActions = new ArrayList<>();
         if (player == Round.getCurrentPlayer()) possibleActions.add(PlayerAction.ACCUSE);
         else possibleActions.add(PlayerAction.REVEAL_IDENTITY);
@@ -110,72 +147,6 @@ public class RoundController {
         if (hand.size() > 0 && round.getUsableCards(player, hand).size() > 0)
             possibleActions.add(PlayerAction.USE_CARD);
         return possibleActions;
-    }
-
-    /**
-     * Ask the current player for his next action.
-     * This method will call the play method of the current player.
-     *
-     * @param player          the player
-     * @param possibleActions the possible actions
-     */
-    public void askPlayerForAction(Player player, List<PlayerAction> possibleActions) {
-        //Ask the player to choose his next action
-        applyPlayerAction(player, player instanceof AI ai ?
-                ai.play(possibleActions) :
-                view.promptForAction(player.getName(), possibleActions)
-        );
-    }
-
-    /**
-     * Apply player action.
-     *
-     * @param player the player
-     * @param action the action
-     */
-    public void applyPlayerAction(Player player, PlayerAction action) {
-        switch (action) {
-            case DISCARD -> {
-                RumourCard chosenCard = chooseCard(player, player.getSelectableCardsFromHand());
-                round.getDiscardPile().add(player.removeCardFromHand(chosenCard));
-            }
-            case LOOK_AT_IDENTITY -> view.showPlayerIdentity(player.getName(), round.getPlayerIdentityCard(player).isWitch());
-            case REVEAL_IDENTITY -> {
-                view.showPlayerAction(player.getName());
-                view.showPlayerIdentity(player.getName(), round.getPlayerIdentityCard(player).isWitch());
-
-                revealIdentity(player);
-            }
-            case ACCUSE -> {
-                List<Player> players = round.getNotRevealedPlayers(player);
-                //In case an effect forbid a player from accusing a certain other player
-                List<Player> notSelectablePlayers = round.notSelectablePlayers.get(player);
-                if (players.size() > 1 && notSelectablePlayers != null) {
-                    players.removeIf(notSelectablePlayers::contains);
-                    notSelectablePlayers.clear();
-                }
-
-                Player targetedPlayer = choosePlayer(player, players);
-                view.showPlayerAction(player.getName(), targetedPlayer.getName());
-
-                passToNextPlayer(player, targetedPlayer);
-                askPlayerForAction(targetedPlayer, getStandardActions(targetedPlayer));
-
-                //If the player is a witch, its identity card is deleted, so if null the player was revealed as a witch
-                if (round.getPlayerIdentityCard(targetedPlayer) == null) {
-                    player.addToScore(1);
-                }
-            }
-            case USE_CARD -> {
-                boolean cardUsedSuccessfully;
-                do {
-                    RumourCard chosenRumourCard = chooseCard(player, round.getUsableCards(player, player.getSelectableCardsFromHand()));
-                    view.showPlayerAction(player.getName(), chosenRumourCard.getCardName());
-                    cardUsedSuccessfully = player.revealRumourCard(chosenRumourCard);
-                } while (!cardUsedSuccessfully);
-            }
-        }
-        if (action != PlayerAction.ACCUSE) passToNextPlayer(player, round.getNextPlayer());
     }
 
     /**
@@ -188,23 +159,6 @@ public class RoundController {
         boolean atLeast2RealPlayers = round.getIdentityCards().stream().filter(identityCard -> !(identityCard.player instanceof AI)).count() > 1;
         if (!(player == nextPlayer || nextPlayer instanceof AI) && atLeast2RealPlayers) {
             view.promptForPlayerSwitch(nextPlayer.getName());
-        }
-    }
-
-    /**
-     * Reveal identity.
-     *
-     * @param player the player
-     */
-    private void revealIdentity(Player player) {
-        IdentityCard playerIdentityCard = round.getPlayerIdentityCard(player);
-        playerIdentityCard.setIdentityRevealed(true);
-        if (playerIdentityCard.isWitch()) {
-            //If a player is revealed as a witch, we exclude him from the round
-            round.getIdentityCards().removeIf(identityCard -> identityCard.player == player);
-            round.setNextPlayer(Round.getCurrentPlayer());
-        } else {
-            round.setNextPlayer(player);
         }
     }
 
@@ -277,7 +231,7 @@ public class RoundController {
      */
     private void playRound() {
         do {
-            PlayerController playerController = gameController.players.stream()
+            PlayerController playerController = playerControllers.stream()
                     .filter(playerController1 -> playerController1.getPlayer() == Round.getCurrentPlayer())
                     .findFirst()
                     .orElseThrow();
