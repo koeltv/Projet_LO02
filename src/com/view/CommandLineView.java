@@ -102,6 +102,11 @@ public class CommandLineView implements PassiveView, ActiveView {
         possibleActions.forEach(System.out::println);
     }
 
+    @Override
+    public void waitForPlayerSwitch(String name) {
+        System.out.println("Waiting for Player " + name);
+    }
+
     ///////////////////////////////////////////////////////////////////////////
     // Active Methods
     ///////////////////////////////////////////////////////////////////////////
@@ -165,5 +170,11 @@ public class CommandLineView implements PassiveView, ActiveView {
             System.out.println(i + "- " + possibleActions.get(i));
         }
         return possibleActions.get(Integer.parseInt(keyboard.nextLine()));
+    }
+
+    @Override
+    public void promptForPlayerSwitch(String name) {
+        System.out.println("Please pass the hand to Player " + name);
+        keyboard.nextLine();
     }
 }

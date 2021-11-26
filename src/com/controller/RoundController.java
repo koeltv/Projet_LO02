@@ -325,6 +325,7 @@ public class RoundController {
                 Player targetedPlayer = choosePlayer(player, players);
                 view.showPlayerAction(player.getName(), targetedPlayer.getName());
 
+                passToNextPlayer(player, targetedPlayer);
                 askPlayerForAction(targetedPlayer, getStandardActions(targetedPlayer));
 
                 //If the player is a witch, its identity card is deleted, so if null the player was revealed as a witch
@@ -340,6 +341,19 @@ public class RoundController {
                     cardUsedSuccessfully = player.revealRumourCard(chosenRumourCard);
                 } while (!cardUsedSuccessfully);
             }
+        }
+        if (action != PlayerAction.ACCUSE) passToNextPlayer(player, nextPlayer);
+    }
+
+    /**
+     * If the next player isn't the same player and both players aren't AIs, demand to pass to next player.
+     *
+     * @param player     the player currently playing
+     * @param nextPlayer the next player
+     */
+    private void passToNextPlayer(Player player, Player nextPlayer) {
+        if (!(player == nextPlayer || nextPlayer instanceof AI)) {
+            view.promptForPlayerSwitch(nextPlayer.getName());
         }
     }
 
@@ -387,14 +401,18 @@ public class RoundController {
      * This method will call the selectIdentity() method to prompt players to choose a role for the round.
      */
     private void askPlayersForIdentity() {
-        identityCards.forEach(identityCard -> {
+        boolean previousWasPlayer = false;
+        for (IdentityCard identityCard : identityCards) {
             if (identityCard.player instanceof AI ai) {
                 ai.selectIdentity();
             } else {
+                if (previousWasPlayer) view.promptForPlayerSwitch(identityCard.player.getName());
+
                 int identity = view.promptForPlayerIdentity(identityCard.player.getName());
                 identityCard.setWitch(identity > 0);
+                previousWasPlayer = true;
             }
-        });
+        }
     }
 
     /**

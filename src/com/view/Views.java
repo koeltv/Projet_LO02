@@ -160,6 +160,12 @@ public class Views extends JFrame implements ActiveView, Runnable {
         return activeView.promptForAction(playerName, possibleActions);
     }
 
+    @Override
+    public synchronized void promptForPlayerSwitch(String name) {
+        views.forEach(passiveView -> passiveView.waitForPlayerSwitch(name));
+        activeView.promptForPlayerSwitch(name);
+    }
+
     ///////////////////////////////////////////////////////////////////////////
     // Runnable Method
     ///////////////////////////////////////////////////////////////////////////

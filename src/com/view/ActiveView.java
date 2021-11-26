@@ -73,4 +73,12 @@ public interface ActiveView extends View { // TODO: 19/11/2021 Make something to
      * @return the chosen player action
      */
     PlayerAction promptForAction(String playerName, List<PlayerAction> possibleActions);
+
+    /**
+     * Prompt for player switch.
+     * Prompt the current player to pass to the next player which name is displayed.
+     *
+     * @param name the name
+     */
+    void promptForPlayerSwitch(String name);
 }

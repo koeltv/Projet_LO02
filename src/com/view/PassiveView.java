@@ -55,4 +55,12 @@ public interface PassiveView extends View {
      * @param possibleActions the possible actions
      */
     void waitForAction(String playerName, List<PlayerAction> possibleActions);
+
+    /**
+     * Wait for player switch.
+     * Wait for the current player to pass to the next player which name is displayed.
+     *
+     * @param name the name
+     */
+    void waitForPlayerSwitch(String name);
 }

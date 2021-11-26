@@ -120,4 +120,9 @@ public abstract class GraphicView extends JFrame implements PassiveView, ActiveV
         String[] actions = possibleActions.stream().map(Enum::toString).toArray(String[]::new);
         return possibleActions.get(promptForOptions("Action", playerName + ", please choose your next action", actions));
     }
+
+    @Override
+    public void promptForPlayerSwitch(String name) {
+        promptForOptions("Player Switch", "Please pass the hand to Player " + name, new String[]{"Done"});
+    }
 }

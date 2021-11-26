@@ -5,6 +5,7 @@ import com.controller.RoundController;
 import com.model.card.CardName;
 import com.model.card.RumourCard;
 import com.model.game.IdentityCard;
+import com.model.player.AI;
 import com.view.graphic.GraphicView;
 
 import java.util.List;
@@ -48,7 +49,11 @@ public class Graphical2DView extends GraphicView {
         List<IdentityCard> identityCards = RoundController.getInstance().getIdentityCards().stream()
                 .filter(identityCard -> identityCard.player.getName().equals(playerName))
                 .collect(Collectors.toList());
-        panel.setMainPlayer(identityCards.size() > 0 ? identityCards.get(0).player : null);
+        if (identityCards.size() > 0 && !(identityCards.get(0).player instanceof AI)) {
+            panel.setMainPlayer(identityCards.get(0).player);
+        } else if (identityCards.size() <= 0) {
+            panel.setMainPlayer(null);
+        }
     }
 
     /**
@@ -153,6 +158,12 @@ public class Graphical2DView extends GraphicView {
         displayAndRepaint();
     }
 
+    @Override
+    public void waitForPlayerSwitch(String name) {
+        actualiseMainPlayer(null);
+        displayAndRepaint();
+    }
+
     ///////////////////////////////////////////////////////////////////////////
     // Active methods
     ///////////////////////////////////////////////////////////////////////////
@@ -162,6 +173,13 @@ public class Graphical2DView extends GraphicView {
         actualiseMainPlayer(playerName);
         displayAndRepaint();
         return super.promptForAction(playerName, possibleActions);
+    }
+
+    @Override
+    public void promptForPlayerSwitch(String name) {
+        actualiseMainPlayer(null);
+        displayAndRepaint();
+        super.promptForPlayerSwitch(name);
     }
 
     @Override

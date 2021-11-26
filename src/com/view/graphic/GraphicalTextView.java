@@ -152,4 +152,9 @@ public class GraphicalTextView extends GraphicView {
         appendText("Waiting for " + playerName + " action choice");
         possibleActions.forEach(possibleAction -> appendText(possibleAction.toString()));
     }
+
+    @Override
+    public void waitForPlayerSwitch(String name) {
+        appendText("Waiting for Player " + name);
+    }
 }
