@@ -19,7 +19,7 @@ public class SecretlyReadIdentityEffect extends Effect {
 
     @Override
     public boolean applyEffect(final Player cardUser, final Player target) {
-        RoundController.getInstance().applyPlayerAction(target, PlayerAction.LOOK_AT_IDENTITY);
+        RoundController.getInstance().getPlayerController(target).applyPlayerAction(PlayerAction.LOOK_AT_IDENTITY);
         return true;
     }
 
