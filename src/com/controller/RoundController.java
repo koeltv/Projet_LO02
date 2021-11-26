@@ -49,7 +49,8 @@ public class RoundController {
         this.view = view;
         this.gameController = gameController;
 
-        this.round = Round.getInstance();
+        this.round = new Round();
+        instance = this;
     }
 
     public static RoundController getInstance() {
@@ -92,23 +93,6 @@ public class RoundController {
                 .filter(playerController -> playerController.getPlayer() == player)
                 .findFirst()
                 .orElseThrow();
-    }
-
-    /**
-     * Reveal identity.
-     *
-     * @param toReveal player to reveal
-     */
-    void revealIdentity(Player toReveal) {
-        IdentityCard identityCard = Round.getInstance().getPlayerIdentityCard(toReveal);
-        identityCard.setIdentityRevealed(true);
-        if (identityCard.isWitch()) {
-            //If a player is revealed as a witch, we exclude him from the round
-            round.getIdentityCards().removeIf(card -> card.player == identityCard.player);
-            round.setNextPlayer(Round.getCurrentPlayer());
-        } else {
-            round.setNextPlayer(identityCard.player);
-        }
     }
 
     /**
@@ -326,7 +310,7 @@ public class RoundController {
         }
         //Gather the discarded cards
         for (Iterator<RumourCard> iterator = round.getDiscardPile().iterator(); iterator.hasNext(); ) {
-            gameController.deck.returnCardToDeck(round.getDiscardPile().get(0));
+            gameController.deck.returnCardToDeck(round.getDiscardPile().poll());
         }
     }
 

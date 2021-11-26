@@ -22,7 +22,7 @@ public class ChooseNextEffect extends TurnEffect {
 
     @Override
     public Player chooseTarget(final CardName cardName, Player cardUser) {
-        return RoundController.getInstance().getPlayerController(cardUser).choosePlayer(Round.getInstance().getSelectablePlayers(cardUser));
+        return RoundController.getInstance().choosePlayer(cardUser, Round.getInstance().getSelectablePlayers(cardUser));
     }
 
     @Override

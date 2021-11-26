@@ -1,6 +1,8 @@
 package com.controller;
 
 import com.model.card.Deck;
+import com.model.game.Round;
+import com.model.player.AI;
 import com.model.player.Player;
 import com.view.ActiveView;
 import com.view.CommandLineView;
@@ -129,7 +131,7 @@ public class GameController {
         view.showGameWinner(settleTie(winners).getName(), RoundController.getNumberOfRound());
 
         players.forEach(playerController -> playerController.getPlayer().resetScore());
-        RoundController.reset();
+        Round.reset();
     }
 
     /**
