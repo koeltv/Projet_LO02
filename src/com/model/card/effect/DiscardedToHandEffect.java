@@ -4,6 +4,7 @@ import com.controller.RoundController;
 import com.model.card.CardName;
 import com.model.card.RumourCard;
 import com.model.game.CardState;
+import com.model.game.Round;
 import com.model.player.Player;
 
 import java.util.List;
@@ -26,7 +27,7 @@ public class DiscardedToHandEffect extends Effect {
 
     @Override
     public boolean applyEffect(final Player cardUser, final Player target) {
-        List<RumourCard> discardPile = RoundController.getInstance().getDiscardPile();
+        List<RumourCard> discardPile = Round.getInstance().getDiscardPile();
 
         if(discardPile.size() > 0) {
             RumourCard chosenCard = RoundController.getInstance().chooseCard(cardUser, discardPile);
@@ -51,7 +52,7 @@ public class DiscardedToHandEffect extends Effect {
 
     @Override
     public boolean isApplicable(Player cardUser, CardName cardName) {
-        return RoundController.getInstance().getDiscardPile().size() > 0;
+        return Round.getInstance().getDiscardPile().size() > 0;
     }
 
 }

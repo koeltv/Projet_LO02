@@ -3,6 +3,7 @@ package com.model.card.effect;
 import com.controller.RoundController;
 import com.model.card.CardName;
 import com.model.card.RumourCard;
+import com.model.game.Round;
 import com.model.player.Player;
 
 /**
@@ -31,7 +32,7 @@ public class TakeRevealedFromOtherEffect extends Effect {
     public Player chooseTarget(final CardName cardName, Player cardUser) {
         return RoundController.getInstance().choosePlayer(
                 cardUser,
-                RoundController.getInstance().getSelectablePlayers(cardUser)
+                Round.getInstance().getSelectablePlayers(cardUser)
                         .stream()
                         .filter(player -> player.getRevealedCards().size() > 0)
                         .toList()
@@ -40,7 +41,7 @@ public class TakeRevealedFromOtherEffect extends Effect {
 
     @Override
     public boolean isApplicable(Player cardUser, CardName cardName) {
-        return RoundController.getInstance().getSelectablePlayers(cardUser).stream().anyMatch(player -> player.getRevealedCards().size() > 0);
+        return Round.getInstance().getSelectablePlayers(cardUser).stream().anyMatch(player -> player.getRevealedCards().size() > 0);
     }
 
 }

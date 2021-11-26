@@ -1,9 +1,9 @@
 package com.model.player;
 
 import com.controller.PlayerAction;
-import com.controller.RoundController;
 import com.model.card.RumourCard;
 import com.model.game.IdentityCard;
+import com.model.game.Round;
 
 import java.util.List;
 
@@ -39,7 +39,7 @@ public abstract class Strategy {
      * Select identity.
      */
     public void selectIdentity() {
-        IdentityCard identityCard = RoundController.getInstance().getPlayerIdentityCard(ai);
+        IdentityCard identityCard = Round.getInstance().getPlayerIdentityCard(ai);
         identityCard.setWitch(randomInInterval(1) > 0);
     }
 

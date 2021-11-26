@@ -52,7 +52,7 @@ public class Round {
     /**
      * Instantiates a new Round controller.
      */
-    Round() {
+    public Round() {
         this.discardPile = new LinkedList<>();
         this.identityCards = new ArrayList<>();
         this.notSelectablePlayers = new HashMap<>();
@@ -147,7 +147,7 @@ public class Round {
      *
      * @return the discard pile
      */
-    public List<RumourCard> getDiscardPile() {
+    public LinkedList<RumourCard> getDiscardPile() {
         return discardPile;
     }
 

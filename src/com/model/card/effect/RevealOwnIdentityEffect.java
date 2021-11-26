@@ -4,6 +4,7 @@ import com.controller.PlayerAction;
 import com.controller.RoundController;
 import com.model.card.CardName;
 import com.model.game.IdentityCard;
+import com.model.game.Round;
 import com.model.player.Player;
 
 import java.util.List;
@@ -22,7 +23,7 @@ public class RevealOwnIdentityEffect extends TurnEffect {
 
     @Override
     public boolean applyEffect(final Player cardUser, final Player target) {
-        RoundController round = RoundController.getInstance();
+        Round round = Round.getInstance();
 
         Player nextPlayer = null;
         if (round.getPlayerIdentityCard(cardUser).isWitch()) {
@@ -37,10 +38,10 @@ public class RevealOwnIdentityEffect extends TurnEffect {
                 }
             }
         } else {
-            nextPlayer = round.choosePlayer(cardUser, round.getSelectablePlayers(cardUser));
+            nextPlayer = RoundController.getInstance().choosePlayer(cardUser, round.getSelectablePlayers(cardUser));
         }
-        round.applyPlayerAction(cardUser, PlayerAction.REVEAL_IDENTITY);
-        RoundController.getInstance().setNextPlayer(nextPlayer);
+        RoundController.getInstance().applyPlayerAction(cardUser, PlayerAction.REVEAL_IDENTITY);
+        round.setNextPlayer(nextPlayer);
         return true;
     }
 

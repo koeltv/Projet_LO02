@@ -1,10 +1,10 @@
 package com.view.graphic.dynamic;
 
-import com.controller.RoundController;
 import com.model.card.RumourCard;
 import com.model.card.effect.Effect;
 import com.model.game.CardState;
 import com.model.game.IdentityCard;
+import com.model.game.Round;
 import com.model.player.Player;
 
 import javax.swing.*;
@@ -78,7 +78,7 @@ public class Panel extends JPanel {
         this.identityCardNotRevealed = getToolkit().getImage("data/IdentityCard.png");
         this.identityCardRevealed = getToolkit().getImage("data/RevealedVillager.png");
 
-        this.mainPlayer = RoundController.getCurrentPlayer();
+        this.mainPlayer = Round.getCurrentPlayer();
     }
 
     /**
@@ -324,7 +324,7 @@ public class Panel extends JPanel {
 
         //Actualise object values
         g2D = (Graphics2D) graphics;
-        RoundController roundController = RoundController.getInstance();
+        Round round = Round.getInstance();
 
         cardHeight = getHeight() / SIZE_FACTOR;
         cardWidth = (int) (cardHeight / 1.35);
@@ -333,11 +333,11 @@ public class Panel extends JPanel {
         graphics.drawImage(background, 0, 0, getWidth(), getHeight(), this);
 
         //Draw content
-        if (roundController != null && roundController.getIdentityCards().size() > 0) {
+        if (round != null && round.getIdentityCards().size() > 0) {
             AffineTransform oldRotation = g2D.getTransform();
 
             //Draw the discard pile
-            List<RumourCard> discardPile = RoundController.getInstance().getDiscardPile();
+            List<RumourCard> discardPile = round.getDiscardPile();
             if (discardPile.size() > 0) {
                 g2D.translate(0, (-getHeight() / 2) + cardHeight / 3);
                 drawCardList(discardPile, discardPile.size(), false);
@@ -345,13 +345,13 @@ public class Panel extends JPanel {
             }
 
             //Draw hand of the current player at the bottom
-            drawPlayer(roundController.getPlayerIdentityCard(mainPlayer));
+            drawPlayer(round.getPlayerIdentityCard(mainPlayer));
 
             //Draw the hand of each other player hidden
             double currentAngle = 0;
-            double angle = (double) 360 / roundController.getIdentityCards().size();
+            double angle = (double) 360 / round.getIdentityCards().size();
 
-            for (IdentityCard card : roundController.getIdentityCards()) {
+            for (IdentityCard card : round.getIdentityCards()) {
                 if (card.player != mainPlayer) {
                     //Rotation to make all players on a circle
                     g2D.rotate(Math.toRadians(angle), (float) getWidth() / 2, (float) getHeight() / 2);
@@ -366,7 +366,7 @@ public class Panel extends JPanel {
                     double y0Translation = 0;
                     //We only apply it to players near the diagonals
                     if (
-                            roundController.getIdentityCards().size() < 6 && (
+                            round.getIdentityCards().size() < 6 && (
                                     (currentAngle > 15 && currentAngle < 65)
                                             || (currentAngle > 105 && currentAngle < 135)
                                             || (currentAngle > 225 && currentAngle < 255)
