@@ -7,8 +7,17 @@ import com.view.ActiveView;
 
 import java.util.List;
 
+/**
+ * The type Ai controller.
+ */
 public class AIController extends PlayerController {
 
+    /**
+     * Instantiates a new AI controller.
+     *
+     * @param playerName the player name
+     * @param view       the view
+     */
     AIController(String playerName, ActiveView view) {
         super(view);
         this.player = new AI(playerName);
