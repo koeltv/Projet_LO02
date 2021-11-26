@@ -20,7 +20,7 @@ public class TakeRevealedFromOtherEffect extends Effect {
     @Override
     public boolean applyEffect(final Player cardUser, final Player target) {
         if(target.getRevealedCards().size() > 0) {
-            RumourCard chosenCard = RoundController.getInstance().chooseCard(target, target.getRevealedCards());
+            RumourCard chosenCard = RoundController.getInstance().getPlayerController(target).chooseCard(target.getRevealedCards());
             cardUser.addCardToHand(target.removeCardFromHand(chosenCard));
             return true;
         } else {
@@ -30,8 +30,7 @@ public class TakeRevealedFromOtherEffect extends Effect {
 
     @Override
     public Player chooseTarget(final CardName cardName, Player cardUser) {
-        return RoundController.getInstance().choosePlayer(
-                cardUser,
+        return RoundController.getInstance().getPlayerController(cardUser).choosePlayer(
                 Round.getInstance().getSelectablePlayers(cardUser)
                         .stream()
                         .filter(player -> player.getRevealedCards().size() > 0)

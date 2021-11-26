@@ -1,8 +1,6 @@
 package com.controller;
 
 import com.model.card.Deck;
-import com.model.game.Round;
-import com.model.player.AI;
 import com.model.player.Player;
 import com.view.ActiveView;
 import com.view.CommandLineView;
@@ -23,7 +21,7 @@ public class GameController {
     /**
      * The Players.
      */
-    final List<Player> players;
+    List<PlayerController> players;
 
     /**
      * The Deck.
@@ -72,10 +70,12 @@ public class GameController {
 
         for (int i = 1; i <= values[0]; i++) addPlayer(i);
         for (int i = 0; i < values[1]; i++) {
-            players.add(new AI(randomAIName(players.stream()
-                    .map(Player::getName)
-                    .collect(Collectors.toList())
-            )));
+            players.add(new AIController(
+                    randomAIName(players.stream()
+                            .map(player -> player.getPlayer().getName())
+                            .collect(Collectors.toList()))
+                    ,view
+                    ));
         }
     }
 
@@ -90,12 +90,12 @@ public class GameController {
         do {
             playerName = view.promptForPlayerName(id);
             nameAlreadyAssigned = false;
-            for (Player player : players) {
+            for (PlayerController player : players) {
                 nameAlreadyAssigned = player.getName().equals(playerName);
                 if (nameAlreadyAssigned) break;
             }
         } while (nameAlreadyAssigned);
-        players.add(new Player(playerName));
+        players.add(new PlayerController(playerName, view));
     }
 
     /**
@@ -124,11 +124,11 @@ public class GameController {
      * Wrap up game.
      */
     private void wrapUpGame() {
-        List<Player> winners = players.stream().filter(player -> player.getScore() >= 5).collect(Collectors.toList());
+        List<Player> winners = players.stream().map(PlayerController::getPlayer).filter(player -> player.getScore() >= 5).collect(Collectors.toList());
 
         view.showGameWinner(settleTie(winners).getName(), RoundController.getNumberOfRound());
 
-        players.forEach(Player::resetScore);
+        players.forEach(playerController -> playerController.getPlayer().resetScore());
         RoundController.reset();
     }
 

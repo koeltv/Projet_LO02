@@ -34,7 +34,7 @@ public class RevealAnotherIdentityEffect extends TurnEffect {
 			round.setNextPlayer(target);
 		}
 
-		RoundController.getInstance().applyPlayerAction(target, PlayerAction.REVEAL_IDENTITY);
+		RoundController.getInstance().getPlayerController(target).applyPlayerAction(PlayerAction.REVEAL_IDENTITY);
 		return true;
 	}
 
@@ -46,7 +46,7 @@ public class RevealAnotherIdentityEffect extends TurnEffect {
 					.filter(player -> player.getRevealedCards().stream().allMatch(rumourCard -> rumourCard.getCardName() != CardName.BROOMSTICK))
 					.collect(Collectors.toList());
 		}
-		return RoundController.getInstance().choosePlayer(cardUser, selectablePlayers);
+		return RoundController.getInstance().getPlayerController(cardUser).choosePlayer(selectablePlayers);
 	}
 
 	@Override
