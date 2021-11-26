@@ -27,8 +27,6 @@ public class RoundController {
      */
     private final GameController gameController;
 
-    private final List<PlayerController> playerControllers;
-
     private static RoundController instance;
 
     /**
@@ -51,7 +49,6 @@ public class RoundController {
     RoundController(GameController gameController, ActiveView view) {
         this.view = view;
         this.gameController = gameController;
-        this.playerControllers = gameController.players;
 
         this.round = new Round();
         instance = this;
@@ -109,7 +106,7 @@ public class RoundController {
     ///////////////////////////////////////////////////////////////////////////
 
     public PlayerController getPlayerController(Player player) {
-        return playerControllers.stream()
+        return gameController.players.stream()
                 .filter(playerController -> playerController.getPlayer() == player)
                 .findFirst()
                 .orElseThrow();
@@ -231,7 +228,7 @@ public class RoundController {
      */
     private void playRound() {
         do {
-            PlayerController playerController = playerControllers.stream()
+            PlayerController playerController = gameController.players.stream()
                     .filter(playerController1 -> playerController1.getPlayer() == Round.getCurrentPlayer())
                     .findFirst()
                     .orElseThrow();
