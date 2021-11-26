@@ -13,11 +13,13 @@ sur [ce site](http://www.goodlittlegames.co.uk/games/09-witch-hunt.html).
 - Modularité à travers l'utilisation de l'architecture MVC
   - Possibilité d'ajouter différentes interfaces (vues), actuellement uniquement par ligne de commande
   - Possibilité d'extraire les règles pour les faire varier
+  - Possibilité d'ajouter facilement de nouveaux effets, de nouvelles cartes, de nouveaux deck de départ, de nouvelles
+    stratégies d'IAs, ...
 
 ## A faire
 
-- Implémentation des stratégies des IAs.
 - Patron de conception visitor pour le comptage de points de chaque joueur.
+- Gestion des exceptions/erreurs
 - Documentation JavaDoc.
 
 ## Contexte
