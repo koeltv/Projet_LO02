@@ -1,7 +1,5 @@
 package com.util;
 
-import com.model.player.Player;
-
 import java.util.List;
 import java.util.Random;
 
@@ -29,18 +27,18 @@ public final class GameUtil {
     /**
      * Get a random not already assigned name.
      *
-     * @param players the players
+     * @param names the players name
      * @return new name
      */
-    public static String randomAIName(List<Player> players) {
+    public static String randomAIName(List<String> names) {
         String[] NAMES = {"Jean", "Antoine", "Fabrice", "Patrick", "Clara", "June", "Louis", "Sylvain"};
 
         String name;
         boolean nameAssigned = false;
         do {
             name = NAMES[randomInInterval(NAMES.length - 1)];
-            for (Player player : players) {
-                nameAssigned = player.getName().equals(name);
+            for (String playerName : names) {
+                nameAssigned = playerName.equals(name);
                 if (nameAssigned) break;
             }
         } while (nameAssigned);

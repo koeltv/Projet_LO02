@@ -47,7 +47,7 @@ public class Round {
     /**
      * The players that aren't selectable per player.
      */
-    public final HashMap<Player, List<Player>> notSelectablePlayers;
+    private final HashMap<Player, List<Player>> notSelectablePlayers;
 
     /**
      * Instantiates a new Round controller.
@@ -87,6 +87,9 @@ public class Round {
         return numberOfRound;
     }
 
+    /**
+     * Augment the counter of rounds.
+     */
     public static void addNumberOfRound() {
         numberOfRound++;
     }
@@ -100,6 +103,11 @@ public class Round {
         return currentPlayer;
     }
 
+    /**
+     * Sets current player.
+     *
+     * @param player the player
+     */
     public static void setCurrentPlayer(Player player) {
         currentPlayer = player;
     }
@@ -158,6 +166,16 @@ public class Round {
      */
     public List<IdentityCard> getIdentityCards() {
         return identityCards;
+    }
+
+    /**
+     * Gets not selectable players of a specific player.
+     *
+     * @param player the player to check for
+     * @return the list of not selectable players for the given player
+     */
+    public List<Player> getNotSelectablePlayers(Player player) {
+        return notSelectablePlayers.get(player);
     }
 
     /**

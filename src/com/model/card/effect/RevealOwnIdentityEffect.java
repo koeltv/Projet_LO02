@@ -38,9 +38,9 @@ public class RevealOwnIdentityEffect extends TurnEffect {
                 }
             }
         } else {
-            nextPlayer = RoundController.getInstance().choosePlayer(cardUser, round.getSelectablePlayers(cardUser));
+            nextPlayer = RoundController.getInstance().getPlayerController(cardUser).choosePlayer(round.getSelectablePlayers(cardUser));
         }
-        RoundController.getInstance().applyPlayerAction(cardUser, PlayerAction.REVEAL_IDENTITY);
+        RoundController.getInstance().getPlayerController(cardUser).applyPlayerAction(PlayerAction.REVEAL_IDENTITY);
         round.setNextPlayer(nextPlayer);
         return true;
     }

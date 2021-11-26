@@ -1,8 +1,6 @@
 package com.controller;
 
 import com.model.card.Deck;
-import com.model.game.Round;
-import com.model.player.AI;
 import com.model.player.Player;
 import com.view.ActiveView;
 import com.view.CommandLineView;
@@ -11,6 +9,7 @@ import com.view.graphic.dynamic.Graphical2DView;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import static com.util.GameUtil.randomAIName;
 import static com.util.GameUtil.randomInInterval;
@@ -22,7 +21,7 @@ public class GameController {
     /**
      * The Players.
      */
-    List<Player> players;
+    List<PlayerController> players;
 
     /**
      * The Deck.
@@ -87,7 +86,13 @@ public class GameController {
         } while (!repartitionAllowed(values[0], values[1]));
 
         for (int i = 0; i < values[0]; i++) addPlayer(i);
-        for (int i = 0; i < values[1]; i++) players.add(new AI(randomAIName(players)));
+
+        for (int i = 0; i < values[1]; i++) {
+            players.add(new AIController(
+                    randomAIName(players.stream().map(PlayerController::getName).collect(Collectors.toList())),
+                    view
+            ));
+        }
     }
 
     /**
@@ -101,12 +106,12 @@ public class GameController {
         do {
             playerName = view.promptForPlayerName(id);
             nameAlreadyAssigned = false;
-            for (Player player : players) {
+            for (PlayerController player : players) {
                 nameAlreadyAssigned = player.getName().equals(playerName);
                 if (nameAlreadyAssigned) break;
             }
         } while (nameAlreadyAssigned);
-        players.add(new Player(playerName));
+        players.add(new PlayerController(playerName, view));
     }
 
     /**
@@ -138,17 +143,17 @@ public class GameController {
         List<Player> winners = new ArrayList<>();
 
         players.forEach(player -> {
-            if (player.getScore() >= 5) winners.add(player);
+            if (player.getScore() >= 5) winners.add(player.getPlayer());
             player.resetScore();
         });
 
         if (winners.size() > 1) {
             settleTie(winners);
         } else if (winners.size() == 1) {
-            view.showGameWinner(winners.get(0).getName(), Round.getNumberOfRound());
+            view.showGameWinner(winners.get(0).getName(), RoundController.getNumberOfRound());
         }
 
-        Round.reset();
+        RoundController.reset();
     }
 
     /**
@@ -158,7 +163,7 @@ public class GameController {
      */
     private void settleTie(List<Player> winners) { //TODO Find better alternative
         Player winner = winners.get(randomInInterval(winners.size() - 1));
-        view.showGameWinner(winner.getName(), Round.getNumberOfRound());
+        view.showGameWinner(winner.getName(), RoundController.getNumberOfRound());
     }
 
     /**

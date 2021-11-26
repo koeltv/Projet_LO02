@@ -20,7 +20,7 @@ public class TakeRevealedCardEffect extends Effect {
     @Override
     public boolean applyEffect(final Player cardUser, final Player target) {
         if (cardUser.getRevealedCards().size() > 0) {
-            RumourCard chosenCard = RoundController.getInstance().chooseCard(cardUser, cardUser.getRevealedCards());
+            RumourCard chosenCard = RoundController.getInstance().getPlayerController(cardUser).chooseCard(cardUser.getRevealedCards());
             for (CardState card : cardUser.getHand()) {
                 if (card.rumourCard == chosenCard) {
                     card.setRevealed(false);    //change the status of the Rumour Card
