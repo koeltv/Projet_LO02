@@ -4,11 +4,14 @@ import com.model.card.CardName;
 import com.model.card.RumourCard;
 import com.model.game.CardState;
 import com.model.game.IdentityCard;
+import com.model.game.Round;
 import com.model.player.AI;
 import com.model.player.Player;
 import com.view.ActiveView;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
 import java.util.stream.Collectors;
 
 import static com.util.GameUtil.randomInInterval;
@@ -19,16 +22,6 @@ import static com.util.GameUtil.randomInInterval;
  */
 public class RoundController {
     /**
-     * The single instance of roundController.
-     */
-    private static RoundController instance;
-
-    /**
-     * The number of round.
-     */
-    private static int numberOfRound;
-
-    /**
      * The Game controller.
      */
     private final GameController gameController;
@@ -38,30 +31,7 @@ public class RoundController {
      */
     private final ActiveView view;
 
-    /**
-     * The current player.
-     */
-    private static Player currentPlayer;
-
-    /**
-     * The Next player.
-     */
-    private Player nextPlayer;
-
-    /**
-     * The Discard pile.
-     */
-    private final LinkedList<RumourCard> discardPile;
-
-    /**
-     * The Active players.
-     */
-    private final List<IdentityCard> identityCards;
-
-    /**
-     * The players that aren't selectable per player.
-     */
-    private final HashMap<Player, List<Player>> notSelectablePlayers;
+    private final Round round;
 
     /**
      * Instantiates a new Round controller.
@@ -70,132 +40,10 @@ public class RoundController {
      * @param view           the view
      */
     RoundController(GameController gameController, ActiveView view) {
-        this.discardPile = new LinkedList<>();
-        this.identityCards = new ArrayList<>();
-        this.notSelectablePlayers = new HashMap<>();
-
         this.view = view;
         this.gameController = gameController;
 
-        RoundController.instance = this;
-    }
-
-    /**
-     * Gets round controller.
-     * Return the single available instance of round controller (Singleton).
-     *
-     * @return the round controller
-     */
-    public static RoundController getInstance() {
-        return instance;
-    }
-
-    /**
-     * Reset static attributes.
-     */
-    public static void reset() {
-        numberOfRound = 0;
-        currentPlayer = null;
-    }
-
-    /**
-     * Gets number of round.
-     *
-     * @return the number of round
-     */
-    public static int getNumberOfRound() {
-        return numberOfRound;
-    }
-
-    /**
-     * Gets current player.
-     *
-     * @return the current player
-     */
-    public static Player getCurrentPlayer() {
-        return currentPlayer;
-    }
-
-    /**
-     * Gets number of not revealed players.
-     *
-     * @return the number of not revealed players
-     */
-    private int getNumberOfNotRevealedPlayers() {
-        return (int) identityCards.stream().filter(identityCard -> !identityCard.isIdentityRevealed()).count();
-    }
-
-    /**
-     * Sets next player.
-     *
-     * @param nextPlayer the next player
-     */
-    public void setNextPlayer(Player nextPlayer) {
-        this.nextPlayer = nextPlayer;
-    }
-
-    /**
-     * Gets next player.
-     *
-     * @return the next player
-     */
-    public Player getNextPlayer() {
-        return this.nextPlayer;
-    }
-
-    /**
-     * Add not selectable player to a player.
-     *
-     * @param player              the player
-     * @param notSelectablePlayer the player not selectable by player
-     */
-    public void addNotSelectablePlayer(Player player, Player notSelectablePlayer) {
-        notSelectablePlayers.computeIfAbsent(player, k -> new ArrayList<>());
-        notSelectablePlayers.get(player).add(notSelectablePlayer);
-    }
-
-    /**
-     * Gets discard pile.
-     *
-     * @return the discard pile
-     */
-    public List<RumourCard> getDiscardPile() {
-        return discardPile;
-    }
-
-    /**
-     * Gets identity cards
-     *
-     * @return the identity cards
-     */
-    public List<IdentityCard> getIdentityCards() {
-        return identityCards;
-    }
-
-    /**
-     * Gets player identity card.
-     *
-     * @param targetedPlayer the targeted player
-     * @return the player identity card
-     */
-    public IdentityCard getPlayerIdentityCard(Player targetedPlayer) {
-        return identityCards.stream()
-                .filter(identityCard -> identityCard.player == targetedPlayer)
-                .findFirst().orElse(null);
-    }
-
-    /**
-     * Gets usable cards.
-     * Return the cards from the input list that can be used by the player.
-     *
-     * @param player the player
-     * @param cards  the cards
-     * @return the usable cards
-     */
-    public List<RumourCard> getUsableCards(Player player, List<RumourCard> cards) {
-        return cards.stream()
-                .filter(rumourCard -> rumourCard.isUsable(player))
-                .collect(Collectors.toList());
+        this.round = Round.getInstance();
     }
 
     /**
@@ -226,32 +74,6 @@ public class RoundController {
     }
 
     /**
-     * Get the list of all players in the current round.
-     *
-     * @param player the player
-     * @return selectable players
-     */
-    public List<Player> getSelectablePlayers(Player player) {
-        return identityCards.stream()
-                .filter(identityCard -> identityCard.player != player)
-                .map(identityCard -> identityCard.player)
-                .collect(Collectors.toList());
-    }
-
-    /**
-     * Get the list of not revealed players in the current round.
-     *
-     * @param player the player
-     * @return selectable players
-     */
-    public List<Player> getNotRevealedPlayers(Player player) {
-        return identityCards.stream()
-                .filter(identityCard -> identityCard.player != player && !identityCard.isIdentityRevealed())
-                .map(identityCard -> identityCard.player)
-                .collect(Collectors.toList());
-    }
-
-    /**
      * Ask a player to choose another player.
      *
      * @param choosingPlayer the choosing player
@@ -272,11 +94,12 @@ public class RoundController {
      */
     private List<PlayerAction> getStandardActions(Player player) {
         List<PlayerAction> possibleActions = new ArrayList<>();
-        if (player == RoundController.getCurrentPlayer()) possibleActions.add(PlayerAction.ACCUSE);
+        if (player == Round.getCurrentPlayer()) possibleActions.add(PlayerAction.ACCUSE);
         else possibleActions.add(PlayerAction.REVEAL_IDENTITY);
         //If the player has at least 1 usable card, we add the possibility to use it
         List<RumourCard> hand = player.getSelectableCardsFromHand();
-        if (hand.size() > 0 && getUsableCards(player, hand).size() > 0) possibleActions.add(PlayerAction.USE_CARD);
+        if (hand.size() > 0 && round.getUsableCards(player, hand).size() > 0)
+            possibleActions.add(PlayerAction.USE_CARD);
         return possibleActions;
     }
 
@@ -305,22 +128,22 @@ public class RoundController {
         switch (action) {
             case DISCARD -> {
                 RumourCard chosenCard = chooseCard(player, player.getSelectableCardsFromHand());
-                discardPile.add(player.removeCardFromHand(chosenCard));
+                round.getDiscardPile().add(player.removeCardFromHand(chosenCard));
             }
-            case LOOK_AT_IDENTITY -> view.showPlayerIdentity(player.getName(), getPlayerIdentityCard(player).isWitch());
+            case LOOK_AT_IDENTITY -> view.showPlayerIdentity(player.getName(), round.getPlayerIdentityCard(player).isWitch());
             case REVEAL_IDENTITY -> {
                 view.showPlayerAction(player.getName());
-                view.showPlayerIdentity(player.getName(), getPlayerIdentityCard(player).isWitch());
+                view.showPlayerIdentity(player.getName(), round.getPlayerIdentityCard(player).isWitch());
 
                 revealIdentity(player);
             }
             case ACCUSE -> {
-                List<Player> players = getNotRevealedPlayers(player);
+                List<Player> players = round.getNotRevealedPlayers(player);
                 //In case an effect forbid a player from accusing a certain other player
-                List<Player> notSelectablePlayersOfPlayer = notSelectablePlayers.get(player);
-                if (players.size() > 1 && notSelectablePlayersOfPlayer != null) {
-                    players.removeIf(notSelectablePlayersOfPlayer::contains);
-                    notSelectablePlayersOfPlayer.clear();
+                List<Player> notSelectablePlayers = round.getNotSelectablePlayers(player);
+                if (players.size() > 1 && notSelectablePlayers != null) {
+                    players.removeIf(notSelectablePlayers::contains);
+                    notSelectablePlayers.clear();
                 }
 
                 Player targetedPlayer = choosePlayer(player, players);
@@ -330,20 +153,20 @@ public class RoundController {
                 askPlayerForAction(targetedPlayer, getStandardActions(targetedPlayer));
 
                 //If the player is a witch, its identity card is deleted, so if null the player was revealed as a witch
-                if (getPlayerIdentityCard(targetedPlayer) == null) {
+                if (round.getPlayerIdentityCard(targetedPlayer) == null) {
                     player.addToScore(1);
                 }
             }
             case USE_CARD -> {
                 boolean cardUsedSuccessfully;
                 do {
-                    RumourCard chosenRumourCard = chooseCard(player, getUsableCards(player, player.getSelectableCardsFromHand()));
+                    RumourCard chosenRumourCard = chooseCard(player, round.getUsableCards(player, player.getSelectableCardsFromHand()));
                     view.showPlayerAction(player.getName(), chosenRumourCard.getCardName());
                     cardUsedSuccessfully = player.revealRumourCard(chosenRumourCard);
                 } while (!cardUsedSuccessfully);
             }
         }
-        if (action != PlayerAction.ACCUSE) passToNextPlayer(player, nextPlayer);
+        if (action != PlayerAction.ACCUSE) passToNextPlayer(player, round.getNextPlayer());
     }
 
     /**
@@ -353,7 +176,7 @@ public class RoundController {
      * @param nextPlayer the next player
      */
     private void passToNextPlayer(Player player, Player nextPlayer) {
-        boolean atLeast2RealPlayers = getIdentityCards().stream().filter(identityCard -> !(identityCard.player instanceof AI)).count() > 1;
+        boolean atLeast2RealPlayers = round.getIdentityCards().stream().filter(identityCard -> !(identityCard.player instanceof AI)).count() > 1;
         if (!(player == nextPlayer || nextPlayer instanceof AI) && atLeast2RealPlayers) {
             view.promptForPlayerSwitch(nextPlayer.getName());
         }
@@ -365,14 +188,14 @@ public class RoundController {
      * @param player the player
      */
     private void revealIdentity(Player player) {
-        IdentityCard playerIdentityCard = getPlayerIdentityCard(player);
+        IdentityCard playerIdentityCard = round.getPlayerIdentityCard(player);
         playerIdentityCard.setIdentityRevealed(true);
         if (playerIdentityCard.isWitch()) {
             //If a player is revealed as a witch, we exclude him from the round
-            identityCards.removeIf(identityCard -> identityCard.player == player);
-            setNextPlayer(RoundController.getCurrentPlayer());
+            round.getIdentityCards().removeIf(identityCard -> identityCard.player == player);
+            round.setNextPlayer(Round.getCurrentPlayer());
         } else {
-            setNextPlayer(player);
+            round.setNextPlayer(player);
         }
     }
 
@@ -382,16 +205,16 @@ public class RoundController {
      */
     private void distributeRumourCards() {
         gameController.deck.shuffle();
-        int nbOfExcessCards = CardName.values().length % identityCards.size();
+        int nbOfExcessCards = CardName.values().length % round.getIdentityCards().size();
 
         //Take care of excess cards
         for (int i = 0; i < nbOfExcessCards; i++) {
-            discardPile.add(gameController.deck.removeTopCard());
+            round.getDiscardPile().add(gameController.deck.removeTopCard());
         }
 
         //Distribute the rest equally
-        int numberOfCardsPerPlayer = CardName.values().length / identityCards.size();
-        for (Player player : gameController.players) {
+        int numberOfCardsPerPlayer = CardName.values().length / round.getIdentityCards().size();
+        for (PlayerController player : gameController.players) {
             for (int i = 0; i < numberOfCardsPerPlayer; i++) {
                 player.addCardToHand(gameController.deck.removeTopCard());
             }
@@ -404,7 +227,7 @@ public class RoundController {
      */
     private void askPlayersForIdentity() {
         boolean previousWasPlayer = false;
-        for (IdentityCard identityCard : identityCards) {
+        for (IdentityCard identityCard : round.getIdentityCards()) {
             if (identityCard.player instanceof AI ai) {
                 ai.selectIdentity();
             } else {
@@ -422,8 +245,8 @@ public class RoundController {
      * This method will only be used on the first round to select a random player to start.
      */
     private void selectFirstPlayer() {
-        List<Player> playerList = gameController.players;
-        RoundController.currentPlayer = playerList.get(randomInInterval(playerList.size() - 1));
+        List<PlayerController> playerList = gameController.players;
+        Round.setCurrentPlayer(playerList.get(randomInInterval(playerList.size() - 1)).getPlayer());
     }
 
     /**
@@ -431,12 +254,12 @@ public class RoundController {
      * This method will do everything necessary to set up a round (select 1st player, create identity cards, distribute Rumour cards, ask players for identity).
      */
     private void startRound() {
-        numberOfRound++;
-        view.showStartOfRound(numberOfRound);
+        Round.addNumberOfRound();
+        view.showStartOfRound(Round.getNumberOfRound());
 
-        if (currentPlayer == null) selectFirstPlayer();
+        if (Round.getCurrentPlayer() == null) selectFirstPlayer();
         //Fill up the list of active players at the start
-        gameController.players.forEach(player -> identityCards.add(new IdentityCard(player)));
+        gameController.players.forEach(player -> round.getIdentityCards().add(new IdentityCard(player.getPlayer())));
 
         distributeRumourCards();
         askPlayersForIdentity();
@@ -448,9 +271,9 @@ public class RoundController {
      */
     private void playRound() {
         do {
-            askPlayerForAction(getCurrentPlayer(), getStandardActions(getCurrentPlayer()));
-            currentPlayer = nextPlayer;
-        } while (getNumberOfNotRevealedPlayers() > 1);
+            askPlayerForAction(Round.getCurrentPlayer(), getStandardActions(Round.getCurrentPlayer()));
+            Round.setCurrentPlayer(round.getNextPlayer());
+        } while (round.getNumberOfNotRevealedPlayers() > 1);
     }
 
     /**
@@ -459,7 +282,7 @@ public class RoundController {
      */
     private void endRound() {
         //We search the last not revealed player, reveal is identity and give him points
-        IdentityCard identityCard = identityCards.stream()
+        IdentityCard identityCard = round.getIdentityCards().stream()
                 .filter(card -> !card.isIdentityRevealed())
                 .findFirst()
                 .orElseThrow();
@@ -467,7 +290,7 @@ public class RoundController {
         view.showPlayerIdentity(identityCard.player.getName(), identityCard.isWitch());
         identityCard.player.addToScore(identityCard.isWitch() ? 2 : 1);
         //Set him to be first for the next round
-        currentPlayer = identityCard.player;
+        Round.setCurrentPlayer(identityCard.player);
 
         //Gather all players cards
         gameController.players.forEach(player -> {
@@ -476,8 +299,8 @@ public class RoundController {
             }
         });
         //Gather the discarded cards
-        for (Iterator<RumourCard> iterator = discardPile.iterator(); iterator.hasNext(); ) {
-            gameController.deck.returnCardToDeck(discardPile.poll());
+        for (Iterator<RumourCard> iterator = round.getDiscardPile().iterator(); iterator.hasNext(); ) {
+            gameController.deck.returnCardToDeck(round.getDiscardPile().get(0));
         }
     }
 
