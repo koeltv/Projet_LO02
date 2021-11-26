@@ -3,6 +3,7 @@ package com.model.card.effect;
 import com.controller.RoundController;
 import com.model.card.CardName;
 import com.model.card.RumourCard;
+import com.model.game.Round;
 import com.model.player.Player;
 
 import java.util.ArrayList;
@@ -26,7 +27,7 @@ public class DiscardFromHandEffect extends Effect {
     public boolean applyEffect(final Player cardUser, final Player target) {
         if (selectableCards.size() > 0) {
             RumourCard chosenCard = RoundController.getInstance().chooseCard(cardUser, selectableCards);
-            RoundController.getInstance().getDiscardPile().add(cardUser.removeCardFromHand(chosenCard));
+            Round.getInstance().getDiscardPile().add(cardUser.removeCardFromHand(chosenCard));
             return true;
         } else {
             return false;

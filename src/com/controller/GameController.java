@@ -1,6 +1,7 @@
 package com.controller;
 
 import com.model.card.Deck;
+import com.model.game.Round;
 import com.model.player.AI;
 import com.model.player.Player;
 import com.view.ActiveView;
@@ -127,9 +128,7 @@ public class GameController {
      * @return true if at least 1 player has 5 points or more, and false otherwise
      */
     private boolean verifyScores() {
-        for (Player player : players)
-            if (player.getScore() >= 5) return true;
-        return false;
+        return players.stream().anyMatch(player -> player.getScore() >= 5);
     }
 
     /**
@@ -146,10 +145,10 @@ public class GameController {
         if (winners.size() > 1) {
             settleTie(winners);
         } else if (winners.size() == 1) {
-            view.showGameWinner(winners.get(0).getName(), RoundController.getNumberOfRound());
+            view.showGameWinner(winners.get(0).getName(), Round.getNumberOfRound());
         }
 
-        RoundController.reset();
+        Round.reset();
     }
 
     /**
@@ -159,7 +158,7 @@ public class GameController {
      */
     private void settleTie(List<Player> winners) { //TODO Find better alternative
         Player winner = winners.get(randomInInterval(winners.size() - 1));
-        view.showGameWinner(winner.getName(), RoundController.getNumberOfRound());
+        view.showGameWinner(winner.getName(), Round.getNumberOfRound());
     }
 
     /**

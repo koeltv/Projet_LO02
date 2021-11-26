@@ -1,8 +1,8 @@
 package com.model.card.effect;
 
-import com.controller.RoundController;
 import com.model.card.CardName;
 import com.model.card.RumourCard;
+import com.model.game.Round;
 import com.model.player.Player;
 
 import java.util.List;
@@ -35,12 +35,12 @@ public class TakeRandomCardFromNextEffect extends Effect {
 
     @Override
     public Player chooseTarget(final CardName cardName, Player cardUser) {
-        return RoundController.getInstance().getNextPlayer();
+        return Round.getInstance().getNextPlayer();
     }
 
     @Override
     public boolean isApplicable(Player cardUser, CardName cardName) {
-        return RoundController.getInstance().getSelectablePlayers(cardUser)
+        return Round.getInstance().getSelectablePlayers(cardUser)
                 .stream().anyMatch(player -> player.getSelectableCardsFromHand().size() > 0);
     }
 

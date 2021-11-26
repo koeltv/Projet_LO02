@@ -1,8 +1,8 @@
 package com.model.card;
 
-import com.controller.RoundController;
 import com.model.card.effect.Effect;
 import com.model.card.effect.EffectList;
+import com.model.game.Round;
 import com.model.player.Player;
 
 import java.util.List;
@@ -72,7 +72,7 @@ public class RumourCard {
      * @return whether the card has been used successfully or not
      */
     public boolean useCard(Player cardUser) {
-        return applyEffects(cardUser, cardUser == RoundController.getCurrentPlayer() ? huntEffects.effects : witchEffects.effects);
+        return applyEffects(cardUser, cardUser == Round.getCurrentPlayer() ? huntEffects.effects : witchEffects.effects);
     }
 
     /**
@@ -111,7 +111,7 @@ public class RumourCard {
      * @return true if it is, false otherwise
      */
     public boolean isUsable(Player cardUser) {
-        List<Effect> effects = cardUser == RoundController.getCurrentPlayer() ? huntEffects.effects : witchEffects.effects;
+        List<Effect> effects = cardUser == Round.getCurrentPlayer() ? huntEffects.effects : witchEffects.effects;
         return effects.stream().allMatch(effect -> effect.isApplicable(cardUser, cardName));
     }
 
