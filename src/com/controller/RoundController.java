@@ -353,10 +353,8 @@ public class RoundController {
      * @param nextPlayer the next player
      */
     private void passToNextPlayer(Player player, Player nextPlayer) {
-        if (
-                !(player == nextPlayer || nextPlayer instanceof AI)
-                        && identityCards.stream().filter(identityCard -> !(identityCard.player instanceof AI)).count() > 1
-        ) {
+        boolean atLeast2RealPlayers = getIdentityCards().stream().filter(identityCard -> !(identityCard.player instanceof AI)).count() > 1;
+        if (!(player == nextPlayer || nextPlayer instanceof AI) && atLeast2RealPlayers) {
             view.promptForPlayerSwitch(nextPlayer.getName());
         }
     }
