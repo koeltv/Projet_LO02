@@ -174,7 +174,7 @@ public class CommandLineView implements PassiveView, ActiveView {
 
     @Override
     public void promptForPlayerSwitch(String name) {
-        System.out.println("Please pass the hand to Player " + name);
+        System.out.println("Please pass the hand to Player " + name + ", then press enter");
         keyboard.nextLine();
     }
 }

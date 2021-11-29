@@ -134,7 +134,7 @@ public class GraphicalTextView extends GraphicView {
     @Override
     public void waitForCardChoice(List<RumourCard> rumourCards) {
         appendText("Waiting for card choice");
-        rumourCards.forEach(rumourCard -> appendText(rumourCard.toString()));
+        if (rumourCards != null) rumourCards.forEach(rumourCard -> appendText(rumourCard.toString()));
     }
 
     @Override

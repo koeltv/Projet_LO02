@@ -352,7 +352,10 @@ public class RoundController {
      * @param nextPlayer the next player
      */
     private void passToNextPlayer(Player player, Player nextPlayer) {
-        if (!(player == nextPlayer || nextPlayer instanceof AI)) {
+        if (
+                !(player == nextPlayer || nextPlayer instanceof AI)
+                        && identityCards.stream().filter(identityCard -> !(identityCard.player instanceof AI)).count() > 1
+        ) {
             view.promptForPlayerSwitch(nextPlayer.getName());
         }
     }

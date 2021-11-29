@@ -6,10 +6,10 @@ import com.model.player.Player;
 import com.view.ActiveView;
 import com.view.CommandLineView;
 import com.view.Views;
-import com.view.graphic.dynamic.Graphical2DView;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import static com.util.GameUtil.randomAIName;
 import static com.util.GameUtil.randomInInterval;
@@ -85,8 +85,9 @@ public class GameController {
             values = view.promptForRepartition();
         } while (!repartitionAllowed(values[0], values[1]));
 
-        for (int i = 0; i < values[0]; i++) addPlayer(i);
-        for (int i = 0; i < values[1]; i++) players.add(new AI(randomAIName(players)));
+        for (int i = 1; i <= values[0]; i++) addPlayer(i);
+        for (int i = 0; i < values[1]; i++)
+            players.add(new AI(randomAIName(players.stream().map(Player::getName).collect(Collectors.toList()))));
     }
 
     /**
@@ -188,8 +189,8 @@ public class GameController {
      * @param args the input arguments, currently unused
      */
     public static void main(String[] args) {
-        Views views = new Views(new Graphical2DView());
-        views.addView(new CommandLineView());
+        Views views = new Views(new CommandLineView());
+        //        views.addView(new Graphical2DView());
 
         GameController gameController = new GameController(views);
         gameController.run();
