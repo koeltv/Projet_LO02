@@ -10,7 +10,7 @@ import java.util.Scanner;
 /**
  * The type Command line view.
  */
-public class CommandLineView implements PassiveView, ActiveView {
+public class CommandLineView implements ActiveView {
     /**
      * The Keyboard.
      */
@@ -58,53 +58,6 @@ public class CommandLineView implements PassiveView, ActiveView {
     @Override
     public void showPlayerAction(String name, CardName chosenCardName) {
         System.out.println("Player " + name + " is using " + chosenCardName + " !");
-    }
-
-    ///////////////////////////////////////////////////////////////////////////
-    // Passive Methods
-    ///////////////////////////////////////////////////////////////////////////
-
-    @Override
-    public void waitForPlayerName(int playerIndex) {
-        System.out.println("Waiting for Player " + playerIndex + " name ...");
-    }
-
-    @Override
-    public void waitForNewGame() {
-        System.out.println("Waiting for a new game choice");
-    }
-
-    @Override
-    public void waitForPlayerChoice(List<String> playerNames) {
-        System.out.println("Waiting for player choice");
-        playerNames.forEach(System.out::println);
-    }
-
-    @Override
-    public void waitForCardChoice(List<RumourCard> rumourCards) {
-        System.out.println("Waiting for card choice");
-        if (rumourCards != null) rumourCards.forEach(System.out::println);
-    }
-
-    @Override
-    public void waitForRepartition() {
-        System.out.println("Waiting for repartition choice");
-    }
-
-    @Override
-    public void waitForPlayerIdentity(String name) {
-        System.out.println("Waiting for " + name + " identity choice");
-    }
-
-    @Override
-    public void waitForAction(String playerName, List<PlayerAction> possibleActions) {
-        System.out.println("Waiting for " + playerName + " action choice");
-        possibleActions.forEach(System.out::println);
-    }
-
-    @Override
-    public void waitForPlayerSwitch(String name) {
-        System.out.println("Waiting for Player " + name);
     }
 
     ///////////////////////////////////////////////////////////////////////////

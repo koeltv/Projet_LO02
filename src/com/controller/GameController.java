@@ -5,8 +5,6 @@ import com.model.player.AI;
 import com.model.player.Player;
 import com.view.ActiveView;
 import com.view.CommandLineView;
-import com.view.Views;
-import com.view.graphic.dynamic.Graphical2DView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -137,7 +135,7 @@ public class GameController {
      * @param winners the winners
      * @return the winning player
      */
-    private Player settleTie(List<Player> winners) { //TODO Find better alternative
+    private Player settleTie(List<Player> winners) {
         return winners.get(randomInInterval(winners.size() - 1));
     }
 
@@ -167,10 +165,7 @@ public class GameController {
      * @param args the input arguments, currently unused
      */
     public static void main(String[] args) {
-        Views views = new Views(new CommandLineView());
-        views.addView(new Graphical2DView());
-
-        GameController gameController = new GameController(views);
+        GameController gameController = new GameController(new CommandLineView());
         gameController.run();
     }
 }
