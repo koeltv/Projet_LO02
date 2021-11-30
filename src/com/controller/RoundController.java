@@ -330,9 +330,7 @@ public class RoundController {
                 askPlayerForAction(targetedPlayer, getStandardActions(targetedPlayer));
 
                 //If the player is a witch, its identity card is deleted, so if null the player was revealed as a witch
-                if (getPlayerIdentityCard(targetedPlayer) == null) {
-                    player.addToScore(1);
-                }
+                if (getPlayerIdentityCard(targetedPlayer) == null) player.addToScore(1);
             }
             case USE_CARD -> {
                 boolean cardUsedSuccessfully;

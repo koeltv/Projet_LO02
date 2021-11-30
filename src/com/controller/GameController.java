@@ -138,11 +138,7 @@ public class GameController {
      * @return the winning player
      */
     private Player settleTie(List<Player> winners) { //TODO Find better alternative
-        if (winners.size() > 1) {
-            return winners.get(randomInInterval(winners.size() - 1));
-        } else {
-            return winners.get(0);
-        }
+        return winners.get(randomInInterval(winners.size() - 1));
     }
 
     /**
