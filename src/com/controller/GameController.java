@@ -6,6 +6,7 @@ import com.model.player.Player;
 import com.view.ActiveView;
 import com.view.CommandLineView;
 import com.view.Views;
+import com.view.graphic.dynamic.Graphical2DView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,7 +22,7 @@ public class GameController {
     /**
      * The Players.
      */
-    List<Player> players;
+    final List<Player> players;
 
     /**
      * The Deck.
@@ -34,29 +35,12 @@ public class GameController {
     private final ActiveView view;
 
     /**
-     * Action choice at the end of a game.
-     */
-    enum GameAction {
-        /**
-         * Restart a new game with existing players.
-         */
-        RESTART_GAME,
-        /**
-         * Restart a new game with new players.
-         */
-        RESET_GAME,
-        /**
-         * End the program.
-         */
-        STOP
-    }
-
-    /**
      * Instantiates a new Game controller.
      *
      * @param view the view
      */
     public GameController(ActiveView view) {
+        this.players = new ArrayList<>();
         this.deck = new Deck();
         this.view = view;
     }
@@ -79,15 +63,19 @@ public class GameController {
      * Ask for player repartition.
      */
     private void askForPlayerRepartition() {
-        players = new ArrayList<>();
+        players.clear();
         int[] values;
         do {
             values = view.promptForRepartition();
         } while (!repartitionAllowed(values[0], values[1]));
 
         for (int i = 1; i <= values[0]; i++) addPlayer(i);
-        for (int i = 0; i < values[1]; i++)
-            players.add(new AI(randomAIName(players.stream().map(Player::getName).collect(Collectors.toList()))));
+        for (int i = 0; i < values[1]; i++) {
+            players.add(new AI(randomAIName(players.stream()
+                    .map(Player::getName)
+                    .collect(Collectors.toList())
+            )));
+        }
     }
 
     /**
@@ -128,28 +116,18 @@ public class GameController {
      * @return true if at least 1 player has 5 points or more, and false otherwise
      */
     private boolean verifyScores() {
-        for (Player player : players)
-            if (player.getScore() >= 5) return true;
-        return false;
+        return players.stream().anyMatch(player -> player.getScore() >= 5);
     }
 
     /**
      * Wrap up game.
      */
     private void wrapUpGame() {
-        List<Player> winners = new ArrayList<>();
+        List<Player> winners = players.stream().filter(player -> player.getScore() >= 5).collect(Collectors.toList());
 
-        players.forEach(player -> {
-            if (player.getScore() >= 5) winners.add(player);
-            player.resetScore();
-        });
+        view.showGameWinner(settleTie(winners).getName(), RoundController.getNumberOfRound());
 
-        if (winners.size() > 1) {
-            settleTie(winners);
-        } else if (winners.size() == 1) {
-            view.showGameWinner(winners.get(0).getName(), RoundController.getNumberOfRound());
-        }
-
+        players.forEach(Player::resetScore);
         RoundController.reset();
     }
 
@@ -157,10 +135,14 @@ public class GameController {
      * Settle tie.
      *
      * @param winners the winners
+     * @return the winning player
      */
-    private void settleTie(List<Player> winners) { //TODO Find better alternative
-        Player winner = winners.get(randomInInterval(winners.size() - 1));
-        view.showGameWinner(winner.getName(), RoundController.getNumberOfRound());
+    private Player settleTie(List<Player> winners) { //TODO Find better alternative
+        if (winners.size() > 1) {
+            return winners.get(randomInInterval(winners.size() - 1));
+        } else {
+            return winners.get(0);
+        }
     }
 
     /**
@@ -190,7 +172,7 @@ public class GameController {
      */
     public static void main(String[] args) {
         Views views = new Views(new CommandLineView());
-        //        views.addView(new Graphical2DView());
+        views.addView(new Graphical2DView());
 
         GameController gameController = new GameController(views);
         gameController.run();

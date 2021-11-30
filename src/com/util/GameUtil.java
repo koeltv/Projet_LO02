@@ -13,6 +13,8 @@ public final class GameUtil {
     private GameUtil() {
     }
 
+    private static final String[] NAMES = {"Jean", "Antoine", "Fabrice", "Patrick", "Clara", "June", "Louis", "Sylvain"};
+
     /**
      * Get random integer between 0 and the max.
      * This function is a utility function used to get a random integer between 0 and the max value (included).
@@ -31,17 +33,10 @@ public final class GameUtil {
      * @return new name
      */
     public static String randomAIName(List<String> playerNames) {
-        String[] NAMES = {"Jean", "Antoine", "Fabrice", "Patrick", "Clara", "June", "Louis", "Sylvain"};
-
         String name;
-        boolean nameAssigned = false;
         do {
             name = NAMES[randomInInterval(NAMES.length - 1)];
-            for (String playerName : playerNames) {
-                nameAssigned = playerName.equals(name);
-                if (nameAssigned) break;
-            }
-        } while (nameAssigned);
+        } while (playerNames.contains(name));
         return name;
     }
 }
