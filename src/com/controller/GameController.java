@@ -2,7 +2,6 @@ package com.controller;
 
 import com.model.card.Deck;
 import com.model.game.Round;
-import com.model.player.AI;
 import com.model.player.Player;
 import com.view.ActiveView;
 import com.view.CommandLineView;
@@ -23,7 +22,7 @@ public class GameController {
     /**
      * The Players.
      */
-    List<PlayerController> players;
+    final List<PlayerController> players;
 
     /**
      * The Deck.
@@ -35,6 +34,10 @@ public class GameController {
      */
     private final ActiveView view;
 
+    ///////////////////////////////////////////////////////////////////////////
+    // Constructor, getters and setters
+    ///////////////////////////////////////////////////////////////////////////
+
     /**
      * Instantiates a new Game controller.
      *
@@ -45,6 +48,10 @@ public class GameController {
         this.deck = new Deck();
         this.view = view;
     }
+
+    ///////////////////////////////////////////////////////////////////////////
+    // Controller methods
+    ///////////////////////////////////////////////////////////////////////////
 
     /**
      * Check if the given repartition is allowed.
@@ -76,8 +83,8 @@ public class GameController {
                     randomAIName(players.stream()
                             .map(player -> player.getPlayer().getName())
                             .collect(Collectors.toList()))
-                    ,view
-                    ));
+                    , view
+            ));
         }
     }
 
@@ -141,11 +148,7 @@ public class GameController {
      * @return the winning player
      */
     private Player settleTie(List<Player> winners) { //TODO Find better alternative
-        if (winners.size() > 1) {
-            return winners.get(randomInInterval(winners.size() - 1));
-        } else {
-            return winners.get(0);
-        }
+        return winners.get(randomInInterval(winners.size() - 1));
     }
 
     /**

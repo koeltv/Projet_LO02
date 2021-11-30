@@ -13,7 +13,6 @@ import java.util.stream.Collectors;
  * The type Player controller.
  */
 public class PlayerController {
-
     /**
      * The Player.
      */
@@ -55,13 +54,6 @@ public class PlayerController {
      */
     public int getScore() {
         return player.getScore();
-    }
-
-    /**
-     * Reset score.
-     */
-    public void resetScore() {
-        player.resetScore();
     }
 
     /**

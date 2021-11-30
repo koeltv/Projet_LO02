@@ -12,6 +12,10 @@ import java.util.List;
  */
 public class AIController extends PlayerController {
 
+    ///////////////////////////////////////////////////////////////////////////
+    // Constructor, getters and setters
+    ///////////////////////////////////////////////////////////////////////////
+
     /**
      * Instantiates a new AI controller.
      *
@@ -22,6 +26,10 @@ public class AIController extends PlayerController {
         super(view);
         this.player = new AI(playerName);
     }
+
+    ///////////////////////////////////////////////////////////////////////////
+    // Controller methods
+    ///////////////////////////////////////////////////////////////////////////
 
     @Override
     public void chooseIdentity() {

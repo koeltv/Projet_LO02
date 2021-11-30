@@ -28,8 +28,7 @@ public class RoundController {
     private final GameController gameController;
 
     /**
-     * Gets round controller instance.
-     * Return the single available instance of RoundController (Singleton).
+     * The single instance of round controller.
      */
     private static RoundController instance;
 
@@ -62,19 +61,13 @@ public class RoundController {
     }
 
     /**
-     * Gets instance.
+     * Gets round controller instance.
+     * Return the single available instance of RoundController (Singleton).
      *
      * @return the instance
      */
     public static RoundController getInstance() {
         return instance;
-    }
-
-    /**
-     * Reset static attributes.
-     */
-    public static void reset() {
-        Round.reset();
     }
 
     /**
@@ -256,8 +249,9 @@ public class RoundController {
     private void askPlayersForIdentity() {
         boolean previousWasPlayer = false;
         for (IdentityCard identityCard : round.getIdentityCards()) {
-            if (previousWasPlayer && !(identityCard.player instanceof AI))
+            if (previousWasPlayer && !(identityCard.player instanceof AI)) {
                 view.promptForPlayerSwitch(identityCard.player.getName());
+            }
             getPlayerController(identityCard.player).chooseIdentity();
             previousWasPlayer = !(identityCard.player instanceof AI);
         }
