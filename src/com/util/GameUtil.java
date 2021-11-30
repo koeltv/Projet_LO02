@@ -13,6 +13,9 @@ public final class GameUtil {
     private GameUtil() {
     }
 
+    /**
+     * The constant holding possibles names. Intended to be used for AIs.
+     */
     private static final String[] NAMES = {"Jean", "Antoine", "Fabrice", "Patrick", "Clara", "June", "Louis", "Sylvain"};
 
     /**
@@ -32,7 +35,7 @@ public final class GameUtil {
      * @param playerNames the players name
      * @return new name
      */
-    public static String randomAIName(List<String> playerNames) {
+    public static String randomName(List<String> playerNames) {
         String name;
         do {
             name = NAMES[randomInInterval(NAMES.length - 1)];

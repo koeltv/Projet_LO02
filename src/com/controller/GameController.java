@@ -12,8 +12,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import static com.util.GameUtil.randomAIName;
 import static com.util.GameUtil.randomInInterval;
+import static com.util.GameUtil.randomName;
 
 /**
  * The type Game controller.
@@ -80,7 +80,7 @@ public class GameController {
         for (int i = 1; i <= values[0]; i++) addPlayer(i);
         for (int i = 0; i < values[1]; i++) {
             players.add(new AIController(
-                    randomAIName(players.stream()
+                    randomName(players.stream()
                             .map(player -> player.getPlayer().getName())
                             .collect(Collectors.toList()))
                     , view
