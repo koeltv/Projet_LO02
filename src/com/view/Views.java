@@ -201,4 +201,10 @@ public class Views extends JFrame implements ActiveView, Runnable {
             }
         }
     }
+
+	@Override
+	public void showCardList(String name, List<String> card) {
+		views.forEach(passiveView -> passiveView.showCardList(name, card));
+        activeView.showCardList(name, card);
+	}
 }

@@ -131,19 +131,19 @@ public class CommandLineView implements PassiveView, ActiveView {
 
     @Override
     public String promptForPlayerName(int playerIndex) {
-        System.out.println("Enter player " + playerIndex + " name");
+        System.out.println(">> Enter player " + playerIndex + " name");
         return keyboard.nextLine();
     }
 
     @Override
     public String promptForNewGame() {
-        System.out.println("Press enter to play again, q to exit or r to reset");
+        System.out.println(">> Press enter to play again, q to exit or r to reset");
         return keyboard.nextLine();
     }
 
     @Override
     public int promptForPlayerChoice(List<String> playerNames) {
-        System.out.println("Choose a player by index");
+        System.out.println(">> Choose a player by index");
         for (int i = 0; i < playerNames.size(); i++) {
             System.out.println(i + "- " + playerNames.get(i));
         }
@@ -152,7 +152,7 @@ public class CommandLineView implements PassiveView, ActiveView {
 
     @Override
     public int promptForCardChoice(List<RumourCard> rumourCards) {
-        System.out.println("Choose a card by index");
+        System.out.println(">> Choose a card by index");
         for (int i = 0; i < rumourCards.size(); i++) {
             System.out.println(i + "- " + rumourCards.get(i));
         }
@@ -161,29 +161,29 @@ public class CommandLineView implements PassiveView, ActiveView {
 
     @Override
     public int promptForCardChoice(int listSize) {
-        System.out.println("Choose a card by index");
+        System.out.println(">> Choose a card by index");
         for (int i = 0; i < listSize; i++) System.out.println("Card n°" + i);
         return promptForInt(listSize);
     }
 
     @Override
     public int[] promptForRepartition() {
-        System.out.println("Number of players ?");
+        System.out.println(">> Number of players ?");
         int nbPlayers = promptForInt();
-        System.out.println("Number of AI ?");
+        System.out.println(">> Number of AI ?");
         int nbAIs = promptForInt();
         return new int[]{nbPlayers, nbAIs};
     }
 
     @Override
     public int promptForPlayerIdentity(String name) {
-        System.out.println(name + ", type 0 for villager and 1 for witch");
+        System.out.println(">> " + name + ", type 0 for villager and 1 for witch");
         return promptForInt();
     }
 
     @Override
     public PlayerAction promptForAction(String playerName, List<PlayerAction> possibleActions) {
-        System.out.println(playerName + ", please choose your next action");
+        System.out.println(">> " + playerName + ", please choose your next action");
         for (int i = 0; i < possibleActions.size(); i++) {
             System.out.println(i + "- " + possibleActions.get(i));
         }
@@ -192,7 +192,15 @@ public class CommandLineView implements PassiveView, ActiveView {
 
     @Override
     public void promptForPlayerSwitch(String name) {
-        System.out.println("Please pass the hand to Player " + name + ", then press enter");
+        System.out.println(">> Please pass the hand to Player " + name + ", then press enter");
         keyboard.nextLine();
     }
+
+	@Override
+	public void showCardList(String name, List<String> card) {
+		System.out.println("\n================ "+ name +" ================\n");
+		for(String cardDescription : card) {
+			System.out.println(cardDescription);
+		}
+	}
 }

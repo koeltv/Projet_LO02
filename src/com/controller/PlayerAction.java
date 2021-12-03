@@ -23,7 +23,19 @@ public enum PlayerAction {
     /**
      * Discard player action.
      */
-    DISCARD;
+    DISCARD,
+    /**
+     * View player's hand.
+     */
+    VIEW_HAND,
+    /**
+     * View cards revealed.
+     */
+    VIEW_REVEALED,
+    /**
+     * View discard pile.
+     */
+    VIEW_DISCARD_PILE;
 
     @Override
     public String toString() {

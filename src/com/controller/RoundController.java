@@ -277,6 +277,11 @@ public class RoundController {
         //If the player has at least 1 usable card, we add the possibility to use it
         List<RumourCard> hand = player.getSelectableCardsFromHand();
         if (hand.size() > 0 && getUsableCards(player, hand).size() > 0) possibleActions.add(PlayerAction.USE_CARD);
+        if(!(player instanceof AI)) {
+        	possibleActions.add(PlayerAction.VIEW_HAND);
+        	possibleActions.add(PlayerAction.VIEW_REVEALED);
+        	possibleActions.add(PlayerAction.VIEW_DISCARD_PILE);
+        }
         return possibleActions;
     }
 
@@ -289,10 +294,13 @@ public class RoundController {
      */
     public void askPlayerForAction(Player player, List<PlayerAction> possibleActions) {
         //Ask the player to choose his next action
-        applyPlayerAction(player, player instanceof AI ai ?
-                ai.play(possibleActions) :
-                view.promptForAction(player.getName(), possibleActions)
-        );
+        PlayerAction action;
+    	do {
+        	action = player instanceof AI ai ?
+                    ai.play(possibleActions) :
+                    view.promptForAction(player.getName(), possibleActions);
+        	applyPlayerAction(player, action);
+        } while (action == PlayerAction.VIEW_HAND || action == PlayerAction.VIEW_REVEALED || action == PlayerAction.VIEW_DISCARD_PILE);
     }
 
     /**
@@ -340,6 +348,20 @@ public class RoundController {
                     cardUsedSuccessfully = player.revealRumourCard(chosenRumourCard);
                 } while (!cardUsedSuccessfully);
             }
+            case VIEW_HAND -> {
+            	view.showCardList("Hand", player.getSelectableCardsFromHand().stream().map(card -> card.toString()).toList());
+            	nextPlayer = player;
+            }
+            case VIEW_REVEALED -> {
+            	for(IdentityCard p : identityCards) {
+                	view.showCardList("Revealed cards of " + p.player.getName(), p.player.getRevealedCards().stream().map(card -> card.toString()).toList());
+                	nextPlayer = player;
+            	}
+            }
+            case VIEW_DISCARD_PILE -> {
+            	view.showCardList("Discard Pile", discardPile.stream().map(card -> card.toString()).toList());
+            	nextPlayer = player;
+            }
         }
         if (action != PlayerAction.ACCUSE) passToNextPlayer(player, nextPlayer);
     }
@@ -351,10 +373,7 @@ public class RoundController {
      * @param nextPlayer the next player
      */
     private void passToNextPlayer(Player player, Player nextPlayer) {
-        boolean atLeast2RealPlayers = getIdentityCards().stream().filter(identityCard -> !(identityCard.player instanceof AI)).count() > 1;
-        if (!(player == nextPlayer || nextPlayer instanceof AI) && atLeast2RealPlayers) {
-            view.promptForPlayerSwitch(nextPlayer.getName());
-        }
+        view.promptForPlayerSwitch(nextPlayer.getName());
     }
 
     /**
