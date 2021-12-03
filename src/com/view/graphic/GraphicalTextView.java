@@ -157,4 +157,9 @@ public class GraphicalTextView extends GraphicView {
     public void waitForPlayerSwitch(String name) {
         appendText("Waiting for Player " + name);
     }
+
+	@Override
+	public void showCardList(String name, List<String> card) {
+		//Nothing
+	}
 }

@@ -186,4 +186,10 @@ public class Graphical2DView extends GraphicView {
         displayAndRepaint();
         return super.promptForPlayerIdentity(name);
     }
+
+	@Override
+	public void showCardList(String name, List<String> card) {
+		actualiseMainPlayer(name);
+        displayAndRepaint();
+	}
 }

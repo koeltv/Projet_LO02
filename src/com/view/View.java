@@ -1,5 +1,7 @@
 package com.view;
 
+import java.util.List;
+
 import com.model.card.CardName;
 
 /**
@@ -59,4 +61,11 @@ public interface View {
      * @param chosenCardName the chosen card name
      */
     void showPlayerAction(String name, CardName chosenCardName);
+    
+    /**
+     * 
+     * @param name
+     * @param card
+     */
+    void showCardList(String name, List<String> card);
 }
