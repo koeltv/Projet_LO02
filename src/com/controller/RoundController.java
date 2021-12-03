@@ -349,18 +349,18 @@ public class RoundController {
                 } while (!cardUsedSuccessfully);
             }
             case VIEW_HAND -> {
-            	view.showCardList("Hand", player.getSelectableCardsFromHand().stream().map(card -> card.toString()).toList());
-            	nextPlayer = player;
+            	view.showCardList("Hand", player.getSelectableCardsFromHand().stream().map(RumourCard::toString).toList());
+                nextPlayer = player;
             }
             case VIEW_REVEALED -> {
-            	for(IdentityCard p : identityCards) {
-                	view.showCardList("Revealed cards of " + p.player.getName(), p.player.getRevealedCards().stream().map(card -> card.toString()).toList());
-                	nextPlayer = player;
-            	}
+                for (IdentityCard card : identityCards) {
+                    view.showCardList("Revealed cards of " + card.player.getName(), card.player.getRevealedCards().stream().map(RumourCard::toString).toList());
+                    nextPlayer = player;
+                }
             }
             case VIEW_DISCARD_PILE -> {
-            	view.showCardList("Discard Pile", discardPile.stream().map(card -> card.toString()).toList());
-            	nextPlayer = player;
+                view.showCardList("Discard Pile", discardPile.stream().map(RumourCard::toString).toList());
+                nextPlayer = player;
             }
         }
         if (action != PlayerAction.ACCUSE) passToNextPlayer(player, nextPlayer);
@@ -373,7 +373,10 @@ public class RoundController {
      * @param nextPlayer the next player
      */
     private void passToNextPlayer(Player player, Player nextPlayer) {
+        //        boolean atLeast2RealPlayers = getIdentityCards().stream().filter(identityCard -> !(identityCard.player instanceof AI)).count() > 1;
+        //        if (!(player == nextPlayer || nextPlayer instanceof AI) && atLeast2RealPlayers) {
         view.promptForPlayerSwitch(nextPlayer.getName());
+        //        }
     }
 
     /**

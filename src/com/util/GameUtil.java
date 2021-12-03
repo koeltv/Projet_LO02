@@ -13,6 +13,9 @@ public final class GameUtil {
     private GameUtil() {
     }
 
+    /**
+     * The possible names to choose from.
+     */
     private static final String[] NAMES = {"Jean", "Antoine", "Fabrice", "Patrick", "Clara", "June", "Louis", "Sylvain"};
 
     /**

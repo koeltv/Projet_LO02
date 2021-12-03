@@ -32,6 +32,13 @@ public abstract class GraphicView extends JFrame implements PassiveView, ActiveV
     // Active Methods
     ///////////////////////////////////////////////////////////////////////////
 
+    /**
+     * Prompt for integer.
+     *
+     * @param title   the title
+     * @param message the message
+     * @return the int
+     */
     private int promptForInt(String title, String message) {
         String input = promptForInput(title, message);
         while (!input.matches("\\d+")) {

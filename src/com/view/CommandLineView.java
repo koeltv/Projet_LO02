@@ -60,6 +60,14 @@ public class CommandLineView implements PassiveView, ActiveView {
         System.out.println("Player " + name + " is using " + chosenCardName + " !");
     }
 
+    @Override
+    public void showCardList(String name, List<String> cards) {
+        System.out.println("\n================ " + name + " ================\n");
+        for (String cardDescription : cards) {
+            System.out.println(cardDescription);
+        }
+    }
+
     ///////////////////////////////////////////////////////////////////////////
     // Passive Methods
     ///////////////////////////////////////////////////////////////////////////
@@ -111,6 +119,11 @@ public class CommandLineView implements PassiveView, ActiveView {
     // Active Methods
     ///////////////////////////////////////////////////////////////////////////
 
+    /**
+     * Prompt for integer.
+     *
+     * @return the int
+     */
     private int promptForInt() {
         String input = keyboard.nextLine();
         while (!input.matches("\\d+")) {
@@ -120,6 +133,12 @@ public class CommandLineView implements PassiveView, ActiveView {
         return Integer.parseInt(input);
     }
 
+    /**
+     * Prompt for integer inferior to max.
+     *
+     * @param max the max
+     * @return the int
+     */
     private int promptForInt(int max) {
         String input = keyboard.nextLine();
         while (!input.matches("\\d+") && Integer.parseInt(input) <= max) {
@@ -195,12 +214,4 @@ public class CommandLineView implements PassiveView, ActiveView {
         System.out.println(">> Please pass the hand to Player " + name + ", then press enter");
         keyboard.nextLine();
     }
-
-	@Override
-	public void showCardList(String name, List<String> card) {
-		System.out.println("\n================ "+ name +" ================\n");
-		for(String cardDescription : card) {
-			System.out.println(cardDescription);
-		}
-	}
 }

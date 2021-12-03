@@ -188,8 +188,8 @@ public class Graphical2DView extends GraphicView {
     }
 
 	@Override
-	public void showCardList(String name, List<String> card) {
-		actualiseMainPlayer(name);
+    public void showCardList(String name, List<String> cards) {
+        actualiseMainPlayer(name);
         displayAndRepaint();
-	}
+    }
 }

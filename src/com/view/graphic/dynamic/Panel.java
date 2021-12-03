@@ -106,6 +106,14 @@ public class Panel extends JPanel {
         this.mainPlayer = RoundController.getCurrentPlayer();
     }
 
+    /**
+     * Load buffered image.
+     *
+     * @param fileName the file name
+     * @param jar      the .jar file to load from
+     * @return the buffered image
+     * @throws IOException exception thrown if the file wasn't found in the .jar file
+     */
     private BufferedImage loadImage(String fileName, JarFile jar) throws IOException {
         InputStream fileInputStreamReader = jar.getInputStream(jar.getJarEntry(fileName));
         return ImageIO.read(fileInputStreamReader);

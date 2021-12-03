@@ -110,6 +110,13 @@ public class GraphicalTextView extends GraphicView {
         appendText("Player " + name + " is using " + chosenCardName + " !");
     }
 
+    @Override
+    public void showCardList(String name, List<String> cards) {
+        appendText("\n================ " + name + " ================\n");
+        for (String cardDescription : cards) {
+            appendText(cardDescription);
+        }
+    }
 
     ///////////////////////////////////////////////////////////////////////////
     // Passive Methods
@@ -157,9 +164,4 @@ public class GraphicalTextView extends GraphicView {
     public void waitForPlayerSwitch(String name) {
         appendText("Waiting for Player " + name);
     }
-
-	@Override
-	public void showCardList(String name, List<String> card) {
-		//Nothing
-	}
 }

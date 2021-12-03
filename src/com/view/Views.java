@@ -107,6 +107,12 @@ public class Views extends JFrame implements ActiveView, Runnable {
         activeView.showPlayerAction(name, chosenCardName);
     }
 
+    @Override
+    public void showCardList(String name, List<String> cards) {
+        views.forEach(passiveView -> passiveView.showCardList(name, cards));
+        activeView.showCardList(name, cards);
+    }
+
     ///////////////////////////////////////////////////////////////////////////
     // Active Methods
     ///////////////////////////////////////////////////////////////////////////
@@ -201,10 +207,4 @@ public class Views extends JFrame implements ActiveView, Runnable {
             }
         }
     }
-
-	@Override
-	public void showCardList(String name, List<String> card) {
-		views.forEach(passiveView -> passiveView.showCardList(name, card));
-        activeView.showCardList(name, card);
-	}
 }
