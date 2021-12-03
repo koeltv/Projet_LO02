@@ -56,7 +56,7 @@ public class RevealAnotherIdentityEffect extends TurnEffect {
 				List<Player> players = RoundController.getInstance().getSelectablePlayers(cardUser)
 						.stream()
 						.filter(player -> player.getRevealedCards().stream().allMatch(rumourCard -> rumourCard.getCardName() != CardName.BROOMSTICK))
-						.collect(Collectors.toList());
+						.toList();
 				return players.size() > 0;
 			}
 			return true;

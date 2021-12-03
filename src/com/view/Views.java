@@ -8,7 +8,6 @@ import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 /**
  * The type Views.
@@ -172,14 +171,13 @@ public class Views extends JFrame implements ActiveView, Runnable {
 
     @Override
     public void run() {
-        //noinspection InfiniteLoopStatement
         while (true) {
             if (views != null && views.size() > 0) {
                 List<ActiveView> activeViews = views
                         .stream()
                         .filter(passiveView -> passiveView instanceof ActiveView)
                         .map(passiveView -> (ActiveView) passiveView)
-                        .collect(Collectors.toList());
+                        .toList();
 
                 String[] viewsToString = activeViews.stream().map(View::toString).toArray(String[]::new);
 
@@ -190,7 +188,7 @@ public class Views extends JFrame implements ActiveView, Runnable {
                         null,
                         viewsToString, viewsToString[0]
                 );
-
+                if (index == JOptionPane.CLOSED_OPTION) System.exit(0);
                 switchActiveView(activeViews.get(index));
             } else {
                 synchronized (this) {

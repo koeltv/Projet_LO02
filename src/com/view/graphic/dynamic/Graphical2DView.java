@@ -9,7 +9,6 @@ import com.model.player.AI;
 import com.view.graphic.GraphicView;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 /**
  * The type Graphical 2D view.
@@ -47,8 +46,7 @@ public class Graphical2DView extends GraphicView {
     private void actualiseMainPlayer(String playerName) {
         //We change the player at the bottom of the display to the player currently playing
         List<IdentityCard> identityCards = RoundController.getInstance().getIdentityCards().stream()
-                .filter(identityCard -> identityCard.player.getName().equals(playerName))
-                .collect(Collectors.toList());
+                .filter(identityCard -> identityCard.player.getName().equals(playerName)).toList();
         if (identityCards.size() > 0 && !(identityCards.get(0).player instanceof AI)) {
             panel.setMainPlayer(identityCards.get(0).player);
         } else if (identityCards.size() <= 0) {

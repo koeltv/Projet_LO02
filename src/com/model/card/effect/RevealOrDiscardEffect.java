@@ -60,7 +60,7 @@ public class RevealOrDiscardEffect extends TurnEffect {
 			List<Player> players = RoundController.getInstance().getSelectablePlayers(cardUser)
 					.stream()
 					.filter(player -> player.getRevealedCards().stream().anyMatch(rumourCard -> rumourCard.getCardName() != CardName.WART))
-					.collect(Collectors.toList());
+					.toList();
 			return players.size() > 0;
 		}
 		return true;

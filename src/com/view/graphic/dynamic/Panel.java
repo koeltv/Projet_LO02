@@ -72,11 +72,11 @@ public class Panel extends JPanel {
      * Instantiates a new Panel.
      */
     Panel() {
-        this.background = getToolkit().getImage("data/Tabletop.jpg");
-        this.cardFront = getToolkit().getImage("data/CardFrontEmpty.png");
-        this.cardBack = getToolkit().getImage("data/CatBack.jpg");
-        this.identityCardNotRevealed = getToolkit().getImage("data/IdentityCard.png");
-        this.identityCardRevealed = getToolkit().getImage("data/RevealedVillager.png");
+        this.background = getToolkit().getImage("data/image/Tabletop.jpg");
+        this.cardFront = getToolkit().getImage("data/image/CardFrontEmpty.png");
+        this.cardBack = getToolkit().getImage("data/image/CatBack.jpg");
+        this.identityCardNotRevealed = getToolkit().getImage("data/image/IdentityCard.png");
+        this.identityCardRevealed = getToolkit().getImage("data/image/RevealedVillager.png");
 
         this.mainPlayer = RoundController.getCurrentPlayer();
     }

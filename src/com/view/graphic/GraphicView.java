@@ -32,6 +32,15 @@ public abstract class GraphicView extends JFrame implements PassiveView, ActiveV
     // Active Methods
     ///////////////////////////////////////////////////////////////////////////
 
+    private int promptForInt(String title, String message) {
+        String input = promptForInput(title, message);
+        while (!input.matches("\\d+")) {
+            System.err.println("Input format not correct, integer is needed");
+            input = promptForInput(title, message);
+        }
+        return Integer.parseInt(input);
+    }
+
     /**
      * Prompt player with input box.
      *
@@ -40,7 +49,7 @@ public abstract class GraphicView extends JFrame implements PassiveView, ActiveV
      * @return user input
      */
     String promptForInput(String title, String message) {
-        return (String) JOptionPane.showInputDialog(
+        Object input = JOptionPane.showInputDialog(
                 this,
                 message,
                 title, JOptionPane.QUESTION_MESSAGE,
@@ -48,6 +57,12 @@ public abstract class GraphicView extends JFrame implements PassiveView, ActiveV
                 null,
                 ""
         );
+        if (input instanceof String s) {
+            return s;
+        } else {
+            System.exit(0);
+            return null;
+        }
     }
 
     /**
@@ -58,14 +73,16 @@ public abstract class GraphicView extends JFrame implements PassiveView, ActiveV
      * @param options the options to propose
      * @return the index of the chosen option
      */
-    int promptForOptions(String title, String message, String[] options) { // TODO: 19/11/2021 Take care of unexpected inputs
-        return JOptionPane.showOptionDialog(
+    int promptForOptions(String title, String message, String[] options) {
+        int input = JOptionPane.showOptionDialog(
                 rootPane,
                 message, title,
                 JOptionPane.DEFAULT_OPTION, JOptionPane.QUESTION_MESSAGE,
                 null,
                 options, options[0]
         );
+        if (input == JOptionPane.CLOSED_OPTION) System.exit(0);
+        return input;
     }
 
     @Override
@@ -104,8 +121,8 @@ public abstract class GraphicView extends JFrame implements PassiveView, ActiveV
 
     @Override
     public int[] promptForRepartition() {
-        int nbPlayers = Integer.parseInt(promptForInput("Number of players", "Number of players ?"));
-        int nbAIs = Integer.parseInt(promptForInput("Number of AIs", "Number of AIs ?"));
+        int nbPlayers = promptForInt("Number of players", "Number of players ?");
+        int nbAIs = promptForInt("Number of AIs", "Number of AIs ?");
         return new int[]{nbPlayers, nbAIs};
     }
 
