@@ -4,7 +4,6 @@ import com.model.card.Deck;
 import com.model.player.AI;
 import com.model.player.Player;
 import com.view.ActiveView;
-import com.view.CommandLineView;
 import com.view.Views;
 import com.view.graphic.dynamic.Graphical2DView;
 
@@ -167,8 +166,8 @@ public class GameController {
      * @param args the input arguments, currently unused
      */
     public static void main(String[] args) {
-        Views views = new Views(new CommandLineView());
-        views.addView(new Graphical2DView());
+        Views views = new Views(new Graphical2DView());
+        //        views.addView(new Graphical2DView());
 
         GameController gameController = new GameController(views);
         gameController.run();

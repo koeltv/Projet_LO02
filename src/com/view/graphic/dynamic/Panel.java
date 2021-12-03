@@ -7,9 +7,13 @@ import com.model.game.CardState;
 import com.model.game.IdentityCard;
 import com.model.player.Player;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.geom.AffineTransform;
+import java.awt.image.BufferedImage;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.Arrays;
 import java.util.Comparator;
 import java.util.List;
@@ -72,13 +76,33 @@ public class Panel extends JPanel {
      * Instantiates a new Panel.
      */
     Panel() {
-        this.background = getToolkit().getImage("data/image/Tabletop.jpg");
-        this.cardFront = getToolkit().getImage("data/image/CardFrontEmpty.png");
-        this.cardBack = getToolkit().getImage("data/image/CatBack.jpg");
-        this.identityCardNotRevealed = getToolkit().getImage("data/image/IdentityCard.png");
-        this.identityCardRevealed = getToolkit().getImage("data/image/RevealedVillager.png");
+        String path = null;
+        this.background = loadImage(path + "Tabletop.jpg");
+        this.cardFront = loadImage(path + "CardFrontEmpty.png");
+        this.cardBack = loadImage(path + "CardBack.jpg");
+        this.identityCardNotRevealed = loadImage(path + "IdentityCard.png");
+        this.identityCardRevealed = loadImage(path + "RevealedVillager.png");
+
+        //        BufferedImage
+        //        getClass().getClassLoader().getResourceAsStream("");
+        //
+        //        URL url = getClass().getClassLoader().getResource("ressources/Tabletop.jpg");
+        //        InputStream resourceBuff = Ressources.class.getResourceAsStream("ressources/Tabletop.jpg");
+        //        BufferedImage bf = ImageIO.read(resourceBuff).getScaledInstance(-1, -1, 0);
 
         this.mainPlayer = RoundController.getCurrentPlayer();
+    }
+
+    private BufferedImage loadImage(String fileName) {
+        BufferedImage bufferedImage;
+        try {
+            InputStream inputStream = getClass().getResourceAsStream(fileName);
+            bufferedImage = ImageIO.read(inputStream);
+        } catch (IOException e) {
+            e.printStackTrace();
+            return null;
+        }
+        return bufferedImage;
     }
 
     /**
