@@ -12,11 +12,14 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
+import java.net.URISyntaxException;
 import java.util.Arrays;
 import java.util.Comparator;
 import java.util.List;
+import java.util.jar.JarFile;
 
 /**
  * The type Panel.
@@ -76,33 +79,36 @@ public class Panel extends JPanel {
      * Instantiates a new Panel.
      */
     Panel() {
-        String path = null;
-        this.background = loadImage(path + "Tabletop.jpg");
-        this.cardFront = loadImage(path + "CardFrontEmpty.png");
-        this.cardBack = loadImage(path + "CardBack.jpg");
-        this.identityCardNotRevealed = loadImage(path + "IdentityCard.png");
-        this.identityCardRevealed = loadImage(path + "RevealedVillager.png");
+        Image background, cardFront, cardBack, identityCardNotRevealed, identityCardRevealed;
+        try {
+            File executable = new File(getClass().getProtectionDomain().getCodeSource().getLocation().toURI());
+            JarFile jar = new JarFile(executable);
 
-        //        BufferedImage
-        //        getClass().getClassLoader().getResourceAsStream("");
-        //
-        //        URL url = getClass().getClassLoader().getResource("ressources/Tabletop.jpg");
-        //        InputStream resourceBuff = Ressources.class.getResourceAsStream("ressources/Tabletop.jpg");
-        //        BufferedImage bf = ImageIO.read(resourceBuff).getScaledInstance(-1, -1, 0);
+            background = loadImage("Tabletop.jpg", jar);
+            cardFront = loadImage("CardFrontEmpty.png", jar);
+            cardBack = loadImage("CardBack.jpg", jar);
+            identityCardNotRevealed = loadImage("IdentityCard.PNG", jar);
+            identityCardRevealed = loadImage("RevealedVillager.png", jar);
+        } catch (IOException | URISyntaxException e) {
+            e.printStackTrace();
+            background = null;
+            cardFront = null;
+            cardBack = null;
+            identityCardNotRevealed = null;
+            identityCardRevealed = null;
+        }
 
+        this.background = background;
+        this.cardFront = cardFront;
+        this.cardBack = cardBack;
+        this.identityCardNotRevealed = identityCardNotRevealed;
+        this.identityCardRevealed = identityCardRevealed;
         this.mainPlayer = RoundController.getCurrentPlayer();
     }
 
-    private BufferedImage loadImage(String fileName) {
-        BufferedImage bufferedImage;
-        try {
-            InputStream inputStream = getClass().getResourceAsStream(fileName);
-            bufferedImage = ImageIO.read(inputStream);
-        } catch (IOException e) {
-            e.printStackTrace();
-            return null;
-        }
-        return bufferedImage;
+    private BufferedImage loadImage(String fileName, JarFile jar) throws IOException {
+        InputStream fileInputStreamReader = jar.getInputStream(jar.getJarEntry(fileName));
+        return ImageIO.read(fileInputStreamReader);
     }
 
     /**
