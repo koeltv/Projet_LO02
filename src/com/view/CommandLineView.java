@@ -27,7 +27,9 @@ public class CommandLineView implements PassiveView, ActiveView {
 
     @Override
     public void showGameWinner(String name, int numberOfRound) {
+        System.out.println("\n-----------------------------------------------");
         System.out.println("Congratulations " + name + ", you won in " + numberOfRound + " rounds !");
+        System.out.println("-----------------------------------------------\n");
     }
 
     @Override
@@ -62,7 +64,7 @@ public class CommandLineView implements PassiveView, ActiveView {
 
     @Override
     public void showCardList(String name, List<String> cards) {
-        System.out.println("\n================ " + name + " ================\n");
+        System.out.println("================ " + name + " ================\n");
         for (String cardDescription : cards) {
             System.out.println(cardDescription);
         }
@@ -141,8 +143,8 @@ public class CommandLineView implements PassiveView, ActiveView {
      */
     private int promptForInt(int max) {
         String input = keyboard.nextLine();
-        while (!input.matches("\\d+") && Integer.parseInt(input) <= max) {
-            System.err.println("Input format not correct, integer is needed");
+        while (!input.matches("\\d+") || Integer.parseInt(input) > max) {
+            System.err.println("Input format not correct, integer between 0 and " + max + " is needed");
             input = keyboard.nextLine();
         }
         return Integer.parseInt(input);
@@ -166,7 +168,7 @@ public class CommandLineView implements PassiveView, ActiveView {
         for (int i = 0; i < playerNames.size(); i++) {
             System.out.println(i + "- " + playerNames.get(i));
         }
-        return promptForInt(playerNames.size());
+        return promptForInt(playerNames.size() - 1);
     }
 
     @Override
@@ -175,14 +177,14 @@ public class CommandLineView implements PassiveView, ActiveView {
         for (int i = 0; i < rumourCards.size(); i++) {
             System.out.println(i + "- " + rumourCards.get(i));
         }
-        return promptForInt(rumourCards.size());
+        return promptForInt(rumourCards.size() - 1);
     }
 
     @Override
     public int promptForCardChoice(int listSize) {
         System.out.println(">> Choose a card by index");
         for (int i = 0; i < listSize; i++) System.out.println("Card n°" + i);
-        return promptForInt(listSize);
+        return promptForInt(listSize - 1);
     }
 
     @Override
@@ -206,7 +208,7 @@ public class CommandLineView implements PassiveView, ActiveView {
         for (int i = 0; i < possibleActions.size(); i++) {
             System.out.println(i + "- " + possibleActions.get(i));
         }
-        return possibleActions.get(promptForInt(possibleActions.size()));
+        return possibleActions.get(promptForInt(possibleActions.size() - 1));
     }
 
     @Override
