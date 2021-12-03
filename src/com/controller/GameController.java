@@ -135,7 +135,7 @@ public class GameController {
      * @param winners the winners
      * @return the winning player
      */
-    private Player settleTie(List<Player> winners) { //TODO Find better alternative
+    private Player settleTie(List<Player> winners) {
         return winners.get(randomInInterval(winners.size() - 1));
     }
 
