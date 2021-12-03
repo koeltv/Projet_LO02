@@ -5,8 +5,6 @@ import com.model.player.AI;
 import com.model.player.Player;
 import com.view.ActiveView;
 import com.view.CommandLineView;
-import com.view.Views;
-import com.view.graphic.dynamic.Graphical2DView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -167,10 +165,7 @@ public class GameController {
      * @param args the input arguments, currently unused
      */
     public static void main(String[] args) {
-        Views views = new Views(new Graphical2DView());
-        views.addView(new CommandLineView());
-
-        GameController gameController = new GameController(views);
+        GameController gameController = new GameController(new CommandLineView());
         gameController.run();
     }
 }
