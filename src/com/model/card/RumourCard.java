@@ -49,9 +49,9 @@ public class RumourCard {
         StringBuilder stringBuilder = new StringBuilder();
         stringBuilder.append("==========").append(cardName).append("==========\n");
         stringBuilder.append("----------Witch Effects----------\n");
-        witchEffects.effects.forEach(effect -> stringBuilder.append(effect).append("\n"));
+        witchEffects.forEach(effect -> stringBuilder.append(effect).append("\n"));
         stringBuilder.append("----------Hunt Effects----------\n");
-        huntEffects.effects.forEach(effect -> stringBuilder.append(effect).append("\n"));
+        huntEffects.forEach(effect -> stringBuilder.append(effect).append("\n"));
         return stringBuilder.toString();
     }
 
@@ -72,7 +72,7 @@ public class RumourCard {
      * @return whether the card has been used successfully or not
      */
     public boolean useCard(Player cardUser) {
-        return applyEffects(cardUser, cardUser == RoundController.getCurrentPlayer() ? huntEffects.effects : witchEffects.effects);
+        return applyEffects(cardUser, cardUser == RoundController.getCurrentPlayer() ? huntEffects : witchEffects);
     }
 
     /**
@@ -111,7 +111,7 @@ public class RumourCard {
      * @return true if it is, false otherwise
      */
     public boolean isUsable(Player cardUser) {
-        List<Effect> effects = cardUser == RoundController.getCurrentPlayer() ? huntEffects.effects : witchEffects.effects;
+        List<Effect> effects = cardUser == RoundController.getCurrentPlayer() ? huntEffects : witchEffects;
         return effects.stream().allMatch(effect -> effect.isApplicable(cardUser, cardName));
     }
 

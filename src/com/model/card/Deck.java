@@ -30,7 +30,7 @@ public class Deck {
                 case DUCKING_STOOL -> new EffectList(new ChooseNextEffect());
                 case CAULDRON -> new EffectList(new AccuserDiscardRandomEffect());
                 case EVIL_EYE -> new EffectList(new ChooseNextEffect(), new NextMustAccuseOtherEffect());
-                default -> new EffectList();
+                default -> new EffectList(new TakeNextTurnEffect());
             };
 
             //Hunt! Effects
