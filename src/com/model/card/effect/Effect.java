@@ -4,7 +4,7 @@ import com.model.card.CardName;
 import com.model.player.Player;
 
 /**
- * The interface Effect.
+ * The type Effect.
  */
 public abstract class Effect {
     /**

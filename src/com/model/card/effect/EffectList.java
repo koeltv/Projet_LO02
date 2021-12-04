@@ -1,33 +1,18 @@
 package com.model.card.effect;
 
 import java.util.ArrayList;
-import java.util.List;
 import java.util.ListIterator;
 
 /**
  * The type Effect list.
  */
-public class EffectList {
-    /**
-     * The Effects of the list.
-     */
-    public final List<Effect> effects;
-
-    /**
-     * Instantiates a new Effect list with the default turn effect (Take next turn).
-     */
-    public EffectList() {
-        this.effects = new ArrayList<>();
-        add(new TakeNextTurnEffect());
-    }
-
+public class EffectList extends ArrayList<Effect> {
     /**
      * Instantiates a new Effect list using the given turn effect
      *
      * @param turnEffect the turn effect
      */
     public EffectList(TurnEffect turnEffect) {
-        this.effects = new ArrayList<>();
         add(turnEffect);
     }
 
@@ -37,7 +22,6 @@ public class EffectList {
      * @param effect the effect
      */
     public EffectList(Effect effect) {
-        this.effects = new ArrayList<>();
         add(effect);
         add(new TakeNextTurnEffect());
     }
@@ -49,7 +33,6 @@ public class EffectList {
      * @param turnEffect the turn effect
      */
     public EffectList(Effect effect, TurnEffect turnEffect) {
-        this.effects = new ArrayList<>();
         add(effect);
         add(turnEffect);
     }
@@ -61,7 +44,6 @@ public class EffectList {
      * @param effect     the effect
      */
     public EffectList(TurnEffect turnEffect, Effect effect) {
-        this.effects = new ArrayList<>();
         add(turnEffect);
         add(effect);
     }
@@ -71,14 +53,17 @@ public class EffectList {
      *
      * @param effect the effect
      */
-    public void add(Effect effect) {
-        if (effect instanceof TurnEffect && effects.stream().anyMatch(effect1 -> effect1 instanceof TurnEffect)) {
-            ListIterator<Effect> iterator = effects.listIterator();
+    @Override
+    public boolean add(Effect effect) {
+        if (effect instanceof TurnEffect && super.stream().anyMatch(existingEffect -> existingEffect instanceof TurnEffect)) {
+            ListIterator<Effect> iterator = super.listIterator();
             while (iterator.hasNext()) {
-                if (iterator.next() instanceof TurnEffect) iterator.set(effect);
+                if (iterator.next() instanceof TurnEffect) {
+                    iterator.set(effect);
+                    break;
+                }
             }
-        } else {
-            effects.add(effect);
-        }
+        } else super.add(effect);
+        return true;
     }
 }
