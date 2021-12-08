@@ -71,7 +71,7 @@ public class Panel extends JPanel {
      */
     private PrintableAction action;
     /**
-     * The Main player.
+     * The player currently playing that will be displayed at the bottom.
      */
     private Player mainPlayer;
 
@@ -267,32 +267,33 @@ public class Panel extends JPanel {
     }
 
     /**
-     * Draw a card list.
-     * This can take a list of either CardStates or RumourCards.
+     * Draw a card list with their states.
+     * This method will also display the state of the cards.
+     * For exemple the card are visible if they are revealed and also have a green border if they are in the main player hand.
      *
      * @param cardList     the card list
      * @param size         the size of the card list
      * @param isMainPlayer whether this is for the main player or not
      */
-    private void drawCardList(List<?> cardList, int size, boolean isMainPlayer) {
+    private void drawCardList(List<CardState> cardList, int size, boolean isMainPlayer) {
         int margin = 10, xf = (size - 1) * (cardWidth + margin), offset = (getWidth() - (xf + cardWidth)) / 2;
         int y = getHeight() - (margin + getHeight() / SIZE_FACTOR);
 
         for (int i = 0; i < size; i++) {
             int xi = offset + i * (cardWidth + margin);
 
-            //Check the list, only return card from rumour card list or revealed ones from card state list
+            //Check the list, only return revealed cards from card state list, or display all for main player
             RumourCard rumourCard = null;
             if (cardList != null && cardList.size() > 0) {
-                if (cardList.get(i) instanceof RumourCard card) rumourCard = card;
-                else if (cardList.get(i) instanceof CardState card && (card.isRevealed() || isMainPlayer))
-                    rumourCard = card.rumourCard;
+                if ((cardList.get(i).isRevealed() || isMainPlayer)) {
+                    rumourCard = cardList.get(i).rumourCard;
+                }
             }
 
             //Show the card
             if (rumourCard != null) {
                 //If it is a revealed card of the main player, add a green border
-                if (isMainPlayer && ((CardState) cardList.get(i)).isRevealed()) {
+                if (isMainPlayer && cardList.get(i).isRevealed()) {
                     Stroke stroke = g2D.getStroke();
                     g2D.setStroke(new BasicStroke(margin));
                     g2D.setColor(new Color(51, 153, 51));
@@ -303,6 +304,29 @@ public class Panel extends JPanel {
             } else {
                 drawCard(xi, y);
             }
+        }
+    }
+
+    /**
+     * Draw a card list.
+     *
+     * @param cardList the card list
+     * @param size     the size of the card list
+     */
+    private void drawCardList(List<RumourCard> cardList, int size) {
+        int margin = 10, xf = (size - 1) * (cardWidth + margin), offset = (getWidth() - (xf + cardWidth)) / 2;
+        int y = getHeight() - (margin + getHeight() / SIZE_FACTOR);
+
+        for (int i = 0; i < size; i++) {
+            int xi = offset + i * (cardWidth + margin);
+
+            //Check the list, only return card from rumour card list or revealed ones from card state list
+            RumourCard rumourCard = null;
+            if (cardList != null && cardList.size() > 0) rumourCard = cardList.get(i);
+
+            //Show the card
+            if (rumourCard != null) drawCard(xi, y, rumourCard);
+            else drawCard(xi, y);
         }
     }
 
@@ -378,7 +402,7 @@ public class Panel extends JPanel {
             List<RumourCard> discardPile = RoundController.getInstance().getDiscardPile();
             if (discardPile.size() > 0) {
                 g2D.translate(0, (-getHeight() / 2) + cardHeight / 3);
-                drawCardList(discardPile, discardPile.size(), false);
+                drawCardList(discardPile, discardPile.size());
                 g2D.setTransform(oldRotation);
             }
 
