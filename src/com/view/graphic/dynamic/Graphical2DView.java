@@ -1,10 +1,10 @@
 package com.view.graphic.dynamic;
 
 import com.controller.PlayerAction;
-import com.controller.RoundController;
 import com.model.card.CardName;
 import com.model.card.RumourCard;
 import com.model.game.IdentityCard;
+import com.model.game.Round;
 import com.model.player.AI;
 import com.view.graphic.GraphicView;
 
@@ -45,7 +45,7 @@ public class Graphical2DView extends GraphicView {
      */
     private void actualiseMainPlayer(String playerName) {
         //We change the player at the bottom of the display to the player currently playing
-        List<IdentityCard> identityCards = RoundController.getInstance().getIdentityCards().stream()
+        List<IdentityCard> identityCards = Round.getInstance().getIdentityCards().stream()
                 .filter(identityCard -> identityCard.player.getName().equals(playerName)).toList();
         if (identityCards.size() > 0 && !(identityCards.get(0).player instanceof AI)) {
             panel.setMainPlayer(identityCards.get(0).player);

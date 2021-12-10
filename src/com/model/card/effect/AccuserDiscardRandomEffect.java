@@ -1,8 +1,8 @@
 package com.model.card.effect;
 
-import com.controller.RoundController;
 import com.model.card.CardName;
 import com.model.card.RumourCard;
+import com.model.game.Round;
 import com.model.player.Player;
 
 import static com.util.GameUtil.randomInInterval;
@@ -22,7 +22,7 @@ public class AccuserDiscardRandomEffect extends Effect {
     public boolean applyEffect(Player cardUser, Player target) {
         if (target.getHand().size() > 0) {
             RumourCard chosenCard = target.getHand().get(randomInInterval(target.getHand().size() - 1)).rumourCard;
-            RoundController.getInstance().getDiscardPile().add(RoundController.getCurrentPlayer().removeCardFromHand(chosenCard));
+            Round.getInstance().getDiscardPile().add(Round.getCurrentPlayer().removeCardFromHand(chosenCard));
             return true;
         } else
             return false;
@@ -30,12 +30,12 @@ public class AccuserDiscardRandomEffect extends Effect {
 
     @Override
     public Player chooseTarget(CardName cardName, Player cardUser) {
-        return RoundController.getCurrentPlayer();
+        return Round.getCurrentPlayer();
     }
 
     @Override
     public boolean isApplicable(Player cardUser, CardName cardName) {
-        return RoundController.getCurrentPlayer().getSelectableCardsFromHand().size() > 0;
+        return Round.getCurrentPlayer().getSelectableCardsFromHand().size() > 0;
     }
 
 }
