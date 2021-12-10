@@ -1,6 +1,7 @@
 package com.controller;
 
 import com.model.card.Deck;
+import com.model.game.Game;
 import com.model.player.AI;
 import com.model.player.Player;
 import com.view.ActiveView;
@@ -8,26 +9,19 @@ import com.view.CommandLineView;
 import com.view.Views;
 import com.view.graphic.dynamic.Graphical2DView;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
 import static com.util.GameUtil.randomAIName;
-import static com.util.GameUtil.randomInInterval;
 
 /**
  * The type Game controller.
  */
 public class GameController {
     /**
-     * The Players.
+     * The Game.
      */
-    final List<Player> players;
-
-    /**
-     * The Deck.
-     */
-    final Deck deck;
+    private final Game game;
 
     /**
      * The View.
@@ -40,38 +34,31 @@ public class GameController {
      * @param view the view
      */
     public GameController(ActiveView view) {
-        this.players = new ArrayList<>();
-        this.deck = new Deck();
+        this.game = new Game();
         this.view = view;
     }
 
-    /**
-     * Check if the given repartition is allowed.
-     *
-     * @param nbOfPlayers the number of players
-     * @param nbOfAIs     the number of AIs
-     * @return true if the repartition is valid, false otherwise
-     */
-    private boolean repartitionAllowed(int nbOfPlayers, int nbOfAIs) {
-        if (nbOfPlayers + nbOfAIs >= 3 && nbOfPlayers + nbOfAIs <= 6) {
-            return nbOfPlayers >= 0 && nbOfPlayers <= 6 && nbOfAIs >= 0 && nbOfAIs <= 6;
-        }
-        return false;
+    public Deck getDeck() {
+        return game.getDeck();
+    }
+
+    public List<Player> getPlayers() {
+        return game.getPlayers();
     }
 
     /**
      * Ask for player repartition.
      */
     private void askForPlayerRepartition() {
-        players.clear();
+        game.clearPlayers();
         int[] values;
         do {
             values = view.promptForRepartition();
-        } while (!repartitionAllowed(values[0], values[1]));
+        } while (!game.repartitionAllowed(values[0], values[1]));
 
         for (int i = 1; i <= values[0]; i++) addPlayer(i);
         for (int i = 0; i < values[1]; i++) {
-            players.add(new AI(randomAIName(players.stream()
+            game.getPlayers().add(new AI(randomAIName(game.getPlayers().stream()
                     .map(Player::getName)
                     .collect(Collectors.toList())
             )));
@@ -89,12 +76,12 @@ public class GameController {
         do {
             playerName = view.promptForPlayerName(id);
             nameAlreadyAssigned = false;
-            for (Player player : players) {
+            for (Player player : game.getPlayers()) {
                 nameAlreadyAssigned = player.getName().equals(playerName);
                 if (nameAlreadyAssigned) break;
             }
         } while (nameAlreadyAssigned);
-        players.add(new Player(playerName));
+        game.addPlayer(new Player(playerName));
     }
 
     /**
@@ -111,34 +98,12 @@ public class GameController {
     }
 
     /**
-     * Verify scores.
-     *
-     * @return true if at least 1 player has 5 points or more, and false otherwise
-     */
-    private boolean verifyScores() {
-        return players.stream().anyMatch(player -> player.getScore() >= 5);
-    }
-
-    /**
      * Wrap up game.
      */
     private void wrapUpGame() {
-        List<Player> winners = players.stream().filter(player -> player.getScore() >= 5).collect(Collectors.toList());
+        List<Player> winners = game.getPlayers().stream().filter(player -> player.getScore() >= 5).collect(Collectors.toList());
 
-        view.showGameWinner(settleTie(winners).getName(), RoundController.getNumberOfRound());
-
-        players.forEach(Player::resetScore);
-        RoundController.reset();
-    }
-
-    /**
-     * Settle tie.
-     *
-     * @param winners the winners
-     * @return the winning player
-     */
-    private Player settleTie(List<Player> winners) { //TODO Find better alternative
-        return winners.get(randomInInterval(winners.size() - 1));
+        view.showGameWinner(game.settleTie(winners).getName(), RoundController.getNumberOfRound());
     }
 
     /**
@@ -150,9 +115,10 @@ public class GameController {
             askForPlayerRepartition();
             do {
                 do {
-                    RoundController roundController = new RoundController(this, view);
-                    roundController.run();
-                } while (!verifyScores());
+                    game.resetScores();
+                    RoundController.reset();
+                    new RoundController(this, view).run();
+                } while (!game.verifyScores());
                 wrapUpGame();
                 endProgram = nextAction();
             } while (endProgram == GameAction.RESTART_GAME);
