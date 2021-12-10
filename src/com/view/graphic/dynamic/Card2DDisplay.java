@@ -10,33 +10,31 @@ import java.awt.event.MouseListener;
 public class Card2DDisplay extends JComponent {
     private final ZoomPanel zoomPanel;
 
-    class MouseClickOnCardListener implements MouseListener {
-        @Override
-        public void mouseClicked(MouseEvent e) {
-            zoomOnCard();
-        }
-
-        @Override
-        public void mousePressed(MouseEvent e) {
-        }
-
-        @Override
-        public void mouseReleased(MouseEvent e) {
-        }
-
-        @Override
-        public void mouseEntered(MouseEvent e) {
-        }
-
-        @Override
-        public void mouseExited(MouseEvent e) {
-        }
-    }
-
     Card2DDisplay(int x, int y, int width, int height, RumourCard rumourCard) {
         this.zoomPanel = new ZoomPanel(rumourCard);
         this.setBounds(x, y, width, height);
-        this.addMouseListener(new MouseClickOnCardListener());
+        this.addMouseListener(new MouseListener() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                zoomOnCard();
+            }
+
+            @Override
+            public void mousePressed(MouseEvent e) {
+            }
+
+            @Override
+            public void mouseReleased(MouseEvent e) {
+            }
+
+            @Override
+            public void mouseEntered(MouseEvent e) {
+            }
+
+            @Override
+            public void mouseExited(MouseEvent e) {
+            }
+        });
     }
 
     private void zoomOnCard() {
