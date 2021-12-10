@@ -293,12 +293,15 @@ public class Panel extends JPanel {
             //Show the card
             if (rumourCard != null) {
                 //If it is a revealed card of the main player, add a green border
-                if (isMainPlayer && cardList.get(i).isRevealed()) {
-                    Stroke stroke = g2D.getStroke();
-                    g2D.setStroke(new BasicStroke(margin));
-                    g2D.setColor(new Color(51, 153, 51));
-                    g2D.drawRect(xi, y, cardWidth, cardHeight);
-                    g2D.setStroke(stroke);
+                if (isMainPlayer) {
+                    CardState cardState = cardList.get(i);
+                    if (cardState.isRevealed() || cardState.rumourCard.isUsable(mainPlayer)) {
+                        g2D.setColor(cardState.isRevealed() ? new Color(51, 153, 51) : new Color(200, 50, 30));
+                        Stroke stroke = g2D.getStroke();
+                        g2D.setStroke(new BasicStroke(margin));
+                        g2D.drawRect(xi, y, cardWidth, cardHeight);
+                        g2D.setStroke(stroke);
+                    }
                 }
                 drawCard(xi, y, rumourCard);
             } else {
