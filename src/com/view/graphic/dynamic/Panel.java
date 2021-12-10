@@ -104,6 +104,9 @@ public class Panel extends JPanel {
         this.identityCardNotRevealed = identityCardNotRevealed;
         this.identityCardRevealed = identityCardRevealed;
         this.mainPlayer = Round.getCurrentPlayer();
+
+        ZoomPanel.template = cardFront;
+        ZoomPanel.hiddenCard = cardBack;
     }
 
     /**
@@ -184,8 +187,9 @@ public class Panel extends JPanel {
         );
 
         //We set the font so that each effect fit
+        int margin = getWidth() / 200;
         Font font = g2D.getFont();
-        g2D.setFont(font.deriveFont((float) (font.getSize() * cardWidth) / lengthOfLongestString));
+        g2D.setFont(font.deriveFont((float) (font.getSize() * (cardWidth - 2 * margin)) / lengthOfLongestString));
 
         //Draw effects
         int yDelta = 0;
@@ -239,10 +243,10 @@ public class Panel extends JPanel {
         drawXCenteredString(rumourCard.getCardName().toString(), x, y + cardHeight / 5, cardWidth);
 
         //Witch effects
-        drawEffectsContainer(x, y + cardHeight / 3, rumourCard.witchEffects, true);
+        drawEffectsContainer(x, y + cardHeight / 3, rumourCard.getWitchEffects(), true);
 
         //Hunt effects
-        drawEffectsContainer(x, y + (int) (cardHeight / 1.5), rumourCard.huntEffects, false);
+        drawEffectsContainer(x, y + (int) (cardHeight / 1.5), rumourCard.getHuntEffects(), false);
     }
 
     /**
@@ -302,6 +306,8 @@ public class Panel extends JPanel {
                         g2D.drawRect(xi, y, cardWidth, cardHeight);
                         g2D.setStroke(stroke);
                     }
+                    //Add the possibility to zoom on cards
+                    add(new Card2DDisplay(xi, y, cardWidth, cardHeight, rumourCard));
                 }
                 drawCard(xi, y, rumourCard);
             } else {
@@ -390,6 +396,10 @@ public class Panel extends JPanel {
         //Actualise object values
         g2D = (Graphics2D) graphics;
         Round round = Round.getInstance();
+
+        for (Component component : this.getComponents()) {
+            if (component instanceof Card2DDisplay card) this.remove(card);
+        }
 
         cardHeight = getHeight() / SIZE_FACTOR;
         cardWidth = (int) (cardHeight / 1.35);

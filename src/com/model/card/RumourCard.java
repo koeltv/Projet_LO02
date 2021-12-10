@@ -19,12 +19,12 @@ public class RumourCard {
     /**
      * The Witch effects.
      */
-    public final EffectList witchEffects;
+    private final EffectList witchEffects;
 
     /**
      * The Hunt effects.
      */
-    public final EffectList huntEffects;
+    private final EffectList huntEffects;
 
     /**
      * Instantiates a new Rumour card.
@@ -37,6 +37,14 @@ public class RumourCard {
         this.cardName = name;
         this.witchEffects = witchEffects;
         this.huntEffects = huntEffects;
+    }
+
+    public EffectList getHuntEffects() {
+        return huntEffects;
+    }
+
+    public EffectList getWitchEffects() {
+        return witchEffects;
     }
 
     /**
