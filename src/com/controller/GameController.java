@@ -16,15 +16,21 @@ import static com.util.GameUtil.randomAIName;
 
 /**
  * The type Game controller.
+ * 
+ * Game controller is the class that contains the function main() in order to execute the program.
  */
 public class GameController {
     /**
      * The Game.
+     * 
+     * @see com.model.game.Game
      */
     private final Game game;
 
     /**
      * The View.
+     * 
+     * @see com.view.ActiveView
      */
     private final ActiveView view;
 
@@ -38,16 +44,32 @@ public class GameController {
         this.view = view;
     }
 
+    /**
+     * Gets deck.
+     *
+     * @return the deck
+     * @see com.model.game.Game
+     */
     public Deck getDeck() {
         return game.getDeck();
     }
-
+    
+    /**
+     * Gets players.
+     *
+     * @return the players
+     * @see com.model.game.Game
+     */
     public List<Player> getPlayers() {
         return game.getPlayers();
     }
 
     /**
      * Ask for player repartition.
+     * 
+     * @see com.model.game.Game
+     * @see com.model.player.Player
+     * @see com.view.ActiveView
      */
     private void askForPlayerRepartition() {
         game.clearPlayers();
@@ -69,6 +91,9 @@ public class GameController {
      * Add player.
      *
      * @param id the player id
+     * @see com.model.game.Game
+     * @see com.model.player.Player
+     * @see com.view.ActiveView
      */
     private void addPlayer(int id) {
         String playerName;
@@ -86,8 +111,11 @@ public class GameController {
 
     /**
      * Exit or start a new game.
+     * The user can press "q" to exit the game, "r" to reset the game and "" to restart.
      *
      * @return the choice, false to continue, true to exit
+     * @see com.controller.GameAction
+     * @see com.view.ActiveView
      */
     private GameAction nextAction() {
         return switch (view.promptForNewGame()) {
@@ -99,6 +127,11 @@ public class GameController {
 
     /**
      * Wrap up game.
+     * 
+     * @see com.controller.RoundController
+     * @see com.model.game.Game
+     * @see com.model.player.Player
+     * @see com.view.View
      */
     private void wrapUpGame() {
         List<Player> winners = game.getPlayers().stream().filter(player -> player.getScore() >= 5).collect(Collectors.toList());
@@ -108,6 +141,10 @@ public class GameController {
 
     /**
      * Run the game.
+     * 
+     * @see com.controller.GameAction
+     * @see com.controller.RoundController
+     * @see com.model.game.Game
      */
     public void run() {
         GameAction endProgram;
@@ -131,6 +168,9 @@ public class GameController {
      * The entry point of application.
      *
      * @param args the input arguments, currently unused
+     * @see com.view.CommandLineView
+     * @see com.view.Views
+     * @see com.view.graphic.dynamic.Graphical2DView
      */
     public static void main(String[] args) {
         Views views = new Views(new Graphical2DView());

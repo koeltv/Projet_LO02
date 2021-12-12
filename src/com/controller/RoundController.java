@@ -13,25 +13,35 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 /**
- * The type Round.
- * Round is the class that contains all methods to supervise a round. It is a singleton.
+ * The type Round controller.
+ * 
+ * Round controller is the class that contains all methods to supervise a round. It is a singleton.
  */
 public class RoundController {
     /**
-     * The single instance of roundController.
+     * The single instance of RoundController.
      */
     private static RoundController instance;
 
     /**
      * The Game controller.
+     * 
+     * @see com.controller.GameController
      */
     private final GameController gameController;
 
     /**
      * The View.
+     * 
+     * @see com.view.ActiveView
      */
     private final ActiveView view;
 
+    /**
+     * The Round.
+     * 
+     * @see com.model.game.Round
+     */
     private final Round round;
 
     /**
@@ -39,6 +49,9 @@ public class RoundController {
      *
      * @param gameController the game controller
      * @param view           the view
+     * @see com.controller.GameController
+     * @see com.model.game.Round
+     * @see com.view.ActiveView
      */
     RoundController(GameController gameController, ActiveView view) {
         this.view = view;
@@ -61,11 +74,19 @@ public class RoundController {
 
     /**
      * Reset static attributes.
+     * 
+     * @see com.model.game.Round
      */
     public static void reset() {
         Round.reset();
     }
 
+    /**
+     * Gets the number of round
+     * 
+     * @return the number of round
+     * @see com.model.game.Round
+     */
     public static int getNumberOfRound() {
         return Round.getNumberOfRound();
     }
@@ -76,6 +97,10 @@ public class RoundController {
      * @param player         the player
      * @param rumourCardList the list of card to select from
      * @return chosen card
+     * @see com.model.player.Player
+     * @see com.model.player.AI
+     * @see com.model.card.RumourCard
+     * @see com.view.ActiveView
      */
     public RumourCard chooseCard(Player player, List<RumourCard> rumourCardList) {
         return player instanceof AI ai ?
@@ -89,6 +114,10 @@ public class RoundController {
      * @param player         the player
      * @param rumourCardList the rumour card list
      * @return the rumour card
+     * @see com.model.player.Player
+     * @see com.model.player.AI
+     * @see com.model.card.RumourCard
+     * @see com.view.ActiveView
      */
     public RumourCard chooseCardBlindly(Player player, List<RumourCard> rumourCardList) {
         int index = player instanceof AI ai ?
@@ -103,6 +132,9 @@ public class RoundController {
      * @param choosingPlayer the choosing player
      * @param playerList     the player list to choose from
      * @return chosen player
+     * @see com.model.player.Player
+     * @see com.model.player.AI
+     * @see com.view.ActiveView
      */
     public Player choosePlayer(Player choosingPlayer, List<Player> playerList) {
         return choosingPlayer instanceof AI ai ?
@@ -116,6 +148,10 @@ public class RoundController {
      *
      * @param player          the player
      * @param possibleActions the possible actions
+     * @see com.controller.PlayerAction
+     * @see com.model.player.Player
+     * @see com.model.player.AI
+     * @see com.view.ActiveView
      */
     public void askPlayerForAction(Player player, List<PlayerAction> possibleActions) {
         //Ask the player to choose his next action
@@ -133,6 +169,13 @@ public class RoundController {
      *
      * @param player the player
      * @param action the action
+     * @see com.controller.PlayerAction
+     * @see com.model.card.RumourCard
+     * @see com.model.game.Round
+     * @see com.model.game.IdentityCard
+     * @see com.model.player.Player
+     * @see com.view.View
+     * @see com.view.ActiveView
      */
     public void applyPlayerAction(Player player, PlayerAction action) {
         switch (action) {
@@ -192,10 +235,13 @@ public class RoundController {
     }
 
     /**
+     * Pass to next player.
      * If the next player isn't the same player and both players aren't AIs, demand to pass to next player.
      *
      * @param player     the player currently playing
      * @param nextPlayer the next player
+     * @see com.model.player.Player
+     * @see com.view.ActiveView
      */
     private void passToNextPlayer(Player player, Player nextPlayer) {
         if (player != nextPlayer) view.promptForPlayerSwitch(nextPlayer.getName());
@@ -204,6 +250,11 @@ public class RoundController {
     /**
      * Ask players for their chosen identity.
      * This method will call the selectIdentity() method to prompt players to choose a role for the round.
+     * 
+     * @see com.model.game.IdentityCard
+     * @see com.model.player.Player
+     * @see com.model.player.AI
+     * @see com.view.ActiveView
      */
     private void askPlayersForIdentity() {
         boolean previousWasPlayer = false;
@@ -223,6 +274,9 @@ public class RoundController {
     /**
      * Set up the round.
      * This method will do everything necessary to set up a round (select 1st player, create identity cards, distribute Rumour cards, ask players for identity).
+     * 
+     * @see com.model.game.Round
+     * @see com.view.View
      */
     private void startRound() {
         view.showStartOfRound(Round.getNumberOfRound());
@@ -234,6 +288,9 @@ public class RoundController {
     /**
      * Round playing loop.
      * This method will prompt the current player for action, then set the current player to the next and loop while there is more than 1 not revealed player.
+     * 
+     * @see com.model.player.Player
+     * @see com.model.game.Round
      */
     private void playRound() {
         do {
@@ -246,6 +303,14 @@ public class RoundController {
     /**
      * Wrap up the round.
      * This method will do everything necessary to wrap up a round (reveal last player and give him points, gather all cards).
+     * 
+     * @see com.controller.GameController
+     * @see com.model.game.Round
+     * @see com.model.game.CardState
+     * @see com.model.game.IdentityCard
+     * @see com.model.card.Deck
+     * @see com.model.player.Player
+     * @see com.view.View
      */
     private void endRound() {
         //We search the last not revealed player, reveal is identity and give him points

@@ -2,6 +2,10 @@ package com.controller;
 
 /**
  * The enum Player action.
+ * 
+ * Action choices during the game. Players can select one of those choices (constants) : ACCUSE, REVEAL_IDENTITY, USE_CARD, LOOK_AT_IDENTITY, DISCARD, VIEW_HAND, VIEW_REVEALED, VIEW_DISCARD_PILE.
+ * 
+ * @see com.controller.RoundController
  */
 public enum PlayerAction {
     /**
@@ -25,15 +29,15 @@ public enum PlayerAction {
      */
     DISCARD,
     /**
-     * View player's hand.
+     * View player's hand player action.
      */
     VIEW_HAND,
     /**
-     * View cards revealed.
+     * View cards revealed player action.
      */
     VIEW_REVEALED,
     /**
-     * View discard pile.
+     * View discard pile player action.
      */
     VIEW_DISCARD_PILE;
 

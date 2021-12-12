@@ -1,7 +1,9 @@
 package com.controller;
 
 /**
- * Action choice at the end of a game.
+ * The enum Game action. 
+ * 
+ * Action choices at the end of a game. Players can select one of those choices (constants) : RESTART_GAME, RESET_GAME, STOP.
  * 
  * @see com.controller.GameController
  */
