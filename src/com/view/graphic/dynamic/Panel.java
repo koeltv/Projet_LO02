@@ -95,7 +95,7 @@ public class Panel extends JPanel {
 
             background = getToolkit().getImage(path + "Tabletop.jpg");
             cardFront = getToolkit().getImage(path + "CardFrontEmpty.png");
-            cardBack = getToolkit().getImage(path + "CatBack.jpg");
+            cardBack = getToolkit().getImage(path + "CardBack.jpg");
             identityCardNotRevealed = getToolkit().getImage(path + "IdentityCard.png");
             identityCardRevealed = getToolkit().getImage(path + "RevealedVillager.png");
         }
