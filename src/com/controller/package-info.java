@@ -3,4 +3,4 @@
  * 
  * This package described all the classes related to the controller.
  */
-package src.com.controller;
+package com.controller;

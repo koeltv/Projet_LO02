@@ -12,6 +12,7 @@ import java.util.List;
  * The type Graphical Text View.
  * Made to display user's interaction in a graphical interface using a text window and input boxes.
  */
+@SuppressWarnings({"ALL", "unused"})
 public class GraphicalTextView extends GraphicView {
     /**
      * The Text area.
