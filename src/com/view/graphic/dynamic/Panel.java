@@ -90,12 +90,14 @@ public class Panel extends JPanel {
             identityCardNotRevealed = loadImage("IdentityCard.PNG", jar);
             identityCardRevealed = loadImage("RevealedVillager.png", jar);
         } catch (IOException | URISyntaxException e) {
-            e.printStackTrace();
-            background = null;
-            cardFront = null;
-            cardBack = null;
-            identityCardNotRevealed = null;
-            identityCardRevealed = null;
+            String path = "ressources/";
+            System.err.println("Ressources weren't found, trying in : " + path);
+
+            background = getToolkit().getImage(path + "Tabletop.jpg");
+            cardFront = getToolkit().getImage(path + "CardFrontEmpty.png");
+            cardBack = getToolkit().getImage(path + "CatBack.jpg");
+            identityCardNotRevealed = getToolkit().getImage(path + "IdentityCard.png");
+            identityCardRevealed = getToolkit().getImage(path + "RevealedVillager.png");
         }
 
         this.background = background;
