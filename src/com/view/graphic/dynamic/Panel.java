@@ -18,6 +18,7 @@ import java.io.InputStream;
 import java.net.URISyntaxException;
 import java.util.Arrays;
 import java.util.Comparator;
+import java.util.HashMap;
 import java.util.List;
 import java.util.jar.JarFile;
 
@@ -33,25 +34,9 @@ public class Panel extends JPanel {
     private static final int SIZE_FACTOR = 5;
 
     /**
-     * The Background.
+     * The external ressources.
      */
-    private final Image background;
-    /**
-     * The Card front.
-     */
-    private final Image cardFront;
-    /**
-     * The Card back.
-     */
-    private final Image cardBack;
-    /**
-     * The Identity card when the player isn't revealed.
-     */
-    private final Image identityCardNotRevealed;
-    /**
-     * The Identity card when the player is revealed as Villager.
-     */
-    private final Image identityCardRevealed;
+    private final HashMap<Ressource, Image> ressources;
 
     /**
      * The 2D graphics used in the whole class.
@@ -77,38 +62,32 @@ public class Panel extends JPanel {
 
     /**
      * Instantiates a new Panel.
+     * This is where all external ressources (images) are loaded. It will first try to access its own ressources (only possible as .jar)
+     * and if not possible it will search in "./ressources". If ressources still weren't found, do without them.
      */
     Panel() {
-        Image background, cardFront, cardBack, identityCardNotRevealed, identityCardRevealed;
+        this.ressources = new HashMap<>(5);
         try {
             File executable = new File(getClass().getProtectionDomain().getCodeSource().getLocation().toURI());
             JarFile jar = new JarFile(executable);
-
-            background = loadImage("Tabletop.jpg", jar);
-            cardFront = loadImage("CardFrontEmpty.png", jar);
-            cardBack = loadImage("CardBack.jpg", jar);
-            identityCardNotRevealed = loadImage("IdentityCard.PNG", jar);
-            identityCardRevealed = loadImage("RevealedVillager.png", jar);
+            for (Ressource ressource : Ressource.values()) {
+                try {
+                    ressources.put(ressource, loadImage(ressource.toString(), jar));
+                } catch (NullPointerException e) {
+                    System.err.println("Couldn't find \"" + ressource.toString() + "\" in .jar");
+                }
+            }
         } catch (IOException | URISyntaxException e) {
             String path = "ressources/";
-            System.err.println("Ressources weren't found, trying in : " + path);
-
-            background = getToolkit().getImage(path + "Tabletop.jpg");
-            cardFront = getToolkit().getImage(path + "CardFrontEmpty.png");
-            cardBack = getToolkit().getImage(path + "CardBack.jpg");
-            identityCardNotRevealed = getToolkit().getImage(path + "IdentityCard.png");
-            identityCardRevealed = getToolkit().getImage(path + "RevealedVillager.png");
+            System.err.println("Can't access .jar, searching ressources in : " + path);
+            for (Ressource ressource : Ressource.values()) {
+                ressources.putIfAbsent(ressource, getToolkit().createImage(path + ressource.toString()));
+            }
         }
-
-        this.background = background;
-        this.cardFront = cardFront;
-        this.cardBack = cardBack;
-        this.identityCardNotRevealed = identityCardNotRevealed;
-        this.identityCardRevealed = identityCardRevealed;
         this.mainPlayer = Round.getCurrentPlayer();
 
-        ZoomPanel.template = cardFront;
-        ZoomPanel.hiddenCard = cardBack;
+        ZoomPanel.template = ressources.get(Ressource.EMPTY_CARD_FRONT);
+        ZoomPanel.hiddenCard = ressources.get(Ressource.CARD_BACK);
     }
 
     /**
@@ -117,9 +96,10 @@ public class Panel extends JPanel {
      * @param fileName the file name
      * @param jar      the .jar file to load from
      * @return the buffered image
-     * @throws IOException exception thrown if the file wasn't found in the .jar file
+     * @throws IOException          exception thrown if the file wasn't found in the .jar file
+     * @throws NullPointerException the null pointer exception
      */
-    private BufferedImage loadImage(String fileName, JarFile jar) throws IOException {
+    private BufferedImage loadImage(String fileName, JarFile jar) throws IOException, NullPointerException {
         InputStream fileInputStreamReader = jar.getInputStream(jar.getJarEntry(fileName));
         return ImageIO.read(fileInputStreamReader);
     }
@@ -237,7 +217,7 @@ public class Panel extends JPanel {
      */
     private void drawCard(int x, int y, RumourCard rumourCard) {
         //The card itself
-        g2D.drawImage(cardFront, x, y, cardWidth, cardHeight, this);
+        g2D.drawImage(ressources.get(Ressource.EMPTY_CARD_FRONT), x, y, cardWidth, cardHeight, this);
 
         //Card name
         g2D.setFont(g2D.getFont().deriveFont((float) (getWidth() / 100)).deriveFont(Font.BOLD));
@@ -258,7 +238,7 @@ public class Panel extends JPanel {
      * @param y the y coordinate
      */
     private void drawCard(int x, int y) {
-        g2D.drawImage(cardBack, x, y, cardWidth, cardHeight, this);
+        g2D.drawImage(ressources.get(Ressource.CARD_BACK), x, y, cardWidth, cardHeight, this);
     }
 
     /**
@@ -269,7 +249,7 @@ public class Panel extends JPanel {
      * @param identityCard the identity card to display
      */
     private void drawIdentityCard(int x, int y, IdentityCard identityCard) {
-        g2D.drawImage(!identityCard.isIdentityRevealed() ? identityCardNotRevealed : identityCardRevealed, x, y, cardWidth, cardHeight, this);
+        g2D.drawImage(!identityCard.isIdentityRevealed() ? ressources.get(Ressource.IDENTITY_CARD) : ressources.get(Ressource.REVEALED_VILLAGER), x, y, cardWidth, cardHeight, this);
     }
 
     /**
@@ -407,7 +387,7 @@ public class Panel extends JPanel {
         cardWidth = (int) (cardHeight / 1.35);
 
         //Draw background
-        graphics.drawImage(background, 0, 0, getWidth(), getHeight(), this);
+        graphics.drawImage(ressources.get(Ressource.TABLETOP), 0, 0, getWidth(), getHeight(), this);
 
         //Draw content
         if (round != null && round.getIdentityCards().size() > 0) {
