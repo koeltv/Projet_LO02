@@ -2,8 +2,10 @@ package com.controller;
 
 /**
  * Action choice at the end of a game.
+ * 
+ * @see com.controller.GameController
  */
-enum GameAction {
+public enum GameAction {
     /**
      * Restart a new game with existing players.
      */
