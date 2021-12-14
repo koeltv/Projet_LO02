@@ -3,14 +3,18 @@ package com.model.card.effect;
 import java.util.ArrayList;
 import java.util.ListIterator;
 
+//TODO : describe the type Effect list in the class
+
 /**
  * The type Effect list.
+ *
  */
 public class EffectList extends ArrayList<Effect> {
     /**
      * Instantiates a new Effect list using the given turn effect
      *
      * @param turnEffect the turn effect
+     * @see com.model.card.effect.TurnEffect
      */
     public EffectList(TurnEffect turnEffect) {
         add(turnEffect);
@@ -20,6 +24,8 @@ public class EffectList extends ArrayList<Effect> {
      * Instantiates a new Effect list with the given effect and the default turn effect.
      *
      * @param effect the effect
+     * @see com.model.card.effect.Effect
+     * @see com.model.card.effect.TakeNextTurnEffect
      */
     public EffectList(Effect effect) {
         add(effect);
@@ -31,6 +37,8 @@ public class EffectList extends ArrayList<Effect> {
      *
      * @param effect     the effect
      * @param turnEffect the turn effect
+     * @see com.model.card.effect.Effect
+     * @see com.model.card.effect.TurnEffect 
      */
     public EffectList(Effect effect, TurnEffect turnEffect) {
         add(effect);
@@ -42,6 +50,8 @@ public class EffectList extends ArrayList<Effect> {
      *
      * @param turnEffect the turn effect
      * @param effect     the effect
+     * @see com.model.card.effect.Effect
+     * @see com.model.card.effect.TurnEffect 
      */
     public EffectList(TurnEffect turnEffect, Effect effect) {
         add(turnEffect);
@@ -52,6 +62,8 @@ public class EffectList extends ArrayList<Effect> {
      * Add an effect to the list.
      *
      * @param effect the effect
+     * @see com.model.card.effect.Effect
+     * @see com.model.card.effect.TurnEffect
      */
     @Override
     public boolean add(Effect effect) {

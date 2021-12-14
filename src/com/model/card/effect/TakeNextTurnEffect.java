@@ -5,7 +5,10 @@ import com.model.game.Round;
 import com.model.player.Player;
 
 /**
- * The type Take next turn effect.
+ * Take next turn. The type Take next turn effect.
+ * 
+ * @see com.model.card.effect.Effect
+ * @see com.model.card.effect.EffectList
  */
 public class TakeNextTurnEffect extends TurnEffect {
     @Override

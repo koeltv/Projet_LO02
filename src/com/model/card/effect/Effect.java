@@ -5,6 +5,7 @@ import com.model.player.Player;
 
 /**
  * The interface Effect.
+ * Gives all the methods related to card effects.
  */
 public abstract class Effect {
     /**
@@ -21,6 +22,7 @@ public abstract class Effect {
      * @param cardUser the card user
      * @param target   the target
      * @return whether the effect was successfully applied or not
+     * @see com.model.player.Player
      */
     public abstract boolean applyEffect(Player cardUser, Player target);
 
@@ -30,6 +32,8 @@ public abstract class Effect {
      * @param cardName the card name
      * @param cardUser the player using the card and applying its effects
      * @return the chosen player
+     * @see com.model.card.CardName
+     * @see com.model.player.Player
      */
     public abstract Player chooseTarget(CardName cardName, Player cardUser);
 
@@ -40,6 +44,8 @@ public abstract class Effect {
      * @param cardUser the card user
      * @param cardName the card name
      * @return true if the effect can be used, false otherwise
+     * @see com.model.card.CardName
+     * @see com.model.player.Player
      */
     public abstract boolean isApplicable(Player cardUser, CardName cardName);
 }

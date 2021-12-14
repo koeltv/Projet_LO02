@@ -11,7 +11,10 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 /**
- * The type Reveal another identity effect.
+ * Reveal another player's identity. Witch: You gain 2pts. You take next turn. Villager: You lose 2pts. They take next turn. The type Reveal another identity effect.
+ * 
+ * @see com.model.card.effect.Effect
+ * @see com.model.card.effect.EffectList
  */
 public class RevealAnotherIdentityEffect extends TurnEffect {
 	@Override

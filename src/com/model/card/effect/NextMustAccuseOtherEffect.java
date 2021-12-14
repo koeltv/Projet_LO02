@@ -5,7 +5,10 @@ import com.model.game.Round;
 import com.model.player.Player;
 
 /**
- * The type Next must accuse other effect.
+ * On their turn they must accuse a player other than you, if possible. The type Next must accuse other effect.
+ * 
+ * @see com.model.card.effect.Effect
+ * @see com.model.card.effect.EffectList
  */
 public class NextMustAccuseOtherEffect extends Effect {
     @Override

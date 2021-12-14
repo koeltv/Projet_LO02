@@ -79,7 +79,7 @@ public class Panel extends JPanel {
             }
         } catch (IOException | URISyntaxException e) {
             String path = "ressources/";
-<<<<<<< HEAD
+//<<<<<<< HEAD
             System.err.println("Ressources weren't found, trying in : " + path);
 
             background = getToolkit().getImage(path + "Tabletop.jpg");
@@ -87,12 +87,12 @@ public class Panel extends JPanel {
             cardBack = getToolkit().getImage(path + "CardBack.jpg");
             identityCardNotRevealed = getToolkit().getImage(path + "IdentityCard.png");
             identityCardRevealed = getToolkit().getImage(path + "RevealedVillager.png");
-=======
+//=======
             System.err.println("Can't access .jar, searching ressources in : " + path);
             for (Ressource ressource : Ressource.values()) {
                 ressources.putIfAbsent(ressource, getToolkit().createImage(path + ressource.toString()));
             }
->>>>>>> d13bcbab34176be22e1abd09f6339c231c8fc660
+//>>>>>>> d13bcbab34176be22e1abd09f6339c231c8fc660
         }
         this.mainPlayer = Round.getCurrentPlayer();
 

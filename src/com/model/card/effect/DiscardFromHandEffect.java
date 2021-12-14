@@ -10,7 +10,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * The type Discard from hand effect.
+ * Discard a card from your hand. The type Discard from hand effect.
+ * 
+ * @see com.model.card.effect.Effect
+ * @see com.model.card.effect.EffectList
  */
 public class DiscardFromHandEffect extends Effect {
     /**

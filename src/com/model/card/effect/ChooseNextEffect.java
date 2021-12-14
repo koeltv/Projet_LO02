@@ -6,7 +6,10 @@ import com.model.game.Round;
 import com.model.player.Player;
 
 /**
- * The type Choose next effect.
+ * Choose next player. The type Choose next effect.
+ * 
+ * @see com.model.card.effect.Effect
+ * @see com.model.card.effect.EffectList
  */
 public class ChooseNextEffect extends TurnEffect {
     @Override

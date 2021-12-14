@@ -8,7 +8,10 @@ import com.model.player.Player;
 import static com.util.GameUtil.randomInInterval;
 
 /**
- * The type Accuser discard random effect.
+ * The player who accused you discards a random card from their hand. The type Accuser discard random effect.
+ * 
+ * @see com.model.card.effect.Effect
+ * @see com.model.card.effect.EffectList
  */
 public class AccuserDiscardRandomEffect extends Effect {
     @Override

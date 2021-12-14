@@ -7,7 +7,10 @@ import com.model.game.CardState;
 import com.model.player.Player;
 
 /**
- * The type Take revealed card effect.
+ * Take one of your own revealed Rumour cards into your hand. The type Take revealed card effect.
+ * 
+ * @see com.model.card.effect.Effect
+ * @see com.model.card.effect.EffectList
  */
 public class TakeRevealedCardEffect extends Effect {
     @Override

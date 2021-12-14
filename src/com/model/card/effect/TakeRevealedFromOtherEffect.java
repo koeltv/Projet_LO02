@@ -7,7 +7,10 @@ import com.model.game.Round;
 import com.model.player.Player;
 
 /**
- * The type Take revealed from other effect.
+ * Take a revealed Rumour card from any other player into your hand. The type Take revealed from other effect.
+ * 
+ * @see com.model.card.effect.Effect
+ * @see com.model.card.effect.EffectList
  */
 public class TakeRevealedFromOtherEffect extends Effect {
     @Override

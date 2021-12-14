@@ -10,7 +10,10 @@ import java.util.List;
 import static com.util.GameUtil.randomInInterval;
 
 /**
- * The type Take random card from next effect.
+ * Before their turn, take a random card from their hand and add it to your hand. The type Take random card from next effect.
+ * 
+ * @see com.model.card.effect.Effect
+ * @see com.model.card.effect.EffectList
  */
 public class TakeRandomCardFromNextEffect extends Effect {
     @Override

@@ -10,7 +10,10 @@ import com.model.player.Player;
 import java.util.List;
 
 /**
- * The type Discarded to hand effect.
+ * Add one discarded card to your hand, and then discard this card. The type Discarded to hand effect.
+ * 
+ * @see com.model.card.effect.Effect
+ * @see com.model.card.effect.EffectList
  */
 public class DiscardedToHandEffect extends Effect {
     /**

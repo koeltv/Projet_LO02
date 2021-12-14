@@ -12,7 +12,10 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 /**
- * The type Reveal or discard effect.
+ * 	Choose a player and they must reveal their identity or discard a card from their hand. Witch: You gain 1pt. You take next turn. Villager: You lose 1pt. They take next turn. If they discard: They take next turn. The type Reveal or discard effect.
+ * 
+ * @see com.model.card.effect.Effect
+ * @see com.model.card.effect.EffectList
  */
 public class RevealOrDiscardEffect extends TurnEffect {
 	@Override

@@ -10,7 +10,10 @@ import com.model.player.Player;
 import java.util.List;
 
 /**
- * The type Reveal own identity effect.
+ * Reveal your identity. Witch: Player to your left takes next turn. Villager: Choose next player. The type Reveal own identity effect.
+ * 
+ * @see com.model.card.effect.Effect
+ * @see com.model.card.effect.EffectList
  */
 public class RevealOwnIdentityEffect extends TurnEffect {
     @Override

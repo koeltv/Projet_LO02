@@ -7,7 +7,10 @@ import com.model.game.Round;
 import com.model.player.Player;
 
 /**
- * The type Take from accuser hand effect.
+ * Take one card from the hand of the player who accused you. The type Take from accuser hand effect.
+ * 
+ * @see com.model.card.effect.Effect
+ * @see com.model.card.effect.EffectList
  */
 public class TakeFromAccuserHandEffect extends Effect {
     @Override

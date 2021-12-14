@@ -7,7 +7,10 @@ import com.model.game.Round;
 import com.model.player.Player;
 
 /**
- * The type Secretly read identity effect.
+ * Before their turn, secretly look at their identity. The type Secretly read identity effect.
+ * 
+ * @see com.model.card.effect.Effect
+ * @see com.model.card.effect.EffectList
  */
 public class SecretlyReadIdentityEffect extends Effect {
     @Override
