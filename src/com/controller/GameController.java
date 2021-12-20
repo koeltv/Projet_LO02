@@ -5,9 +5,8 @@ import com.model.game.Game;
 import com.model.player.AI;
 import com.model.player.Player;
 import com.view.ActiveView;
-import com.view.CommandLineView;
-import com.view.Views;
-import com.view.graphic.dynamic.Graphical2DView;
+import com.view.InitialViewChoice;
+import com.view.server.ClientSideView;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -22,17 +21,17 @@ import static com.util.GameUtil.randomAIName;
 public class GameController {
     /**
      * The Game.
-     * 
+     *
      * @see com.model.game.Game
      */
-    private final Game game;
+    protected final Game game;
 
     /**
      * The View.
-     * 
+     *
      * @see com.view.ActiveView
      */
-    private final ActiveView view;
+    protected final ActiveView view;
 
     /**
      * Instantiates a new Game controller.
@@ -66,12 +65,12 @@ public class GameController {
 
     /**
      * Ask for player repartition.
-     * 
+     *
      * @see com.model.game.Game
      * @see com.model.player.Player
      * @see com.view.ActiveView
      */
-    private void askForPlayerRepartition() {
+    protected void askForPlayerRepartition() {
         game.clearPlayers();
         int[] values;
         do {
@@ -95,7 +94,7 @@ public class GameController {
      * @see com.model.player.Player
      * @see com.view.ActiveView
      */
-    private void addPlayer(int id) {
+    protected void addPlayer(int id) {
         String playerName;
         boolean nameAlreadyAssigned;
         do {
@@ -117,7 +116,7 @@ public class GameController {
      * @see com.controller.GameAction
      * @see com.view.ActiveView
      */
-    private GameAction nextAction() {
+    protected GameAction nextAction() {
         return switch (view.promptForNewGame()) {
             case "q" -> GameAction.STOP;
             case "r" -> GameAction.RESET_GAME;
@@ -127,13 +126,13 @@ public class GameController {
 
     /**
      * Wrap up game.
-     * 
+     *
      * @see com.controller.RoundController
      * @see com.model.game.Game
      * @see com.model.player.Player
      * @see com.view.View
      */
-    private void wrapUpGame() {
+    protected void wrapUpGame() {
         List<Player> winners = game.getPlayers().stream().filter(player -> player.getScore() >= 5).collect(Collectors.toList());
 
         view.showGameWinner(game.settleTie(winners).getName(), RoundController.getNumberOfRound());
@@ -173,10 +172,12 @@ public class GameController {
      * @see com.view.graphic.dynamic.Graphical2DView
      */
     public static void main(String[] args) {
-        Views views = new Views(new Graphical2DView());
-        views.addView(new CommandLineView());
-
-        GameController gameController = new GameController(views);
-        gameController.run();
+        ActiveView activeView = InitialViewChoice.run();
+        if (activeView instanceof ClientSideView clientSideView) {
+            clientSideView.run();
+        } else {
+            GameController gameController = new GameController(activeView);
+            gameController.run();
+        }
     }
 }

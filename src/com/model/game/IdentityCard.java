@@ -2,19 +2,21 @@ package com.model.game;
 
 import com.model.player.Player;
 
+import java.io.Serializable;
+
 /**
  * The type Identity card.
  */
-public class IdentityCard {
-    /**
-     * The Player linked to this card.
-     */
-    public final Player player;
+public class IdentityCard implements Serializable {
+	/**
+	 * The Player linked to this card.
+	 */
+	public final Player player;
 
-    /**
-     * The Witch.
-     */
-    private boolean witch;
+	/**
+	 * The Witch.
+	 */
+	private boolean witch;
 
     /**
      * The Identity revealed.

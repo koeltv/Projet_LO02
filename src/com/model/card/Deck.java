@@ -2,23 +2,24 @@ package com.model.card;
 
 import com.model.card.effect.*;
 
+import java.io.Serializable;
 import java.util.Collections;
 import java.util.LinkedList;
 
 /**
  * The type Deck.
  */
-public class Deck {
+public class Deck implements Serializable {
 
-    /**
-     * The Cards.
-     */
-    private final LinkedList<RumourCard> cards;
+	/**
+	 * The Cards.
+	 */
+	private final LinkedList<RumourCard> cards;
 
-    /**
-     * Instantiates a new Deck.
-     */
-    public Deck() {
+	/**
+	 * Instantiates a new Deck.
+	 */
+	public Deck() {
         this.cards = new LinkedList<>();
 
         for (CardName cardName : CardName.values()) {

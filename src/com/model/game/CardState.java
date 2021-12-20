@@ -2,19 +2,21 @@ package com.model.game;
 
 import com.model.card.RumourCard;
 
+import java.io.Serializable;
+
 /**
  * The type Card state.
  */
-public class CardState {
-    /**
-     * The linked Rumour card.
-     */
-    public final RumourCard rumourCard;
+public class CardState implements Serializable {
+	/**
+	 * The linked Rumour card.
+	 */
+	public final RumourCard rumourCard;
 
-    /**
-     * Is Revealed boolean.
-     */
-    private boolean revealed;
+	/**
+	 * Is Revealed boolean.
+	 */
+	private boolean revealed;
 
     /**
      * Instantiates a new Card state.

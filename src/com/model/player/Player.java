@@ -3,6 +3,7 @@ package com.model.player;
 import com.model.card.RumourCard;
 import com.model.game.CardState;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -10,7 +11,7 @@ import java.util.stream.Collectors;
 /**
  * The type Player.
  */
-public class Player {
+public class Player implements Serializable {
     /**
      * The Score.
      */

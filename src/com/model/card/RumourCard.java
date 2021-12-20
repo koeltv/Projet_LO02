@@ -5,12 +5,13 @@ import com.model.card.effect.EffectList;
 import com.model.game.Round;
 import com.model.player.Player;
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
  * The type Rumour card.
  */
-public class RumourCard {
+public class RumourCard implements Serializable {
     /**
      * The Card name.
      */

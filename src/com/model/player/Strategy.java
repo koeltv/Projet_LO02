@@ -5,6 +5,7 @@ import com.model.card.RumourCard;
 import com.model.game.IdentityCard;
 import com.model.game.Round;
 
+import java.io.Serializable;
 import java.util.List;
 
 import static com.util.GameUtil.randomInInterval;
@@ -12,17 +13,17 @@ import static com.util.GameUtil.randomInInterval;
 /**
  * The interface Strategy.
  */
-public abstract class Strategy {
-    /**
-     * The linked AI.
-     */
-    final AI ai;
+public abstract class Strategy implements Serializable {
+	/**
+	 * The linked AI.
+	 */
+	final AI ai;
 
-    /**
-     * Instantiates a new Strategy.
-     *
-     * @param ai the linked AI
-     */
+	/**
+	 * Instantiates a new Strategy.
+	 *
+	 * @param ai the linked AI
+	 */
     Strategy(AI ai) {
         this.ai = ai;
     }

@@ -13,7 +13,7 @@ import java.util.List;
  * The type Views.
  * Contain a list of passive views and 1 active view. Made to be able to handle more than 1 view at a time.
  */
-public class Views extends JFrame implements ActiveView, Runnable {
+public class Views extends JFrame implements ActiveView, PassiveView, Runnable {
 
     /**
      * The Passive Views.
@@ -206,5 +206,57 @@ public class Views extends JFrame implements ActiveView, Runnable {
                 }
             }
         }
+    }
+
+    ///////////////////////////////////////////////////////////////////////////
+    // Passive Methods
+    ///////////////////////////////////////////////////////////////////////////
+
+    @Override
+    public void waitForPlayerName(int playerIndex) {
+        if (activeView instanceof PassiveView passiveView) passiveView.waitForPlayerName(playerIndex);
+        views.forEach(passiveView -> passiveView.waitForPlayerName(playerIndex));
+    }
+
+    @Override
+    public void waitForNewGame() {
+        if (activeView instanceof PassiveView passiveView) passiveView.waitForNewGame();
+        views.forEach(PassiveView::waitForNewGame);
+    }
+
+    @Override
+    public void waitForPlayerChoice(List<String> playerNames) {
+        if (activeView instanceof PassiveView passiveView) passiveView.waitForPlayerChoice(playerNames);
+        views.forEach(passiveView -> passiveView.waitForPlayerChoice(playerNames));
+    }
+
+    @Override
+    public void waitForCardChoice(List<RumourCard> rumourCards) {
+        if (activeView instanceof PassiveView passiveView) passiveView.waitForCardChoice(rumourCards);
+        views.forEach(passiveView -> passiveView.waitForCardChoice(rumourCards));
+    }
+
+    @Override
+    public void waitForRepartition() {
+        if (activeView instanceof PassiveView passiveView) passiveView.waitForRepartition();
+        views.forEach(PassiveView::waitForRepartition);
+    }
+
+    @Override
+    public void waitForPlayerIdentity(String name) {
+        if (activeView instanceof PassiveView passiveView) passiveView.waitForPlayerIdentity(name);
+        views.forEach(passiveView -> passiveView.waitForPlayerIdentity(name));
+    }
+
+    @Override
+    public void waitForAction(String playerName, List<PlayerAction> possibleActions) {
+        if (activeView instanceof PassiveView passiveView) passiveView.waitForAction(playerName, possibleActions);
+        views.forEach(passiveView -> passiveView.waitForAction(playerName, possibleActions));
+    }
+
+    @Override
+    public void waitForPlayerSwitch(String name) {
+        if (activeView instanceof PassiveView passiveView) passiveView.waitForPlayerSwitch(name);
+        views.forEach(passiveView -> passiveView.waitForPlayerSwitch(name));
     }
 }

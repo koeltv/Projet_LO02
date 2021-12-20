@@ -7,6 +7,7 @@ import com.model.card.RumourCard;
 import com.model.player.AI;
 import com.model.player.Player;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedList;
@@ -15,11 +16,11 @@ import java.util.stream.Collectors;
 
 import static com.util.GameUtil.randomInInterval;
 
-public class Round {
+public class Round implements Serializable {
     /**
      * The single instance of roundController.
      */
-    private static Round instance;
+    protected transient static Round instance;
 
     /**
      * The number of round.

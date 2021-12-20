@@ -1,19 +1,21 @@
 package com.model.card;
 
+import java.io.Serializable;
+
 /**
  * The enum Card name.
  */
-public enum CardName {
-    /**
-     * Angry mob card name.
-     */
-    ANGRY_MOB,
-    /**
-     * The inquisition card name.
-     */
-    THE_INQUISITION,
-    /**
-     * Pointed hat card name.
+public enum CardName implements Serializable {
+	/**
+	 * Angry mob card name.
+	 */
+	ANGRY_MOB,
+	/**
+	 * The inquisition card name.
+	 */
+	THE_INQUISITION,
+	/**
+	 * Pointed hat card name.
      */
     POINTED_HAT,
     /**
