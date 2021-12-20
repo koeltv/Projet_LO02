@@ -7,6 +7,7 @@ import com.model.card.RumourCard;
 import com.model.player.AI;
 import com.model.player.Player;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedList;
@@ -17,15 +18,15 @@ import static com.util.GameUtil.randomInInterval;
 
 /**
  * The type Round.
- * 
+ *
  * Gives all the methods related to the round.
  */
-public class Round {
-	
+public class Round implements Serializable {
+
 	/**
      * The single instance of Round.
      */
-    private static Round instance;
+    protected transient static Round instance;
 
     /**
      * The number of round.
@@ -34,14 +35,14 @@ public class Round {
 
     /**
      * The current player.
-     * 
+     *
      * @see com.model.player.Player
      */
     private static Player currentPlayer;
 
     /**
      * The Next player.
-     * 
+     *
      * @see com.model.player.Player
      */
     private Player nextPlayer;
@@ -69,7 +70,7 @@ public class Round {
 
     /**
      * The Deck.
-     * 
+     *
      * @see com.model.card.Deck
      */
     private final Deck deck;
@@ -105,7 +106,7 @@ public class Round {
     /**
      * Reset the round instance.
      * Permit to re-prepare a game.
-     * 
+     *
      * @see com.model.card.Deck
      * @see com.model.player.Player
      */
@@ -205,7 +206,7 @@ public class Round {
 
     /**
      * Gets not selectable players.
-     * 
+     *
      * @param player the player
      * @return a list of not selectable players
      * @see com.model.player.Player
@@ -319,7 +320,7 @@ public class Round {
     /**
      * Distribute Rumour cards.
      * This method distribute the Rumour cards at the start of a round based on the number of players.
-     * 
+     *
      * @see com.model.card.CardName
      * @see com.model.card.Deck
      * @see com.model.game.IdentityCard

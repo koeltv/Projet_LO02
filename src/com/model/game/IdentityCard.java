@@ -2,19 +2,21 @@ package com.model.game;
 
 import com.model.player.Player;
 
+import java.io.Serializable;
+
 /**
  * The type Identity card.
- * 
+ *
  * Gives all the methods related to identity cards.
  */
-public class IdentityCard {
-    
-	/**
-     * The Player linked to this card.
-     * 
+public class IdentityCard implements Serializable {
+
+    /**
+	 * The Player linked to this card.
+     *
      * @see com.model.player.Player
-     */
-    public final Player player;
+	 */
+	public final Player player;
 
     /**
      * The Witch (2 possible identities depending on the player's choice)

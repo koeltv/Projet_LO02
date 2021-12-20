@@ -5,32 +5,32 @@ import com.model.card.effect.EffectList;
 import com.model.game.Round;
 import com.model.player.Player;
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
  * The type Rumour card.
- * 
+ *
  * Gives all the methods related to Rumour Cards.
  */
-public class RumourCard {
-    
-	/**
+public class RumourCard implements Serializable {
+    /**
      * The Card name.
-     * 
+     *
      * @see com.model.card.CardName
      */
     private final CardName cardName;
 
     /**
      * The Witch effects.
-     * 
+     *
      * @see com.model.card.effect.EffectList
      */
     private final EffectList witchEffects;
 
     /**
      * The Hunt effects.
-     * 
+     *
      * @see com.model.card.effect.EffectList
      */
     private final EffectList huntEffects;
@@ -52,7 +52,7 @@ public class RumourCard {
 
     /**
      * Gets Hunt Effects
-     * 
+     *
      * @return hunt effects
      * @see com.model.card.effect.EffectList
      */
@@ -62,7 +62,7 @@ public class RumourCard {
 
     /**
      * Gets Witch Effects
-     * 
+     *
      * @return witch effects
      * @see com.model.card.effect.EffectList
      */

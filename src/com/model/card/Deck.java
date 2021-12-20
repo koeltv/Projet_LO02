@@ -2,26 +2,27 @@ package com.model.card;
 
 import com.model.card.effect.*;
 
+import java.io.Serializable;
 import java.util.Collections;
 import java.util.LinkedList;
 
 /**
  * The type Deck.
- * 
+ *
  * Gives all the methods related to the deck.
  */
-public class Deck {
-    
+public class Deck implements Serializable {
+
 	/**
-     * The Cards.
+	 * The Cards.
      *
      * @see com.model.card.RumourCard
-     */
-    private final LinkedList<RumourCard> cards = new LinkedList<>();
+	 */
+	private final LinkedList<RumourCard> cards = new LinkedList<>();
 
     /**
      * Instantiates a new Deck.
-     * 
+     *
      * @see com.model.card.CardName
      * @see com.model.card.RumourCard
      * @see com.model.card.effect.EffectList
@@ -42,7 +43,6 @@ public class Deck {
      */
     public Deck() {
         for (CardName cardName : CardName.values()) {
-        	
             //Witch? effects
             EffectList witchEffects = switch (cardName) {
                 case THE_INQUISITION -> new EffectList(new DiscardFromHandEffect());

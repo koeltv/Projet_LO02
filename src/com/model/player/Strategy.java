@@ -5,6 +5,7 @@ import com.model.card.RumourCard;
 import com.model.game.IdentityCard;
 import com.model.game.Round;
 
+import java.io.Serializable;
 import java.util.List;
 
 import static com.util.GameUtil.randomInInterval;
@@ -14,11 +15,11 @@ import static com.util.GameUtil.randomInInterval;
  * 
  * Gives all the methods related to the Strategy. Some other classes are extended from this abstract class because it's the strategy by default from all strategies created.
  */
-public abstract class Strategy {
-    
+public abstract class Strategy implements Serializable {
+
 	/**
      * The linked AI.
-     * 
+     *
      * @see com.model.player.AI
      */
     final AI ai;
@@ -44,7 +45,7 @@ public abstract class Strategy {
 
     /**
      * Select identity.
-     * 
+     *
      * @see com.model.game.IdentityCard
      */
     public void selectIdentity() {

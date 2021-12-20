@@ -3,23 +3,25 @@ package com.model.card.effect;
 import com.model.card.CardName;
 import com.model.player.Player;
 
+import java.io.Serializable;
+
 /**
  * The abstract class Effect.
- * 
+ *
  * Gives all the methods related to card effects.
  */
-public abstract class Effect {
-    
-	/**
-     * Get effect description.
-     *
-     * @return effect description.
-     */
-    @Override
-    public abstract String toString();
+public abstract class Effect implements Serializable {
 
     /**
-     * Apply effect.
+	 * Get effect description.
+	 *
+	 * @return effect description.
+	 */
+	@Override
+	public abstract String toString();
+
+	/**
+	 * Apply effect.
      *
      * @param cardUser the card user
      * @param target   the target
