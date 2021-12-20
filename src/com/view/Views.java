@@ -1,7 +1,6 @@
 package com.view;
 
 import com.controller.PlayerAction;
-import com.model.card.CardName;
 import com.model.card.RumourCard;
 
 import javax.swing.*;
@@ -90,21 +89,21 @@ public class Views extends JFrame implements ActiveView, Runnable {
     }
 
     @Override
-    public synchronized void showPlayerAction(String name) {
-        views.forEach(view -> view.showPlayerAction(name));
-        activeView.showPlayerAction(name);
+    public synchronized void showRevealAction(String name) {
+        views.forEach(view -> view.showRevealAction(name));
+        activeView.showRevealAction(name);
     }
 
     @Override
-    public synchronized void showPlayerAction(String name, String targetedPlayerName) {
-        views.forEach(view -> view.showPlayerAction(name, targetedPlayerName));
-        activeView.showPlayerAction(name, targetedPlayerName);
+    public synchronized void showAccuseAction(String name, String targetedPlayerName) {
+        views.forEach(view -> view.showAccuseAction(name, targetedPlayerName));
+        activeView.showAccuseAction(name, targetedPlayerName);
     }
 
     @Override
-    public synchronized void showPlayerAction(String name, CardName chosenCardName) {
-        views.forEach(view -> view.showPlayerAction(name, chosenCardName));
-        activeView.showPlayerAction(name, chosenCardName);
+    public synchronized void showUseCardAction(String name, String chosenCardName) {
+        views.forEach(view -> view.showUseCardAction(name, chosenCardName));
+        activeView.showUseCardAction(name, chosenCardName);
     }
 
     @Override

@@ -1,7 +1,6 @@
 package com.view;
 
 import com.controller.PlayerAction;
-import com.model.card.CardName;
 import com.model.card.RumourCard;
 
 import java.util.List;
@@ -48,17 +47,17 @@ public class CommandLineView implements PassiveView, ActiveView {
     }
 
     @Override
-    public void showPlayerAction(String name) {
+    public void showRevealAction(String name) {
         System.out.println("Player " + name + " is revealing his identity !");
     }
 
     @Override
-    public void showPlayerAction(String name, String targetedPlayerName) {
+    public void showAccuseAction(String name, String targetedPlayerName) {
         System.out.println("Player " + name + " is accusing " + targetedPlayerName + " !");
     }
 
     @Override
-    public void showPlayerAction(String name, CardName chosenCardName) {
+    public void showUseCardAction(String name, String chosenCardName) {
         System.out.println("Player " + name + " is using " + chosenCardName + " !");
     }
 

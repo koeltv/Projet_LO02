@@ -1,7 +1,6 @@
 package com.view.graphic;
 
 import com.controller.PlayerAction;
-import com.model.card.CardName;
 import com.model.card.RumourCard;
 
 import javax.swing.*;
@@ -12,7 +11,6 @@ import java.util.List;
  * The type Graphical Text View.
  * Made to display user's interaction in a graphical interface using a text window and input boxes.
  */
-@SuppressWarnings({"ALL", "unused"})
 public class GraphicalTextView extends GraphicView {
     /**
      * The Text area.
@@ -97,17 +95,17 @@ public class GraphicalTextView extends GraphicView {
     }
 
     @Override
-    public void showPlayerAction(String name) {
+    public void showRevealAction(String name) {
         appendText("Player " + name + " is revealing his identity !");
     }
 
     @Override
-    public void showPlayerAction(String name, String targetedPlayerName) {
+    public void showAccuseAction(String name, String targetedPlayerName) {
         appendText("Player " + name + " is accusing " + targetedPlayerName + " !");
     }
 
     @Override
-    public void showPlayerAction(String name, CardName chosenCardName) {
+    public void showUseCardAction(String name, String chosenCardName) {
         appendText("Player " + name + " is using " + chosenCardName + " !");
     }
 

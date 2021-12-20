@@ -185,7 +185,7 @@ public class RoundController {
             }
             case LOOK_AT_IDENTITY -> view.showPlayerIdentity(player.getName(), round.getPlayerIdentityCard(player).isWitch());
             case REVEAL_IDENTITY -> {
-                view.showPlayerAction(player.getName());
+                view.showRevealAction(player.getName());
                 view.showPlayerIdentity(player.getName(), round.getPlayerIdentityCard(player).isWitch());
 
                 round.revealIdentity(player);
@@ -200,7 +200,7 @@ public class RoundController {
                 }
 
                 Player targetedPlayer = choosePlayer(player, players);
-                view.showPlayerAction(player.getName(), targetedPlayer.getName());
+                view.showAccuseAction(player.getName(), targetedPlayer.getName());
 
                 passToNextPlayer(player, targetedPlayer);
                 askPlayerForAction(targetedPlayer, round.getStandardActions(targetedPlayer));
@@ -212,7 +212,7 @@ public class RoundController {
                 boolean cardUsedSuccessfully;
                 do {
                     RumourCard chosenRumourCard = chooseCard(player, round.getUsableCards(player, player.getSelectableCardsFromHand()));
-                    view.showPlayerAction(player.getName(), chosenRumourCard.getCardName());
+                    view.showUseCardAction(player.getName(), chosenRumourCard.getCardName().toString());
                     cardUsedSuccessfully = player.revealRumourCard(chosenRumourCard);
                 } while (!cardUsedSuccessfully);
             }

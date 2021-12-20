@@ -1,7 +1,6 @@
 package com.view.graphic.dynamic;
 
 import com.controller.PlayerAction;
-import com.model.card.CardName;
 import com.model.card.RumourCard;
 import com.model.game.IdentityCard;
 import com.model.game.Round;
@@ -101,17 +100,17 @@ public class Graphical2DView extends GraphicView { // TODO: 10/12/2021 Zoom on c
     }
 
     @Override
-    public void showPlayerAction(String name) {
+    public void showRevealAction(String name) {
         displayAndRepaint("Player " + name + " is revealing his identity !");
     }
 
     @Override
-    public void showPlayerAction(String name, String targetedPlayerName) {
+    public void showAccuseAction(String name, String targetedPlayerName) {
         displayAndRepaint("Player " + name + " is accusing " + targetedPlayerName + " !");
     }
 
     @Override
-    public void showPlayerAction(String name, CardName chosenCardName) {
+    public void showUseCardAction(String name, String chosenCardName) {
         displayAndRepaint("Player " + name + " is using " + chosenCardName + " !");
     }
 

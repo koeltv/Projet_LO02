@@ -1,7 +1,5 @@
 package com.view;
 
-import com.model.card.CardName;
-
 import java.util.List;
 
 /**
@@ -44,7 +42,7 @@ public interface View {
      *
      * @param name the player name
      */
-    void showPlayerAction(String name);
+    void showRevealAction(String name);
 
     /**
      * Show player action (accusing).
@@ -52,7 +50,7 @@ public interface View {
      * @param name               the player name
      * @param targetedPlayerName the targeted player name
      */
-    void showPlayerAction(String name, String targetedPlayerName);
+    void showAccuseAction(String name, String targetedPlayerName);
 
     /**
      * Show player action (using card).
@@ -60,7 +58,7 @@ public interface View {
      * @param name           the player name
      * @param chosenCardName the chosen card name
      */
-    void showPlayerAction(String name, CardName chosenCardName);
+    void showUseCardAction(String name, String chosenCardName);
 
     /**
      * Show card list.
