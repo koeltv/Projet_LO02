@@ -178,6 +178,13 @@ public class Round implements Serializable {
                 .findFirst().orElse(null);
     }
 
+    public Player getPlayerByName(String name) {
+        return identityCards.stream()
+                .map(identityCard -> identityCard.player)
+                .filter(player -> player.getName().equals(name))
+                .findFirst().orElse(null);
+    }
+
     /**
      * Gets usable cards.
      * Return the cards from the input list that can be used by the player.

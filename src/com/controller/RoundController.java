@@ -39,10 +39,18 @@ public class RoundController {
 
     /**
      * The Round.
-     * 
+     *
      * @see com.model.game.Round
      */
     private final Round round;
+
+    public RoundController(ActiveView view) {
+        this.view = view;
+        this.gameController = null;
+        this.round = null;
+
+        RoundController.instance = this;
+    }
 
     /**
      * Instantiates a new Round controller.
@@ -105,7 +113,7 @@ public class RoundController {
     public RumourCard chooseCard(Player player, List<RumourCard> rumourCardList) {
         return player instanceof AI ai ?
                 ai.selectCard(rumourCardList) :
-                rumourCardList.get(view.promptForCardChoice(rumourCardList));
+                rumourCardList.get(view.promptForCardChoice(player.getName(), rumourCardList));
     }
 
     /**
@@ -122,7 +130,7 @@ public class RoundController {
     public RumourCard chooseCardBlindly(Player player, List<RumourCard> rumourCardList) {
         int index = player instanceof AI ai ?
                 ai.selectCard(rumourCardList.size()) :
-                view.promptForCardChoice(rumourCardList.size());
+                view.promptForCardChoice(player.getName(), rumourCardList.size());
         return rumourCardList.get(index);
     }
 
@@ -139,7 +147,7 @@ public class RoundController {
     public Player choosePlayer(Player choosingPlayer, List<Player> playerList) {
         return choosingPlayer instanceof AI ai ?
                 ai.selectPlayer(playerList) :
-                playerList.get(view.promptForPlayerChoice(playerList.stream().map(Player::getName).collect(Collectors.toList())));
+                playerList.get(view.promptForPlayerChoice(choosingPlayer.getName(), playerList.stream().map(Player::getName).collect(Collectors.toList())));
     }
 
     /**

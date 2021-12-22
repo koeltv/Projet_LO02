@@ -109,18 +109,18 @@ public abstract class GraphicView extends JFrame implements PassiveView, ActiveV
     }
 
     @Override
-    public int promptForPlayerChoice(List<String> playerNames) {
+    public int promptForPlayerChoice(String playerName, List<String> playerNames) {
         return promptForOptions("Player choice", "Choose a player", playerNames.toArray(String[]::new));
     }
 
     @Override
-    public int promptForCardChoice(List<RumourCard> rumourCards) {
+    public int promptForCardChoice(String playerName, List<RumourCard> rumourCards) {
         String[] cardNames = rumourCards.stream().map(rumourCard -> rumourCard.getCardName().toString()).toArray(String[]::new);
         return promptForOptions("Card choice", "Choose a card", cardNames);
     }
 
     @Override
-    public int promptForCardChoice(int listSize) {
+    public int promptForCardChoice(String playerName, int listSize) {
         List<String> strings = new ArrayList<>();
         for (int i = 0; i < listSize; i++) strings.add("Card n°" + i);
         return promptForOptions("Card choice", "Choose a card", strings.toArray(String[]::new));

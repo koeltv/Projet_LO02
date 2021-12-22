@@ -163,7 +163,7 @@ public class CommandLineView implements PassiveView, ActiveView {
     }
 
     @Override
-    public int promptForPlayerChoice(List<String> playerNames) {
+    public int promptForPlayerChoice(String playerName, List<String> playerNames) {
         System.out.println(">> Choose a player by index");
         for (int i = 0; i < playerNames.size(); i++) {
             System.out.println(i + "- " + playerNames.get(i));
@@ -172,7 +172,7 @@ public class CommandLineView implements PassiveView, ActiveView {
     }
 
     @Override
-    public int promptForCardChoice(List<RumourCard> rumourCards) {
+    public int promptForCardChoice(String playerName, List<RumourCard> rumourCards) {
         System.out.println(">> Choose a card by index");
         for (int i = 0; i < rumourCards.size(); i++) {
             System.out.println(i + "- " + rumourCards.get(i));
@@ -181,7 +181,7 @@ public class CommandLineView implements PassiveView, ActiveView {
     }
 
     @Override
-    public int promptForCardChoice(int listSize) {
+    public int promptForCardChoice(String playerName, int listSize) {
         System.out.println(">> Choose a card by index");
         for (int i = 0; i < listSize; i++) System.out.println("Card n°" + i);
         return promptForInt(listSize - 1);

@@ -141,4 +141,9 @@ public class Player implements Serializable {
                 .map(cardState -> cardState.rumourCard)
                 .collect(Collectors.toList());
     }
+
+    @Override
+    public String toString() {
+        return getName();
+    }
 }

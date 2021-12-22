@@ -29,26 +29,30 @@ public interface ActiveView extends View {
     /**
      * Prompt for player choice.
      *
+     * @param playerName  the choosing player name
      * @param playerNames the player names
      * @return the chosen player index
      */
-    int promptForPlayerChoice(List<String> playerNames);
+    int promptForPlayerChoice(String playerName, List<String> playerNames);
 
     /**
      * Prompt for card choice.
      *
+     * @param playerName  the choosing player name
      * @param rumourCards the rumour card descriptions
      * @return the chosen card index
      */
-    int promptForCardChoice(List<RumourCard> rumourCards);
+    int promptForCardChoice(String playerName, List<RumourCard> rumourCards);
 
     /**
      * Prompt for blind card choice.
      *
+     *
+     * @param playerName the choosing player name
      * @param listSize the number of cards to choose from
      * @return the chosen card index
      */
-    int promptForCardChoice(int listSize);
+    int promptForCardChoice(String playerName, int listSize);
 
     /**
      * Prompt for repartition.

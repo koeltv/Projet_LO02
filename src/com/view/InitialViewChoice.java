@@ -1,5 +1,6 @@
 package com.view;
 
+import com.view.graphic.GraphicalTextView;
 import com.view.graphic.dynamic.Graphical2DView;
 import com.view.server.ClientSideView;
 import com.view.server.ServerSideView;
@@ -33,6 +34,7 @@ public class InitialViewChoice extends JDialog {
 		setContentPane(contentPane);
 		setModal(true);
 		getRootPane().setDefaultButton(buttonOK);
+		setTitle("View choosing window");
 
 		graphical2dSpinner.setModel(new SpinnerNumberModel(0, 0, 10, 1));
 		graphicalTextSpinner.setModel(new SpinnerNumberModel(0, 0, 10, 1));
@@ -70,7 +72,7 @@ public class InitialViewChoice extends JDialog {
 	}
 
 	private void onOK() {
-		List<View> views = new ArrayList<>();
+		List<ActiveView> views = new ArrayList<>();
 
 		if (consoleCheckBox.isSelected()) views.add(new CommandLineView());
 
@@ -79,23 +81,24 @@ public class InitialViewChoice extends JDialog {
 		}
 
 		for (int i = 0; i < (int) graphicalTextSpinner.getValue(); i++) {
-			views.add(new Graphical2DView());
+			views.add(new GraphicalTextView());
 		}
 
-		Views viewList = null;
+		ActiveView view = views.get(0);
 		if (views.size() > 1) {
-			viewList = new Views((ActiveView) views.get(0));
+			Views viewList = new Views(views.get(0));
 			for (int i = 1; i < views.size(); i++) {
 				viewList.addView((PassiveView) views.get(i));
 			}
+			view = viewList;
 		}
 
 		if (offButton.isSelected()) {
-			activeView = viewList != null ? viewList : (ActiveView) views.get(0);
+			activeView = view;
 		} else if (serverButton.isSelected()) {
-			activeView = new ServerSideView(viewList != null ? viewList : (ActiveView) views.get(0));
+			activeView = new ServerSideView(view);
 		} else if (clientButton.isSelected()) {
-			activeView = new ClientSideView(viewList != null ? viewList : (PassiveView) views.get(0));
+			activeView = new ClientSideView((PassiveView) view);
 		}
 
 		dispose();

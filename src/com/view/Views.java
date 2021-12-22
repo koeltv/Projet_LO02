@@ -13,7 +13,7 @@ import java.util.List;
  * The type Views.
  * Contain a list of passive views and 1 active view. Made to be able to handle more than 1 view at a time.
  */
-public class Views extends JFrame implements ActiveView, PassiveView, Runnable {
+public class Views extends Frame implements ActiveView, PassiveView, Runnable {
 
     /**
      * The Passive Views.
@@ -130,21 +130,21 @@ public class Views extends JFrame implements ActiveView, PassiveView, Runnable {
     }
 
     @Override
-    public synchronized int promptForPlayerChoice(List<String> playerNames) {
+    public synchronized int promptForPlayerChoice(String playerName, List<String> playerNames) {
         views.forEach(passiveView -> passiveView.waitForPlayerChoice(playerNames));
-        return activeView.promptForPlayerChoice(playerNames);
+        return activeView.promptForPlayerChoice(playerName, playerNames);
     }
 
     @Override
-    public synchronized int promptForCardChoice(List<RumourCard> rumourCards) {
+    public synchronized int promptForCardChoice(String playerName, List<RumourCard> rumourCards) {
         views.forEach(passiveView -> passiveView.waitForCardChoice(rumourCards));
-        return activeView.promptForCardChoice(rumourCards);
+        return activeView.promptForCardChoice(playerName, rumourCards);
     }
 
     @Override
-    public int promptForCardChoice(int listSize) {
+    public int promptForCardChoice(String playerName, int listSize) {
         views.forEach(passiveView -> passiveView.waitForCardChoice(null));
-        return activeView.promptForCardChoice(listSize);
+        return activeView.promptForCardChoice(playerName, listSize);
     }
 
     @Override
@@ -188,7 +188,7 @@ public class Views extends JFrame implements ActiveView, PassiveView, Runnable {
                 String[] viewsToString = activeViews.stream().map(View::toString).toArray(String[]::new);
 
                 int index = JOptionPane.showOptionDialog(
-                        rootPane,
+                        this,
                         "Please choose which view do you want as the main view", "Main View",
                         JOptionPane.DEFAULT_OPTION, JOptionPane.PLAIN_MESSAGE,
                         null,
