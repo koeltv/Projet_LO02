@@ -62,31 +62,30 @@ public class ServerSideView extends Frame implements ActiveView, Runnable {
 	}
 
 	private void initiateClientConnection(Socket clientSocket) {
-		Terminal terminal = null;
 		try {
-			terminal = new Terminal(
+			Terminal terminal = new Terminal(
 					clientSocket,
 					new ObjectOutputStream(clientSocket.getOutputStream()),
 					new ObjectInputStream(clientSocket.getInputStream())
 			);
 			clients.add(terminal);
-		} catch (IOException e) {
-			System.err.println("A connection was abandonned by the client");
-		}
 
-		//Player assignation : choose if the client is a spectator (default if only 1 player) or represents 1 or more player
-		if (Round.getInstance() != null) {
-			List<Player> availablePlayers = Round.getInstance().getSelectablePlayers(null).stream()
-					.filter(player -> !(player instanceof AI))
-					.filter(player -> localPlayers.keySet().stream().noneMatch(socket -> localPlayers.get(socket).contains(player)))
-					.toList();
-			if (availablePlayers.size() > 1) {
-				List<Player> players = select(this, "Choose player(s) to hand over to new client", availablePlayers);
-				if (players.size() > 0) {
-					localPlayers.put(terminal, new ArrayList<>(players.size()));
-					for (Player player : players) localPlayers.get(terminal).add(player);
+			//Player assignation : choose if the client is a spectator (default if only 1 player) or represents 1 or more player
+			if (Round.getInstance() != null) {
+				List<Player> availablePlayers = Round.getInstance().getSelectablePlayers(null).stream()
+						.filter(player -> !(player instanceof AI))
+						.filter(player -> localPlayers.keySet().stream().noneMatch(socket -> localPlayers.get(socket).contains(player)))
+						.toList();
+				if (availablePlayers.size() > 1) {
+					List<Player> players = select(this, "Choose player(s) to hand over to new client", availablePlayers);
+					if (players.size() > 0) {
+						localPlayers.put(terminal, new ArrayList<>(players.size()));
+						for (Player player : players) localPlayers.get(terminal).add(player);
+					}
 				}
 			}
+		} catch (IOException e) {
+			System.err.println("A connection was abandonned by the client");
 		}
 	}
 

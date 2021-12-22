@@ -11,9 +11,12 @@ import com.view.PassiveView;
 import com.view.View;
 
 import java.io.IOException;
+import java.net.Inet4Address;
 import java.net.InetAddress;
 import java.net.SocketException;
 import java.net.UnknownHostException;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
@@ -21,8 +24,8 @@ import java.util.concurrent.ForkJoinPool;
 import java.util.stream.IntStream;
 
 public class ClientSideView implements ActiveView, PassiveView {
-	private static final int ADDRESS_MIN = 0;
-	private static final int ADDRESS_MAX = 256;
+	private static final int ADDRESS_BYTE_MIN = 0;
+	private static final int ADDRESS_BYTE_MAX = 256;
 	private static final int PORT_MIN = 49152;
 	private static final int PORT_MAX = 49160;
 
@@ -33,35 +36,62 @@ public class ClientSideView implements ActiveView, PassiveView {
 	public ClientSideView(PassiveView view) {
 		this.view = view;
 		new RoundController((ActiveView) view);
-		connectToAvailableHost();
+		try {
+			connectToAvailableHost();
+		} catch (ExecutionException | InterruptedException e) {
+			e.printStackTrace();
+		}
 	}
 
 	///////////////////////////////////////////////////////////////////////////
 	// Connection method
 	///////////////////////////////////////////////////////////////////////////
 
-	public void connectToAvailableHost() {
-		try {
-			byte[] ip = InetAddress.getLocalHost().getAddress();
-			ExecutorService executor = ForkJoinPool.commonPool();
-			server = executor.invokeAny(
-					IntStream.range(ADDRESS_MIN, ADDRESS_MAX).unordered().parallel()
-							.mapToObj(i -> new byte[]{ip[0], ip[1], (byte) i, 0})
-							.flatMap(bytes -> IntStream.range(ADDRESS_MIN, ADDRESS_MAX).mapToObj(j -> new byte[]{bytes[0], bytes[1], bytes[2], (byte) j}))
-							.<CallableTerminal>mapMulti((bytes, consumer) -> {
-								try {
-									InetAddress inetAddress = InetAddress.getByAddress(bytes);
-									IntStream.range(PORT_MIN, PORT_MAX).forEach(i -> consumer.accept(new CallableTerminal(inetAddress, i)));
-								} catch (UnknownHostException e) {
-									e.printStackTrace();
-								}
-							})
-							.toList()
-			);
+	public void connectToAvailableHost() throws ExecutionException, InterruptedException {
+		ExecutorService executor = ForkJoinPool.commonPool();
+		try { //Check for similar to local IPs first
+			var ips = Arrays.stream(InetAddress.getAllByName(InetAddress.getLocalHost().getCanonicalHostName()))
+					.filter(address -> address instanceof Inet4Address)
+					.map(InetAddress::getAddress)
+					.toList();
 
+			List<CallableTerminal> terminals = new ArrayList<>();
+			ips.forEach(ip -> terminals.addAll(IntStream.range(ADDRESS_BYTE_MIN, ADDRESS_BYTE_MAX).unordered().parallel()
+					.mapToObj(i -> new byte[]{ip[0], ip[1], ip[2], (byte) i})
+					.<CallableTerminal>mapMulti(((bytes, consumer) -> {
+						try {
+							InetAddress inetAddress = InetAddress.getByAddress(bytes);
+							consumer.accept(new CallableTerminal(inetAddress, PORT_MIN));
+						} catch (UnknownHostException e) {
+							e.printStackTrace();
+						}
+					}))
+					.toList())
+			);
+			server = executor.invokeAny(terminals);
 			System.out.println("Found host: " + server.socket());
 			executor.shutdown();
-		} catch (InterruptedException | ExecutionException | UnknownHostException e) {
+		} catch (ExecutionException e) { //Check other if no result
+			try {
+				byte[] ip = InetAddress.getLocalHost().getAddress();
+				executor.shutdown();
+
+				executor.invokeAny(IntStream.range(ADDRESS_BYTE_MIN, ADDRESS_BYTE_MAX).unordered().parallel()
+						.mapToObj(i -> new byte[]{ip[0], ip[1], (byte) i, 0})
+						.flatMap(bytes -> IntStream.range(ADDRESS_BYTE_MIN, ADDRESS_BYTE_MAX).mapToObj(j -> new byte[]{bytes[0], bytes[1], bytes[2], (byte) j}))
+						.<CallableTerminal>mapMulti((bytes, consumer) -> {
+							try {
+								InetAddress inetAddress = InetAddress.getByAddress(bytes);
+								IntStream.range(PORT_MIN, PORT_MAX).forEach(i -> consumer.accept(new CallableTerminal(inetAddress, i)));
+							} catch (UnknownHostException ex) {
+								e.printStackTrace();
+							}
+						})
+						.toList());
+			} catch (UnknownHostException ex) {
+				ex.printStackTrace();
+			}
+		} catch (InterruptedException | UnknownHostException e) {
 			e.printStackTrace();
 		}
 	}

@@ -8,10 +8,11 @@ import java.net.Socket;
 import java.util.concurrent.Callable;
 
 public record CallableTerminal(InetAddress address, int port) implements Callable<Terminal> {
-	private static final int TIMEOUT = 30;
+	private static final int TIMEOUT = 150;
 
 	@Override
 	public Terminal call() throws Exception {
+		System.out.println("Trying to connect to " + address + " on port " + port + " !");
 		try (Socket socket = new Socket()) {
 			socket.connect(new InetSocketAddress(address, port), TIMEOUT);
 			System.out.println("Could connect to " + address + " on port " + port + " !");
