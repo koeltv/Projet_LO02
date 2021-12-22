@@ -48,10 +48,10 @@ public class ClientSideView implements ActiveView, PassiveView {
 					IntStream.range(ADDRESS_MIN, ADDRESS_MAX).unordered().parallel()
 							.mapToObj(i -> new byte[]{ip[0], ip[1], (byte) i, 0})
 							.flatMap(bytes -> IntStream.range(ADDRESS_MIN, ADDRESS_MAX).mapToObj(j -> new byte[]{bytes[0], bytes[1], bytes[2], (byte) j}))
-							.<CallableServer>mapMulti((bytes, consumer) -> {
+							.<CallableTerminal>mapMulti((bytes, consumer) -> {
 								try {
 									InetAddress inetAddress = InetAddress.getByAddress(bytes);
-									IntStream.range(PORT_MIN, PORT_MAX).forEach(i -> consumer.accept(new CallableServer(inetAddress, i)));
+									IntStream.range(PORT_MIN, PORT_MAX).forEach(i -> consumer.accept(new CallableTerminal(inetAddress, i)));
 								} catch (UnknownHostException e) {
 									e.printStackTrace();
 								}

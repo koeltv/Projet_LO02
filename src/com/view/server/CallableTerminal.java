@@ -7,7 +7,7 @@ import java.net.InetSocketAddress;
 import java.net.Socket;
 import java.util.concurrent.Callable;
 
-public record CallableServer(InetAddress address, int port) implements Callable<Terminal> {
+public record CallableTerminal(InetAddress address, int port) implements Callable<Terminal> {
 	private static final int TIMEOUT = 30;
 
 	@Override
