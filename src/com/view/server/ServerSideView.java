@@ -78,7 +78,7 @@ public class ServerSideView extends Frame implements ActiveView, Runnable {
 						.toList();
 				if (availablePlayers.size() > 1) {
 					List<Player> players = select(this, "Choose player(s) to hand over to new client", availablePlayers);
-					if (players.size() > 0) {
+					if (players.size() > 0 && players.size() < availablePlayers.size()) {
 						localPlayers.put(terminal, new ArrayList<>(players.size()));
 						for (Player player : players) localPlayers.get(terminal).add(player);
 					}
