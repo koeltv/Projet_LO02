@@ -27,7 +27,6 @@ public class ServerSideView extends Frame implements ActiveView, Runnable {
 	private static final int MAX_CAPACITY = 5;
 
 	private final List<Terminal> clients = new ArrayList<>();
-	//	private final HashMap<Socket, Flux> clients = new HashMap<>();
 
 	private final HashMap<Terminal, List<Player>> localPlayers = new HashMap<>();
 
@@ -100,7 +99,7 @@ public class ServerSideView extends Frame implements ActiveView, Runnable {
 		try {
 			ServerSocket serverSocket = createServerConnection();
 			if (serverSocket != null) {
-				System.out.println("Server is opened on port : " + serverSocket.getLocalPort());
+				System.out.println("Server is opened: " + serverSocket);
 				do {
 					Socket clientSocket = serverSocket.accept();
 					System.out.println("New client : " + clientSocket);
@@ -113,13 +112,17 @@ public class ServerSideView extends Frame implements ActiveView, Runnable {
 	}
 
 	private void initiateClientConnection(Socket clientSocket) throws IOException {
-		Terminal terminal = new Terminal(
-				clientSocket,
-				new ObjectOutputStream(clientSocket.getOutputStream()),
-				new ObjectInputStream(clientSocket.getInputStream())
-		);
-		clients.add(terminal);
-		terminal.output().writeObject("WitchHunt");
+		Terminal terminal = null;
+		try {
+			terminal = new Terminal(
+					clientSocket,
+					new ObjectOutputStream(clientSocket.getOutputStream()),
+					new ObjectInputStream(clientSocket.getInputStream())
+			);
+			clients.add(terminal);
+		} catch (IOException e) {
+			System.err.println("A connection was abandonned by the client");
+		}
 
 		//Player assignation : choose if the client is a spectator (default if only 1 player) or represents 1 or more player
 		if (Round.getInstance() != null) {
