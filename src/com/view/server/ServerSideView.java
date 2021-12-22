@@ -26,9 +26,10 @@ import java.util.List;
 public class ServerSideView extends Frame implements ActiveView, Runnable {
 	private static final int MAX_CAPACITY = 5;
 
-	private final HashMap<Socket, Flux> clients = new HashMap<>();
+	private final List<Terminal> clients = new ArrayList<>();
+	//	private final HashMap<Socket, Flux> clients = new HashMap<>();
 
-	private final HashMap<Socket, List<Player>> localPlayers = new HashMap<>();
+	private final HashMap<Terminal, List<Player>> localPlayers = new HashMap<>();
 
 	private final ActiveView activeView;
 
@@ -56,29 +57,33 @@ public class ServerSideView extends Frame implements ActiveView, Runnable {
 		return null;
 	}
 
-	public void updateClient(Socket socket, Object object) {
+	public void updateClient(Terminal terminal, Object object) {
 		try {
-			var stream = clients.get(socket).output();
+
+			var stream = clients.stream()
+					.filter(terminal1 -> terminal1 == terminal)
+					.findFirst().orElseThrow()
+					.output();
 			stream.writeUnshared(object);
 			stream.flush();
 			stream.reset();
 		} catch (SocketException e) {
-			clients.remove(socket);
+			clients.remove(terminal);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 	}
 
 	public void updateClients(Object object) {
-		List<Socket> toRemove = new ArrayList<>();
+		List<Terminal> toRemove = new ArrayList<>();
 
-		clients.forEach((socket, stream) -> {
+		clients.forEach(terminal -> {
 			try {
-				stream.output().writeUnshared(object);
-				stream.output().flush();
-				stream.output().reset();
+				terminal.output().writeUnshared(object);
+				terminal.output().flush();
+				terminal.output().reset();
 			} catch (SocketException e) {
-				toRemove.add(socket);
+				toRemove.add(terminal);
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
@@ -108,14 +113,13 @@ public class ServerSideView extends Frame implements ActiveView, Runnable {
 	}
 
 	private void initiateClientConnection(Socket clientSocket) throws IOException {
-		clients.put(
+		Terminal terminal = new Terminal(
 				clientSocket,
-				new Flux(
-						new ObjectOutputStream(clientSocket.getOutputStream()),
-						new ObjectInputStream(clientSocket.getInputStream())
-				)
+				new ObjectOutputStream(clientSocket.getOutputStream()),
+				new ObjectInputStream(clientSocket.getInputStream())
 		);
-		clients.get(clientSocket).output().writeObject("WitchHunt");
+		clients.add(terminal);
+		terminal.output().writeObject("WitchHunt");
 
 		//Player assignation : choose if the client is a spectator (default if only 1 player) or represents 1 or more player
 		if (Round.getInstance() != null) {
@@ -126,8 +130,8 @@ public class ServerSideView extends Frame implements ActiveView, Runnable {
 			if (availablePlayers.size() > 1) {
 				List<Player> players = select(this, "Choose player(s) to hand over to new client", availablePlayers);
 				if (players.size() > 0) {
-					localPlayers.put(clientSocket, new ArrayList<>(players.size()));
-					for (Player player : players) localPlayers.get(clientSocket).add(player);
+					localPlayers.put(terminal, new ArrayList<>(players.size()));
+					for (Player player : players) localPlayers.get(terminal).add(player);
 				}
 			}
 		}
@@ -173,18 +177,16 @@ public class ServerSideView extends Frame implements ActiveView, Runnable {
 	}
 
 	private Object getInputFromClient(Player player, ExchangeContainer exchangeContainer) {
-		clients.forEach((socket, flux) -> {
-			if (localPlayers.containsKey(socket) && localPlayers.get(socket).contains(player)) {
-				updateClient(socket, exchangeContainer.setActive());
-			} else {
-				updateClient(socket, exchangeContainer);
-			}
-		});
-		Socket socket = clients.keySet().stream()
-				.filter(socket1 -> localPlayers.get(socket1).contains(player))
-				.findFirst().orElse(null);
+		clients.forEach(terminal -> updateClient(terminal,
+				localPlayers.containsKey(terminal) && localPlayers.get(terminal).contains(player) ?
+						exchangeContainer.setActive() :
+						exchangeContainer
+		));
 		try {
-			return clients.get(socket).input().readObject();
+			return clients.stream()
+					.filter(terminal -> localPlayers.get(terminal).contains(player))
+					.findFirst().orElseThrow()
+					.input().readObject();
 		} catch (IOException | ClassNotFoundException e) {
 			e.printStackTrace();
 			return null;

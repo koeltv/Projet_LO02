@@ -12,10 +12,8 @@ import com.view.View;
 
 import java.io.IOException;
 import java.net.InetAddress;
-import java.net.Socket;
 import java.net.SocketException;
 import java.net.UnknownHostException;
-import java.util.AbstractMap;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
@@ -23,7 +21,7 @@ import java.util.concurrent.ForkJoinPool;
 import java.util.stream.IntStream;
 
 public class ClientSideView implements ActiveView, PassiveView {
-	private AbstractMap.SimpleEntry<Socket, Flux> server;
+	private Terminal server;
 
 	private final View view;
 
@@ -55,7 +53,7 @@ public class ClientSideView implements ActiveView, PassiveView {
 					.toList()
 			);
 
-			System.out.println("Found host: " + server.getKey());
+			System.out.println("Found host: " + server.socket());
 			executor.shutdown();
 		} catch (InterruptedException | ExecutionException | UnknownHostException e) {
 			e.printStackTrace();
@@ -115,14 +113,14 @@ public class ClientSideView implements ActiveView, PassiveView {
 		try {
 			while (server != null) {
 				try {
-					Object object = server.getValue().input().readObject();
+					Object object = server.input().readObject();
 
 					if (object instanceof Round round) {
 						LocalRound.setInstance(round);
 					} else if (object instanceof ExchangeContainer container) {
 						if (Round.getInstance() != null) {
 							if (container.state.isActive()) {
-								server.getValue().output().writeObject(chooseAppropriateActiveAction(container));
+								server.output().writeObject(chooseAppropriateActiveAction(container));
 							} else {
 								chooseAppropriatePassiveAction(container);
 							}

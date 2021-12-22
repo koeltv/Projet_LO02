@@ -5,20 +5,19 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.InetAddress;
 import java.net.Socket;
-import java.util.AbstractMap;
 import java.util.concurrent.Callable;
 
-public record CallableServer(InetAddress inetAddress) implements Callable<AbstractMap.SimpleEntry<Socket, Flux>> {
-	private static AbstractMap.SimpleEntry<Socket, Flux> server;
+public record CallableServer(InetAddress inetAddress) implements Callable<Terminal> {
+	private static Terminal server;
 
 	private void waitForConfirmation() {
 		try {
-			if (server.getValue().input().readObject().equals("WitchHunt")) {
+			if (server.input().readObject().equals("WitchHunt")) {
 				System.out.println("Confirmation received");
 			}
 		} catch (IOException | ClassNotFoundException e) {
 			try {
-				server.getKey().close();
+				server.socket().close();
 			} catch (IOException ex) {
 				ex.printStackTrace();
 			}
@@ -34,10 +33,11 @@ public record CallableServer(InetAddress inetAddress) implements Callable<Abstra
 			try {
 				Socket socket = new Socket(address, i);
 				System.out.println("port " + i + " can be reached !");
-				server = new AbstractMap.SimpleEntry<>(socket, new Flux(
+				server = new Terminal(
+						socket,
 						new ObjectOutputStream(socket.getOutputStream()),
 						new ObjectInputStream(socket.getInputStream())
-				));
+				);
 
 				//Try to see if the server answer
 				Thread confirmation = new Thread(this::waitForConfirmation);
@@ -59,7 +59,7 @@ public record CallableServer(InetAddress inetAddress) implements Callable<Abstra
 	}
 
 	@Override
-	public AbstractMap.SimpleEntry<Socket, Flux> call() throws Exception {
+	public Terminal call() throws Exception {
 		if (inetAddress.isReachable(30)) {
 			System.out.println(inetAddress + " can be reached !");
 			searchForOpenPort(inetAddress);
