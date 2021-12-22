@@ -17,10 +17,11 @@ import java.io.ObjectOutputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.net.SocketException;
-import java.util.AbstractMap;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 @SuppressWarnings("ConstantConditions")
 public class ServerSideView extends Frame implements ActiveView, Runnable {
@@ -40,6 +41,10 @@ public class ServerSideView extends Frame implements ActiveView, Runnable {
 		thread.start();
 	}
 
+	///////////////////////////////////////////////////////////////////////////
+	// Connection methods
+	///////////////////////////////////////////////////////////////////////////
+
 	/**
 	 * Search for available port between 49152 and 65535 to create server connection.
 	 *
@@ -55,6 +60,39 @@ public class ServerSideView extends Frame implements ActiveView, Runnable {
 		}
 		return null;
 	}
+
+	private void initiateClientConnection(Socket clientSocket) {
+		Terminal terminal = null;
+		try {
+			terminal = new Terminal(
+					clientSocket,
+					new ObjectOutputStream(clientSocket.getOutputStream()),
+					new ObjectInputStream(clientSocket.getInputStream())
+			);
+			clients.add(terminal);
+		} catch (IOException e) {
+			System.err.println("A connection was abandonned by the client");
+		}
+
+		//Player assignation : choose if the client is a spectator (default if only 1 player) or represents 1 or more player
+		if (Round.getInstance() != null) {
+			List<Player> availablePlayers = Round.getInstance().getSelectablePlayers(null).stream()
+					.filter(player -> !(player instanceof AI))
+					.filter(player -> localPlayers.keySet().stream().noneMatch(socket -> localPlayers.get(socket).contains(player)))
+					.toList();
+			if (availablePlayers.size() > 1) {
+				List<Player> players = select(this, "Choose player(s) to hand over to new client", availablePlayers);
+				if (players.size() > 0) {
+					localPlayers.put(terminal, new ArrayList<>(players.size()));
+					for (Player player : players) localPlayers.get(terminal).add(player);
+				}
+			}
+		}
+	}
+
+	///////////////////////////////////////////////////////////////////////////
+	// Communication methods
+	///////////////////////////////////////////////////////////////////////////
 
 	public void updateClient(Terminal terminal, Object object) {
 		try {
@@ -90,56 +128,6 @@ public class ServerSideView extends Frame implements ActiveView, Runnable {
 		toRemove.forEach(clients::remove);
 	}
 
-	///////////////////////////////////////////////////////////////////////////
-	// Runnable method
-	///////////////////////////////////////////////////////////////////////////
-
-	@Override
-	public void run() {
-		try {
-			ServerSocket serverSocket = createServerConnection();
-			if (serverSocket != null) {
-				System.out.println("Server is opened: " + serverSocket);
-				do {
-					Socket clientSocket = serverSocket.accept();
-					System.out.println("New client : " + clientSocket);
-					initiateClientConnection(clientSocket);
-				} while (clients.size() <= MAX_CAPACITY);
-			}
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-	}
-
-	private void initiateClientConnection(Socket clientSocket) throws IOException {
-		Terminal terminal = null;
-		try {
-			terminal = new Terminal(
-					clientSocket,
-					new ObjectOutputStream(clientSocket.getOutputStream()),
-					new ObjectInputStream(clientSocket.getInputStream())
-			);
-			clients.add(terminal);
-		} catch (IOException e) {
-			System.err.println("A connection was abandonned by the client");
-		}
-
-		//Player assignation : choose if the client is a spectator (default if only 1 player) or represents 1 or more player
-		if (Round.getInstance() != null) {
-			List<Player> availablePlayers = Round.getInstance().getSelectablePlayers(null).stream()
-					.filter(player -> !(player instanceof AI))
-					.filter(player -> localPlayers.keySet().stream().noneMatch(socket -> localPlayers.get(socket).contains(player)))
-					.toList();
-			if (availablePlayers.size() > 1) {
-				List<Player> players = select(this, "Choose player(s) to hand over to new client", availablePlayers);
-				if (players.size() > 0) {
-					localPlayers.put(terminal, new ArrayList<>(players.size()));
-					for (Player player : players) localPlayers.get(terminal).add(player);
-				}
-			}
-		}
-	}
-
 	/**
 	 * @param parent  parent of this pane
 	 * @param message message to display
@@ -149,24 +137,21 @@ public class ServerSideView extends Frame implements ActiveView, Runnable {
 	 * @see <a href="https://stackoverflow.com/questions/8899605/multiple-choices-from-a-joptionpane">source</a>
 	 */
 	public static <T> List<T> select(Component parent, String message, List<T> options) {
-		List<AbstractMap.SimpleEntry<JCheckBox, T>> boxes = options.stream()
-				.map(variant -> new AbstractMap.SimpleEntry<>(new JCheckBox(String.valueOf(variant)), variant))
-				.toList();
+		Map<JCheckBox, T> boxes = options.stream().collect(Collectors.toMap(boxe -> new JCheckBox(String.valueOf(boxe)), boxe -> boxe));
 
 		JPanel panel = new JPanel(new GridBagLayout());
-
-		boxes.forEach(p -> panel.add(p.getKey(),
-				new GridBagConstraints(0, boxes.indexOf(p), 1, 1, 1.0, 1.0,
+		boxes.forEach((box, value) -> panel.add(box,
+				new GridBagConstraints(
+						0, boxes.keySet().stream().toList().indexOf(box), 1, 1, 1.0, 1.0,
 						GridBagConstraints.CENTER, GridBagConstraints.HORIZONTAL,
 						new Insets(0, 0, 0, 0), 0, 0
 				)
 		));
 
 		JOptionPane.showMessageDialog(parent, panel, message, JOptionPane.PLAIN_MESSAGE);
-
-		return boxes.stream()
-				.filter(p -> p.getKey().isSelected())
-				.map(AbstractMap.SimpleEntry::getValue)
+		return boxes.keySet().stream()
+				.filter(AbstractButton::isSelected)
+				.map(boxes::get)
 				.toList();
 	}
 
@@ -367,5 +352,26 @@ public class ServerSideView extends Frame implements ActiveView, Runnable {
 		sendRoundState();
 		updateClients(new ExchangeContainer(ChangedState.SHOW_CARD_LIST, name, cards));
 		activeView.showCardList(name, cards);
+	}
+
+	///////////////////////////////////////////////////////////////////////////
+	// Runnable method
+	///////////////////////////////////////////////////////////////////////////
+
+	@Override
+	public void run() {
+		try {
+			ServerSocket serverSocket = createServerConnection();
+			if (serverSocket != null) {
+				System.out.println("Server is opened: " + serverSocket);
+				do {
+					Socket clientSocket = serverSocket.accept();
+					System.out.println("New client : " + clientSocket);
+					initiateClientConnection(clientSocket);
+				} while (clients.size() <= MAX_CAPACITY);
+			}
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 }
