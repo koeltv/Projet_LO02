@@ -6,7 +6,7 @@ import java.io.Serializable;
 import java.util.List;
 
 public class ExchangeContainer implements Serializable {
-	final ChangedState state;
+	ChangedState state;
 
 	String name;
 	String name2;
@@ -59,8 +59,20 @@ public class ExchangeContainer implements Serializable {
 		this.list = list;
 	}
 
-	ExchangeContainer(ChangedState state, List<?> list) {
-		this.state = state;
-		this.list = list;
+	public ExchangeContainer copy() {
+		ExchangeContainer result = new ExchangeContainer(state);
+		result.list = list;
+		result.name = name;
+		result.name2 = name2;
+		result.isWitch = isWitch;
+		result.cardName = cardName;
+		result.nb = nb;
+		return result;
+	}
+
+	public ExchangeContainer setActive() {
+		ExchangeContainer activeContainer = copy();
+		activeContainer.state = activeContainer.state.switchPA();
+		return activeContainer;
 	}
 }
