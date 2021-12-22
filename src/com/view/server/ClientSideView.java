@@ -21,6 +21,11 @@ import java.util.concurrent.ForkJoinPool;
 import java.util.stream.IntStream;
 
 public class ClientSideView implements ActiveView, PassiveView {
+	private static final int ADDRESS_MIN = 0;
+	private static final int ADDRESS_MAX = 256;
+	private static final int PORT_MIN = 49152;
+	private static final int PORT_MAX = 49160;
+
 	private Terminal server;
 
 	private final View view;
@@ -28,29 +33,30 @@ public class ClientSideView implements ActiveView, PassiveView {
 	public ClientSideView(PassiveView view) {
 		this.view = view;
 		new RoundController((ActiveView) view);
-
 		connectToAvailableHost();
 	}
 
 	///////////////////////////////////////////////////////////////////////////
-	// Connection methods
+	// Connection method
 	///////////////////////////////////////////////////////////////////////////
 
 	public void connectToAvailableHost() {
-		ExecutorService executor = ForkJoinPool.commonPool();
 		try {
 			byte[] ip = InetAddress.getLocalHost().getAddress();
-			server = executor.invokeAny(IntStream.range(0, 256).unordered().parallel()
-					.mapToObj(i -> new byte[]{ip[0], ip[1], (byte) i, 0})
-					.flatMap(bytes -> IntStream.range(0, 256).mapToObj(j -> new byte[]{bytes[0], bytes[1], bytes[2], (byte) j}))
-					.<CallableServer>mapMulti((bytes, consumer) -> {
-						try {
-							consumer.accept(new CallableServer(InetAddress.getByAddress(bytes)));
-						} catch (IOException e) {
-							e.printStackTrace();
-						}
-					})
-					.toList()
+			ExecutorService executor = ForkJoinPool.commonPool();
+			server = executor.invokeAny(
+					IntStream.range(ADDRESS_MIN, ADDRESS_MAX).unordered().parallel()
+							.mapToObj(i -> new byte[]{ip[0], ip[1], (byte) i, 0})
+							.flatMap(bytes -> IntStream.range(ADDRESS_MIN, ADDRESS_MAX).mapToObj(j -> new byte[]{bytes[0], bytes[1], bytes[2], (byte) j}))
+							.<CallableServer>mapMulti((bytes, consumer) -> {
+								try {
+									InetAddress inetAddress = InetAddress.getByAddress(bytes);
+									IntStream.range(PORT_MIN, PORT_MAX).forEach(i -> consumer.accept(new CallableServer(inetAddress, i)));
+								} catch (UnknownHostException e) {
+									e.printStackTrace();
+								}
+							})
+							.toList()
 			);
 
 			System.out.println("Found host: " + server.socket());
@@ -117,13 +123,11 @@ public class ClientSideView implements ActiveView, PassiveView {
 
 					if (object instanceof Round round) {
 						LocalRound.setInstance(round);
-					} else if (object instanceof ExchangeContainer container) {
-						if (Round.getInstance() != null) {
-							if (container.state.isActive()) {
-								server.output().writeObject(chooseAppropriateActiveAction(container));
-							} else {
-								chooseAppropriatePassiveAction(container);
-							}
+					} else if (Round.getInstance() != null && object instanceof ExchangeContainer container) {
+						if (container.state.isActive()) {
+							server.output().writeObject(chooseAppropriateActiveAction(container));
+						} else {
+							chooseAppropriatePassiveAction(container);
 						}
 					} else {
 						System.err.println("Received non standard transmission : " + object);
