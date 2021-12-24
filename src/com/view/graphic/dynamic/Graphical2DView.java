@@ -13,7 +13,7 @@ import java.util.List;
  * The type Graphical 2D view.
  * Graphical view which display the whole game in 2D graphics. It is resizable.
  */
-public class Graphical2DView extends GraphicView { // TODO: 10/12/2021 Zoom on card by clicking on them (show restrictions)
+public class Graphical2DView extends GraphicView {
     /**
      * The Panel.
      */
