@@ -17,14 +17,14 @@ public class Views extends Frame implements ActiveView, PassiveView, Runnable {
 
     /**
      * The Passive Views.
-     * 
+     *
      * @see com.view.PassiveView
      */
-    private final List<PassiveView> views;
+    private final List<PassiveView> views = new ArrayList<>();;
 
     /**
      * The Active view.
-     * 
+     *
      * @see com.view.ActiveView
      */
     private ActiveView activeView;
@@ -36,7 +36,6 @@ public class Views extends Frame implements ActiveView, PassiveView, Runnable {
      * @see com.view.ActiveView
      */
     public Views(ActiveView activeView) {
-        this.views = new ArrayList<>();
         this.activeView = activeView;
 
         //Used to enable the ability to switch the active view dynamically

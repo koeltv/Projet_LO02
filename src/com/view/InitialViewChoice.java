@@ -86,10 +86,8 @@ public class InitialViewChoice extends JDialog {
 
 		ActiveView view = views.get(0);
 		if (views.size() > 1) {
-			Views viewList = new Views(views.get(0));
-			for (int i = 1; i < views.size(); i++) {
-				viewList.addView((PassiveView) views.get(i));
-			}
+			Views viewList = new Views();
+			views.forEach(viewList::addView);
 			view = viewList;
 		}
 

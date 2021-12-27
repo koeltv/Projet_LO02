@@ -1,6 +1,6 @@
 package com.view.server;
 
-public enum ChangedState {
+public enum Command {
 	PLAYER_NAME_REQUEST,
 	NEW_GAME_REQUEST,
 	PLAYER_CHOICE_REQUEST,
@@ -30,14 +30,14 @@ public enum ChangedState {
 	SHOW_CARD_USE_ACTION,
 	SHOW_CARD_LIST;
 
-	public ChangedState switchPA() {
+	public Command switchPA() {
 		String name = toString();
 		if (this.ordinal() <= 8) {
 			name = name.replaceAll("REQUEST", "WAIT");
 		} else if (this.ordinal() <= 17) {
 			name = name.replaceAll("WAIT", "REQUEST");
 		}
-		return ChangedState.valueOf(name);
+		return Command.valueOf(name);
 	}
 
 	public boolean isActive() {
