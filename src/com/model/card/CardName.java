@@ -1,7 +1,11 @@
 package com.model.card;
 
 /**
- * The enum Card name.
+ * The enum Card Name.
+ * 
+ * Names of the different selectable cards in the game : ANGRY_MOB, THE_INQUISITION, POINTED_HAT, HOOKED_NOSE, BROOMSTICK, WART, DUCKING_STOOL, CAULDRON, EVIL_EYE, TOAD, BLACK_CAT, PET_NEWT.
+ * 
+ * @see com.model.card.Deck
  */
 public enum CardName {
     /**
