@@ -5,9 +5,7 @@ import com.model.game.Game;
 import com.model.player.AI;
 import com.model.player.Player;
 import com.view.ActiveView;
-import com.view.CommandLineView;
-import com.view.Views;
-import com.view.graphic.dynamic.Graphical2DView;
+import com.view.InitialViewChoice;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -173,10 +171,8 @@ public class GameController {
      * @see com.view.graphic.dynamic.Graphical2DView
      */
     public static void main(String[] args) {
-        Views views = new Views(new Graphical2DView());
-        views.addView(new CommandLineView());
-
-        GameController gameController = new GameController(views);
+        ActiveView activeView = InitialViewChoice.run();
+        GameController gameController = new GameController(activeView);
         gameController.run();
     }
 }
