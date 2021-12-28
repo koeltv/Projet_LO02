@@ -149,9 +149,9 @@ public class GameController {
         do {
             askForPlayerRepartition();
             do {
+                game.resetScores();
+                RoundController.reset();
                 do {
-                    game.resetScores();
-                    RoundController.reset();
                     new RoundController(this, view).run();
                 } while (!game.verifyScores());
                 wrapUpGame();
