@@ -9,6 +9,8 @@ import java.util.stream.Collectors;
 
 /**
  * The type Player.
+ * 
+ * Gives all the methods related to the Player.
  */
 public class Player {
     /**
@@ -75,6 +77,7 @@ public class Player {
      * Gets hand.
      *
      * @return the hand
+     * @see com.model.game.CardState
      */
     public List<CardState> getHand() {
         return this.hand;
@@ -82,8 +85,11 @@ public class Player {
 
     /**
      * Add card to hand.
+     * This method adds the chosen card to the player's hand.
      *
      * @param rumourCard the rumour card
+     * @see com.model.game.CardState
+     * @see com.model.card.RumourCard
      */
     public void addCardToHand(RumourCard rumourCard) {
         this.hand.add(new CardState(rumourCard));
@@ -91,9 +97,11 @@ public class Player {
 
     /**
      * Remove card from hand.
+     * This method removes the chosen card from the player's hand.
      *
      * @param rumourCard the rumour card to remove
      * @return removed rumour card or null if the card wasn't found
+     * @see com.model.card.RumourCard
      */
     public RumourCard removeCardFromHand(RumourCard rumourCard) {
         return this.hand.removeIf(card -> card.rumourCard == rumourCard) ? rumourCard : null;
@@ -101,10 +109,12 @@ public class Player {
 
     /**
      * Reveal a Rumour card.
-     * This method reveal the chosen card from the player hand and call its effects.
+     * This method reveals the chosen card from the player's hand and call its effects.
      *
      * @param cardToReveal card to reveal
      * @return whether the card has been used successfully or not
+     * @see com.model.card.RumourCard
+     * @see com.model.game.CardState
      */
     public boolean revealRumourCard(RumourCard cardToReveal) {
         boolean cardUsedSuccessfully = cardToReveal.useCard(this);
@@ -121,6 +131,8 @@ public class Player {
      * Get the list of not revealed cards from the player's hand.
      *
      * @return selectable cards
+     * @see com.model.card.RumourCard
+     * @see com.model.game.CardState
      */
     public List<RumourCard> getSelectableCardsFromHand() {
         return hand.stream()
@@ -130,9 +142,11 @@ public class Player {
     }
 
     /**
-     * Get the list of revealed cards from the player.
+     * Get the list of revealed cards from the player's hand.
      *
      * @return revealed cards
+     * @see com.model.card.RumourCard
+     * @see com.model.game.CardState
      */
     public List<RumourCard> getRevealedCards() {
         return hand.stream()

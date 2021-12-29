@@ -7,12 +7,15 @@ import java.util.List;
 
 /**
  * The type Random.
+ * 
+ * Gives all the methods related to the Random strategy.
  */
 public class Random extends Strategy {
     /**
      * Instantiates a new Random.
      *
      * @param ai the linked AI
+     * @see com.model.player.AI
      */
     Random(AI ai) {
         super(ai);

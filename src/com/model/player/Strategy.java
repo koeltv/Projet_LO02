@@ -10,11 +10,15 @@ import java.util.List;
 import static com.util.GameUtil.randomInInterval;
 
 /**
- * The interface Strategy.
+ * The abstract class Strategy.
+ * 
+ * Gives all the methods related to the Strategy. Some other classes are extended from this abstract class because its the strategy by default from all strategies created.
  */
 public abstract class Strategy {
     /**
      * The linked AI.
+     * 
+     * @see com.model.player.AI
      */
     final AI ai;
 
@@ -22,6 +26,7 @@ public abstract class Strategy {
      * Instantiates a new Strategy.
      *
      * @param ai the linked AI
+     * @see com.model.player.AI
      */
     Strategy(AI ai) {
         this.ai = ai;
@@ -32,22 +37,28 @@ public abstract class Strategy {
      *
      * @param possibleActions the possible actions
      * @return the player action
+     * @see com.controller.PlayerAction
      */
     abstract PlayerAction use(List<PlayerAction> possibleActions);
 
+    //TODO : RoundController ? Game Util ?
     /**
      * Select identity.
+     * 
+     * @see com.model.game.IdentityCard
      */
     public void selectIdentity() {
         IdentityCard identityCard = Round.getInstance().getPlayerIdentityCard(ai);
         identityCard.setWitch(randomInInterval(1) > 0);
     }
 
+    //TODO : Game Util ?
     /**
      * Select target player.
      *
      * @param players the players
      * @return the player
+     * @see com.model.player.Player
      */
     public Player selectPlayer(List<Player> players) {
         return players.get(randomInInterval(players.size() - 1));
@@ -58,6 +69,7 @@ public abstract class Strategy {
      *
      * @param rumourCards the rumour cards
      * @return the rumour card
+     * @see com.model.card.RumourCard
      */
     public RumourCard selectCard(List<RumourCard> rumourCards) {
         return rumourCards.get(randomInInterval(rumourCards.size() - 1));

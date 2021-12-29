@@ -190,7 +190,7 @@ public class Round {
     }
 
     /**
-     * Gets identity cards
+     * Gets identity cards.
      *
      * @return the identity cards
      * @see com.model.game.IdentityCard
@@ -340,7 +340,7 @@ public class Round {
     }
 
     /**
-     * Actualises the current player
+     * Actualises the current player.
      */
     public void actualiseCurrentPlayer() {
         currentPlayer = nextPlayer;
