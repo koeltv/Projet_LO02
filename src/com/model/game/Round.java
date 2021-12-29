@@ -15,9 +15,17 @@ import java.util.stream.Collectors;
 
 import static com.util.GameUtil.randomInInterval;
 
+/**
+ * The type Round.
+ * 
+ * Gives all the methods related to the round.
+ */
 public class Round {
-    /**
+	//TODO : Round Controller
+	/**
      * The single instance of roundController.
+     * 
+     * @see com.model.game.Round
      */
     private static Round instance;
 
@@ -28,33 +36,52 @@ public class Round {
 
     /**
      * The current player.
+     * 
+     * @see com.model.player.Player
      */
     private static Player currentPlayer;
 
     /**
      * The Next player.
+     * 
+     * @see com.model.player.Player
      */
     private Player nextPlayer;
 
     /**
      * The Discard pile.
+     * 
+     * @see com.model.card.RumourCard
      */
     private final LinkedList<RumourCard> discardPile;
 
     /**
      * The Active players.
+     * 
+     * @see com.model.game.IdentityCard
      */
     private final List<IdentityCard> identityCards;
 
     /**
      * The players that aren't selectable per player.
+     * 
+     * @see com.model.player.Player
      */
     private final HashMap<Player, List<Player>> notSelectablePlayers;
 
+    /**
+     * The Deck.
+     * 
+     * @see com.model.card.Deck
+     */
     private final Deck deck;
 
     /**
      * Instantiates a new Round controller.
+     * 
+     * @see com.model.card.Deck
+     * @see com.model.player.Player
+     * @see com.model.game.IdentityCard
      */
     public Round(Deck deck, List<Player> players) {
         numberOfRound++;
@@ -69,11 +96,13 @@ public class Round {
         Round.instance = this;
     }
 
+    //TODO : Round Controller
     /**
      * Gets round controller.
      * Return the single available instance of round controller (Singleton).
      *
      * @return the round controller
+     * @see com.model.game.Round
      */
     public static Round getInstance() {
         return instance;
@@ -81,6 +110,7 @@ public class Round {
 
     /**
      * Reset static attributes.
+     * Permit to re-prepare a game.
      */
     public static void reset() {
         numberOfRound = 0;
@@ -100,6 +130,7 @@ public class Round {
      * Gets current player.
      *
      * @return the current player
+     * @see com.model.player.Player
      */
     public static Player getCurrentPlayer() {
         return currentPlayer;
@@ -109,6 +140,7 @@ public class Round {
      * Gets number of not revealed players.
      *
      * @return the number of not revealed players
+     * @see com.model.game.IdentityCard
      */
     public int getNumberOfNotRevealedPlayers() {
         return (int) identityCards.stream().filter(identityCard -> !identityCard.isIdentityRevealed()).count();
@@ -118,6 +150,7 @@ public class Round {
      * Sets next player.
      *
      * @param nextPlayer the next player
+     * @see com.model.player.Player
      */
     public void setNextPlayer(Player nextPlayer) {
         this.nextPlayer = nextPlayer;
@@ -127,16 +160,19 @@ public class Round {
      * Gets next player.
      *
      * @return the next player
+     * @see com.model.player.Player
      */
     public Player getNextPlayer() {
         return this.nextPlayer;
     }
 
+    //TODO : Formulation
     /**
      * Add not selectable player to a player.
      *
      * @param player              the player
      * @param notSelectablePlayer the player not selectable by player
+     * @see com.model.player.Player
      */
     public void addNotSelectablePlayer(Player player, Player notSelectablePlayer) {
         notSelectablePlayers.computeIfAbsent(player, k -> new ArrayList<>());
@@ -147,6 +183,7 @@ public class Round {
      * Gets discard pile.
      *
      * @return the discard pile
+     * @see com.model.card.RumourCard
      */
     public LinkedList<RumourCard> getDiscardPile() {
         return discardPile;
@@ -156,11 +193,19 @@ public class Round {
      * Gets identity cards
      *
      * @return the identity cards
+     * @see com.model.game.IdentityCard
      */
     public List<IdentityCard> getIdentityCards() {
         return identityCards;
     }
 
+    /**
+     * Gets not selectable players.
+     * 
+     * @param player the player
+     * @return a list of not selectable players
+     * @see com.model.player.Player
+     */
     public List<Player> getNotSelectablePlayers(Player player) {
         return notSelectablePlayers.get(player);
     }
@@ -170,6 +215,7 @@ public class Round {
      *
      * @param targetedPlayer the targeted player
      * @return the player identity card
+     * @see com.model.game.IdentityCard
      */
     public IdentityCard getPlayerIdentityCard(Player targetedPlayer) {
         return identityCards.stream()
@@ -184,6 +230,8 @@ public class Round {
      * @param player the player
      * @param cards  the cards
      * @return the usable cards
+     * @see com.model.card.RumourCard
+     * @see com.model.player.Player
      */
     public List<RumourCard> getUsableCards(Player player, List<RumourCard> cards) {
         return cards.stream()
@@ -195,7 +243,8 @@ public class Round {
      * Get the list of all players in the current round.
      *
      * @param player the player
-     * @return selectable players
+     * @return a list of selectable players
+     * @see com.model.player.Player
      */
     public List<Player> getSelectablePlayers(Player player) {
         return identityCards.stream()
@@ -209,6 +258,7 @@ public class Round {
      *
      * @param player the player
      * @return selectable players
+     * @see com.model.player.Player
      */
     public List<Player> getNotRevealedPlayers(Player player) {
         return identityCards.stream()
@@ -219,9 +269,13 @@ public class Round {
 
     /**
      * Gets standard actions.
+     * The player has the choice to select one of those actions depending on the possibility to choose it during its turn.
      *
      * @param player the player
-     * @return the standard actions
+     * @return a list of the standard actions
+     * @see com.controller.PlayerAction
+     * @see com.model.player.Player
+     * @see com.model.card.RumourCard
      */
     public List<PlayerAction> getStandardActions(Player player) {
         List<PlayerAction> possibleActions = new ArrayList<>();
@@ -238,10 +292,14 @@ public class Round {
         return possibleActions;
     }
 
+    //TODO : Round Controller ?
     /**
      * Reveal identity.
+     * When the identity is revealed, depending on the identity, we remove the player from the round (if witch).
      *
      * @param player the player
+     * @see com.model.player.Player
+     * @see com.model.game.IdentityCard
      */
     public void revealIdentity(Player player) {
         IdentityCard playerIdentityCard = getPlayerIdentityCard(player);
@@ -258,6 +316,10 @@ public class Round {
     /**
      * Distribute Rumour cards.
      * This method distribute the Rumour cards at the start of a round based on the number of players.
+     * 
+     * @see com.model.card.CardName
+     * @see com.model.card.Deck
+     * @see com.model.game.IdentityCard
      */
     public void distributeRumourCards() {
         deck.shuffle();
@@ -277,6 +339,9 @@ public class Round {
         }
     }
 
+    /**
+     * Actualises the current player
+     */
     public void actualiseCurrentPlayer() {
         currentPlayer = nextPlayer;
     }

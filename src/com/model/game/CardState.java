@@ -4,10 +4,14 @@ import com.model.card.RumourCard;
 
 /**
  * The type Card state.
+ * 
+ * Gives all the methods related to cards state.
  */
 public class CardState {
     /**
      * The linked Rumour card.
+     * 
+     * @see com.model.card.RumourCard
      */
     public final RumourCard rumourCard;
 
@@ -20,6 +24,7 @@ public class CardState {
      * Instantiates a new Card state.
      *
      * @param rumourCard the rumour card
+     * @see com.model.card.RumourCard
      */
     public CardState(RumourCard rumourCard) {
         this.rumourCard = rumourCard;
@@ -28,7 +33,7 @@ public class CardState {
     /**
      * Is revealed boolean.
      *
-     * @return the boolean
+     * @return true if it is revealed, false otherwise
      */
     public boolean isRevealed() {
         return this.revealed;
