@@ -5,6 +5,8 @@ import java.util.Random;
 
 /**
  * The type Game util.
+ * 
+ * Gives all the other methods related with the game, that are used sometimes.
  */
 public final class GameUtil {
     /**
@@ -15,12 +17,13 @@ public final class GameUtil {
 
     /**
      * The possible names to choose from.
+     * This function is used to give names to AI in the game.
      */
     private static final String[] NAMES = {"Jean", "Antoine", "Fabrice", "Patrick", "Clara", "June", "Louis", "Sylvain"};
 
     /**
      * Get random integer between 0 and the max.
-     * This function is a utility function used to get a random integer between 0 and the max value (included).
+     * This function is a useful function used to get a random integer between 0 and the max value (included).
      *
      * @param max the maximum value to be returned (included)
      * @return random integer in the interval [0;max]
@@ -31,6 +34,7 @@ public final class GameUtil {
 
     /**
      * Get a random not already assigned name.
+     * This function is used to give names to AI in the game.
      *
      * @param playerNames the players name
      * @return new name
