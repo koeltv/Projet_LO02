@@ -4,6 +4,7 @@ import com.controller.PlayerAction;
 import com.controller.RoundController;
 import com.model.card.CardName;
 import com.model.game.Round;
+import com.model.player.AI;
 import com.model.player.Player;
 
 /**
@@ -22,7 +23,9 @@ public class SecretlyReadIdentityEffect extends Effect {
 
     @Override
     public boolean applyEffect(final Player cardUser, final Player target) {
-        RoundController.getInstance().applyPlayerAction(target, PlayerAction.LOOK_AT_IDENTITY);
+        if (!(cardUser instanceof AI)) {
+            RoundController.getInstance().applyPlayerAction(target, PlayerAction.LOOK_AT_IDENTITY);
+        }
         return true;
     }
 
