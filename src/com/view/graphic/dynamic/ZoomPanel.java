@@ -140,7 +140,7 @@ public class ZoomPanel extends JPanel {
     }
 
     /**
-     * Paint component.
+     * Pain the component.
      */
     @Override
     public void paintComponent(Graphics g) {

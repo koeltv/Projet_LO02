@@ -90,7 +90,7 @@ public class Graphical2DView extends GraphicView {
     ///////////////////////////////////////////////////////////////////////////
 
     /**
-     * Show Game Winner.
+     * Show game winner.
      * This function shows the game winner.
      */
     @Override
@@ -99,7 +99,7 @@ public class Graphical2DView extends GraphicView {
     }
 
     /**
-     * Show Round Winner.
+     * Show round winner.
      * This function shows the round winner.
      */
     @Override
@@ -108,7 +108,7 @@ public class Graphical2DView extends GraphicView {
     }
 
     /**
-     * Show Start of Round.
+     * Show start of round.
      * This function shows the start of a new round and its number.
      */
     @Override
@@ -117,7 +117,7 @@ public class Graphical2DView extends GraphicView {
     }
 
     /**
-     * Show Player Identity.
+     * Show player identity.
      * This function shows the player's identity.
      */
     @Override
@@ -126,7 +126,7 @@ public class Graphical2DView extends GraphicView {
     }
 
     /**
-     * Show Reveal Action.
+     * Show reveal action.
      * This function shows the revelation of a player identity.
      */
     @Override
@@ -135,7 +135,7 @@ public class Graphical2DView extends GraphicView {
     }
 
     /**
-     * Show Accuse Action.
+     * Show accuse action.
      * This function shows the accusation of a targeted player.
      */
     @Override
@@ -144,7 +144,7 @@ public class Graphical2DView extends GraphicView {
     }
 
     /**
-     * Show Use Card Action.
+     * Show use card action.
      * This function shows the card which is used by the player.
      */
     @Override
@@ -156,71 +156,43 @@ public class Graphical2DView extends GraphicView {
     // Passive Methods
     ///////////////////////////////////////////////////////////////////////////
 
-    /**
-     * Wait For Player Name.
-     */
     @Override
     public void waitForPlayerName(int playerIndex) {
         displayAndRepaint();
     }
 
-    /**
-     * Wait For New Game.
-     */
     @Override
     public void waitForNewGame() {
         displayAndRepaint();
     }
 
-    /**
-     * Wait For Player Choice.
-     */
     @Override
     public void waitForPlayerChoice(List<String> playerNames) {
         displayAndRepaint();
     }
 
-    /**
-     * Wait For Card Choice.
-     * 
-     * @see com.model.card.RumourCard
-     */
     @Override
     public void waitForCardChoice(List<RumourCard> rumourCards) {
         displayAndRepaint();
     }
 
-    /**
-     * Wait For Repartition.
-     */
     @Override
     public void waitForRepartition() {
         displayAndRepaint();
     }
 
-    /**
-     * Wait For Player Identity.
-     */
     @Override
     public void waitForPlayerIdentity(String name) {
         actualiseMainPlayer(name);
         displayAndRepaint();
     }
 
-    /**
-     * Wait For Action.
-     * 
-     * @see com.controller.PlayerAction
-     */
     @Override
     public void waitForAction(String playerName, List<PlayerAction> possibleActions) {
         actualiseMainPlayer(playerName);
         displayAndRepaint();
     }
 
-    /**
-     * Wait For Player Switch.
-     */
     @Override
     public void waitForPlayerSwitch(String name) {
         actualiseMainPlayer(null);
@@ -231,11 +203,6 @@ public class Graphical2DView extends GraphicView {
     // Active methods
     ///////////////////////////////////////////////////////////////////////////
 
-    /**
-     * Prompt For Action.
-     * 
-     * @see com.controller.PlayerAction
-     */
     @Override
     public PlayerAction promptForAction(String playerName, List<PlayerAction> possibleActions) {
         actualiseMainPlayer(playerName);
@@ -243,9 +210,6 @@ public class Graphical2DView extends GraphicView {
         return super.promptForAction(playerName, possibleActions);
     }
 
-    /**
-     * Prompt For Player Switch.
-     */
     @Override
     public void promptForPlayerSwitch(String name) {
         actualiseMainPlayer(null);
@@ -253,9 +217,6 @@ public class Graphical2DView extends GraphicView {
         super.promptForPlayerSwitch(name);
     }
 
-    /**
-     * Prompt For Player Identity.
-     */
     @Override
     public int promptForPlayerIdentity(String name) {
         actualiseMainPlayer(name);
@@ -263,9 +224,6 @@ public class Graphical2DView extends GraphicView {
         return super.promptForPlayerIdentity(name);
     }
 
-    /**
-     * Show Card List.
-     */
 	@Override
     public void showCardList(String name, List<String> cards) {
         actualiseMainPlayer(name);
