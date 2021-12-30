@@ -5,6 +5,7 @@ import com.model.player.Player;
 
 /**
  * The interface Effect.
+ * 
  * Gives all the methods related to card effects.
  */
 public abstract class Effect {

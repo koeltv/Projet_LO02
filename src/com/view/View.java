@@ -4,10 +4,12 @@ import java.util.List;
 
 /**
  * The interface View.
- * A view is a way to interact with users.
+ * 
+ * Gives all the methods related to the view. A view is a way to interact with users.
  */
 public interface View {
-    /**
+    
+	/**
      * Show game winner.
      *
      * @param name          the name of the winner

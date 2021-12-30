@@ -24,10 +24,12 @@ import java.util.jar.JarFile;
 
 /**
  * The type Panel.
+ * 
  * Graphical container where all 2D Graphics are drawn.
  */
 public class Panel extends JPanel {
-    /**
+    
+	/**
      * The constant SIZE_FACTOR.
      * Proportional inversion : a bigger number means smaller cards.
      */
@@ -35,6 +37,8 @@ public class Panel extends JPanel {
 
     /**
      * The external ressources.
+     * 
+     * @see com.view.graphic.dynamic.Ressource
      */
     private final HashMap<Ressource, Image> ressources;
 
@@ -47,16 +51,23 @@ public class Panel extends JPanel {
      * The Card width.
      */
     private int cardWidth;
+    
     /**
      * The Card height.
      */
     private int cardHeight;
+    
     /**
      * The next action to display.
+     * 
+     * @see com.view.graphic.dynamic.PrintableAction
      */
     private PrintableAction action;
+    
     /**
      * The player currently playing that will be displayed at the bottom.
+     * 
+     * @see com.model.player.Player
      */
     private Player mainPlayer;
 
@@ -64,6 +75,10 @@ public class Panel extends JPanel {
      * Instantiates a new Panel.
      * This is where all external ressources (images) are loaded. It will first try to access its own ressources (only possible as .jar)
      * and if not possible it will search in "./ressources". If ressources still weren't found, do without them.
+     * 
+     * @see com.model.game.Round
+     * @see com.view.graphic.dynamic.ZoomPanel
+     * @see com.view.graphic.dynamic.Ressource
      */
     Panel() {
         this.ressources = new HashMap<>(5);
@@ -108,6 +123,7 @@ public class Panel extends JPanel {
      * Sets main player.
      *
      * @param mainPlayer the main player
+     * @see com.model.player.Player
      */
     void setMainPlayer(Player mainPlayer) {
         this.mainPlayer = mainPlayer;
@@ -117,6 +133,7 @@ public class Panel extends JPanel {
      * Set next action to display.
      *
      * @param action the action
+     * @see com.view.graphic.dynamic.PrintableAction
      */
     void setAction(String action) {
         this.action = new PrintableAction(action);
@@ -126,6 +143,7 @@ public class Panel extends JPanel {
      * Gets waiting time.
      *
      * @return the waiting time
+     * @see com.view.graphic.dynamic.PrintableAction
      */
     public int getWaitingTime() {
         return action == null ? 0 : action.displayTime;
@@ -159,6 +177,7 @@ public class Panel extends JPanel {
      * @param x       the x coordinate
      * @param y       the y coordinate
      * @param effects the effects to draw
+     * @see com.model.card.effect.Effect
      */
     private void drawEffects(int x, int y, List<Effect> effects) {
         int lengthOfLongestString = g2D.getFontMetrics().stringWidth(
@@ -194,6 +213,8 @@ public class Panel extends JPanel {
      * @param y       the y coordinate
      * @param effects the effects to draw
      * @param witch   whether those effects are witch effects or hunt effects
+     * @see com.model.card.effect.Effect
+     * @see com.view.graphic.dynamic.Gradient
      */
     private void drawEffectsContainer(int x, int y, List<Effect> effects, boolean witch) {
         g2D.setColor(Color.decode(witch ? "#ffebcc" : "#d6ebd6"));
@@ -214,6 +235,8 @@ public class Panel extends JPanel {
      * @param x          the x coordinate
      * @param y          the y coordinate
      * @param rumourCard the rumour card to draw
+     * @see com.model.card.RumourCard
+     * @see com.view.graphic.dynamic.Ressource
      */
     private void drawCard(int x, int y, RumourCard rumourCard) {
         //The card itself
@@ -236,6 +259,7 @@ public class Panel extends JPanel {
      *
      * @param x the x coordinate
      * @param y the y coordinate
+     * @see com.view.graphic.dynamic.Ressource
      */
     private void drawCard(int x, int y) {
         g2D.drawImage(ressources.get(Ressource.CARD_BACK), x, y, cardWidth, cardHeight, this);
@@ -247,6 +271,8 @@ public class Panel extends JPanel {
      * @param x            the x coordinate
      * @param y            the y coordinate
      * @param identityCard the identity card to display
+     * @see com.model.game.IdentityCard
+     * @see com.view.graphic.dynamic.Ressource
      */
     private void drawIdentityCard(int x, int y, IdentityCard identityCard) {
         g2D.drawImage(!identityCard.isIdentityRevealed() ? ressources.get(Ressource.IDENTITY_CARD) : ressources.get(Ressource.REVEALED_VILLAGER), x, y, cardWidth, cardHeight, this);
@@ -260,6 +286,9 @@ public class Panel extends JPanel {
      * @param cardList     the card list
      * @param size         the size of the card list
      * @param isMainPlayer whether this is for the main player or not
+     * @see com.model.card.RumourCard
+     * @see com.model.game.CardState
+     * @see com.view.graphic.dynamic.Card2DDisplay
      */
     private void drawCardList(List<CardState> cardList, int size, boolean isMainPlayer) {
         int margin = 10, xf = (size - 1) * (cardWidth + margin), offset = (getWidth() - (xf + cardWidth)) / 2;
@@ -303,6 +332,7 @@ public class Panel extends JPanel {
      *
      * @param cardList the card list
      * @param size     the size of the card list
+     * @see com.model.card.RumourCard
      */
     private void drawCardList(List<RumourCard> cardList, int size) {
         int margin = 10, xf = (size - 1) * (cardWidth + margin), offset = (getWidth() - (xf + cardWidth)) / 2;
@@ -325,6 +355,8 @@ public class Panel extends JPanel {
      * Draw a player.
      *
      * @param identityCard the identityCard of the player
+     * @see com.model.game.IdentityCard
+     * @see com.model.player.Player
      */
     private void drawPlayer(IdentityCard identityCard) {
         if (identityCard != null) {
@@ -347,6 +379,8 @@ public class Panel extends JPanel {
 
     /**
      * Display the current action if there is one.
+     * 
+     * @see com.view.graphic.dynamic.PrintableAction
      */
     private void drawAction() {
         if (action != null) {
@@ -371,6 +405,13 @@ public class Panel extends JPanel {
         }
     }
 
+    /**
+     * Pain the component.
+     * 
+     * @see com.model.game.Round
+     * @see com.model.card.RumourCard
+     * @see com.model.game.IdentityCard
+     */
     @Override
     public void paintComponent(Graphics graphics) {
         super.paintComponents(graphics);

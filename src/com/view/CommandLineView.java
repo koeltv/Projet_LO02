@@ -8,9 +8,12 @@ import java.util.Scanner;
 
 /**
  * The type Command line view.
+ * 
+ * Gives all the methods related to the command line view.
  */
 public class CommandLineView implements PassiveView, ActiveView {
-    /**
+    
+	/**
      * The Keyboard.
      */
     final Scanner keyboard = new Scanner(System.in);

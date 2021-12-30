@@ -4,15 +4,19 @@ import com.model.player.Player;
 
 /**
  * The type Identity card.
+ * 
+ * Gives all the methods related to identity cards.
  */
 public class IdentityCard {
     /**
      * The Player linked to this card.
+     * 
+     * @see com.model.player.Player
      */
     public final Player player;
 
     /**
-     * The Witch.
+     * The Witch (2 possible identities depending on the player's choice)
      */
     private boolean witch;
 
@@ -25,6 +29,7 @@ public class IdentityCard {
      * Instantiates a new Identity card.
      *
      * @param player the linked player
+     * @see com.model.player.Player
      */
     public IdentityCard(final Player player) {
         this.player = player;

@@ -11,17 +11,22 @@ import static com.util.GameUtil.randomInInterval;
 
 /**
  * The type Agressive.
+ * 
+ * Gives all the methods related to the Agressive strategy.
  */
 public class Agressive extends Strategy {
     /**
      * The Number of accusation per player.
+     * 
+     * @see com.model.player.Player
      */
     public final HashMap<Player, Integer> numberOfAccusationPerPlayer;
 
     /**
-     * Instantiates a new Agressive.
+     * Instantiates a new Agressive strategy.
      *
      * @param ai the linked AI
+     * @see com.model.player.AI
      */
     public Agressive(AI ai) {
         super(ai);

@@ -10,17 +10,22 @@ import java.util.List;
 
 /**
  * The type Views.
- * Contain a list of passive views and 1 active view. Made to be able to handle more than 1 view at a time.
+ * 
+ * Gives all the methods related to the views. Contain a list of passive views and 1 active view. Made to be able to handle more than 1 view at a time.
  */
 public class Views extends JFrame implements ActiveView, Runnable {
 
     /**
      * The Passive Views.
+     * 
+     * @see com.view.PassiveView
      */
     private final List<PassiveView> views;
 
     /**
      * The Active view.
+     * 
+     * @see com.view.ActiveView
      */
     private ActiveView activeView;
 
@@ -28,6 +33,7 @@ public class Views extends JFrame implements ActiveView, Runnable {
      * Instantiates a new Views.
      *
      * @param activeView the active view to start with
+     * @see com.view.ActiveView
      */
     public Views(ActiveView activeView) {
         this.views = new ArrayList<>();
@@ -43,6 +49,7 @@ public class Views extends JFrame implements ActiveView, Runnable {
      * Add view.
      *
      * @param view the view
+     * @see com.view.PassiveView
      */
     public synchronized void addView(PassiveView view) {
         views.add(view);
@@ -52,6 +59,8 @@ public class Views extends JFrame implements ActiveView, Runnable {
      * Switch active view.
      *
      * @param view the view
+     * @see com.view.ActiveView
+     * @see com.view.PassiveView
      */
     public synchronized void switchActiveView(ActiveView view) {
         if (activeView instanceof PassiveView) views.add((PassiveView) activeView);

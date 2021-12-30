@@ -9,20 +9,28 @@ import java.util.List;
 
 /**
  * The type Rumour card.
+ * 
+ * Gives all the methods related to Rumour Cards.
  */
 public class RumourCard {
     /**
      * The Card name.
+     * 
+     * @see com.model.card.CardName
      */
     private final CardName cardName;
 
     /**
      * The Witch effects.
+     * 
+     * @see com.model.card.effect.EffectList
      */
     private final EffectList witchEffects;
 
     /**
      * The Hunt effects.
+     * 
+     * @see com.model.card.effect.EffectList
      */
     private final EffectList huntEffects;
 
@@ -32,6 +40,8 @@ public class RumourCard {
      * @param name         the card name
      * @param witchEffects the witch effects
      * @param huntEffects  the hunt effects
+     * @see com.model.card.CardName
+     * @see com.model.card.effect.EffectList
      */
     public RumourCard(CardName name, EffectList witchEffects, EffectList huntEffects) {
         this.cardName = name;
@@ -39,10 +49,22 @@ public class RumourCard {
         this.huntEffects = huntEffects;
     }
 
+    /**
+     * Gets Hunt Effects
+     * 
+     * @return hunt effects
+     * @see com.model.card.effect.EffectList
+     */
     public EffectList getHuntEffects() {
         return huntEffects;
     }
 
+    /**
+     * Gets Witch Effects
+     * 
+     * @return witch effects
+     * @see com.model.card.effect.EffectList
+     */
     public EffectList getWitchEffects() {
         return witchEffects;
     }
@@ -67,6 +89,7 @@ public class RumourCard {
      * Gets card name.
      *
      * @return the card name
+     * @see com.model.card.CardName
      */
     public CardName getCardName() {
         return this.cardName;
@@ -78,6 +101,8 @@ public class RumourCard {
      *
      * @param cardUser the player that used this card
      * @return whether the card has been used successfully or not
+     * @see com.model.game.Round
+     * @see com.model.player.Player
      */
     public boolean useCard(Player cardUser) {
         return applyEffects(cardUser, cardUser == Round.getCurrentPlayer() ? huntEffects : witchEffects);
@@ -89,6 +114,8 @@ public class RumourCard {
      * @param cardUser the card user
      * @param effect   the effect
      * @return the player
+     * @see com.model.player.Player
+     * @see com.model.card.effect.Effect
      */
     private Player chooseTarget(Player cardUser, Effect effect) {
         Player target;
@@ -104,6 +131,8 @@ public class RumourCard {
      * @param cardUser   the player that used this card
      * @param effectList the effect list
      * @return whether the effects have been used successfully or not
+     * @see com.model.player.Player
+     * @see com.model.card.effect.Effect
      */
     private boolean applyEffects(Player cardUser, List<Effect> effectList) {
         for (Effect effect : effectList) {
@@ -117,6 +146,9 @@ public class RumourCard {
      *
      * @param cardUser the card user
      * @return true if it is, false otherwise
+     * @see com.model.game.Round
+     * @see com.model.player.Player
+     * @see com.model.card.effect.Effect
      */
     public boolean isUsable(Player cardUser) {
         List<Effect> effects = cardUser == Round.getCurrentPlayer() ? huntEffects : witchEffects;

@@ -9,10 +9,14 @@ import static com.util.GameUtil.randomInInterval;
 
 /**
  * The type AI.
+ * 
+ * Gives all the methods related to the AI.
  */
 public class AI extends Player {
     /**
      * The Strategy.
+     * 
+     * @see com.model.player.Strategy
      */
     private final Strategy strategy;
 
@@ -20,6 +24,7 @@ public class AI extends Player {
      * Instantiates a new AI.
      *
      * @param name the AI name
+     * @see com.model.player.CardUser
      */
     public AI(final String name) {
         super(name);
@@ -36,6 +41,8 @@ public class AI extends Player {
      *
      * @param possibleActions the possible actions
      * @return the player action
+     * @see com.controller.PlayerAction
+     * @see com.model.player.Strategy
      */
     public PlayerAction play(List<PlayerAction> possibleActions) {
         return strategy.use(possibleActions);
@@ -43,6 +50,8 @@ public class AI extends Player {
 
     /**
      * Use the AI strategy to select identity.
+     * 
+     * @see com.model.player.Strategy
      */
     public void selectIdentity() {
         strategy.selectIdentity();
@@ -53,6 +62,8 @@ public class AI extends Player {
      *
      * @param players the players
      * @return the chosen player
+     * @see com.model.player.Player
+     * @see com.model.player.Strategy
      */
     public Player selectPlayer(List<Player> players) {
         return strategy.selectPlayer(players);
@@ -63,6 +74,8 @@ public class AI extends Player {
      *
      * @param rumourCards the rumour cards
      * @return the chosen rumour card
+     * @see com.model.card.RumourCard
+     * @see com.model.player.Strategy
      */
     public RumourCard selectCard(List<RumourCard> rumourCards) {
         return strategy.selectCard(rumourCards);
@@ -73,6 +86,7 @@ public class AI extends Player {
      *
      * @param listSize the size of the list
      * @return the chosen index
+     * @see com.model.player.Strategy
      */
     public int selectCard(int listSize) {
         return strategy.selectCard(listSize);

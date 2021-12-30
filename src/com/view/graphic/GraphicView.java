@@ -12,6 +12,8 @@ import java.util.List;
 
 /**
  * The type Graphic view.
+ * 
+ * Gives all the methods related to the graphical view.
  */
 public abstract class GraphicView extends JFrame implements PassiveView, ActiveView {
 

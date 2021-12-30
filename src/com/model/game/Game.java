@@ -10,20 +10,28 @@ import static com.util.GameUtil.randomInInterval;
 
 /**
  * The type Game.
+ * 
+ * Gives all the methods related to the game.
  */
 public class Game {
     /**
      * The Players.
+     * 
+     * @see com.model.player.Player
      */
     final List<Player> players;
 
     /**
      * The Deck.
+     * 
+     * @see com.model.card.Deck
      */
     final Deck deck;
 
     /**
      * Instantiates a new Game.
+     * 
+     * @see com.model.card.Deck
      */
     public Game() {
         this.players = new ArrayList<>();
@@ -34,6 +42,7 @@ public class Game {
      * Gets deck.
      *
      * @return the deck
+     * @see com.model.card.Deck
      */
     public Deck getDeck() {
         return deck;
@@ -43,6 +52,7 @@ public class Game {
      * Gets players.
      *
      * @return the players
+     * @see com.model.player.Player
      */
     public List<Player> getPlayers() {
         return players;
@@ -52,6 +62,7 @@ public class Game {
      * Add player.
      *
      * @param player the player
+     * @see com.model.player.Player
      */
     public void addPlayer(Player player) {
         players.add(player);
@@ -59,6 +70,7 @@ public class Game {
 
     /**
      * Clear players.
+     * Remove all players in the list.
      */
     public void clearPlayers() {
         players.clear();
@@ -66,6 +78,8 @@ public class Game {
 
     /**
      * Reset scores.
+     * 
+     * @see com.model.player.Player
      */
     public void resetScores() {
         players.forEach(Player::resetScore);
@@ -73,6 +87,7 @@ public class Game {
 
     /**
      * Check if the given repartition is allowed.
+     * The total number of players/AI should not be less than 3 nor more than 6.
      *
      * @param nbOfPlayers the number of players
      * @param nbOfAIs     the number of AIs
@@ -87,18 +102,23 @@ public class Game {
 
     /**
      * Verify scores.
+     * The game ends when at least one of the players has 5 points. This method is only the verification of this condition.
      *
      * @return true if at least 1 player has 5 points or more, and false otherwise
+     * @see com.model.player.Player 
      */
     public boolean verifyScores() {
         return players.stream().anyMatch(player -> player.getScore() >= 5);
     }
 
+    //TODO : Prend un joueur parmi ceux qui sont supérieurs à 5 quand ils sont égaux ou passe au travers quand un seul joueur à le plus de points
+    
     /**
      * Settle tie.
      *
      * @param winners the winners
      * @return the winning player
+     * @see com.model.player.Player
      */
     public Player settleTie(List<Player> winners) {
         return winners.get(randomInInterval(winners.size() - 1));

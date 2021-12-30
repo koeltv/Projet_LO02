@@ -11,16 +11,22 @@ import java.util.List;
 
 /**
  * The type Graphical 2D view.
+ * 
  * Graphical view which display the whole game in 2D graphics. It is resizable.
  */
 public class Graphical2DView extends GraphicView {
-    /**
+    
+	/**
      * The Panel.
+     * 
+     * @see com.view.graphic.dynamic.Panel
      */
     private final Panel panel;
 
     /**
      * Instantiates a new Graphical 2D view.
+     * 
+     * @see com.view.graphic.dynamic.Panel
      */
     public Graphical2DView() {
         super();
@@ -41,6 +47,9 @@ public class Graphical2DView extends GraphicView {
      * Actualise main player.
      *
      * @param playerName the main player name
+     * @see com.model.game.IdentityCard
+     * @see com.model.game.Round
+     * @see com.model.player.Player
      */
     private void actualiseMainPlayer(String playerName) {
         //We change the player at the bottom of the display to the player currently playing
@@ -64,6 +73,7 @@ public class Graphical2DView extends GraphicView {
      * Display and repaint with text display.
      *
      * @param text the text to display
+     * @see com.view.graphic.dynamic.Panel
      */
     public synchronized void displayAndRepaint(String text) {
         panel.setAction(text);
@@ -79,36 +89,64 @@ public class Graphical2DView extends GraphicView {
     // View Methods
     ///////////////////////////////////////////////////////////////////////////
 
+    /**
+     * Show game winner.
+     * This function shows the game winner.
+     */
     @Override
     public synchronized void showGameWinner(String name, int numberOfRound) {
         displayAndRepaint("Congratulations " + name + ", you won in " + numberOfRound + " rounds !");
     }
 
+    /**
+     * Show round winner.
+     * This function shows the round winner.
+     */
     @Override
     public void showRoundWinner(String name) {
         displayAndRepaint(name + " won this round !");
     }
 
+    /**
+     * Show start of round.
+     * This function shows the start of a new round and its number.
+     */
     @Override
     public void showStartOfRound(int numberOfRound) {
         displayAndRepaint("Start of Round " + numberOfRound);
     }
 
+    /**
+     * Show player identity.
+     * This function shows the player's identity.
+     */
     @Override
     public void showPlayerIdentity(String name, boolean witch) {
         displayAndRepaint(name + " is a " + (witch ? "witch" : "villager") + " !");
     }
 
+    /**
+     * Show reveal action.
+     * This function shows the revelation of a player identity.
+     */
     @Override
     public void showRevealAction(String name) {
         displayAndRepaint("Player " + name + " is revealing his identity !");
     }
 
+    /**
+     * Show accuse action.
+     * This function shows the accusation of a targeted player.
+     */
     @Override
     public void showAccuseAction(String name, String targetedPlayerName) {
         displayAndRepaint("Player " + name + " is accusing " + targetedPlayerName + " !");
     }
 
+    /**
+     * Show use card action.
+     * This function shows the card which is used by the player.
+     */
     @Override
     public void showUseCardAction(String name, String chosenCardName) {
         displayAndRepaint("Player " + name + " is using " + chosenCardName + " !");
