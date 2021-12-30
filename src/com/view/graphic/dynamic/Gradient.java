@@ -4,10 +4,12 @@ import java.awt.*;
 
 /**
  * The enum Gradient.
- * Used for title texts
+ * 
+ * Used for title texts.
  */
 enum Gradient {
-    /**
+    
+	/**
      * Name gradient.
      */
     NAME,

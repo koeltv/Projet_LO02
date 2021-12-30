@@ -2,8 +2,11 @@ package com.view.graphic.dynamic;
 
 /**
  * The enum Ressource.
+ * 
+ * Gives all the methods related to resources of this game (backgrounds, graphical elements...)
  */
 public enum Ressource {
+	
     /**
      * The Background.
      */

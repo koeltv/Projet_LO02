@@ -10,15 +10,42 @@ import java.util.Comparator;
 import java.util.List;
 
 public class ZoomPanel extends JPanel {
-    static Image template;
-    static Image hiddenCard;
+    
+	/**
+	 * The Template
+	 */
+	static Image template;
+    
+	/**
+	 * The Hidden Card
+	 */
+	static Image hiddenCard;
 
+	/**
+	 * The Rumour Card
+	 */
     private final RumourCard rumourCard;
 
+    /**
+     * Instantiates a new Zoom Panel.
+     * 
+     * @param rumourCard the rumour card
+     * @see com.model.card.RumourCard
+     */
     ZoomPanel(RumourCard rumourCard) {
         this.rumourCard = rumourCard;
     }
 
+    //TODO : Description des méthodes suivantes
+    /**
+     * Draw X centered string.
+     * 
+     * @param g2D     
+     * @param string
+     * @param y
+     * @param width
+     * @return
+     */
     private int drawXCenteredString(Graphics2D g2D, String string, int y, int width) {
         if (string.contains("\n")) {
             String[] array = string.split("\n");
@@ -31,6 +58,13 @@ public class ZoomPanel extends JPanel {
         return 0;
     }
 
+    /**
+     * Draw effects
+     * 
+     * @param g2D
+     * @param y
+     * @param effects
+     */
     private void drawEffects(Graphics2D g2D, int y, java.util.List<Effect> effects) {
         int lengthOfLongestString = g2D.getFontMetrics().stringWidth(
                 effects.stream()
@@ -59,6 +93,14 @@ public class ZoomPanel extends JPanel {
         }
     }
 
+    /**
+     * Draw effects container.
+     * 
+     * @param g2D
+     * @param y
+     * @param effects
+     * @param witch
+     */
     private void drawEffectsContainer(Graphics2D g2D, int y, List<Effect> effects, boolean witch) {
         g2D.setColor(Color.decode(witch ? "#ffebcc" : "#d6ebd6"));
         g2D.fillRect(0, y, getWidth(), getHeight() / 4);
@@ -72,6 +114,11 @@ public class ZoomPanel extends JPanel {
         drawEffects(g2D, y, effects);
     }
 
+    /**
+     * Draw card.
+     * 
+     * @param g2D
+     */
     void drawCard(Graphics2D g2D) {
         if (rumourCard != null) {
             //The card itself
@@ -92,6 +139,9 @@ public class ZoomPanel extends JPanel {
         }
     }
 
+    /**
+     * Paint component.
+     */
     @Override
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
