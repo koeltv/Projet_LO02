@@ -7,10 +7,12 @@ import java.util.List;
 
 /**
  * The interface Passive View.
- * All Controller can have as many passive view as wanted. A passive view display the game state but doesn't take any player entry.
+ * 
+ * Gives all the methods related to the passive view. All Controller can have as many passive view as wanted. A passive view display the game state but doesn't take any player entry.
  */
 public interface PassiveView extends View {
-    /**
+    
+	/**
      * Wait for player name.
      *
      * @param playerIndex the player index
@@ -33,6 +35,7 @@ public interface PassiveView extends View {
      * Wait for card choice.
      *
      * @param rumourCards the rumour card names
+     * @see com.model.card.RumourCard
      */
     void waitForCardChoice(List<RumourCard> rumourCards);
 
@@ -53,6 +56,7 @@ public interface PassiveView extends View {
      *
      * @param playerName      the player name
      * @param possibleActions the possible actions
+     * @see com.controller.PlayerAction
      */
     void waitForAction(String playerName, List<PlayerAction> possibleActions);
 

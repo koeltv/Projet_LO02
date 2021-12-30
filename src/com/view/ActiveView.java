@@ -7,7 +7,8 @@ import java.util.List;
 
 /**
  * The interface Active View.
- * All Controller should have 1 active view. The active view is the view that take care of player entries.
+ * 
+ * Gives all the methods related to the active view. All Controller should have 1 active view. The active view is the view that take care of player entries.
  */
 public interface ActiveView extends View {
 

@@ -18,42 +18,52 @@ import java.util.List;
  */
 @SuppressWarnings("unused")
 public class InitialViewChoice extends JDialog {
+	
 	/**
 	 * The Content pane.
 	 */
 	private JPanel contentPane;
+	
 	/**
 	 * The OK Button used to finalize user choices.
 	 */
 	private JButton buttonOK;
+	
 	/**
 	 * The cancel Button used to stop selection and terminate the program.
 	 */
 	private JButton buttonCancel;
+	
 	/**
 	 * The View label.
 	 */
 	private JLabel viewLabel;
+	
 	/**
 	 * The Confirmation panel.
 	 */
 	private JPanel confirmationPanel;
+	
 	/**
 	 * The Console check box.
 	 */
 	private JCheckBox consoleCheckBox;
+	
 	/**
 	 * The Graphical 2D spinner.
 	 */
 	private JSpinner graphical2dSpinner;
+	
 	/**
 	 * The Graphical 2D label.
 	 */
 	private JLabel graphical2dLabel;
+	
 	/**
 	 * The Graphical text label.
 	 */
 	private JLabel graphicalTextLabel;
+	
 	/**
 	 * The Graphical text spinner.
 	 */
@@ -115,6 +125,12 @@ public class InitialViewChoice extends JDialog {
 
 	/**
 	 * On press of the OK button.
+	 * 
+	 * @see com.view.ActiveView
+	 * @see com.view.PassiveView
+	 * @see com.view.CommandLineView
+	 * @see com.view.graphic.dynamic.Graphical2DView
+	 * @see com.view.graphic.GraphicalTextView
 	 */
 	private void onOK() {
 		List<ActiveView> views = new ArrayList<>();
