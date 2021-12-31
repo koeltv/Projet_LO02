@@ -11,8 +11,8 @@ import static com.util.GameUtil.randomInInterval;
 
 /**
  * The abstract class Strategy.
- * 
- * Gives all the methods related to the Strategy. Some other classes are extended from this abstract class because its the strategy by default from all strategies created.
+ * <p>
+ * Gives all the methods related to the Strategy. Some other classes are extended from this abstract class because it's the strategy by default from all strategies created.
  */
 public abstract class Strategy {
     /**

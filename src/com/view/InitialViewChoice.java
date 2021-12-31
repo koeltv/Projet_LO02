@@ -18,7 +18,6 @@ import java.util.List;
  *
  * @see GameController
  */
-@SuppressWarnings("unused")
 public class InitialViewChoice extends JDialog {
 	
 	/**

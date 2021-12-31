@@ -4,8 +4,8 @@ import com.model.card.RumourCard;
 
 /**
  * The type Card state.
- * 
- * Gives all the methods related to cards state.
+ * <p>
+ * Gives all the methods related to card state.
  */
 public class CardState {
     /**

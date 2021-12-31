@@ -36,7 +36,7 @@ public class ZoomPanel extends JPanel {
         this.rumourCard = rumourCard;
     }
 
-    //TODO : Description des méthodes suivantes
+    //TODO : Description des mÃ©thodes suivantes
     /**
      * Draw X centered string.
      * 
