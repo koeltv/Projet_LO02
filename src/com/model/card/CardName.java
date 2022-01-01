@@ -8,7 +8,8 @@ package com.model.card;
  * @see com.model.card.Deck
  */
 public enum CardName {
-    /**
+    
+	/**
      * Angry mob card name.
      */
     ANGRY_MOB,

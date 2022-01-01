@@ -13,7 +13,8 @@ import static com.util.GameUtil.randomInInterval;
  * Gives all the methods related to the AI.
  */
 public class AI extends Player {
-    /**
+    
+	/**
      * The Strategy.
      * 
      * @see com.model.player.Strategy

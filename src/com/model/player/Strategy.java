@@ -11,11 +11,12 @@ import static com.util.GameUtil.randomInInterval;
 
 /**
  * The abstract class Strategy.
- * <p>
+ * 
  * Gives all the methods related to the Strategy. Some other classes are extended from this abstract class because it's the strategy by default from all strategies created.
  */
 public abstract class Strategy {
-    /**
+    
+	/**
      * The linked AI.
      * 
      * @see com.model.player.AI
@@ -41,7 +42,6 @@ public abstract class Strategy {
      */
     abstract PlayerAction use(List<PlayerAction> possibleActions);
 
-    //TODO : RoundController ? Game Util ?
     /**
      * Select identity.
      * 
@@ -52,7 +52,6 @@ public abstract class Strategy {
         identityCard.setWitch(randomInInterval(1) > 0);
     }
 
-    //TODO : Game Util ?
     /**
      * Select target player.
      *

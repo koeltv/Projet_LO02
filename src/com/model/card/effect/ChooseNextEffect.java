@@ -12,7 +12,8 @@ import com.model.player.Player;
  * @see com.model.card.effect.EffectList
  */
 public class ChooseNextEffect extends TurnEffect {
-    @Override
+    
+	@Override
     public String toString() {
         return "Choose next player.";
     }

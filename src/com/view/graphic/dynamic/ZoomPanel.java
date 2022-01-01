@@ -9,6 +9,11 @@ import java.util.Arrays;
 import java.util.Comparator;
 import java.util.List;
 
+/**
+ * The type Zoom Panel.
+ * 
+ * Gives all the methods related to zoom panel.
+ */
 public class ZoomPanel extends JPanel {
     
 	/**
@@ -36,15 +41,14 @@ public class ZoomPanel extends JPanel {
         this.rumourCard = rumourCard;
     }
 
-    //TODO : Description des méthodes suivantes
     /**
      * Draw X centered string.
      * 
-     * @param g2D     
-     * @param string
-     * @param y
-     * @param width
-     * @return
+     * @param g2D     the graphics
+     * @param string  the string
+     * @param y       the height
+     * @param width   the width
+     * @return the number of lines-1
      */
     private int drawXCenteredString(Graphics2D g2D, String string, int y, int width) {
         if (string.contains("\n")) {
@@ -61,9 +65,9 @@ public class ZoomPanel extends JPanel {
     /**
      * Draw effects
      * 
-     * @param g2D
-     * @param y
-     * @param effects
+     * @param g2D     the graphics
+     * @param y       the height
+     * @param effects the effects
      */
     private void drawEffects(Graphics2D g2D, int y, java.util.List<Effect> effects) {
         int lengthOfLongestString = g2D.getFontMetrics().stringWidth(
@@ -96,10 +100,10 @@ public class ZoomPanel extends JPanel {
     /**
      * Draw effects container.
      * 
-     * @param g2D
-     * @param y
-     * @param effects
-     * @param witch
+     * @param g2D     the graphics
+     * @param y       the height
+     * @param effects the effects
+     * @param witch   the player is a witch or not ?
      */
     private void drawEffectsContainer(Graphics2D g2D, int y, List<Effect> effects, boolean witch) {
         g2D.setColor(Color.decode(witch ? "#ffebcc" : "#d6ebd6"));
@@ -117,7 +121,7 @@ public class ZoomPanel extends JPanel {
     /**
      * Draw card.
      * 
-     * @param g2D
+     * @param g2D the graphics
      */
     void drawCard(Graphics2D g2D) {
         if (rumourCard != null) {

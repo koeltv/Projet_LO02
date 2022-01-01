@@ -16,7 +16,8 @@ import java.util.List;
  * @see com.model.card.effect.EffectList
  */
 public class DiscardedToHandEffect extends Effect {
-    /**
+    
+	/**
      * The Taken rumour card.
      */
     private RumourCard takenRumourCard;

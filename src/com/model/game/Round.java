@@ -21,11 +21,9 @@ import static com.util.GameUtil.randomInInterval;
  * Gives all the methods related to the round.
  */
 public class Round {
-	//TODO : Round Controller
+	
 	/**
-     * The single instance of roundController.
-     * 
-     * @see com.model.game.Round
+     * The single instance of Round.
      */
     private static Round instance;
 
@@ -93,7 +91,6 @@ public class Round {
         Round.instance = this;
     }
 
-    //TODO : Round Controller
     /**
      * Gets round.
      * Return the single available instance of round (Singleton).
@@ -108,6 +105,9 @@ public class Round {
     /**
      * Reset the round instance.
      * Permit to re-prepare a game.
+     * 
+     * @see com.model.card.Deck
+     * @see com.model.player.Player
      */
     public static void reset(Deck deck, List<Player> players) {
         instance = new Round(deck, players);
@@ -171,12 +171,11 @@ public class Round {
         return this.nextPlayer;
     }
 
-    //TODO : Formulation
     /**
      * Add not selectable player to a player.
      *
      * @param player              the player
-     * @param notSelectablePlayer the player not selectable by player
+     * @param notSelectablePlayer the player who is not selectable by a player
      * @see com.model.player.Player
      */
     public void addNotSelectablePlayer(Player player, Player notSelectablePlayer) {
@@ -297,7 +296,6 @@ public class Round {
         return possibleActions;
     }
 
-    //TODO : Round Controller ?
     /**
      * Reveal identity.
      * When the identity is revealed, depending on the identity, we remove the player from the round (if witch).

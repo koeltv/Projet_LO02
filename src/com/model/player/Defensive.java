@@ -12,7 +12,8 @@ import static com.util.GameUtil.randomInInterval;
  * Gives all the methods related to the Defensive strategy.
  */
 public class Defensive extends Strategy {
-    /**
+    
+	/**
      * Instantiates a new Defensive.
      *
      * @param ai the linked AI

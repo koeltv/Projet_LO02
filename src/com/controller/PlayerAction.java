@@ -8,7 +8,8 @@ package com.controller;
  * @see com.controller.RoundController
  */
 public enum PlayerAction {
-    /**
+    
+	/**
      * Accuse player action.
      */
     ACCUSE,

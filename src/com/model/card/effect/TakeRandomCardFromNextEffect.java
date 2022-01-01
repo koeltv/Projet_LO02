@@ -16,7 +16,8 @@ import static com.util.GameUtil.randomInInterval;
  * @see com.model.card.effect.EffectList
  */
 public class TakeRandomCardFromNextEffect extends Effect {
-    @Override
+    
+	@Override
     public String toString() {
         return """
                 Before their turn, take a random card

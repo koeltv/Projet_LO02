@@ -18,6 +18,7 @@ import java.util.stream.Collectors;
  * @see com.model.card.effect.EffectList
  */
 public class RevealOrDiscardEffect extends TurnEffect {
+	
 	@Override
 	public String toString() {
 		return """

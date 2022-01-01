@@ -14,7 +14,8 @@ import static com.util.GameUtil.randomInInterval;
  * @see com.model.card.effect.EffectList
  */
 public class AccuserDiscardRandomEffect extends Effect {
-    @Override
+    
+	@Override
     public String toString() {
         return """
                 The player who accused you discards

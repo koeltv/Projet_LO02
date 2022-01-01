@@ -13,7 +13,8 @@ import java.util.List;
  * Gives all the methods related to the game.
  */
 public class Game {
-    /**
+
+	/**
      * The Players.
      *
      * @see com.model.player.Player

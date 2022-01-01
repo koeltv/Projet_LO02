@@ -11,7 +11,8 @@ import java.util.LinkedList;
  * Gives all the methods related to the deck.
  */
 public class Deck {
-    /**
+    
+	/**
      * The Cards.
      *
      * @see com.model.card.RumourCard
@@ -74,7 +75,6 @@ public class Deck {
 
     /**
      * Shuffle the cards.
-     * 
      */
     public void shuffle() {
         Collections.shuffle(cards);

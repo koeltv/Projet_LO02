@@ -13,7 +13,8 @@ import com.model.player.Player;
  * @see com.model.card.effect.EffectList
  */
 public class TakeFromAccuserHandEffect extends Effect {
-    @Override
+    
+	@Override
     public String toString() {
         return """
                 Take one card from the hand of

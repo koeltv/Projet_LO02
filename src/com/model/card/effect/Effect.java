@@ -4,12 +4,13 @@ import com.model.card.CardName;
 import com.model.player.Player;
 
 /**
- * The interface Effect.
+ * The abstract class Effect.
  * 
  * Gives all the methods related to card effects.
  */
 public abstract class Effect {
-    /**
+    
+	/**
      * Get effect description.
      *
      * @return effect description.
@@ -37,7 +38,6 @@ public abstract class Effect {
      * @see com.model.player.Player
      */
     public abstract Player chooseTarget(CardName cardName, Player cardUser);
-
 
     /**
      * Check if applicable.

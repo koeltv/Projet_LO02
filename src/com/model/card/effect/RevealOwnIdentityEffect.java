@@ -16,7 +16,8 @@ import java.util.List;
  * @see com.model.card.effect.EffectList
  */
 public class RevealOwnIdentityEffect extends TurnEffect {
-    @Override
+    
+	@Override
     public String toString() {
         return """
                 Reveal your identity.

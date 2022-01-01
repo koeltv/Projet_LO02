@@ -11,7 +11,8 @@ import com.model.player.Player;
  * @see com.model.card.effect.EffectList
  */
 public class NextMustAccuseOtherEffect extends Effect {
-    @Override
+    
+	@Override
     public String toString() {
         return """
                 On their turn they must accuse a

@@ -15,7 +15,8 @@ import static com.util.GameUtil.randomInInterval;
  * Gives all the methods related to the Agressive strategy.
  */
 public class Agressive extends Strategy {
-    /**
+    
+	/**
      * The Number of accusation per player.
      * 
      * @see com.model.player.Player
