@@ -14,7 +14,8 @@ import com.model.player.Player;
  * @see com.model.card.effect.EffectList
  */
 public class SecretlyReadIdentityEffect extends Effect {
-    @Override
+    
+	@Override
     public String toString() {
         return """
                 Before their turn, secretly

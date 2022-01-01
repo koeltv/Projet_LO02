@@ -13,7 +13,8 @@ import java.util.stream.Collectors;
  * Gives all the methods related to the Player.
  */
 public class Player {
-    /**
+    
+	/**
      * The Score.
      */
     private int score;

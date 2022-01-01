@@ -9,7 +9,7 @@ import java.awt.event.MouseListener;
 
 /**
  * The type Card 2D Display.
- * <p>
+ * 
  * Gives all the methods related to card 2D display.
  */
 public class Card2DDisplay extends JComponent {

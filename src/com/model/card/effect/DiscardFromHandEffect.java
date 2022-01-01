@@ -16,7 +16,8 @@ import java.util.List;
  * @see com.model.card.effect.EffectList
  */
 public class DiscardFromHandEffect extends Effect {
-    /**
+    
+	/**
      * The Selectable cards.
      */
     private List<RumourCard> selectableCards = new ArrayList<>();

@@ -4,11 +4,12 @@ import com.model.card.RumourCard;
 
 /**
  * The type Card state.
- * <p>
+ * 
  * Gives all the methods related to card state.
  */
 public class CardState {
-    /**
+    
+	/**
      * The linked Rumour card.
      * 
      * @see com.model.card.RumourCard

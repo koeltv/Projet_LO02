@@ -17,6 +17,7 @@ import java.util.stream.Collectors;
  * @see com.model.card.effect.EffectList
  */
 public class RevealAnotherIdentityEffect extends TurnEffect {
+	
 	@Override
 	public String toString() {
 		return """

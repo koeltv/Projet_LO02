@@ -8,7 +8,8 @@ package com.controller;
  * @see com.controller.GameController
  */
 public enum GameAction {
-    /**
+    
+	/**
      * Restart a new game with existing players.
      */
     RESTART_GAME,

@@ -8,7 +8,8 @@ import com.model.player.Player;
  * Gives all the methods related to identity cards.
  */
 public class IdentityCard {
-    /**
+    
+	/**
      * The Player linked to this card.
      * 
      * @see com.model.player.Player

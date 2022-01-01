@@ -13,7 +13,8 @@ import java.util.List;
  * Gives all the methods related to Rumour Cards.
  */
 public class RumourCard {
-    /**
+    
+	/**
      * The Card name.
      * 
      * @see com.model.card.CardName

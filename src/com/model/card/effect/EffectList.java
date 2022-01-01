@@ -3,14 +3,14 @@ package com.model.card.effect;
 import java.util.ArrayList;
 import java.util.ListIterator;
 
-//TODO : describe the type Effect list in the class
-
 /**
  * The type Effect list.
  *
+ * A list contains at least 1 turn effect.
  */
 public class EffectList extends ArrayList<Effect> {
-    /**
+    
+	/**
      * Instantiates a new Effect list using the given turn effect
      *
      * @param turnEffect the turn effect

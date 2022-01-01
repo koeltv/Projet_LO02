@@ -13,7 +13,8 @@ import com.model.player.Player;
  * @see com.model.card.effect.EffectList
  */
 public class TakeRevealedCardEffect extends Effect {
-    @Override
+    
+	@Override
     public String toString() {
         return """
                 Take one of your own revealed

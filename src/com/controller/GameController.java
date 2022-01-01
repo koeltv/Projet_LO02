@@ -18,7 +18,8 @@ import static com.util.GameUtil.randomAIName;
  * Game controller is the class that contains the function main() in order to execute the program.
  */
 public class GameController {
-    /**
+    
+	/**
      * The Game.
      * 
      * @see com.model.game.Game

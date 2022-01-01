@@ -14,7 +14,8 @@ import static com.util.GameUtil.randomInInterval;
  * Gives all the methods related to the game.
  */
 public class Game {
-    /**
+    
+	/**
      * The Players.
      * 
      * @see com.model.player.Player
@@ -110,8 +111,6 @@ public class Game {
     public boolean verifyScores() {
         return players.stream().anyMatch(player -> player.getScore() >= 5);
     }
-
-    //TODO : Prend un joueur parmi ceux qui sont supérieurs à 5 quand ils sont égaux ou passe au travers quand un seul joueur à le plus de points
     
     /**
      * Settle tie.

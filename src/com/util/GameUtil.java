@@ -9,7 +9,8 @@ import java.util.Random;
  * Gives all the other methods related with the game, that are used sometimes.
  */
 public final class GameUtil {
-    /**
+    
+	/**
      * Instantiates a new Game util.
      */
     private GameUtil() {
