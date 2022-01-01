@@ -1,8 +1,8 @@
 <?xml version="1.0" ?>
-<!--GENERATED FILE, PLEASE DO NOT EDIT!!!--><EXT object="Defensive" version="4">
+<!--GENERATED FILE, PLEASE DO NOT EDIT!!!--><EXT object="CommandLineView" version="4">
   <OBJECT>
-    <ID name="Defensive" mc="Standard.Class" uid="60cbbe4e-b6b8-435c-9a69-a0ab28fb692d"/>
-    <PID name="model" mc="Standard.Package" uid="f4607dd5-4ea2-4930-8352-d2c4d32ab2f0"/>
+    <ID name="CommandLineView" mc="Standard.Class" uid="eafa1c3b-8ede-4ce5-b9c7-f2e6d22abd0d"/>
+    <PID name="view" mc="Standard.Package" uid="622b6a7c-0c6c-4b27-8fe2-fd110890edf1"/>
     <ATTRIBUTES>
       <ATT name="IsActive">false</ATT>
       <ATT name="IsMain">false</ATT>
@@ -11,13 +11,13 @@
       <ATT name="IsLeaf">false</ATT>
       <ATT name="IsRoot">false</ATT>
       <ATT name="Visibility">Public</ATT>
-      <ATT name="Name"><![CDATA[Defensive]]></ATT>
+      <ATT name="Name"><![CDATA[CommandLineView]]></ATT>
       <ATT name="status">1970354901745664</ATT>
     </ATTRIBUTES>
     <DEPENDENCIES>
       <COMP relation="OwnedOperation">
         <OBJECT>
-          <ID name="accuse" mc="Standard.Operation" uid="baecdf70-4b4f-4530-8819-b17f0d39245e"/>
+          <ID name="prompt..." mc="Standard.Operation" uid="e7286fe3-678c-4b8a-8321-7de44f92b1aa"/>
           <ATTRIBUTES>
             <ATT name="Concurrency">false</ATT>
             <ATT name="Final">false</ATT>
@@ -25,57 +25,60 @@
             <ATT name="Visibility">Public</ATT>
             <ATT name="IsClass">false</ATT>
             <ATT name="IsAbstract">false</ATT>
-            <ATT name="Name"><![CDATA[accuse]]></ATT>
-            <ATT name="status">1970354901745664</ATT>
-          </ATTRIBUTES>
-          <DEPENDENCIES></DEPENDENCIES>
-        </OBJECT>
-        <OBJECT>
-          <ID name="revealRumorCard" mc="Standard.Operation" uid="80266ecd-b337-4e3b-b6d9-757de00d7700"/>
-          <ATTRIBUTES>
-            <ATT name="Concurrency">false</ATT>
-            <ATT name="Final">false</ATT>
-            <ATT name="Passing">MethodOut</ATT>
-            <ATT name="Visibility">Public</ATT>
-            <ATT name="IsClass">false</ATT>
-            <ATT name="IsAbstract">false</ATT>
-            <ATT name="Name"><![CDATA[revealRumorCard]]></ATT>
-            <ATT name="status">1970354901745664</ATT>
-          </ATTRIBUTES>
-          <DEPENDENCIES></DEPENDENCIES>
-        </OBJECT>
-        <OBJECT>
-          <ID name="use" mc="Standard.Operation" uid="3460d051-e189-4683-8e94-ba481f4fc028"/>
-          <ATTRIBUTES>
-            <ATT name="Concurrency">false</ATT>
-            <ATT name="Final">false</ATT>
-            <ATT name="Passing">MethodOut</ATT>
-            <ATT name="Visibility">Public</ATT>
-            <ATT name="IsClass">false</ATT>
-            <ATT name="IsAbstract">false</ATT>
-            <ATT name="Name"><![CDATA[use]]></ATT>
+            <ATT name="Name"><![CDATA[prompt...]]></ATT>
             <ATT name="status">1970354901745664</ATT>
           </ATTRIBUTES>
           <DEPENDENCIES>
             <LINK relation="Redefines">
               <REFOBJ>
-                <ID name="use" mc="Standard.Operation" uid="8ebb2c64-897a-4c93-b4c2-aca2f56bb9a6"/>
+                <ID name="prompt..." mc="Standard.Operation" uid="edfa62ef-cd75-4f39-ac5e-ffc5aadf6eee"/>
+              </REFOBJ>
+            </LINK>
+          </DEPENDENCIES>
+        </OBJECT>
+        <OBJECT>
+          <ID name="wait..." mc="Standard.Operation" uid="6c38670a-8c23-4e01-86cc-bd2c316620d3"/>
+          <ATTRIBUTES>
+            <ATT name="Concurrency">false</ATT>
+            <ATT name="Final">false</ATT>
+            <ATT name="Passing">MethodOut</ATT>
+            <ATT name="Visibility">Public</ATT>
+            <ATT name="IsClass">false</ATT>
+            <ATT name="IsAbstract">false</ATT>
+            <ATT name="Name"><![CDATA[wait...]]></ATT>
+            <ATT name="status">1970354901745664</ATT>
+          </ATTRIBUTES>
+          <DEPENDENCIES>
+            <LINK relation="Redefines">
+              <REFOBJ>
+                <ID name="wait..." mc="Standard.Operation" uid="340188b6-2fac-44e0-93fe-75c75044d5ab"/>
               </REFOBJ>
             </LINK>
           </DEPENDENCIES>
         </OBJECT>
       </COMP>
-      <COMP relation="Parent">
+      <COMP relation="Realized">
         <OBJECT>
-          <ID name="Generalization" mc="Standard.Generalization" uid="6a4d2022-e780-4f2c-b5ca-55f74ddda706"/>
+          <ID name="InterfaceRealization" mc="Standard.InterfaceRealization" uid="aa83afd4-24fe-4fe7-8fbc-98acea83c433"/>
           <ATTRIBUTES>
-            <ATT name="Discriminator"></ATT>
-            <ATT name="Name"><![CDATA[Generalization]]></ATT>
+            <ATT name="Name"><![CDATA[InterfaceRealization]]></ATT>
             <ATT name="status">1970354901745664</ATT>
           </ATTRIBUTES>
           <DEPENDENCIES>
-            <LINK relation="SuperType">
-              <ID name="Strategy" mc="Standard.Class" uid="edacbace-526c-4bad-8e0f-bfeea5346cf5"/>
+            <LINK relation="Implemented">
+              <ID name="ActiveView" mc="Standard.Interface" uid="a6c08f99-37cd-4fbf-906b-4e4a728cf22d"/>
+            </LINK>
+          </DEPENDENCIES>
+        </OBJECT>
+        <OBJECT>
+          <ID name="InterfaceRealization" mc="Standard.InterfaceRealization" uid="43434f1b-39a5-41cd-baff-72f0ec2279e5"/>
+          <ATTRIBUTES>
+            <ATT name="Name"><![CDATA[InterfaceRealization]]></ATT>
+            <ATT name="status">1970354901745664</ATT>
+          </ATTRIBUTES>
+          <DEPENDENCIES>
+            <LINK relation="Implemented">
+              <ID name="PassiveView" mc="Standard.Interface" uid="c27cf1da-bd51-4d3f-a125-8ff4d85ec4d9"/>
             </LINK>
           </DEPENDENCIES>
         </OBJECT>

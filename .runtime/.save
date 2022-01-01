@@ -1,8 +1,6 @@
-#Fri Oct 15 19:43:36 CEST 2021
+#Sat Jan 01 22:43:33 CET 2022
 org.modelio.app.module.propertytab.JavaDesigner\ v3.10.00\ GModule\ @file\:///C\:/Users/valen/.modelio/4.1/modules/JavaDesigner_3.10.00/JavaDesigner_3.10.00.jmdac\ runtime\ module_.org.modelio.diagram.perspective.parentId=app.ui.ext_com.partstack.right
 org.modelio.app.module.propertytab.JavaDesigner\ v3.10.00\ GModule\ @file\:///C\:/Users/valen/.modelio/4.1/modules/JavaDesigner_3.10.00/JavaDesigner_3.10.00.jmdac\ runtime\ module_.org.modelio.app.ui.model.perspective.parentId=org.modelio.app.bottom.parts
-org.modelio.app.diagram.editor.OpenedDiagrams2='Diagramme de s\u00E9quence Interaction' {da37c085-053f-416b-8589-58131d9cafa1} Standard.SequenceDiagram
 org.modelio.app.module.propertytab.JavaDesigner\ v3.10.00\ GModule\ @file\:///C\:/Users/valen/.modelio/4.1/modules/JavaDesigner_3.10.00/JavaDesigner_3.10.00.jmdac\ runtime\ module_.org.modelio.development.perspective.parentId=app.ui.ext_com.partstack.bottom
-org.modelio.app.diagram.editor.OpenedDiagrams1='Diagramme de classe witchHuntGame' {92425b89-2e4c-4a6d-9381-dff4138827c3} Standard.ClassDiagram
-org.modelio.app.diagram.editor.OpenedDiagrams0='Diagramme de cas d'utilisation DGCasUtilisation' {ad4e7c65-3e0e-4048-a562-90b1f545296e} Standard.UseCaseDiagram
+org.modelio.app.diagram.editor.OpenedDiagrams0='Diagramme de classe witchHuntGame' {92425b89-2e4c-4a6d-9381-dff4138827c3} Standard.ClassDiagram
 org.modelio.app.module.propertytab.JavaDesigner\ v3.10.00\ GModule\ @file\:///C\:/Users/valen/.modelio/4.1/modules/JavaDesigner_3.10.00/JavaDesigner_3.10.00.jmdac\ runtime\ module_.org.modelio.full.perspective.parentId=app.ui.ext_com.partstack.bottom

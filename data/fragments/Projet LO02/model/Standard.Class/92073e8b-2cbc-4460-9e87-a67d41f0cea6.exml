@@ -2,7 +2,7 @@
 <!--GENERATED FILE, PLEASE DO NOT EDIT!!!--><EXT object="AI" version="4">
   <OBJECT>
     <ID name="AI" mc="Standard.Class" uid="92073e8b-2cbc-4460-9e87-a67d41f0cea6"/>
-    <PID name="witchHuntGame" mc="Standard.Package" uid="1fde6271-4967-42c7-941b-fd8c539c040d"/>
+    <PID name="model" mc="Standard.Package" uid="f4607dd5-4ea2-4930-8352-d2c4d32ab2f0"/>
     <ATTRIBUTES>
       <ATT name="IsActive">false</ATT>
       <ATT name="IsMain">false</ATT>
@@ -151,7 +151,7 @@
         <OBJECT>
           <ID name="strategy" mc="Standard.AssociationEnd" uid="c578ae1b-4cdd-47e1-a5c9-0ecdcbf63749"/>
           <ATTRIBUTES>
-            <ATT name="Aggregation">KindIsAggregation</ATT>
+            <ATT name="Aggregation">KindIsComposition</ATT>
             <ATT name="IsChangeable">true</ATT>
             <ATT name="Changeable">ReadWrite</ATT>
             <ATT name="IsDerived">false</ATT>
@@ -159,7 +159,7 @@
             <ATT name="IsUnique">false</ATT>
             <ATT name="MultiplicityMin"><![CDATA[1]]></ATT>
             <ATT name="MultiplicityMax"><![CDATA[1]]></ATT>
-            <ATT name="Visibility">Public</ATT>
+            <ATT name="Visibility">Private</ATT>
             <ATT name="IsClass">false</ATT>
             <ATT name="IsAbstract">false</ATT>
             <ATT name="Name"><![CDATA[strategy]]></ATT>
@@ -167,7 +167,7 @@
           </ATTRIBUTES>
           <DEPENDENCIES>
             <LINK relation="Target">
-              <ID name="Strategy" mc="Standard.Interface" uid="1d266d7e-dfbb-4c64-8764-2457f74b7214"/>
+              <ID name="Strategy" mc="Standard.Class" uid="edacbace-526c-4bad-8e0f-bfeea5346cf5"/>
             </LINK>
             <COMP relation="Opposite">
               <OBJECT>

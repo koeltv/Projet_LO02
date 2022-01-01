@@ -4,33 +4,32 @@ import com.model.card.Deck;
 import com.model.player.Player;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
-
-import static com.util.GameUtil.randomInInterval;
 
 /**
  * The type Game.
- * 
+ *
  * Gives all the methods related to the game.
  */
 public class Game {
     /**
      * The Players.
-     * 
+     *
      * @see com.model.player.Player
      */
     final List<Player> players;
 
     /**
      * The Deck.
-     * 
+     *
      * @see com.model.card.Deck
      */
     final Deck deck;
 
     /**
      * Instantiates a new Game.
-     * 
+     *
      * @see com.model.card.Deck
      */
     public Game() {
@@ -78,7 +77,7 @@ public class Game {
 
     /**
      * Reset scores.
-     * 
+     *
      * @see com.model.player.Player
      */
     public void resetScores() {
@@ -105,22 +104,26 @@ public class Game {
      * The game ends when at least one of the players has 5 points. This method is only the verification of this condition.
      *
      * @return true if at least 1 player has 5 points or more, and false otherwise
-     * @see com.model.player.Player 
+     * @see com.model.player.Player
      */
     public boolean verifyScores() {
         return players.stream().anyMatch(player -> player.getScore() >= 5);
     }
 
-    //TODO : Prend un joueur parmi ceux qui sont supérieurs à 5 quand ils sont égaux ou passe au travers quand un seul joueur à le plus de points
-    
     /**
      * Settle tie.
+     * This is done by selecting a player in the list randomly.
+     * If some players have a higher score than other, only choose between them.
      *
      * @param winners the winners
      * @return the winning player
      * @see com.model.player.Player
      */
     public Player settleTie(List<Player> winners) {
-        return winners.get(randomInInterval(winners.size() - 1));
+        int highestScore = winners.stream()
+                .max(Comparator.comparing(Player::getScore))
+                .orElseThrow().getScore();
+
+        return winners.stream().filter(player -> player.getScore() == highestScore).findAny().orElseThrow();
     }
 }

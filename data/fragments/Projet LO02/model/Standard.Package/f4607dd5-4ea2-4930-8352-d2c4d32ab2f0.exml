@@ -1,0 +1,168 @@
+<?xml version="1.0" ?>
+<!--GENERATED FILE, PLEASE DO NOT EDIT!!!--><EXT object="model" version="4">
+  <OBJECT>
+    <ID name="model" mc="Standard.Package" uid="f4607dd5-4ea2-4930-8352-d2c4d32ab2f0"/>
+    <PID name="witchHuntGame" mc="Standard.Package" uid="1fde6271-4967-42c7-941b-fd8c539c040d"/>
+    <ATTRIBUTES>
+      <ATT name="IsInstantiable">false</ATT>
+      <ATT name="IsAbstract">false</ATT>
+      <ATT name="IsLeaf">false</ATT>
+      <ATT name="IsRoot">false</ATT>
+      <ATT name="Visibility">Public</ATT>
+      <ATT name="Name"><![CDATA[model]]></ATT>
+      <ATT name="status">1970354901745664</ATT>
+    </ATTRIBUTES>
+    <DEPENDENCIES>
+      <COMP relation="OwnedElement">
+        <COMPID name="Player" mc="Standard.Class" uid="111fa0a5-d215-450b-92eb-5a72e7b62f6d"/>
+        <COMPID name="Game" mc="Standard.Class" uid="f50d48b7-a6d1-4fad-af87-83fb571812fd"/>
+        <COMPID name="Round" mc="Standard.Class" uid="c28f7e31-e764-4b29-bf82-24de6d7b861e"/>
+        <COMPID name="CardState" mc="Standard.Class" uid="48789c70-4131-43ec-be0b-726990f19cd0"/>
+        <COMPID name="Defensive" mc="Standard.Class" uid="60cbbe4e-b6b8-435c-9a69-a0ab28fb692d"/>
+        <COMPID name="Agressive" mc="Standard.Class" uid="e1b768fd-229c-4381-a358-22005903e012"/>
+        <COMPID name="AI" mc="Standard.Class" uid="92073e8b-2cbc-4460-9e87-a67d41f0cea6"/>
+        <COMPID name="AccuserDiscardRandomEffect" mc="Standard.Class" uid="9b8f1017-e6f9-4534-a80b-d19d79461d75"/>
+        <COMPID name="RevealOrDiscardEffect" mc="Standard.Class" uid="a0a7d956-7f6d-4091-9735-c341153e7294"/>
+        <COMPID name="TakeFromAccuserHandEffect" mc="Standard.Class" uid="80187038-38cf-42bb-84ba-c765af77603d"/>
+        <COMPID name="TakeNextTurnEffect" mc="Standard.Class" uid="eebfef01-0042-46dc-ad54-19ce1e092c06"/>
+        <COMPID name="DiscardedToHandEffect" mc="Standard.Class" uid="3f6ea5a7-f9b6-4350-94a5-2f3f774d624a"/>
+        <COMPID name="RumourCard" mc="Standard.Class" uid="bf6572c6-603b-4089-aa8e-1fdf38fba75e"/>
+        <COMPID name="TakeRandomCardFromNextEffect" mc="Standard.Class" uid="0cff4351-ae2c-48c6-ab11-0d413dc0f339"/>
+        <COMPID name="NextMustAccuseOtherEffect" mc="Standard.Class" uid="71212c55-d04f-48e5-a16f-2c439d208a8b"/>
+        <COMPID name="TakeRevealedFromOtherEffect" mc="Standard.Class" uid="f2d8fabd-170b-4567-bb16-e3f713d39a01"/>
+        <COMPID name="ChooseNextEffect" mc="Standard.Class" uid="6987a724-a5fd-4340-81e0-56e93d579b73"/>
+        <COMPID name="RevealAnotherIdentityEffect" mc="Standard.Class" uid="2d72d033-6a62-4eac-8ded-46df7b379673"/>
+        <COMPID name="SecretlyReadIdentityEffect" mc="Standard.Class" uid="1729b1a8-5229-4a58-a823-87e502fe74d0"/>
+        <COMPID name="RevealOwnIdentityEffect" mc="Standard.Class" uid="711b817a-75ef-4eaa-9949-7b08e31f4f67"/>
+        <COMPID name="TakeRevealedCardEffect" mc="Standard.Class" uid="c2ebcb6e-65b1-4976-960c-40a17508121a"/>
+        <COMPID name="DiscardFromHandEffect" mc="Standard.Class" uid="fa6ba737-01b2-4a92-b56c-3e6a4b33d032"/>
+        <OBJECT>
+          <ID name="CardName" mc="Standard.Enumeration" uid="95cb1ef3-770e-47e1-88b7-297bc6236aeb"/>
+          <ATTRIBUTES>
+            <ATT name="IsElementary">true</ATT>
+            <ATT name="IsAbstract">false</ATT>
+            <ATT name="IsLeaf">false</ATT>
+            <ATT name="IsRoot">false</ATT>
+            <ATT name="Visibility">Public</ATT>
+            <ATT name="Name"><![CDATA[CardName]]></ATT>
+            <ATT name="status">1970354901745664</ATT>
+          </ATTRIBUTES>
+          <DEPENDENCIES>
+            <COMP relation="Value">
+              <OBJECT>
+                <ID name="ANGRY_MOB" mc="Standard.EnumerationLiteral" uid="da7c9887-57d5-45b9-afb1-28cb8f67cd45"/>
+                <ATTRIBUTES>
+                  <ATT name="Name"><![CDATA[ANGRY_MOB]]></ATT>
+                  <ATT name="status">1970354901745664</ATT>
+                </ATTRIBUTES>
+                <DEPENDENCIES></DEPENDENCIES>
+              </OBJECT>
+              <OBJECT>
+                <ID name="THE_INQUISITION" mc="Standard.EnumerationLiteral" uid="2045c55d-a5e2-4ee4-9981-f010db06b884"/>
+                <ATTRIBUTES>
+                  <ATT name="Name"><![CDATA[THE_INQUISITION]]></ATT>
+                  <ATT name="status">1970354901745664</ATT>
+                </ATTRIBUTES>
+                <DEPENDENCIES></DEPENDENCIES>
+              </OBJECT>
+              <OBJECT>
+                <ID name="POINTED_HAT" mc="Standard.EnumerationLiteral" uid="3a87ed05-54b8-4aca-8cdc-1a8af8d0939c"/>
+                <ATTRIBUTES>
+                  <ATT name="Name"><![CDATA[POINTED_HAT]]></ATT>
+                  <ATT name="status">1970354901745664</ATT>
+                </ATTRIBUTES>
+                <DEPENDENCIES></DEPENDENCIES>
+              </OBJECT>
+              <OBJECT>
+                <ID name="HOOKED_NOSE" mc="Standard.EnumerationLiteral" uid="99a8e806-081a-4a37-8ef6-eaf36d54763b"/>
+                <ATTRIBUTES>
+                  <ATT name="Name"><![CDATA[HOOKED_NOSE]]></ATT>
+                  <ATT name="status">1970354901745664</ATT>
+                </ATTRIBUTES>
+                <DEPENDENCIES></DEPENDENCIES>
+              </OBJECT>
+              <OBJECT>
+                <ID name="BROOMSTICK" mc="Standard.EnumerationLiteral" uid="e27c1dcd-5229-49ba-8513-336f8f4f89ce"/>
+                <ATTRIBUTES>
+                  <ATT name="Name"><![CDATA[BROOMSTICK]]></ATT>
+                  <ATT name="status">1970354901745664</ATT>
+                </ATTRIBUTES>
+                <DEPENDENCIES></DEPENDENCIES>
+              </OBJECT>
+              <OBJECT>
+                <ID name="WART" mc="Standard.EnumerationLiteral" uid="3b0e57ce-7161-4931-94a1-3e070a0b2d25"/>
+                <ATTRIBUTES>
+                  <ATT name="Name"><![CDATA[WART]]></ATT>
+                  <ATT name="status">1970354901745664</ATT>
+                </ATTRIBUTES>
+                <DEPENDENCIES></DEPENDENCIES>
+              </OBJECT>
+              <OBJECT>
+                <ID name="DUCKING_STOOL" mc="Standard.EnumerationLiteral" uid="7a873cc5-daf7-41c6-a11a-26164ea675df"/>
+                <ATTRIBUTES>
+                  <ATT name="Name"><![CDATA[DUCKING_STOOL]]></ATT>
+                  <ATT name="status">1970354901745664</ATT>
+                </ATTRIBUTES>
+                <DEPENDENCIES></DEPENDENCIES>
+              </OBJECT>
+              <OBJECT>
+                <ID name="CAULDRON" mc="Standard.EnumerationLiteral" uid="5588363c-4115-4452-8497-fe27db0f3603"/>
+                <ATTRIBUTES>
+                  <ATT name="Name"><![CDATA[CAULDRON]]></ATT>
+                  <ATT name="status">1970354901745664</ATT>
+                </ATTRIBUTES>
+                <DEPENDENCIES></DEPENDENCIES>
+              </OBJECT>
+              <OBJECT>
+                <ID name="EVIL_EYE" mc="Standard.EnumerationLiteral" uid="18ef7124-87f6-48b3-a1f6-4e8eb277452b"/>
+                <ATTRIBUTES>
+                  <ATT name="Name"><![CDATA[EVIL_EYE]]></ATT>
+                  <ATT name="status">1970354901745664</ATT>
+                </ATTRIBUTES>
+                <DEPENDENCIES></DEPENDENCIES>
+              </OBJECT>
+              <OBJECT>
+                <ID name="TOAD" mc="Standard.EnumerationLiteral" uid="3abc9e34-ba71-42a0-9325-ba9b990e3765"/>
+                <ATTRIBUTES>
+                  <ATT name="Name"><![CDATA[TOAD]]></ATT>
+                  <ATT name="status">1970354901745664</ATT>
+                </ATTRIBUTES>
+                <DEPENDENCIES></DEPENDENCIES>
+              </OBJECT>
+              <OBJECT>
+                <ID name="BLACK_CAT" mc="Standard.EnumerationLiteral" uid="b88d9087-184c-4b09-a27a-baba1353c004"/>
+                <ATTRIBUTES>
+                  <ATT name="Name"><![CDATA[BLACK_CAT]]></ATT>
+                  <ATT name="status">1970354901745664</ATT>
+                </ATTRIBUTES>
+                <DEPENDENCIES></DEPENDENCIES>
+              </OBJECT>
+              <OBJECT>
+                <ID name="PET_NEWT" mc="Standard.EnumerationLiteral" uid="0611b0fe-eca5-4ddf-8ffe-409373195cc5"/>
+                <ATTRIBUTES>
+                  <ATT name="Name"><![CDATA[PET_NEWT]]></ATT>
+                  <ATT name="status">1970354901745664</ATT>
+                </ATTRIBUTES>
+                <DEPENDENCIES></DEPENDENCIES>
+              </OBJECT>
+            </COMP>
+            <LINK relation="Extension">
+              <FOREIGNID name="JavaEnumeration" mc="Infrastructure.Stereotype" uid="01ec23a8-0000-0262-0000-000000000000"/>
+            </LINK>
+          </DEPENDENCIES>
+        </OBJECT>
+        <COMPID name="IdentityCard" mc="Standard.Class" uid="17a469e1-6467-404e-b7ea-b8529834f3a3"/>
+        <COMPID name="EffectList" mc="Standard.Class" uid="8b95c8ef-4820-4c35-b9a2-3ba060bd07d2"/>
+        <COMPID name="TurnEffect" mc="Standard.Class" uid="2f2b0018-6ed5-49fe-94e7-34678e91c2da"/>
+        <COMPID name="Effect" mc="Standard.Class" uid="944317ac-0251-4659-a304-62f82d30b839"/>
+        <COMPID name="Random" mc="Standard.Class" uid="33360c46-d3c1-41c1-849b-c74b1f609dec"/>
+        <COMPID name="CardUser" mc="Standard.Class" uid="6eee1547-3aa2-4ba2-82e1-ff52c49859a4"/>
+        <COMPID name="Strategy" mc="Standard.Class" uid="edacbace-526c-4bad-8e0f-bfeea5346cf5"/>
+        <COMPID name="Deck" mc="Standard.Class" uid="41be6223-b386-4721-a2a4-b13c52892ac5"/>
+      </COMP>
+      <LINK relation="Extension">
+        <FOREIGNID name="JavaPackage" mc="Infrastructure.Stereotype" uid="01ec23a8-0000-0126-0000-000000000000"/>
+      </LINK>
+    </DEPENDENCIES>
+  </OBJECT>
+</EXT>

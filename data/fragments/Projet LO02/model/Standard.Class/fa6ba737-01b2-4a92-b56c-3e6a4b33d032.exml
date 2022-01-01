@@ -2,7 +2,7 @@
 <!--GENERATED FILE, PLEASE DO NOT EDIT!!!--><EXT object="DiscardFromHandEffect" version="4">
   <OBJECT>
     <ID name="DiscardFromHandEffect" mc="Standard.Class" uid="fa6ba737-01b2-4a92-b56c-3e6a4b33d032"/>
-    <PID name="witchHuntGame" mc="Standard.Package" uid="1fde6271-4967-42c7-941b-fd8c539c040d"/>
+    <PID name="model" mc="Standard.Package" uid="f4607dd5-4ea2-4930-8352-d2c4d32ab2f0"/>
     <ATTRIBUTES>
       <ATT name="IsActive">false</ATT>
       <ATT name="IsMain">false</ATT>
@@ -177,16 +177,17 @@
           </DEPENDENCIES>
         </OBJECT>
       </COMP>
-      <COMP relation="Realized">
+      <COMP relation="Parent">
         <OBJECT>
-          <ID name="InterfaceRealization" mc="Standard.InterfaceRealization" uid="92c76f0a-40f6-4a66-b94f-09ff0fc30c03"/>
+          <ID name="Generalization" mc="Standard.Generalization" uid="e49ebcd6-527a-4704-af94-1d0a19c8c57f"/>
           <ATTRIBUTES>
-            <ATT name="Name"><![CDATA[InterfaceRealization]]></ATT>
+            <ATT name="Discriminator"></ATT>
+            <ATT name="Name"><![CDATA[Generalization]]></ATT>
             <ATT name="status">1970354901745664</ATT>
           </ATTRIBUTES>
           <DEPENDENCIES>
-            <LINK relation="Implemented">
-              <ID name="Effect" mc="Standard.Interface" uid="227731b3-49f5-4204-958d-5a639dba4da5"/>
+            <LINK relation="SuperType">
+              <ID name="Effect" mc="Standard.Class" uid="944317ac-0251-4659-a304-62f82d30b839"/>
             </LINK>
           </DEPENDENCIES>
         </OBJECT>

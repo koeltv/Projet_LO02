@@ -2,7 +2,7 @@
 <!--GENERATED FILE, PLEASE DO NOT EDIT!!!--><EXT object="Round" version="4">
   <OBJECT>
     <ID name="Round" mc="Standard.Class" uid="c28f7e31-e764-4b29-bf82-24de6d7b861e"/>
-    <PID name="witchHuntGame" mc="Standard.Package" uid="1fde6271-4967-42c7-941b-fd8c539c040d"/>
+    <PID name="model" mc="Standard.Package" uid="f4607dd5-4ea2-4930-8352-d2c4d32ab2f0"/>
     <ATTRIBUTES>
       <ATT name="IsActive">false</ATT>
       <ATT name="IsMain">false</ATT>
@@ -615,20 +615,6 @@ this.nextPlayer = value;]]></ATT>
           </DEPENDENCIES>
         </OBJECT>
         <OBJECT>
-          <ID name="askCurrentPlayerForAction" mc="Standard.Operation" uid="8f460d6e-9a51-42fe-85db-813fc4cbd2ca"/>
-          <ATTRIBUTES>
-            <ATT name="Concurrency">false</ATT>
-            <ATT name="Final">false</ATT>
-            <ATT name="Passing">MethodOut</ATT>
-            <ATT name="Visibility">Private</ATT>
-            <ATT name="IsClass">false</ATT>
-            <ATT name="IsAbstract">false</ATT>
-            <ATT name="Name"><![CDATA[askCurrentPlayerForAction]]></ATT>
-            <ATT name="status">1970354901745664</ATT>
-          </ATTRIBUTES>
-          <DEPENDENCIES></DEPENDENCIES>
-        </OBJECT>
-        <OBJECT>
           <ID name="distributeRumourCards" mc="Standard.Operation" uid="a9502f99-d8cd-4a55-8262-3dfb690e6eae"/>
           <ATTRIBUTES>
             <ATT name="Concurrency">false</ATT>
@@ -735,103 +721,6 @@ this.nextPlayer = value;]]></ATT>
                 <ID name="" mc="Infrastructure.Note" uid="2459948c-25ef-4cef-95b8-10f7f3d55ecf"/>
                 <ATTRIBUTES>
                   <ATT name="Content"><![CDATA[        if (currentPlayer == null) currentPlayer = Game.player.get(Game.randomInInterval(0, Game.player.size()));]]></ATT>
-                  <ATT name="MimeType"></ATT>
-                  <ATT name="Name"></ATT>
-                  <ATT name="status">1970354901745664</ATT>
-                </ATTRIBUTES>
-                <DEPENDENCIES>
-                  <LINK relation="Model">
-                    <FOREIGNID name="JavaCode" mc="Infrastructure.NoteType" uid="003800a8-0000-018e-0000-000000000000"/>
-                  </LINK>
-                </DEPENDENCIES>
-              </OBJECT>
-            </COMP>
-          </DEPENDENCIES>
-        </OBJECT>
-        <OBJECT>
-          <ID name="startRound" mc="Standard.Operation" uid="f0b8a708-8bad-4c3f-a510-1aacee2912ce"/>
-          <ATTRIBUTES>
-            <ATT name="Concurrency">false</ATT>
-            <ATT name="Final">false</ATT>
-            <ATT name="Passing">MethodOut</ATT>
-            <ATT name="Visibility">Public</ATT>
-            <ATT name="IsClass">false</ATT>
-            <ATT name="IsAbstract">false</ATT>
-            <ATT name="Name"><![CDATA[startRound]]></ATT>
-            <ATT name="status">1970354901745664</ATT>
-          </ATTRIBUTES>
-          <DEPENDENCIES>
-            <COMP relation="Descriptor">
-              <OBJECT>
-                <ID name="" mc="Infrastructure.Note" uid="13978341-f68e-4248-bf06-0cc5f3e7e613"/>
-                <ATTRIBUTES>
-                  <ATT name="Content"><![CDATA[        round = new Round();]]></ATT>
-                  <ATT name="MimeType"></ATT>
-                  <ATT name="Name"></ATT>
-                  <ATT name="status">1970354901745664</ATT>
-                </ATTRIBUTES>
-                <DEPENDENCIES>
-                  <LINK relation="Model">
-                    <FOREIGNID name="JavaCode" mc="Infrastructure.NoteType" uid="003800a8-0000-018e-0000-000000000000"/>
-                  </LINK>
-                </DEPENDENCIES>
-              </OBJECT>
-            </COMP>
-          </DEPENDENCIES>
-        </OBJECT>
-        <OBJECT>
-          <ID name="playRound" mc="Standard.Operation" uid="65898ecb-57d4-497a-8f3d-6e651b644e0d"/>
-          <ATTRIBUTES>
-            <ATT name="Concurrency">false</ATT>
-            <ATT name="Final">false</ATT>
-            <ATT name="Passing">MethodOut</ATT>
-            <ATT name="Visibility">Private</ATT>
-            <ATT name="IsClass">false</ATT>
-            <ATT name="IsAbstract">false</ATT>
-            <ATT name="Name"><![CDATA[playRound]]></ATT>
-            <ATT name="status">1970354901745664</ATT>
-          </ATTRIBUTES>
-          <DEPENDENCIES></DEPENDENCIES>
-        </OBJECT>
-        <OBJECT>
-          <ID name="endRound" mc="Standard.Operation" uid="affebaaf-facb-4f43-b29a-e4814232be0e"/>
-          <ATTRIBUTES>
-            <ATT name="Concurrency">false</ATT>
-            <ATT name="Final">false</ATT>
-            <ATT name="Passing">MethodOut</ATT>
-            <ATT name="Visibility">Private</ATT>
-            <ATT name="IsClass">false</ATT>
-            <ATT name="IsAbstract">false</ATT>
-            <ATT name="Name"><![CDATA[endRound]]></ATT>
-            <ATT name="status">1970354901745664</ATT>
-          </ATTRIBUTES>
-          <DEPENDENCIES>
-            <COMP relation="Descriptor">
-              <OBJECT>
-                <ID name="" mc="Infrastructure.Note" uid="7ae59ac1-3aaf-4dfb-887c-821de2a57059"/>
-                <ATTRIBUTES>
-                  <ATT name="Content"><![CDATA[        //Gather all players cards
-        for (Player player : Game.player) {
-            if (player.rumourCard != null) {
-                int startingNumberOfCard = player.rumourCard.size();
-                for (int i = 0; i < startingNumberOfCard; i++) {
-                    RumourCard removedCard = player.rumourCard.get(0);
-                    player.rumourCard.remove(removedCard);
-                    Game.rumourCard.add(removedCard);
-                }
-            }
-        }
-        //Gather the discarded cards
-        if (DiscardPile.rumourCard != null) {
-            int startingNumberOfCard = DiscardPile.rumourCard.size();
-            for (int i = 0; i < startingNumberOfCard; i++) {
-                RumourCard removedCard = DiscardPile.rumourCard.get(0);
-                DiscardPile.rumourCard.remove(removedCard);
-                Game.rumourCard.add(removedCard);
-            }
-        }
-        //Remember winning player
-        round = null;]]></ATT>
                   <ATT name="MimeType"></ATT>
                   <ATT name="Name"></ATT>
                   <ATT name="status">1970354901745664</ATT>
@@ -1083,7 +972,7 @@ this.nextPlayer = value;]]></ATT>
           </DEPENDENCIES>
         </OBJECT>
         <OBJECT>
-          <ID name="round" mc="Standard.AssociationEnd" uid="9810aaba-8f32-4fa2-96a3-8c8166a22603"/>
+          <ID name="instance" mc="Standard.AssociationEnd" uid="9810aaba-8f32-4fa2-96a3-8c8166a22603"/>
           <ATTRIBUTES>
             <ATT name="Aggregation">KindIsAssociation</ATT>
             <ATT name="IsChangeable">true</ATT>
@@ -1096,7 +985,7 @@ this.nextPlayer = value;]]></ATT>
             <ATT name="Visibility">Private</ATT>
             <ATT name="IsClass">true</ATT>
             <ATT name="IsAbstract">false</ATT>
-            <ATT name="Name"><![CDATA[round]]></ATT>
+            <ATT name="Name"><![CDATA[instance]]></ATT>
             <ATT name="status">1970354901745664</ATT>
           </ATTRIBUTES>
           <DEPENDENCIES>
@@ -1123,7 +1012,7 @@ this.nextPlayer = value;]]></ATT>
                 </ATTRIBUTES>
                 <DEPENDENCIES>
                   <COMP relation="Opposite">
-                    <COMPID name="round" mc="Standard.AssociationEnd" uid="9810aaba-8f32-4fa2-96a3-8c8166a22603"/>
+                    <COMPID name="instance" mc="Standard.AssociationEnd" uid="9810aaba-8f32-4fa2-96a3-8c8166a22603"/>
                   </COMP>
                   <COMP relation="Association">
                     <OBJECT>

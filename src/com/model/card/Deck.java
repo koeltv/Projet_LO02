@@ -13,10 +13,10 @@ import java.util.LinkedList;
 public class Deck {
     /**
      * The Cards.
-     * 
+     *
      * @see com.model.card.RumourCard
      */
-    private final LinkedList<RumourCard> cards;
+    private final LinkedList<RumourCard> cards = new LinkedList<>();
 
     /**
      * Instantiates a new Deck.
@@ -40,8 +40,6 @@ public class Deck {
      * @see com.model.card.effect.TakeRevealedFromOtherEffect
      */
     public Deck() {
-        this.cards = new LinkedList<>();
-
         for (CardName cardName : CardName.values()) {
         	
             //Witch? effects
