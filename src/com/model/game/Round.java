@@ -50,24 +50,24 @@ public class Round {
 
     /**
      * The Discard pile.
-     * 
+     *
      * @see com.model.card.RumourCard
      */
-    private final LinkedList<RumourCard> discardPile;
+    private final LinkedList<RumourCard> discardPile = new LinkedList<>();
 
     /**
      * The Active players.
-     * 
+     *
      * @see com.model.game.IdentityCard
      */
-    private final List<IdentityCard> identityCards;
+    private final List<IdentityCard> identityCards = new ArrayList<>();
 
     /**
      * The players that aren't selectable per player.
-     * 
+     *
      * @see com.model.player.Player
      */
-    private final HashMap<Player, List<Player>> notSelectablePlayers;
+    private final HashMap<Player, List<Player>> notSelectablePlayers = new HashMap<>();
 
     /**
      * The Deck.
@@ -78,16 +78,13 @@ public class Round {
 
     /**
      * Instantiates a new Round controller.
-     * 
+     *
      * @see com.model.card.Deck
      * @see com.model.player.Player
      * @see com.model.game.IdentityCard
      */
-    public Round(Deck deck, List<Player> players) {
+    private Round(Deck deck, List<Player> players) {
         numberOfRound++;
-        this.discardPile = new LinkedList<>();
-        this.identityCards = new ArrayList<>();
-        this.notSelectablePlayers = new HashMap<>();
 
         if (currentPlayer == null) currentPlayer = players.get(randomInInterval(players.size() - 1));
         for (Player player : players) identityCards.add(new IdentityCard(player));
@@ -98,14 +95,22 @@ public class Round {
 
     //TODO : Round Controller
     /**
-     * Gets round controller.
-     * Return the single available instance of round controller (Singleton).
+     * Gets round.
+     * Return the single available instance of round (Singleton).
      *
      * @return the round controller
      * @see com.model.game.Round
      */
     public static Round getInstance() {
         return instance;
+    }
+
+    /**
+     * Reset the round instance.
+     * Permit to re-prepare a game.
+     */
+    public static void reset(Deck deck, List<Player> players) {
+        instance = new Round(deck, players);
     }
 
     /**

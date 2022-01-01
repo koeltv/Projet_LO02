@@ -152,7 +152,8 @@ public class GameController {
                 game.resetScores();
                 RoundController.reset();
                 do {
-                    new RoundController(this, view).run();
+                    RoundController.reset(this, view);
+                    RoundController.getInstance().run();
                 } while (!game.verifyScores());
                 wrapUpGame();
                 endProgram = nextAction();

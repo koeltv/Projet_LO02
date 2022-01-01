@@ -53,13 +53,32 @@ public class RoundController {
      * @see com.model.game.Round
      * @see com.view.ActiveView
      */
-    RoundController(GameController gameController, ActiveView view) {
+    private RoundController(GameController gameController, ActiveView view) {
         this.view = view;
         this.gameController = gameController;
 
-        this.round = new Round(gameController.getDeck(), gameController.getPlayers());
+        Round.reset(gameController.getDeck(), gameController.getPlayers());
+        this.round = Round.getInstance();
 
         RoundController.instance = this;
+    }
+
+    /**
+     * Reset round controller by replacing the existing instance by a new one.
+     *
+     * @see com.model.game.Round
+     */
+    public static void reset(GameController gameController, ActiveView view) {
+        instance = new RoundController(gameController, view);
+    }
+
+    /**
+     * Reset static attributes.
+     *
+     * @see com.model.game.Round
+     */
+    public static void reset() {
+        Round.reset();
     }
 
     /**
@@ -70,15 +89,6 @@ public class RoundController {
      */
     public static RoundController getInstance() {
         return instance;
-    }
-
-    /**
-     * Reset static attributes.
-     * 
-     * @see com.model.game.Round
-     */
-    public static void reset() {
-        Round.reset();
     }
 
     /**
