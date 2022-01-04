@@ -16,12 +16,6 @@ sur [ce site](http://www.goodlittlegames.co.uk/games/09-witch-hunt.html).
   - Possibilité d'ajouter facilement de nouveaux effets, de nouvelles cartes, de nouveaux deck de départ, de nouvelles
     stratégies d'IAs, ...
 
-## A faire
-
-- Patron de conception visitor pour le comptage de points de chaque joueur.
-- Gestion des exceptions/erreurs
-- Documentation JavaDoc.
-
 ## Contexte
 
 Ce projet a été effectué dans le cadre d'un cours sur les principes et pratique de la programmation objet en
