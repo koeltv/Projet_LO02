@@ -30,6 +30,13 @@
         <COMPID name="Administrator" mc="Standard.Actor" uid="021da1b4-c030-43ca-adae-ddc60c185376"/>
         <COMPID name="Player" mc="Standard.Actor" uid="0cadbd1b-b1ad-4fa3-8e10-43b698cc8adc"/>
         <COMPID name="Accused Player" mc="Standard.Actor" uid="ec2195d9-ed08-4737-ba6b-7274d7fb8a21"/>
+        <COMPID name="Configure Views" mc="Standard.UseCase" uid="b524104e-8c9e-4dc6-b4dc-0aabb14228a5"/>
+        <COMPID name="Select wanted views" mc="Standard.UseCase" uid="f151eaac-e316-4baa-aca8-2b9864949873"/>
+        <COMPID name="Select their quantity" mc="Standard.UseCase" uid="e02007e6-3b2c-41f3-942d-ea8805f369e8"/>
+        <COMPID name="See cards" mc="Standard.UseCase" uid="4cded316-64d7-4c5a-ab41-ec353b1deccd"/>
+        <COMPID name="See cards in his hand" mc="Standard.UseCase" uid="134223ba-bf50-468a-9e3b-916a886a67e4"/>
+        <COMPID name="See revealed cards" mc="Standard.UseCase" uid="4dfbba18-3739-44bc-b436-ef41950f5198"/>
+        <COMPID name="See discarded cards" mc="Standard.UseCase" uid="04348624-5101-4369-a224-10a29f176150"/>
       </COMP>
       <COMP relation="Product">
         <COMPID name="Diagramme de cas d'utilisation DGCasUtilisation" mc="Standard.UseCaseDiagram" uid="ad4e7c65-3e0e-4048-a562-90b1f545296e"/>

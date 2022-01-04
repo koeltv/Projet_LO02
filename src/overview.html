@@ -13,16 +13,29 @@
 			documentation in the corresponding part of the project sources.</p>
 
 		<h2>Functionnalities</h2>
-		<img src="../ressources/UseCaseDiagram.png" width="50%" alt="GameImage">
-		<p>From the use case perspective, compared to the functionnalities already developped for the 2nd livrable, we
+		<img src="../ressources/UseCaseDiagramV1.png" width="50%" alt="Usecase Diagram v1">
+		<p>From the <a href="#useCaseDiagram">use case</a> perspective, compared to the functionnalities already
+			developped for the 2nd livrable, we
 			added the followings :</p>
 		<ul>
 			<li>The administrator can now select which views he wants during the party and how many</li>
 			<li>A player can now demand to see his cards, the revealed cards or the discarded cards during the party
 			</li>
 		</ul>
+		<img src="../ressources/UseCaseDiagramV2.png" width="50%" alt="Usecase Diagram v2">
 
-		<p>Here are the others changes that aren't part of the use case diagram :</p>
+		<p>Here is the window that you get when starting the program so that you can select the views you want :</p>
+		<img src="../ressources/StartingScreen.PNG" width="15%" alt="Starting screen">
+		<p>This window also has safeties :</p>
+		<ul>
+			<li>You can't click "OK" if you don't have any view selected</li>
+			<li>There can't be more than 1 command line view (only 1 console, if it is used more than once, the output
+				would be duplicated)
+			</li>
+			<li>The other views count choices are limited between 0 and 10</li>
+		</ul>
+
+		<p>Here are the changes related to the <a href="#classDiagram">class diagram</a> :</p>
 		<ul>
 			<li>Implemented the MVC pattern</li>
 			<li>Created the View, PassiveView and ActiveView interface to classify all views and make it easier to
@@ -34,7 +47,7 @@
 			<li>Added safeties in the code, like the classes EffectList and TurnEffect interface which make it mandatory
 				to put an effect that affect a player to be next in a list of effect
 			</li>
-			<li>Added more variety in the AI strategies, like a card user which focus on using card when possible, or a
+			<li>Added more variety in the AI strategies, like a card user which focus on using cards when possible, or a
 				random that does completely random actions
 			</li>
 			<li>Documented packages, classes, methods and attributes using Javadoc</li>
@@ -54,7 +67,8 @@
 		<p>The different diagrams can be found be following the links</p>
 		<p>Livrable 2 versions :</p>
 		<ul>
-			<li><a href="https://github.com/koeltv/Projet_LO02/blob/master/ressources/UseCaseDiagram.png">Use case
+			<li><a id="useCaseDiagram"
+				   href="https://github.com/koeltv/Projet_LO02/blob/master/ressources/UseCaseDiagramV1.png">Use case
 				diagram</a></li>
 			<li><a href="https://github.com/koeltv/Projet_LO02/blob/master/ressources/ClassDiagramV1.png">Class
 				diagram</a></li>
@@ -63,7 +77,10 @@
 		</ul>
 		<p>Livrable 3 versions :</p>
 		<ul>
-			<li><a href="https://github.com/koeltv/Projet_LO02/blob/master/ressources/ClassDiagramV2.png">Class diagram
+			<li><a href="https://github.com/koeltv/Projet_LO02/blob/master/ressources/UseCaseDiagramV2.png">Use case
+				diagram</a></li>
+			<li><a id="classDiagram"
+				   href="https://github.com/koeltv/Projet_LO02/blob/master/ressources/ClassDiagramV2.png">Class diagram
 				(only global package are shown and the relations between classes, some attributes and methods are
 				missing)</a></li>
 			<li><a href="https://github.com/koeltv/Projet_LO02/blob/master/ressources/ClassDiagramAutoV2.svg">IntelliJ
