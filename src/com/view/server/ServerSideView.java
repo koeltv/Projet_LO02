@@ -1,7 +1,6 @@
 package com.view.server;
 
 import com.controller.PlayerAction;
-import com.model.card.CardName;
 import com.model.card.RumourCard;
 import com.model.game.Round;
 import com.model.player.AI;
@@ -321,29 +320,29 @@ public class ServerSideView extends Frame implements ActiveView, Runnable {
 	@Override
 	public void showPlayerIdentity(String name, boolean witch) {
 		sendRoundState();
-		updateClients(new ExchangeContainer(Command.SHOW_PLAYER_IDENTITY, name, witch));
+		updateClients(new ExchangeContainer(Command.SHOW_PLAYER_IDENTITY, name));
 		activeView.showPlayerIdentity(name, witch);
 	}
 
 	@Override
-	public void showPlayerAction(String name) {
+	public void showRevealAction(String name) {
 		sendRoundState();
 		updateClients(new ExchangeContainer(Command.SHOW_REVEAL_ACTION, name));
-		activeView.showPlayerAction(name);
+		activeView.showRevealAction(name);
 	}
 
 	@Override
-	public void showPlayerAction(String name, String targetedPlayerName) {
+	public void showAccuseAction(String name, String targetedPlayerName) {
 		sendRoundState();
 		updateClients(new ExchangeContainer(Command.SHOW_ACCUSE_ACTION, name, targetedPlayerName));
-		activeView.showPlayerAction(name, targetedPlayerName);
+		activeView.showAccuseAction(name, targetedPlayerName);
 	}
 
 	@Override
-	public void showPlayerAction(String name, CardName chosenCardName) {
+	public void showUseCardAction(String name, String chosenCardName) {
 		sendRoundState();
 		updateClients(new ExchangeContainer(Command.SHOW_CARD_USE_ACTION, name, chosenCardName));
-		activeView.showPlayerAction(name, chosenCardName);
+		activeView.showUseCardAction(name, chosenCardName);
 	}
 
 	@Override

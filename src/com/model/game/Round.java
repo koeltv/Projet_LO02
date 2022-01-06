@@ -82,7 +82,7 @@ public class Round implements Serializable {
      * @see com.model.player.Player
      * @see com.model.game.IdentityCard
      */
-    private Round(Deck deck, List<Player> players) {
+    protected Round(Deck deck, List<Player> players) {
         numberOfRound++;
 
         if (currentPlayer == null) currentPlayer = players.get(randomInInterval(players.size() - 1));

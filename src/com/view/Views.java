@@ -20,7 +20,7 @@ public class Views extends Frame implements ActiveView, PassiveView, Runnable {
      *
      * @see com.view.PassiveView
      */
-    private final List<PassiveView> views = new ArrayList<>();;
+    private final List<PassiveView> views = new ArrayList<>();
 
     /**
      * The Active view.

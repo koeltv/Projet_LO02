@@ -2,7 +2,6 @@ package com.view.server;
 
 import com.controller.PlayerAction;
 import com.controller.RoundController;
-import com.model.card.CardName;
 import com.model.card.RumourCard;
 import com.model.game.LocalRound;
 import com.model.game.Round;
@@ -106,10 +105,10 @@ public class ClientSideView implements ActiveView, PassiveView {
 			case SHOW_CARD_LIST -> showCardList(c.name, (List<String>) c.list);
 			case SHOW_GAME_WINNER -> showGameWinner(c.name, c.nb);
 			case SHOW_ROUND_WINNER -> showRoundWinner(c.name);
-			case SHOW_ACCUSE_ACTION -> showPlayerAction(c.name, c.name2);
-			case SHOW_REVEAL_ACTION -> showPlayerAction(c.name);
+			case SHOW_ACCUSE_ACTION -> showAccuseAction(c.name, c.name2);
+			case SHOW_REVEAL_ACTION -> showRevealAction(c.name);
 			case SHOW_START_OF_ROUND -> showStartOfRound(c.nb);
-			case SHOW_CARD_USE_ACTION -> showPlayerAction(c.name, c.cardName);
+			case SHOW_CARD_USE_ACTION -> showUseCardAction(c.name, c.name2);
 			case SHOW_PLAYER_IDENTITY -> showPlayerIdentity(c.name, c.isWitch);
 
 			case ACTION_WAIT -> waitForAction(c.name, (List<PlayerAction>) c.list);
@@ -199,18 +198,18 @@ public class ClientSideView implements ActiveView, PassiveView {
 	}
 
 	@Override
-	public void showPlayerAction(String name) {
-		view.showPlayerAction(name);
+	public void showRevealAction(String name) {
+		view.showRevealAction(name);
 	}
 
 	@Override
-	public void showPlayerAction(String name, String targetedPlayerName) {
-		view.showPlayerAction(name, targetedPlayerName);
+	public void showAccuseAction(String name, String targetedPlayerName) {
+		view.showAccuseAction(name, targetedPlayerName);
 	}
 
 	@Override
-	public void showPlayerAction(String name, CardName chosenCardName) {
-		view.showPlayerAction(name, chosenCardName);
+	public void showUseCardAction(String name, String chosenCardName) {
+		view.showUseCardAction(name, chosenCardName);
 	}
 
 	@Override

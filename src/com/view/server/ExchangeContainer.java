@@ -1,7 +1,5 @@
 package com.view.server;
 
-import com.model.card.CardName;
-
 import java.io.Serializable;
 import java.util.List;
 
@@ -11,7 +9,6 @@ public class ExchangeContainer implements Serializable {
 	final String name2;
 	final List<?> list;
 	final Integer nb;
-	final CardName cardName;
 	final Boolean isWitch;
 
 	ExchangeContainer(Command state) {
@@ -21,7 +18,6 @@ public class ExchangeContainer implements Serializable {
 		name2 = null;
 		list = null;
 		nb = null;
-		cardName = null;
 	}
 
 	ExchangeContainer(Command state, int nb) {
@@ -31,17 +27,15 @@ public class ExchangeContainer implements Serializable {
 		name = null;
 		name2 = null;
 		list = null;
-		cardName = null;
 	}
 
 	ExchangeContainer(Command state, String name) {
 		this.state = state;
 		this.name = name;
-		isWitch = null;
+		isWitch = state == Command.SHOW_PLAYER_IDENTITY ? true : null;
 		name2 = null;
 		list = null;
 		nb = null;
-		cardName = null;
 	}
 
 	ExchangeContainer(Command state, String name, int nb) {
@@ -51,27 +45,6 @@ public class ExchangeContainer implements Serializable {
 		isWitch = null;
 		name2 = null;
 		list = null;
-		cardName = null;
-	}
-
-	ExchangeContainer(Command state, String name, CardName cardName) {
-		this.state = state;
-		this.name = name;
-		this.cardName = cardName;
-		isWitch = null;
-		name2 = null;
-		list = null;
-		nb = null;
-	}
-
-	ExchangeContainer(Command state, String name, boolean isWitch) {
-		this.state = state;
-		this.name = name;
-		this.isWitch = isWitch;
-		name2 = null;
-		list = null;
-		nb = null;
-		cardName = null;
 	}
 
 	ExchangeContainer(Command state, String name, String name2) {
@@ -81,7 +54,6 @@ public class ExchangeContainer implements Serializable {
 		isWitch = null;
 		list = null;
 		nb = null;
-		cardName = null;
 	}
 
 	ExchangeContainer(Command state, String name, List<?> list) {
@@ -91,16 +63,14 @@ public class ExchangeContainer implements Serializable {
 		isWitch = null;
 		name2 = null;
 		nb = null;
-		cardName = null;
 	}
 
-	ExchangeContainer(Command state, String name, String name2, List<?> list, Integer nb, CardName cardName, Boolean isWitch) {
+	private ExchangeContainer(Command state, String name, String name2, List<?> list, Integer nb, Boolean isWitch) {
 		this.state = state;
 		this.name = name;
 		this.name2 = name2;
 		this.list = list;
 		this.nb = nb;
-		this.cardName = cardName;
 		this.isWitch = isWitch;
 	}
 
@@ -111,7 +81,6 @@ public class ExchangeContainer implements Serializable {
 				name2,
 				list,
 				nb,
-				cardName,
 				isWitch
 		);
 	}
