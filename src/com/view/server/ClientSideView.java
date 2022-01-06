@@ -22,17 +22,46 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.ForkJoinPool;
 import java.util.stream.IntStream;
 
+/**
+ * The type Client side view.
+ */
 public class ClientSideView implements ActiveView, PassiveView {
+	/**
+	 * The minimum byte value.
+	 */
 	private static final int ADDRESS_BYTE_MIN = 0;
+
+	/**
+	 * The maximum byte value (excluded).
+	 */
 	private static final int ADDRESS_BYTE_MAX = 256;
+
+	/**
+	 * The first port to check.
+	 */
 	private static final int PORT_MIN = 49152;
+
+	/**
+	 * The last port to check.
+	 */
 	private static final int PORT_MAX = 49160;
 
+	/**
+	 * The linked server.
+	 */
 	private Terminal server;
 
+	/**
+	 * The View.
+	 */
 	private final View view;
 
-	public ClientSideView(PassiveView view) {
+	/**
+	 * Instantiates a new Client side view.
+	 *
+	 * @param view the view
+	 */
+	public <T extends View> ClientSideView(T view) {
 		this.view = view;
 		new RoundController((ActiveView) view);
 		try {
@@ -46,6 +75,12 @@ public class ClientSideView implements ActiveView, PassiveView {
 	// Connection method
 	///////////////////////////////////////////////////////////////////////////
 
+	/**
+	 * Try to connect to an available host.
+	 *
+	 * @throws ExecutionException   if no connection succedded
+	 * @throws InterruptedException if interrupted
+	 */
 	public void connectToAvailableHost() throws ExecutionException, InterruptedException {
 		ExecutorService executor = ForkJoinPool.commonPool();
 		try { //Check for similar to local IPs first
@@ -99,51 +134,65 @@ public class ClientSideView implements ActiveView, PassiveView {
 	// Communication methods
 	///////////////////////////////////////////////////////////////////////////
 
+	/**
+	 * Choose an appropriate passive action.
+	 *
+	 * @param c the container containing parameters to use
+	 */
 	@SuppressWarnings("unchecked")
 	private void chooseAppropriatePassiveAction(ExchangeContainer c) {
-		switch (c.state) {
-			case SHOW_CARD_LIST -> showCardList(c.name, (List<String>) c.list);
-			case SHOW_GAME_WINNER -> showGameWinner(c.name, c.nb);
-			case SHOW_ROUND_WINNER -> showRoundWinner(c.name);
-			case SHOW_ACCUSE_ACTION -> showAccuseAction(c.name, c.name2);
-			case SHOW_REVEAL_ACTION -> showRevealAction(c.name);
-			case SHOW_START_OF_ROUND -> showStartOfRound(c.nb);
-			case SHOW_CARD_USE_ACTION -> showUseCardAction(c.name, c.name2);
-			case SHOW_PLAYER_IDENTITY -> showPlayerIdentity(c.name, c.isWitch);
+		switch (c.command()) {
+			case SHOW_CARD_LIST -> showCardList(c.name1(), (List<String>) c.list());
+			case SHOW_GAME_WINNER -> showGameWinner(c.name1(), c.number());
+			case SHOW_ROUND_WINNER -> showRoundWinner(c.name1());
+			case SHOW_ACCUSE_ACTION -> showAccuseAction(c.name1(), c.name2());
+			case SHOW_REVEAL_ACTION -> showRevealAction(c.name1());
+			case SHOW_START_OF_ROUND -> showStartOfRound(c.number());
+			case SHOW_CARD_USE_ACTION -> showUseCardAction(c.name1(), c.name2());
+			case SHOW_PLAYER_IDENTITY -> showPlayerIdentity(c.name1(), c.isWitch());
 
-			case ACTION_WAIT -> waitForAction(c.name, (List<PlayerAction>) c.list);
+			case ACTION_WAIT -> waitForAction(c.name1(), (List<PlayerAction>) c.list());
 			case NEW_GAME_WAIT -> waitForNewGame();
-			case CARD_CHOICE_WAIT -> waitForCardChoice((List<RumourCard>) c.list);
+			case CARD_CHOICE_WAIT -> waitForCardChoice((List<RumourCard>) c.list());
 			case REPARTITION_WAIT -> waitForRepartition();
-			case PLAYER_NAME_WAIT -> waitForPlayerName(c.nb);
-			case PLAYER_CHOICE_WAIT -> waitForPlayerChoice((List<String>) c.list);
-			case PLAYER_SWITCH_WAIT -> waitForPlayerSwitch(c.name);
-			case PLAYER_IDENTITY_WAIT -> waitForPlayerIdentity(c.name);
+			case PLAYER_NAME_WAIT -> waitForPlayerName(c.number());
+			case PLAYER_CHOICE_WAIT -> waitForPlayerChoice((List<String>) c.list());
+			case PLAYER_SWITCH_WAIT -> waitForPlayerSwitch(c.name1());
+			case PLAYER_IDENTITY_WAIT -> waitForPlayerIdentity(c.name1());
 			case BLANK_CARD_CHOICE_WAIT -> waitForCardChoice(null);
 
-			default -> System.err.println("Wrong passive action : " + c.state);
+			default -> System.err.println("Wrong passive action : " + c.command());
 		}
 	}
 
+	/**
+	 * Choose an appropriate active action and return the result.
+	 *
+	 * @param c the container containing parameters to use
+	 * @return the result of prompting the user
+	 */
 	@SuppressWarnings("unchecked")
 	private Object chooseAppropriateActiveAction(ExchangeContainer c) {
-		return switch (c.state) {
-			case ACTION_REQUEST -> promptForAction(c.name, (List<PlayerAction>) c.list);
+		return switch (c.command()) {
+			case ACTION_REQUEST -> promptForAction(c.name1(), (List<PlayerAction>) c.list());
 			case NEW_GAME_REQUEST -> promptForNewGame();
-			case CARD_CHOICE_REQUEST -> promptForCardChoice(c.name, (List<RumourCard>) c.list);
+			case CARD_CHOICE_REQUEST -> promptForCardChoice(c.name1(), (List<RumourCard>) c.list());
 			case REPARTITION_REQUEST -> promptForRepartition();
-			case PLAYER_NAME_REQUEST -> promptForPlayerName(c.nb);
-			case PLAYER_CHOICE_REQUEST -> promptForPlayerChoice(c.name, (List<String>) c.list);
+			case PLAYER_NAME_REQUEST -> promptForPlayerName(c.number());
+			case PLAYER_CHOICE_REQUEST -> promptForPlayerChoice(c.name1(), (List<String>) c.list());
 			case PLAYER_SWITCH_REQUEST -> {
-				promptForPlayerSwitch(c.name);
+				promptForPlayerSwitch(c.name1());
 				yield null;
 			}
-			case PLAYER_IDENTITY_REQUEST -> promptForPlayerIdentity(c.name);
-			case BLANK_CARD_CHOICE_REQUEST -> promptForCardChoice(c.name, c.nb);
-			default -> throw new IllegalStateException("Unexpected value: " + c.state);
+			case PLAYER_IDENTITY_REQUEST -> promptForPlayerIdentity(c.name1());
+			case BLANK_CARD_CHOICE_REQUEST -> promptForCardChoice(c.name1(), c.number());
+			default -> throw new IllegalStateException("Unexpected value: " + c.command());
 		};
 	}
 
+	/**
+	 * Run the client.
+	 */
 	public void run() {
 		try {
 			while (server != null) {
@@ -153,7 +202,7 @@ public class ClientSideView implements ActiveView, PassiveView {
 					if (object instanceof Round round) {
 						LocalRound.setInstance(round);
 					} else if (Round.getInstance() != null && object instanceof ExchangeContainer container) {
-						if (container.state.isActive()) {
+						if (container.command().isActive()) {
 							server.output().writeObject(chooseAppropriateActiveAction(container));
 						} else {
 							chooseAppropriatePassiveAction(container);
@@ -170,6 +219,7 @@ public class ClientSideView implements ActiveView, PassiveView {
 			System.exit(0);
 		} catch (IOException e) {
 			e.printStackTrace();
+			System.exit(0);
 		}
 	}
 

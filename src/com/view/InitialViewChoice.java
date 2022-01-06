@@ -11,26 +11,79 @@ import java.awt.event.*;
 import java.util.ArrayList;
 import java.util.List;
 
-@SuppressWarnings("unused")
+/**
+ * The type Initial view choice.
+ */
 public class InitialViewChoice extends JDialog {
+	/**
+	 * The Content pane.
+	 */
 	private JPanel contentPane;
+	/**
+	 * The Button ok.
+	 */
 	private JButton buttonOK;
+	/**
+	 * The Button cancel.
+	 */
 	private JButton buttonCancel;
+	/**
+	 * The Client button.
+	 */
 	private JRadioButton clientButton;
+	/**
+	 * The Server button.
+	 */
 	private JRadioButton serverButton;
+	/**
+	 * The Off button.
+	 */
 	private JRadioButton offButton;
+	/**
+	 * The Network label.
+	 */
 	private JLabel networkLabel;
+	/**
+	 * The View label.
+	 */
 	private JLabel viewLabel;
+	/**
+	 * The Server panel.
+	 */
 	private JPanel serverPanel;
+	/**
+	 * The Confirmation panel.
+	 */
 	private JPanel confirmationPanel;
+	/**
+	 * The Console check box.
+	 */
 	private JCheckBox consoleCheckBox;
+	/**
+	 * The Graphical 2 d spinner.
+	 */
 	private JSpinner graphical2dSpinner;
+	/**
+	 * The Graphical 2 d label.
+	 */
 	private JLabel graphical2dLabel;
+	/**
+	 * The Graphical text label.
+	 */
 	private JLabel graphicalTextLabel;
+	/**
+	 * The Graphical text spinner.
+	 */
 	private JSpinner graphicalTextSpinner;
 
+	/**
+	 * The constant activeView.
+	 */
 	private static ActiveView activeView;
 
+	/**
+	 * Instantiates a new Initial view choice.
+	 */
 	public InitialViewChoice() {
 		setContentPane(contentPane);
 		setModal(true);
@@ -67,11 +120,19 @@ public class InitialViewChoice extends JDialog {
 		setVisible(true);
 	}
 
+	/**
+	 * Run active view.
+	 *
+	 * @return the active view
+	 */
 	public static ActiveView run() {
-		InitialViewChoice initialViewChoice = new InitialViewChoice();
+		new InitialViewChoice();
 		return activeView;
 	}
 
+	/**
+	 * On ok.
+	 */
 	private void onOK() {
 		List<ActiveView> views = new ArrayList<>();
 
@@ -107,6 +168,9 @@ public class InitialViewChoice extends JDialog {
 		dispose();
 	}
 
+	/**
+	 * On cancel.
+	 */
 	private void onCancel() {
 		// add your code here if necessary
 		dispose();
@@ -272,6 +336,9 @@ public class InitialViewChoice extends JDialog {
 	}
 
 	/**
+	 * Get root JComponent.
+	 *
+	 * @return the JComponent
 	 * @noinspection ALL
 	 */
 	public JComponent $$$getRootComponent$$$() {

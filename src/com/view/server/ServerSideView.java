@@ -22,16 +22,36 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
+/**
+ * The type Server side view.
+ */
 @SuppressWarnings("ConstantConditions")
 public class ServerSideView extends Frame implements ActiveView, Runnable {
+	/**
+	 * The maximum number of client supported.
+	 */
 	private static final int MAX_CAPACITY = 5;
 
+	/**
+	 * The Clients.
+	 */
 	private final List<Terminal> clients = new ArrayList<>();
 
+	/**
+	 * The players associated to each terminal.
+	 */
 	private final HashMap<Terminal, List<Player>> localPlayers = new HashMap<>();
 
+	/**
+	 * The Active view.
+	 */
 	private final ActiveView activeView;
 
+	/**
+	 * Instantiates a new Server side view.
+	 *
+	 * @param activeView the active view
+	 */
 	public ServerSideView(ActiveView activeView) {
 		this.activeView = activeView;
 
@@ -45,9 +65,9 @@ public class ServerSideView extends Frame implements ActiveView, Runnable {
 	///////////////////////////////////////////////////////////////////////////
 
 	/**
-	 * Search for available port between 49152 and 65535 to create server connection.
+	 * Search for available port between 49152 and 49160 to create server connection.
 	 *
-	 * @return opened server connection
+	 * @return opened server connection or null if none available
 	 */
 	private ServerSocket createServerConnection() {
 		for (int i = 49152; i <= 49160; i++) {
@@ -60,6 +80,11 @@ public class ServerSideView extends Frame implements ActiveView, Runnable {
 		return null;
 	}
 
+	/**
+	 * Initiate client connection.
+	 *
+	 * @param clientSocket the client socket
+	 */
 	private void initiateClientConnection(Socket clientSocket) {
 		try {
 			Terminal terminal = new Terminal(
@@ -92,6 +117,12 @@ public class ServerSideView extends Frame implements ActiveView, Runnable {
 	// Communication methods
 	///////////////////////////////////////////////////////////////////////////
 
+	/**
+	 * Update client.
+	 *
+	 * @param terminal the terminal
+	 * @param object   the object to send
+	 */
 	public void updateClient(Terminal terminal, Object object) {
 		try {
 
@@ -109,6 +140,11 @@ public class ServerSideView extends Frame implements ActiveView, Runnable {
 		}
 	}
 
+	/**
+	 * Update clients.
+	 *
+	 * @param object the object to send
+	 */
 	public void updateClients(Object object) {
 		List<Terminal> toRemove = new ArrayList<>();
 
@@ -127,11 +163,14 @@ public class ServerSideView extends Frame implements ActiveView, Runnable {
 	}
 
 	/**
+	 * Select 1 or more option in a list via a Pane.
+	 *
+	 * @param <T>     type of the options
 	 * @param parent  parent of this pane
 	 * @param message message to display
 	 * @param options proposed options
-	 * @param <T>     type of the options
 	 * @return chosen options
+	 *
 	 * @see <a href="https://stackoverflow.com/questions/8899605/multiple-choices-from-a-joptionpane">source</a>
 	 */
 	public static <T> List<T> select(Component parent, String message, List<T> options) {
@@ -157,16 +196,25 @@ public class ServerSideView extends Frame implements ActiveView, Runnable {
 	// Active methods
 	///////////////////////////////////////////////////////////////////////////
 
+	/**
+	 * Send round state.
+	 */
 	private void sendRoundState() {
 		Round round = Round.getInstance();
 		if (round != null) updateClients(round);
 	}
 
-	private Object getInputFromClient(Player player, ExchangeContainer exchangeContainer) {
-		clients.forEach(terminal -> updateClient(terminal,
-				localPlayers.containsKey(terminal) && localPlayers.get(terminal).contains(player) ?
-						exchangeContainer.setActive() :
-						exchangeContainer
+	/**
+	 * Gets input from the client associated to a player.
+	 *
+	 * @param player the player associated to the client
+	 * @param c      the exchange container to send
+	 * @return the input from client
+	 */
+	private Object getInputFromClient(Player player, ExchangeContainer c) {
+		clients.forEach(terminal -> updateClient(
+				terminal,
+				localPlayers.containsKey(terminal) && localPlayers.get(terminal).contains(player) ? c.setActive() : c
 		));
 		try {
 			return clients.stream()
@@ -182,21 +230,21 @@ public class ServerSideView extends Frame implements ActiveView, Runnable {
 	@Override
 	public String promptForPlayerName(int playerIndex) {
 		sendRoundState();
-		updateClients(new ExchangeContainer(Command.PLAYER_NAME_WAIT, playerIndex));
+		updateClients(new ExchangeContainer(Command.PLAYER_NAME_WAIT, null, null, null, playerIndex, null));
 		return activeView.promptForPlayerName(playerIndex);
 	}
 
 	@Override
 	public String promptForNewGame() {
 		sendRoundState();
-		updateClients(new ExchangeContainer(Command.NEW_GAME_WAIT));
+		updateClients(new ExchangeContainer(Command.NEW_GAME_WAIT, null, null, null, null, null));
 		return activeView.promptForNewGame();
 	}
 
 	@Override
 	public int[] promptForRepartition() {
 		sendRoundState();
-		updateClients(new ExchangeContainer(Command.REPARTITION_WAIT));
+		updateClients(new ExchangeContainer(Command.REPARTITION_WAIT, null, null, null, null, null));
 		return activeView.promptForRepartition();
 	}
 
@@ -207,7 +255,7 @@ public class ServerSideView extends Frame implements ActiveView, Runnable {
 		sendRoundState();
 
 		Player player = Round.getInstance().getPlayerByName(playerName);
-		ExchangeContainer exchangeContainer = new ExchangeContainer(Command.PLAYER_CHOICE_WAIT, playerName, playerNames);
+		ExchangeContainer exchangeContainer = new ExchangeContainer(Command.PLAYER_CHOICE_WAIT, playerName, null, playerNames, null, null);
 		if (localPlayers.keySet().stream().anyMatch(socket -> localPlayers.get(socket).contains(player))) {
 			((PassiveView) activeView).waitForPlayerChoice(playerNames);
 			return (int) getInputFromClient(player, exchangeContainer);
@@ -222,7 +270,7 @@ public class ServerSideView extends Frame implements ActiveView, Runnable {
 		sendRoundState();
 
 		Player player = Round.getInstance().getPlayerByName(playerName);
-		ExchangeContainer exchangeContainer = new ExchangeContainer(Command.CARD_CHOICE_WAIT, playerName, rumourCards);
+		ExchangeContainer exchangeContainer = new ExchangeContainer(Command.CARD_CHOICE_WAIT, playerName, null, rumourCards, null, null);
 		if (localPlayers.keySet().stream().anyMatch(socket -> localPlayers.get(socket).contains(player))) {
 			((PassiveView) activeView).waitForCardChoice(rumourCards);
 			return (int) getInputFromClient(player, exchangeContainer);
@@ -237,7 +285,7 @@ public class ServerSideView extends Frame implements ActiveView, Runnable {
 		sendRoundState();
 
 		Player player = Round.getInstance().getPlayerByName(playerName);
-		ExchangeContainer exchangeContainer = new ExchangeContainer(Command.CARD_CHOICE_WAIT, playerName, listSize);
+		ExchangeContainer exchangeContainer = new ExchangeContainer(Command.CARD_CHOICE_WAIT, playerName, null, null, listSize, null);
 		if (localPlayers.keySet().stream().anyMatch(socket -> localPlayers.get(socket).contains(player))) {
 			((PassiveView) activeView).waitForCardChoice(null);
 			return (int) getInputFromClient(player, exchangeContainer);
@@ -252,7 +300,7 @@ public class ServerSideView extends Frame implements ActiveView, Runnable {
 		sendRoundState();
 
 		Player player = Round.getInstance().getPlayerByName(name);
-		ExchangeContainer exchangeContainer = new ExchangeContainer(Command.PLAYER_IDENTITY_WAIT, name);
+		ExchangeContainer exchangeContainer = new ExchangeContainer(Command.PLAYER_IDENTITY_WAIT, name, null, null, null, null);
 		if (localPlayers.keySet().stream().anyMatch(socket -> localPlayers.get(socket).contains(player))) {
 			((PassiveView) activeView).waitForPlayerIdentity(name);
 			return (int) getInputFromClient(player, exchangeContainer);
@@ -267,7 +315,7 @@ public class ServerSideView extends Frame implements ActiveView, Runnable {
 		sendRoundState();
 
 		Player player = Round.getInstance().getPlayerByName(playerName);
-		ExchangeContainer exchangeContainer = new ExchangeContainer(Command.ACTION_WAIT, playerName, possibleActions);
+		ExchangeContainer exchangeContainer = new ExchangeContainer(Command.ACTION_WAIT, playerName, null, possibleActions, null, null);
 		if (localPlayers.keySet().stream().anyMatch(socket -> localPlayers.get(socket).contains(player))) {
 			((PassiveView) activeView).waitForAction(playerName, possibleActions);
 			return (PlayerAction) getInputFromClient(player, exchangeContainer);
@@ -282,7 +330,7 @@ public class ServerSideView extends Frame implements ActiveView, Runnable {
 		sendRoundState();
 
 		Player player = Round.getInstance().getPlayerByName(name);
-		ExchangeContainer exchangeContainer = new ExchangeContainer(Command.PLAYER_SWITCH_WAIT, name);
+		ExchangeContainer exchangeContainer = new ExchangeContainer(Command.PLAYER_SWITCH_WAIT, name, null, null, null, null);
 		if (localPlayers.keySet().stream().anyMatch(socket -> localPlayers.get(socket).contains(player))) {
 			((PassiveView) activeView).waitForPlayerSwitch(name);
 			getInputFromClient(player, exchangeContainer);
@@ -299,56 +347,56 @@ public class ServerSideView extends Frame implements ActiveView, Runnable {
 	@Override
 	public void showGameWinner(String name, int numberOfRound) {
 		sendRoundState();
-		updateClients(new ExchangeContainer(Command.SHOW_GAME_WINNER, name, numberOfRound));
+		updateClients(new ExchangeContainer(Command.SHOW_GAME_WINNER, name, null, null, numberOfRound, null));
 		activeView.showGameWinner(name, numberOfRound);
 	}
 
 	@Override
 	public void showRoundWinner(String name) {
 		sendRoundState();
-		updateClients(new ExchangeContainer(Command.SHOW_ROUND_WINNER, name));
+		updateClients(new ExchangeContainer(Command.SHOW_ROUND_WINNER, name, null, null, null, null));
 		activeView.showRoundWinner(name);
 	}
 
 	@Override
 	public void showStartOfRound(int numberOfRound) {
 		sendRoundState();
-		updateClients(new ExchangeContainer(Command.SHOW_START_OF_ROUND, numberOfRound));
+		updateClients(new ExchangeContainer(Command.SHOW_START_OF_ROUND, null, null, null, numberOfRound, null));
 		activeView.showStartOfRound(numberOfRound);
 	}
 
 	@Override
 	public void showPlayerIdentity(String name, boolean witch) {
 		sendRoundState();
-		updateClients(new ExchangeContainer(Command.SHOW_PLAYER_IDENTITY, name));
+		updateClients(new ExchangeContainer(Command.SHOW_PLAYER_IDENTITY, name, null, null, null, null));
 		activeView.showPlayerIdentity(name, witch);
 	}
 
 	@Override
 	public void showRevealAction(String name) {
 		sendRoundState();
-		updateClients(new ExchangeContainer(Command.SHOW_REVEAL_ACTION, name));
+		updateClients(new ExchangeContainer(Command.SHOW_REVEAL_ACTION, name, null, null, null, null));
 		activeView.showRevealAction(name);
 	}
 
 	@Override
 	public void showAccuseAction(String name, String targetedPlayerName) {
 		sendRoundState();
-		updateClients(new ExchangeContainer(Command.SHOW_ACCUSE_ACTION, name, targetedPlayerName));
+		updateClients(new ExchangeContainer(Command.SHOW_ACCUSE_ACTION, name, targetedPlayerName, null, null, null));
 		activeView.showAccuseAction(name, targetedPlayerName);
 	}
 
 	@Override
 	public void showUseCardAction(String name, String chosenCardName) {
 		sendRoundState();
-		updateClients(new ExchangeContainer(Command.SHOW_CARD_USE_ACTION, name, chosenCardName));
+		updateClients(new ExchangeContainer(Command.SHOW_CARD_USE_ACTION, name, chosenCardName, null, null, null));
 		activeView.showUseCardAction(name, chosenCardName);
 	}
 
 	@Override
 	public void showCardList(String name, List<String> cards) {
 		sendRoundState();
-		updateClients(new ExchangeContainer(Command.SHOW_CARD_LIST, name, cards));
+		updateClients(new ExchangeContainer(Command.SHOW_CARD_LIST, name, null, cards, null, null));
 		activeView.showCardList(name, cards);
 	}
 
