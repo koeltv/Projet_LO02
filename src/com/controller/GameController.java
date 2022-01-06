@@ -22,14 +22,14 @@ public class GameController {
 
 	/**
      * The Game.
-     * 
+     *
      * @see com.model.game.Game
      */
     protected final Game game;
 
     /**
      * The View.
-     * 
+     *
      * @see com.view.ActiveView
      */
     protected final ActiveView view;
