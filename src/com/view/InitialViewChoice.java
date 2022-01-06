@@ -1,5 +1,6 @@
 package com.view;
 
+import com.controller.GameController;
 import com.view.graphic.GraphicalTextView;
 import com.view.graphic.dynamic.Graphical2DView;
 import com.view.server.ClientSideView;
@@ -12,7 +13,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * The type Initial view choice.
+ * The Window used for the initial view choice.
+ * When called using the static run method, a window will be displayed asking the view(s) that the user want.
+ * Upon validation using the OK button, the view(s) will be created and send back to the GameController.
+ * As a safety, if no views are selected, the OK button can't be pressed
+ *
+ * @see GameController
  */
 public class InitialViewChoice extends JDialog {
 	/**
@@ -20,11 +26,11 @@ public class InitialViewChoice extends JDialog {
 	 */
 	private JPanel contentPane;
 	/**
-	 * The Button ok.
+	 * The OK Button used to finalize user choices.
 	 */
 	private JButton buttonOK;
 	/**
-	 * The Button cancel.
+	 * The cancel Button used to stop selection and terminate the program.
 	 */
 	private JButton buttonCancel;
 	/**
@@ -60,11 +66,11 @@ public class InitialViewChoice extends JDialog {
 	 */
 	private JCheckBox consoleCheckBox;
 	/**
-	 * The Graphical 2 d spinner.
+	 * The Graphical 2D spinner.
 	 */
 	private JSpinner graphical2dSpinner;
 	/**
-	 * The Graphical 2 d label.
+	 * The Graphical 2D label.
 	 */
 	private JLabel graphical2dLabel;
 	/**
@@ -77,7 +83,7 @@ public class InitialViewChoice extends JDialog {
 	private JSpinner graphicalTextSpinner;
 
 	/**
-	 * The constant activeView.
+	 * The constant activeView send back using the run() method.
 	 */
 	private static ActiveView activeView;
 
@@ -121,9 +127,9 @@ public class InitialViewChoice extends JDialog {
 	}
 
 	/**
-	 * Run active view.
+	 * Run the choice window.
 	 *
-	 * @return the active view
+	 * @return the chosen active view
 	 */
 	public static ActiveView run() {
 		new InitialViewChoice();
@@ -131,7 +137,13 @@ public class InitialViewChoice extends JDialog {
 	}
 
 	/**
-	 * On ok.
+	 * On press of the OK button.
+	 *
+	 * @see com.view.ActiveView
+	 * @see com.view.PassiveView
+	 * @see com.view.CommandLineView
+	 * @see com.view.graphic.dynamic.Graphical2DView
+	 * @see com.view.graphic.GraphicalTextView
 	 */
 	private void onOK() {
 		List<ActiveView> views = new ArrayList<>();
@@ -148,13 +160,12 @@ public class InitialViewChoice extends JDialog {
 
 		ActiveView view = views.get(0);
 		if (views.size() > 1) {
-			Views viewList = new Views(views.get(0));
-			views.forEach(activeView -> {
-				if (activeView instanceof PassiveView passiveView) {
-					viewList.addView(passiveView);
+			view = new Views(views.get(0));
+			for (int i = 1; i < views.size(); i++) {
+				if (views.get(i) instanceof PassiveView passiveView) {
+					((Views) view).addView(passiveView);
 				}
-			});
-			view = viewList;
+			}
 		}
 
 		if (offButton.isSelected()) {
@@ -169,7 +180,7 @@ public class InitialViewChoice extends JDialog {
 	}
 
 	/**
-	 * On cancel.
+	 * On press of the cancel button.
 	 */
 	private void onCancel() {
 		// add your code here if necessary

@@ -7,7 +7,7 @@ import java.util.List;
 
 /**
  * The type Local round.
- * <p>
+ *
  * A subtype of round used by clients.
  */
 public class LocalRound extends Round {
