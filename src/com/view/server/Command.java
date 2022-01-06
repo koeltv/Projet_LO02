@@ -2,10 +2,11 @@ package com.view.server;
 
 /**
  * The enum Command.
- * <p>
+ *
  * Used to transmit an operation to do to a client.
  */
-public enum Command {
+enum Command {
+
 	/**
 	 * Player name request command.
 	 */

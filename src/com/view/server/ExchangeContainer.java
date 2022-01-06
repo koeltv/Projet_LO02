@@ -5,7 +5,7 @@ import java.util.List;
 
 /**
  * The record Exchange container.
- * <p>
+ *
  * This record is used to transmit data through a ObjectStream via a standardized object.
  */
 record ExchangeContainer(Command command, String name1, String name2, List<?> list, Integer number,

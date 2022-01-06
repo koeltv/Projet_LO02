@@ -21,65 +21,81 @@ import java.util.List;
  * @see GameController
  */
 public class InitialViewChoice extends JDialog {
+
 	/**
 	 * The Content pane.
 	 */
 	private JPanel contentPane;
+
 	/**
 	 * The OK Button used to finalize user choices.
 	 */
+
 	private JButton buttonOK;
 	/**
 	 * The cancel Button used to stop selection and terminate the program.
 	 */
+
 	private JButton buttonCancel;
 	/**
 	 * The Client button.
 	 */
+
 	private JRadioButton clientButton;
 	/**
 	 * The Server button.
 	 */
+
 	private JRadioButton serverButton;
 	/**
 	 * The Off button.
 	 */
+
 	private JRadioButton offButton;
 	/**
 	 * The Network label.
 	 */
+
 	private JLabel networkLabel;
 	/**
 	 * The View label.
 	 */
+
 	private JLabel viewLabel;
 	/**
 	 * The Server panel.
 	 */
+
 	private JPanel serverPanel;
 	/**
 	 * The Confirmation panel.
 	 */
+
 	private JPanel confirmationPanel;
 	/**
 	 * The Console check box.
 	 */
+
 	private JCheckBox consoleCheckBox;
 	/**
 	 * The Graphical 2D spinner.
 	 */
+
 	private JSpinner graphical2dSpinner;
 	/**
 	 * The Graphical 2D label.
 	 */
+
 	private JLabel graphical2dLabel;
 	/**
 	 * The Graphical text label.
 	 */
+
 	private JLabel graphicalTextLabel;
 	/**
 	 * The Graphical text spinner.
 	 */
+
 	private JSpinner graphicalTextSpinner;
 
 	/**
@@ -90,7 +106,7 @@ public class InitialViewChoice extends JDialog {
 	/**
 	 * Instantiates a new Initial view choice.
 	 */
-	public InitialViewChoice() {
+	private InitialViewChoice() {
 		setContentPane(contentPane);
 		setModal(true);
 		getRootPane().setDefaultButton(buttonOK);

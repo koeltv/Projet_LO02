@@ -178,8 +178,7 @@ public class GameController {
         if (activeView instanceof ClientSideView clientSideView) {
             clientSideView.run();
         } else {
-            GameController gameController = new GameController(activeView);
-            gameController.run();
+            new GameController(activeView).run();
         }
     }
 }

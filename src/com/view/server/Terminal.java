@@ -7,5 +7,5 @@ import java.net.Socket;
 /**
  * The type Terminal.
  */
-public record Terminal(Socket socket, ObjectOutputStream output, ObjectInputStream input) {
+record Terminal(Socket socket, ObjectOutputStream output, ObjectInputStream input) {
 }

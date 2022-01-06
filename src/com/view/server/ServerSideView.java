@@ -24,9 +24,15 @@ import java.util.stream.Collectors;
 
 /**
  * The type Server side view.
+ *
+ * The server will try to listen on the first given port. If the port isn't available, it will try all the port of the range, shutting down if it reaches the end.
+ * Any client can connect until the treshold is reashed.
+ * If there is more than 1 not AI player in the game, the host will be able to hand over some players to the client upon connection but never all player.
+ * The client that has one or more player assigned to it will be prompted if the corresponding player need to give information.
  */
 @SuppressWarnings("ConstantConditions")
 public class ServerSideView extends Frame implements ActiveView, Runnable {
+
 	/**
 	 * The maximum number of client supported.
 	 */

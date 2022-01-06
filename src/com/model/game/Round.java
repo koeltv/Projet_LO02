@@ -23,7 +23,7 @@ import static com.util.GameUtil.randomInInterval;
  */
 public class Round implements Serializable {
 
-	/**
+    /**
      * The single instance of Round.
      */
     protected transient static Round instance;
@@ -78,6 +78,8 @@ public class Round implements Serializable {
     /**
      * Instantiates a new Round controller.
      *
+     * @param deck    the deck
+     * @param players the players
      * @see com.model.card.Deck
      * @see com.model.player.Player
      * @see com.model.game.IdentityCard
@@ -107,6 +109,8 @@ public class Round implements Serializable {
      * Reset the round instance.
      * Permit to re-prepare a game.
      *
+     * @param deck    the deck
+     * @param players the players
      * @see com.model.card.Deck
      * @see com.model.player.Player
      */
@@ -228,6 +232,12 @@ public class Round implements Serializable {
                 .findFirst().orElse(null);
     }
 
+    /**
+     * Gets a player by his name.
+     *
+     * @param name the player name
+     * @return the player with the given name
+     */
     public Player getPlayerByName(String name) {
         return identityCards.stream()
                 .map(identityCard -> identityCard.player)

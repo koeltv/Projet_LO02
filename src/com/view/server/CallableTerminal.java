@@ -9,11 +9,11 @@ import java.util.concurrent.Callable;
 
 /**
  * The record Callable terminal.
- * <p>
+ *
  * Represent a connection to a terminal by its IP and a port.
  * When the call method is used, it will try to reach the port of the terminal and return it, or stop if it fails or timeout.
  */
-public record CallableTerminal(InetAddress address, int port) implements Callable<Terminal> {
+record CallableTerminal(InetAddress address, int port) implements Callable<Terminal> {
 	/**
 	 * The constant TIMEOUT.
 	 */

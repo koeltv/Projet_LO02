@@ -24,8 +24,14 @@ import java.util.stream.IntStream;
 
 /**
  * The type Client side view.
+ *
+ * The client will start by requesting its own local ip, then search for a server on the local network.
+ * It will first look at all similar adresses on the standard port. If it doesn't find any server, it will start looking on all local adresses in the whole port range.
+ *
+ * There is a risk of it not connecting even if the server is listening if the timeout time is exceeded.
  */
 public class ClientSideView implements ActiveView, PassiveView {
+
 	/**
 	 * The minimum byte value.
 	 */
@@ -60,6 +66,7 @@ public class ClientSideView implements ActiveView, PassiveView {
 	 * Instantiates a new Client side view.
 	 *
 	 * @param view the view
+	 * @param <T>  any subtype of view
 	 */
 	public <T extends View> ClientSideView(T view) {
 		this.view = view;
