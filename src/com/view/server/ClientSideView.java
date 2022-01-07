@@ -183,9 +183,7 @@ public class ClientSideView implements ActiveView, PassiveView {
 	private Object chooseAppropriateActiveAction(ExchangeContainer c) {
 		return switch (c.command()) {
 			case ACTION_REQUEST -> promptForAction(c.name1(), (List<PlayerAction>) c.list());
-			case NEW_GAME_REQUEST -> promptForNewGame();
 			case CARD_CHOICE_REQUEST -> promptForCardChoice(c.name1(), (List<RumourCard>) c.list());
-			case REPARTITION_REQUEST -> promptForRepartition();
 			case PLAYER_NAME_REQUEST -> promptForPlayerName(c.number());
 			case PLAYER_CHOICE_REQUEST -> promptForPlayerChoice(c.name1(), (List<String>) c.list());
 			case PLAYER_SWITCH_REQUEST -> {
