@@ -23,6 +23,7 @@
         <COMPID name="GraphicView" mc="Standard.Class" uid="af5e626e-2aeb-4467-91f6-78b311e43144"/>
         <COMPID name="GraphicalTextView" mc="Standard.Class" uid="e433a655-4008-4c59-8e13-7e4de1e706fd"/>
         <COMPID name="Graphical2DView" mc="Standard.Class" uid="0213705f-cbf8-48b7-a92e-b6ea7e92192f"/>
+        <COMPID name="server" mc="Standard.Package" uid="5f2871c2-d5be-46fc-b192-aaa37bbe0353"/>
       </COMP>
       <LINK relation="Extension">
         <FOREIGNID name="JavaPackage" mc="Infrastructure.Stereotype" uid="01ec23a8-0000-0126-0000-000000000000"/>

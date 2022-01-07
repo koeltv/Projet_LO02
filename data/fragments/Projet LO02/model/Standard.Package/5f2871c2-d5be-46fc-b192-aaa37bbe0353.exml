@@ -1,0 +1,25 @@
+<?xml version="1.0" ?>
+<!--GENERATED FILE, PLEASE DO NOT EDIT!!!--><EXT object="server" version="4">
+  <OBJECT>
+    <ID name="server" mc="Standard.Package" uid="5f2871c2-d5be-46fc-b192-aaa37bbe0353"/>
+    <PID name="view" mc="Standard.Package" uid="622b6a7c-0c6c-4b27-8fe2-fd110890edf1"/>
+    <ATTRIBUTES>
+      <ATT name="IsInstantiable">false</ATT>
+      <ATT name="IsAbstract">false</ATT>
+      <ATT name="IsLeaf">false</ATT>
+      <ATT name="IsRoot">false</ATT>
+      <ATT name="Visibility">Public</ATT>
+      <ATT name="Name"><![CDATA[server]]></ATT>
+      <ATT name="status">1970354901745664</ATT>
+    </ATTRIBUTES>
+    <DEPENDENCIES>
+      <COMP relation="OwnedElement">
+        <COMPID name="ClientSideView" mc="Standard.Class" uid="02aa95b6-3ecc-4de8-82cf-90409499ab09"/>
+        <COMPID name="ServerSideView" mc="Standard.Class" uid="2e6eb266-61e2-4069-8021-42527803d1f4"/>
+      </COMP>
+      <LINK relation="Extension">
+        <FOREIGNID name="JavaPackage" mc="Infrastructure.Stereotype" uid="01ec23a8-0000-0126-0000-000000000000"/>
+      </LINK>
+    </DEPENDENCIES>
+  </OBJECT>
+</EXT>

@@ -15,6 +15,7 @@ sur [ce site](http://www.goodlittlegames.co.uk/games/09-witch-hunt.html).
   - Possibilité d'extraire les règles pour les faire varier
   - Possibilité d'ajouter facilement de nouveaux effets, de nouvelles cartes, de nouveaux deck de départ, de nouvelles
     stratégies d'IAs, ...
+- Possibilité de jouer en LAN (WIP)
 
 ## Contexte
 
