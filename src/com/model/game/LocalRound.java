@@ -9,11 +9,13 @@ import java.util.List;
  * The type Local round.
  *
  * A subtype of round used by client view.
+ *
+ * @see com.view.server.ClientSideView
  */
 public class LocalRound extends Round {
 
 	/**
-	 * Instantiates a new Round controller.
+	 * Instantiates a new Round.
 	 *
 	 * @param deck    the deck
 	 * @param players the players

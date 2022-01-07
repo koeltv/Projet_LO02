@@ -11,7 +11,9 @@ import java.util.concurrent.Callable;
  * The record Callable terminal.
  *
  * Represent a connection to a terminal by its IP and a port.
- * When the call method is used, it will try to reach the port of the terminal and return it, or stop if it fails or timeout.
+ * When the call method is used, it will try to reach the port of the terminal and return it, or throw an exception if it fails or timeout.
+ *
+ * @see Terminal
  */
 record CallableTerminal(InetAddress address, int port) implements Callable<Terminal> {
 	/**

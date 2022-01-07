@@ -30,6 +30,8 @@ import java.util.stream.IntStream;
  * It will first look at all similar adresses on the standard port. If it doesn't find any server, it will start looking on all local adresses in the whole port range.
  *
  * There is a risk of it not connecting even if the server is listening if the timeout time is exceeded.
+ *
+ * @see ServerSideView
  */
 public class ClientSideView implements ActiveView, PassiveView {
 

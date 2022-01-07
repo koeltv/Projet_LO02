@@ -4,6 +4,9 @@ package com.view.server;
  * The enum Command.
  *
  * Used to transmit an operation to do to a client.
+ *
+ * @see ServerSideView
+ * @see ClientSideView
  */
 enum Command {
 
@@ -11,10 +14,6 @@ enum Command {
 	 * Player name request command.
 	 */
 	PLAYER_NAME_REQUEST,
-	/**
-	 * New game request command.
-	 */
-	NEW_GAME_REQUEST,
 	/**
 	 * Player choice request command.
 	 */
@@ -27,10 +26,6 @@ enum Command {
 	 * Blank card choice request command.
 	 */
 	BLANK_CARD_CHOICE_REQUEST,
-	/**
-	 * Repartition request command.
-	 */
-	REPARTITION_REQUEST,
 	/**
 	 * Player identity request command.
 	 */
