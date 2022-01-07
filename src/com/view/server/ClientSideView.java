@@ -5,6 +5,7 @@ import com.controller.RoundController;
 import com.model.card.RumourCard;
 import com.model.game.LocalRound;
 import com.model.game.Round;
+import com.model.player.Player;
 import com.view.ActiveView;
 import com.view.PassiveView;
 import com.view.View;
@@ -208,12 +209,18 @@ public class ClientSideView implements ActiveView, PassiveView {
 
 					if (object instanceof Round round) {
 						LocalRound.setInstance(round);
-					} else if (Round.getInstance() != null && object instanceof ExchangeContainer container) {
-						if (container.command().isActive()) {
-							server.output().writeObject(chooseAppropriateActiveAction(container));
-						} else {
-							chooseAppropriatePassiveAction(container);
+					} else if (object instanceof ExchangeContainer container) {
+						if (Round.getInstance() != null) {
+							if (container.command().isActive()) {
+								server.output().writeObject(chooseAppropriateActiveAction(container));
+							} else {
+								chooseAppropriatePassiveAction(container);
+							}
 						}
+					} else if (object instanceof Player player) {
+						LocalRound.setCurrentPlayer(player);
+					} else if (object instanceof Integer roundNumber) {
+						LocalRound.setNumberOfRound(roundNumber);
 					} else {
 						System.err.println("Received non standard transmission : " + object);
 					}

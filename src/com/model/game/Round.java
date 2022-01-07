@@ -31,14 +31,14 @@ public class Round implements Serializable {
     /**
      * The number of round.
      */
-    private static int numberOfRound;
+    protected static int numberOfRound;
 
     /**
      * The current player.
      *
      * @see com.model.player.Player
      */
-    private static Player currentPlayer;
+    protected static Player currentPlayer;
 
     /**
      * The Next player.

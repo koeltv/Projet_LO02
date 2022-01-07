@@ -33,4 +33,17 @@ public class LocalRound extends Round {
 	public static void setInstance(Round round) {
 		instance = round;
 	}
+
+	/**
+	 * Sets current player.
+	 *
+	 * @param player the player to set to current player
+	 */
+	public static void setCurrentPlayer(Player player) {
+		currentPlayer = player;
+	}
+
+	public static void setNumberOfRound(int roundNumber) {
+		numberOfRound = roundNumber;
+	}
 }

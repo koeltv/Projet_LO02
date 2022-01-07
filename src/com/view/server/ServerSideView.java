@@ -207,7 +207,11 @@ public class ServerSideView extends Frame implements ActiveView, Runnable {
 	 */
 	private void sendRoundState() {
 		Round round = Round.getInstance();
-		if (round != null) updateClients(round);
+		if (round != null) {
+			updateClients(round);
+			updateClients(Round.getCurrentPlayer());
+			updateClients(Round.getNumberOfRound());
+		}
 	}
 
 	/**
@@ -254,7 +258,10 @@ public class ServerSideView extends Frame implements ActiveView, Runnable {
 		return activeView.promptForRepartition();
 	}
 
-	// Player specific
+	///////////////////////////////////////////////////////////////////////////
+	// Player specific prompt
+	// Those prompt are destined to 1 player specifically that may be remote
+	///////////////////////////////////////////////////////////////////////////
 
 	@Override
 	public int promptForPlayerChoice(String playerName, List<String> playerNames) {
@@ -374,7 +381,7 @@ public class ServerSideView extends Frame implements ActiveView, Runnable {
 	@Override
 	public void showPlayerIdentity(String name, boolean witch) {
 		sendRoundState();
-		updateClients(new ExchangeContainer(Command.SHOW_PLAYER_IDENTITY, name, null, null, null, null));
+		updateClients(new ExchangeContainer(Command.SHOW_PLAYER_IDENTITY, name, null, null, null, witch));
 		activeView.showPlayerIdentity(name, witch);
 	}
 
