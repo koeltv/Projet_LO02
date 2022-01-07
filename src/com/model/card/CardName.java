@@ -1,24 +1,26 @@
 package com.model.card;
 
+import java.io.Serializable;
+
 /**
  * The enum Card Name.
- * 
+ *
  * Names of the different selectable cards in the game : ANGRY_MOB, THE_INQUISITION, POINTED_HAT, HOOKED_NOSE, BROOMSTICK, WART, DUCKING_STOOL, CAULDRON, EVIL_EYE, TOAD, BLACK_CAT, PET_NEWT.
- * 
+ *
  * @see com.model.card.Deck
  */
-public enum CardName {
-    
+public enum CardName implements Serializable {
+
+    /**
+	 * Angry mob card name.
+	 */
+	ANGRY_MOB,
 	/**
-     * Angry mob card name.
-     */
-    ANGRY_MOB,
-    /**
-     * The inquisition card name.
-     */
-    THE_INQUISITION,
-    /**
-     * Pointed hat card name.
+	 * The inquisition card name.
+	 */
+	THE_INQUISITION,
+	/**
+	 * Pointed hat card name.
      */
     POINTED_HAT,
     /**

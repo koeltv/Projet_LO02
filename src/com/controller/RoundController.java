@@ -14,36 +14,49 @@ import java.util.stream.Collectors;
 
 /**
  * The type Round controller.
- * 
+ *
  * Round controller is the class that contains all methods to supervise a round. It is a singleton.
  */
 public class RoundController {
-    
-	/**
+
+    /**
      * The single instance of RoundController.
      */
     private static RoundController instance;
 
     /**
      * The Game controller.
-     * 
+     *
      * @see com.controller.GameController
      */
     private final GameController gameController;
 
     /**
      * The View.
-     * 
+     *
      * @see com.view.ActiveView
      */
     private final ActiveView view;
 
     /**
      * The Round.
-     * 
+     *
      * @see com.model.game.Round
      */
     private final Round round;
+
+    /**
+     * Instantiates a new Round controller.
+     *
+     * @param view the view
+     */
+    public RoundController(ActiveView view) {
+        this.view = view;
+        this.gameController = null;
+        this.round = null;
+
+        RoundController.instance = this;
+    }
 
     /**
      * Instantiates a new Round controller.
@@ -67,6 +80,8 @@ public class RoundController {
     /**
      * Reset round controller by replacing the existing instance by a new one.
      *
+     * @param gameController the game controller
+     * @param view           the view
      * @see com.model.game.Round
      */
     public static void reset(GameController gameController, ActiveView view) {
@@ -94,7 +109,7 @@ public class RoundController {
 
     /**
      * Gets the number of round
-     * 
+     *
      * @return the number of round
      * @see com.model.game.Round
      */
@@ -116,7 +131,7 @@ public class RoundController {
     public RumourCard chooseCard(Player player, List<RumourCard> rumourCardList) {
         return player instanceof AI ai ?
                 ai.selectCard(rumourCardList) :
-                rumourCardList.get(view.promptForCardChoice(rumourCardList));
+                rumourCardList.get(view.promptForCardChoice(player.getName(), rumourCardList));
     }
 
     /**
@@ -133,7 +148,7 @@ public class RoundController {
     public RumourCard chooseCardBlindly(Player player, List<RumourCard> rumourCardList) {
         int index = player instanceof AI ai ?
                 ai.selectCard(rumourCardList.size()) :
-                view.promptForCardChoice(rumourCardList.size());
+                view.promptForCardChoice(player.getName(), rumourCardList.size());
         return rumourCardList.get(index);
     }
 
@@ -150,7 +165,7 @@ public class RoundController {
     public Player choosePlayer(Player choosingPlayer, List<Player> playerList) {
         return choosingPlayer instanceof AI ai ?
                 ai.selectPlayer(playerList) :
-                playerList.get(view.promptForPlayerChoice(playerList.stream().map(Player::getName).collect(Collectors.toList())));
+                playerList.get(view.promptForPlayerChoice(choosingPlayer.getName(), playerList.stream().map(Player::getName).collect(Collectors.toList())));
     }
 
     /**
@@ -261,7 +276,7 @@ public class RoundController {
     /**
      * Ask players for their chosen identity.
      * This method will call the selectIdentity() method to prompt players to choose a role for the round.
-     * 
+     *
      * @see com.model.game.IdentityCard
      * @see com.model.player.Player
      * @see com.model.player.AI
@@ -285,7 +300,7 @@ public class RoundController {
     /**
      * Set up the round.
      * This method will do everything necessary to set up a round (select 1st player, create identity cards, distribute Rumour cards, ask players for identity).
-     * 
+     *
      * @see com.model.game.Round
      * @see com.view.View
      */
@@ -299,7 +314,7 @@ public class RoundController {
     /**
      * Round playing loop.
      * This method will prompt the current player for action, then set the current player to the next and loop while there is more than 1 not revealed player.
-     * 
+     *
      * @see com.model.player.Player
      * @see com.model.game.Round
      */
@@ -314,7 +329,7 @@ public class RoundController {
     /**
      * Wrap up the round.
      * This method will do everything necessary to wrap up a round (reveal last player and give him points, gather all cards).
-     * 
+     *
      * @see com.controller.GameController
      * @see com.model.game.Round
      * @see com.model.game.CardState

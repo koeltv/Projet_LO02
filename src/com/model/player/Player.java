@@ -3,18 +3,19 @@ package com.model.player;
 import com.model.card.RumourCard;
 import com.model.game.CardState;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
 /**
  * The type Player.
- * 
+ *
  * Gives all the methods related to the Player.
  */
-public class Player {
-    
-	/**
+public class Player implements Serializable {
+
+    /**
      * The Score.
      */
     private int score;
@@ -154,5 +155,10 @@ public class Player {
                 .filter(CardState::isRevealed)
                 .map(cardState -> cardState.rumourCard)
                 .collect(Collectors.toList());
+    }
+
+    @Override
+    public String toString() {
+        return getName();
     }
 }

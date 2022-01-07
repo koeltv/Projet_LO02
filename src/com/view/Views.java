@@ -13,18 +13,18 @@ import java.util.List;
  * 
  * Gives all the methods related to the views. Contain a list of passive views and 1 active view. Made to be able to handle more than 1 view at a time.
  */
-public class Views extends JFrame implements ActiveView, Runnable {
+public class Views extends Frame implements ActiveView, PassiveView, Runnable {
 
     /**
      * The Passive Views.
-     * 
+     *
      * @see com.view.PassiveView
      */
-    private final List<PassiveView> views;
+    private final List<PassiveView> views = new ArrayList<>();
 
     /**
      * The Active view.
-     * 
+     *
      * @see com.view.ActiveView
      */
     private ActiveView activeView;
@@ -36,7 +36,6 @@ public class Views extends JFrame implements ActiveView, Runnable {
      * @see com.view.ActiveView
      */
     public Views(ActiveView activeView) {
-        this.views = new ArrayList<>();
         this.activeView = activeView;
 
         //Used to enable the ability to switch the active view dynamically
@@ -138,21 +137,21 @@ public class Views extends JFrame implements ActiveView, Runnable {
     }
 
     @Override
-    public synchronized int promptForPlayerChoice(List<String> playerNames) {
+    public synchronized int promptForPlayerChoice(String playerName, List<String> playerNames) {
         views.forEach(passiveView -> passiveView.waitForPlayerChoice(playerNames));
-        return activeView.promptForPlayerChoice(playerNames);
+        return activeView.promptForPlayerChoice(playerName, playerNames);
     }
 
     @Override
-    public synchronized int promptForCardChoice(List<RumourCard> rumourCards) {
+    public synchronized int promptForCardChoice(String playerName, List<RumourCard> rumourCards) {
         views.forEach(passiveView -> passiveView.waitForCardChoice(rumourCards));
-        return activeView.promptForCardChoice(rumourCards);
+        return activeView.promptForCardChoice(playerName, rumourCards);
     }
 
     @Override
-    public int promptForCardChoice(int listSize) {
+    public int promptForCardChoice(String playerName, int listSize) {
         views.forEach(passiveView -> passiveView.waitForCardChoice(null));
-        return activeView.promptForCardChoice(listSize);
+        return activeView.promptForCardChoice(playerName, listSize);
     }
 
     @Override
@@ -196,7 +195,7 @@ public class Views extends JFrame implements ActiveView, Runnable {
                 String[] viewsToString = activeViews.stream().map(View::toString).toArray(String[]::new);
 
                 int index = JOptionPane.showOptionDialog(
-                        rootPane,
+                        this,
                         "Please choose which view do you want as the main view", "Main View",
                         JOptionPane.DEFAULT_OPTION, JOptionPane.PLAIN_MESSAGE,
                         null,
@@ -214,5 +213,57 @@ public class Views extends JFrame implements ActiveView, Runnable {
                 }
             }
         }
+    }
+
+    ///////////////////////////////////////////////////////////////////////////
+    // Passive Methods
+    ///////////////////////////////////////////////////////////////////////////
+
+    @Override
+    public void waitForPlayerName(int playerIndex) {
+        if (activeView instanceof PassiveView passiveView) passiveView.waitForPlayerName(playerIndex);
+        views.forEach(passiveView -> passiveView.waitForPlayerName(playerIndex));
+    }
+
+    @Override
+    public void waitForNewGame() {
+        if (activeView instanceof PassiveView passiveView) passiveView.waitForNewGame();
+        views.forEach(PassiveView::waitForNewGame);
+    }
+
+    @Override
+    public void waitForPlayerChoice(List<String> playerNames) {
+        if (activeView instanceof PassiveView passiveView) passiveView.waitForPlayerChoice(playerNames);
+        views.forEach(passiveView -> passiveView.waitForPlayerChoice(playerNames));
+    }
+
+    @Override
+    public void waitForCardChoice(List<RumourCard> rumourCards) {
+        if (activeView instanceof PassiveView passiveView) passiveView.waitForCardChoice(rumourCards);
+        views.forEach(passiveView -> passiveView.waitForCardChoice(rumourCards));
+    }
+
+    @Override
+    public void waitForRepartition() {
+        if (activeView instanceof PassiveView passiveView) passiveView.waitForRepartition();
+        views.forEach(PassiveView::waitForRepartition);
+    }
+
+    @Override
+    public void waitForPlayerIdentity(String name) {
+        if (activeView instanceof PassiveView passiveView) passiveView.waitForPlayerIdentity(name);
+        views.forEach(passiveView -> passiveView.waitForPlayerIdentity(name));
+    }
+
+    @Override
+    public void waitForAction(String playerName, List<PlayerAction> possibleActions) {
+        if (activeView instanceof PassiveView passiveView) passiveView.waitForAction(playerName, possibleActions);
+        views.forEach(passiveView -> passiveView.waitForAction(playerName, possibleActions));
+    }
+
+    @Override
+    public void waitForPlayerSwitch(String name) {
+        if (activeView instanceof PassiveView passiveView) passiveView.waitForPlayerSwitch(name);
+        views.forEach(passiveView -> passiveView.waitForPlayerSwitch(name));
     }
 }

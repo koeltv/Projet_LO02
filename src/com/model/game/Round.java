@@ -7,6 +7,7 @@ import com.model.card.RumourCard;
 import com.model.player.AI;
 import com.model.player.Player;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedList;
@@ -17,31 +18,31 @@ import static com.util.GameUtil.randomInInterval;
 
 /**
  * The type Round.
- * 
+ *
  * Gives all the methods related to the round.
  */
-public class Round {
-	
-	/**
+public class Round implements Serializable {
+
+    /**
      * The single instance of Round.
      */
-    private static Round instance;
+    protected transient static Round instance;
 
     /**
      * The number of round.
      */
-    private static int numberOfRound;
+    protected static int numberOfRound;
 
     /**
      * The current player.
-     * 
+     *
      * @see com.model.player.Player
      */
-    private static Player currentPlayer;
+    protected static Player currentPlayer;
 
     /**
      * The Next player.
-     * 
+     *
      * @see com.model.player.Player
      */
     private Player nextPlayer;
@@ -69,7 +70,7 @@ public class Round {
 
     /**
      * The Deck.
-     * 
+     *
      * @see com.model.card.Deck
      */
     private final Deck deck;
@@ -77,11 +78,13 @@ public class Round {
     /**
      * Instantiates a new Round controller.
      *
+     * @param deck    the deck
+     * @param players the players
      * @see com.model.card.Deck
      * @see com.model.player.Player
      * @see com.model.game.IdentityCard
      */
-    private Round(Deck deck, List<Player> players) {
+    Round(Deck deck, List<Player> players) {
         numberOfRound++;
 
         if (currentPlayer == null) currentPlayer = players.get(randomInInterval(players.size() - 1));
@@ -105,7 +108,9 @@ public class Round {
     /**
      * Reset the round instance.
      * Permit to re-prepare a game.
-     * 
+     *
+     * @param deck    the deck
+     * @param players the players
      * @see com.model.card.Deck
      * @see com.model.player.Player
      */
@@ -205,7 +210,7 @@ public class Round {
 
     /**
      * Gets not selectable players.
-     * 
+     *
      * @param player the player
      * @return a list of not selectable players
      * @see com.model.player.Player
@@ -224,6 +229,19 @@ public class Round {
     public IdentityCard getPlayerIdentityCard(Player targetedPlayer) {
         return identityCards.stream()
                 .filter(identityCard -> identityCard.player == targetedPlayer)
+                .findFirst().orElse(null);
+    }
+
+    /**
+     * Gets a player by his name.
+     *
+     * @param name the player name
+     * @return the player with the given name
+     */
+    public Player getPlayerByName(String name) {
+        return identityCards.stream()
+                .map(identityCard -> identityCard.player)
+                .filter(player -> player.getName().equals(name))
                 .findFirst().orElse(null);
     }
 
@@ -319,7 +337,7 @@ public class Round {
     /**
      * Distribute Rumour cards.
      * This method distribute the Rumour cards at the start of a round based on the number of players.
-     * 
+     *
      * @see com.model.card.CardName
      * @see com.model.card.Deck
      * @see com.model.game.IdentityCard
