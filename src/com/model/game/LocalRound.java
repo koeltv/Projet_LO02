@@ -43,6 +43,11 @@ public class LocalRound extends Round {
 		currentPlayer = player;
 	}
 
+	/**
+	 * Sets number of round.
+	 *
+	 * @param roundNumber the round number
+	 */
 	public static void setNumberOfRound(int roundNumber) {
 		numberOfRound = roundNumber;
 	}
